@@ -1,0 +1,78 @@
+package org.siemac.metamac.access.control.web.client.view;
+
+import java.util.List;
+
+import org.siemac.metamac.gopestat.web.client.presenter.MainPagePresenter;
+import org.siemac.metamac.gopestat.web.client.view.handlers.MainPageUiHandlers;
+import org.siemac.metamac.gopestat.web.client.widgets.BreadCrumbsPanel;
+import org.siemac.metamac.gopestat.web.client.widgets.MasterHead;
+import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
+import org.siemac.metamac.web.common.client.widgets.ErrorMessagePanel;
+import org.siemac.metamac.web.common.client.widgets.SuccessMessagePanel;
+
+import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.AnimationEffect;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
+
+public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> implements MainPagePresenter.MainPageView {
+
+	private static final int NORTH_HEIGHT = 85;
+	private static final String DEFAULT_MARGIN = "0px";
+
+	private final SuccessMessagePanel successMessagePanel;
+	private final ErrorMessagePanel errorMessagePanel;
+	
+	private VLayout panel;
+	private HLayout northLayout;
+	private HLayout southLayout;
+	private HLayout footerLayout;
+	
+
+	@Inject
+	public MainPageViewImpl() {
+	}
+
+	@Override
+	public Widget asWidget() {
+		return null;
+	}
+	
+
+	/****************************************************
+	 * Code for nested presenters.
+	 ***************************************************/
+
+	/*
+	 * GWTP will call setInSlot when a child presenter asks to be added under this view
+	 */
+	@Override
+	public void setInSlot(Object slot, Widget content) {
+		if (slot == MainPagePresenter.TYPE_SetContextAreaContent) {
+			if (content != null) {
+				southLayout.setMembers((VLayout) content);
+			}
+		} else {
+			// To support inheritance in your views it is good practice to call super.setInSlot when you can't handle the call. 
+			// Who knows, maybe the parent class knows what to do with this slot. 
+			super.setInSlot(slot, content);
+		}
+	}
+
+	@Override
+	public void removeFromSlot(Object slot, Widget content) {
+		super.removeFromSlot(slot, content);
+	}
+	
+	/****************************************************
+	 * End code for nested presenters.
+	 ***************************************************/
+
+
+}
