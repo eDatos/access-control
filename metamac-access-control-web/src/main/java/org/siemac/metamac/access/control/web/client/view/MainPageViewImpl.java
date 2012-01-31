@@ -1,25 +1,11 @@
 package org.siemac.metamac.access.control.web.client.view;
 
-import java.util.List;
-
-import org.siemac.metamac.gopestat.web.client.presenter.MainPagePresenter;
-import org.siemac.metamac.gopestat.web.client.view.handlers.MainPageUiHandlers;
-import org.siemac.metamac.gopestat.web.client.widgets.BreadCrumbsPanel;
-import org.siemac.metamac.gopestat.web.client.widgets.MasterHead;
-import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
+import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
+import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
 import org.siemac.metamac.web.common.client.widgets.ErrorMessagePanel;
 import org.siemac.metamac.web.common.client.widgets.SuccessMessagePanel;
 
-import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.inject.Inject;
-import com.gwtplatform.mvp.client.ViewWithUiHandlers;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
-import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.AnimationEffect;
-import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.VLayout;
 
 public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> implements MainPagePresenter.MainPageView {
 
