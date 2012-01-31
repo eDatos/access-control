@@ -1,4 +1,4 @@
-package org.siemac.metamac.gopestat.service.dto;
+package org.siemac.metamac.access.control.service.dto;
 
 import java.util.Date;
 

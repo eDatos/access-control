@@ -21,9 +21,9 @@
 	</bean>
 	
 	<!-- Domain Object to Data Transfers Object	-->
-	<bean id="do2DtoMapper" name="do2DtoMapper" class="org.siemac.metamac.gopestat.service.dto.Do2DtoMapperImpl"></bean>
+	<bean id="do2DtoMapper" name="do2DtoMapper" class="org.siemac.metamac.access.control.service.dto.Do2DtoMapperImpl"></bean>
 	
 	<!-- Data Transfers Object to Domain Object	-->
-	<bean id="dto2DoMapper" name="dto2DoMapper" class="org.siemac.metamac.gopestat.service.dto.Dto2DoMapperImpl"></bean>
+	<bean id="dto2DoMapper" name="dto2DoMapper" class="org.siemac.metamac.access.control.service.dto.Dto2DoMapperImpl"></bean>
 
 </beans>

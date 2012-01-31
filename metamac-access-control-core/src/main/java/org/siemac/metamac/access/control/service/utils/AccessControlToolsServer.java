@@ -1,8 +1,8 @@
-package org.siemac.metamac.gopestat.service.utils;
+package org.siemac.metamac.access.control.service.utils;
 
 import org.apache.commons.lang.RandomStringUtils;
 
-public class GopestatToolsServer {
+public class AccessControlToolsServer {
 
     public static String generateUri() {
         StringBuilder aux = new StringBuilder("http://www.gobiernodecanarias.org/istac");

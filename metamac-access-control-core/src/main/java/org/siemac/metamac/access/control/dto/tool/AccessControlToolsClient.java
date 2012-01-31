@@ -1,8 +1,8 @@
-package org.siemac.metamac.gopestat.dto.tool;
+package org.siemac.metamac.access.control.dto.tool;
 
 import java.io.Serializable;
 
-public class GopestatToolsClient implements Serializable {
+public class AccessControlToolsClient implements Serializable {
 
     private static final long   serialVersionUID = -299934695072266211L;
 
