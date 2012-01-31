@@ -1,0 +1,9 @@
+import "classpath:/btdesign/metamac-access-control-core-dtos.btdesign"
+import "classpath:/btdesign/metamac-access-control-core-lists.btdesign"
+import "classpath:/btdesign/metamac-access-control-core-base.btdesign"
+import "classpath:/btdesign/metamac-access-control-core-constraints.btdesign"
+
+Application AccessControl {
+    basePackage=org.siemac.metamac
+
+}

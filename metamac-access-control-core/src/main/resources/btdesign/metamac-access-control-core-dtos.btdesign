@@ -1,0 +1,10 @@
+
+Application AccessControlDto {
+    basePackage=unused
+
+    Module access_control_dto {
+    	basePackage=org.siemac.metamac.access.control.dto
+
+            
+    }
+}

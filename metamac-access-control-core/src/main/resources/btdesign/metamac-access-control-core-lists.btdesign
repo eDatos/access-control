@@ -1,0 +1,12 @@
+import "classpath:/btdesign/metamac-access-control-core-dtos.btdesign"
+import "classpath:/btdesign/export/metamac-access-control-core-common-entity.btdesign"
+
+Application Lists {
+    basePackage=unused
+
+    Module lists {
+    	basePackage=org.siemac.metamac.access.control.lists
+		
+
+    }
+}
