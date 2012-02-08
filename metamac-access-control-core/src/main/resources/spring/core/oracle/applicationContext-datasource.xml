@@ -13,7 +13,7 @@
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="ACCESSCONTROLEntityManagerFactory" />
+		<property name="persistenceUnitName" value="AccessControlEntityManagerFactory" />
 		<property name="jpaProperties">
 			<props>
 				<prop key="hibernate.show_sql">true</prop>
@@ -28,7 +28,7 @@
 
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName">
-			<value>java:comp/env/jdbc/AcessControl</value>
+			<value>java:comp/env/jdbc/AccessControl</value>
 		</property>
 	</bean>
 

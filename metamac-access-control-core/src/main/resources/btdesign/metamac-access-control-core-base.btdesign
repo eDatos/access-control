@@ -1,12 +1,159 @@
 import "classpath:/btdesign/metamac-access-control-core-dtos.btdesign"
 import "classpath:/btdesign/metamac-access-control-core-lists.btdesign"
 
-
+import "classpath:/btdesign/export/metamac-core-common-basictype.btdesign" 
+import "classpath:/btdesign/export/metamac-core-common-vo.btdesign" 
+import "classpath:/btdesign/export/metamac-core-common-entity.btdesign" 
+ 
 Application Base {
     basePackage=unused
 
     Module base {
 		basePackage=org.siemac.metamac.access.control.base
+		
+		"Roles definitions"
+		Entity Role {
+			databaseTable="TBL_ROLES"
+			hint="idSequence=ROLES"
+			
+			gap
+			
+			"SEMANTIC IDENTIFIER"
+       		String code not nullable;
+       		"TITLE"
+       		String title not nullable;
+       		"DESCRIPTION"
+       		String description nullable;
+
+		
+			Repository RoleRepository {
+				findById;
+		   		findAll;
+		   		save;
+		   		delete;
+		   		findByQuery;
+				findByCondition(PagingParameter pagingParameter);
+			}
+		}  
+		
+		
+		"Applications"
+		Entity App {
+			databaseTable="TBL_APPS"
+			hint="idSequence=APPS"
+			
+			gap
+			
+			"SEMANTIC IDENTIFIER"
+       		String code not nullable;
+       		"TITLE"
+       		String title not nullable;
+       		"DESCRIPTION"
+       		String description nullable;
+
+		
+			Repository AppRepository {
+				findById;
+		   		findAll;
+		   		save;
+		   		delete;
+		   		findByQuery;
+				findByCondition(PagingParameter pagingParameter);
+			}
+		}  
+		
+		"Users"
+		Entity User {
+			databaseTable="TBL_USERS"
+			hint="idSequence=USERS"
+			
+			gap
+			
+			"SEMANTIC IDENTIFIER"
+       		String username not nullable;
+       		"NAME"
+       		String name not nullable;
+       		"SURNAME"
+       		String surname not nullable;
+       		"E-MAIL"
+       		String mail not nullable;
+
+			Repository UserRepository {
+				findById;
+		   		findAll;
+		   		save;
+		   		delete;
+		   		findByQuery;
+				findByCondition(PagingParameter pagingParameter);
+			}
+		}  
+		
+		
+		"Access"
+		Entity Access {
+			databaseTable="TBL_ACCESS"
+			hint="idSequence=ACCESS"
+			
+			gap
+			
+			"ROLE"
+			- @Role role not nullable cascade="none" databaseColumn="ROLE_FK";
+			"APP"
+			- @App app not nullable cascade="none" databaseColumn="APP_FK";
+			"USER"
+			- @User user not nullable cascade="none" databaseColumn="USER_FK";
+			"OPERATION"
+       		- @ExternalItemBt operation nullable;
+			
+			"DISCHARGE DATE"
+			DateTimeTZ dischargeDate nullable;
+			
+			Repository AccessRepository {
+				findById;
+		   		findAll;
+		   		save;
+		   		delete;
+		   		findByQuery;
+				findByCondition(PagingParameter pagingParameter);
+			}
+		}  
+		
+		
+		"Provides access to ACCESS-CONTROL Artefacts"
+ 		Service AccessControlBaseService {
+ 			> @RoleRepository
+ 			> @AppRepository
+ 			> @UserRepository
+ 			> @AccessRepository
+			
+       		"Role" 
+       		@Role findRoleById(Long id) throws MetamacException;
+    		@Role saveRole(@Role entity) throws MetamacException;
+    		deleteRole(@Role entity) throws MetamacException;
+    		List<@Role> findAllRoles throws MetamacException;
+    		PagedResult<@Role> findRoleByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+			
+			"App"			
+			@App findAppById(Long id) throws MetamacException;
+			@App saveApp(@App entity) throws MetamacException;
+			deleteApp(@App entity) throws MetamacException;
+			List<@App> findAllApps throws MetamacException;
+			PagedResult<@App> findAppByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+			
+			"User"		
+			@User findUserById(Long id) throws MetamacException;
+			@User saveUser(@User entity) throws MetamacException;
+			deleteUser(@User entity) throws MetamacException;
+			List<@User> findAllUsers throws MetamacException;
+			PagedResult<@User> findUserByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+			
+			"Access"		
+			@Access findAccessById(Long id) throws MetamacException;
+			@Access saveAccess(@Access entity) throws MetamacException;
+			deleteAccess(@Access entity) throws MetamacException;
+			List<@Access> findAllAccess throws MetamacException;
+			PagedResult<@Access> findAccessByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+	   }
 		
     }
 }

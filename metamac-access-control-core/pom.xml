@@ -11,9 +11,9 @@
 	
 	<parent>
 		<groupId>org.siemac.metamac.access.control</groupId>
-		<artifactId>metamac-acess-control-parent</artifactId>
+		<artifactId>metamac-access-control-parent</artifactId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath>../metamac-acess-control-parent/pom.xml</relativePath>
+		<relativePath>../metamac-access-control-parent/pom.xml</relativePath>
 	</parent>
 	
 	<properties>
@@ -25,7 +25,12 @@
 			<groupId>org.siemac.metamac</groupId>
 			<artifactId>metamac-core-common</artifactId>
 			<version>${metamac-core-common.version}</version>
-			<classifier>client</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.siemac.metamac</groupId>
+			<artifactId>metamac-common-test</artifactId>
+			<version>${metamac-common-test.version}</version>
+			<scope>test</scope>
 		</dependency>
 	
 		<!-- Add dependency to JMS when consumers are used, deployment.type=ear 
@@ -194,11 +199,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-jms</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
@@ -264,20 +264,6 @@
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>${commons-dbcp.version}</version>
-			<!-- Add scope test when running with a persistent database (mysql etc) -->
-			<!-- <scope>test</scope>  -->
-		</dependency>
-		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>${hsqldb.version}</version>
-			<!-- Add scope test when running with a persistent database (mysql etc) -->
-			<!-- <scope>test</scope>  -->
-		</dependency>
 		<dependency>
 			<groupId>org.fornax.cartridges</groupId>
 			<artifactId>fornax-cartridges-sculptor-generator</artifactId>

@@ -21,6 +21,20 @@ public enum ServiceExceptionType {
     SERVICE_VALIDATION_CONSTRAINT_CARDINALITY_MAX("0402"),
     SERVICE_VALIDATION_COLLECTION_EMPTY("0403"),
     SERVICE_VALIDATION_METADATA_REQUIRED("0404"),
+    
+    SERVICE_ROLE_NOT_OK("0501"),
+    SERVICE_ROLE_NOT_FOUND("0502"),
+    
+    SERVICE_APP_NOT_OK("0601"),
+    SERVICE_APP_NOT_FOUND("0502"),
+    
+    SERVICE_USER_NOT_OK("0701"),
+    SERVICE_USER_NOT_FOUND("0502"),
+    
+    SERVICE_ACCESS_NOT_OK("0801"),
+    SERVICE_ACCESS_NOT_FOUND("0502"),;
+
+    
 
     private String                                         errorCode;
 
@@ -43,7 +57,25 @@ public enum ServiceExceptionType {
         MESSAGE_MAP.put(ServiceExceptionType.SERVICE_VALIDATION_CONSTRAINT_CARDINALITY_MAX, "exception.service.validation.constraint.cardinality_max");
         MESSAGE_MAP.put(ServiceExceptionType.SERVICE_VALIDATION_COLLECTION_EMPTY, "exception.service.validation.collection_empty");
         MESSAGE_MAP.put(ServiceExceptionType.SERVICE_VALIDATION_METADATA_REQUIRED, "exception.service.validation.metadata.required");
-
+        
+        // Roles
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ROLE_NOT_OK, "exception.service.role.not_ok");
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ROLE_NOT_FOUND, "exception.service.role.not_found");
+        
+        // Apps
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_APP_NOT_OK, "exception.service.app.not_ok");
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_APP_NOT_FOUND, "exception.service.app.not_found");
+        
+        // Users
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_USER_NOT_OK, "exception.service.user.not_ok");
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_USER_NOT_FOUND, "exception.service.user.not_found");
+        
+        // Access
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ACCESS_NOT_OK, "exception.service.access.not_ok");
+        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ACCESS_NOT_FOUND, "exception.service.access.not_found");
+        
+        
+        
         for (ServiceExceptionType s : EnumSet.allOf(ServiceExceptionType.class)) {
             LOOKUP.put(s.getErrorCode(), s);
         }
