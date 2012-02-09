@@ -4,8 +4,8 @@
   	<artifactId>metamac-access-control</artifactId>
   	<version>1.0-SNAPSHOT</version>
   	<packaging>pom</packaging>
-	<name>METAMAC :: ACESS :: CONTROL</name>
-	<description>METAMAC :: ACESS :: CONTROL</description>
+	<name>METAMAC :: ACCESS :: CONTROL</name>
+	<description>METAMAC :: ACCESS :: CONTROL</description>
 
     <modules>
     	<module>metamac-access-control-parent</module>
