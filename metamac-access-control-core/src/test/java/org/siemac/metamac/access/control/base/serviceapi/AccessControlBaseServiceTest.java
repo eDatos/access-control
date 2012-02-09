@@ -188,14 +188,14 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test
     public void testSaveAccess() throws Exception {
-         // Create access
-         App app = accessControlBaseService.findAppById(getServiceContext(), APP_1);
-         Role role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_1);
-         User user = accessControlBaseService.findUserById(getServiceContext(), USER_1);
-         ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
-        
-         Access access = accessControlBaseService.saveAccess(getServiceContext(), createAccess(app, role, user, operation));
-         assertNotNull(access);
+        // Create access
+        App app = accessControlBaseService.findAppById(getServiceContext(), APP_1);
+        Role role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_1);
+        User user = accessControlBaseService.findUserById(getServiceContext(), USER_1);
+        ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+
+        Access access = accessControlBaseService.saveAccess(getServiceContext(), createAccess(app, role, user, operation));
+        assertNotNull(access);
     }
 
     @Test
@@ -288,10 +288,10 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         sequences.add("SEQ_ACCESS");
         return sequences;
     }
-    
-//    @Override
-//    public void tearDownDatabaseTester() throws Exception {
-//        // NOTHING;
-//    }
+
+    // @Override
+    // public void tearDownDatabaseTester() throws Exception {
+    // // NOTHING;
+    // }
 
 }
