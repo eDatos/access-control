@@ -404,15 +404,8 @@
 						<configuration>
 							<classifier>client</classifier>
 							<includes>
-<!-- 								<include>**/*.gwt.xml</include> -->
-<!-- 								<include>**/serviceapi/*.class</include> -->
-<!-- 								<include>**/domain/*.class</include> -->
-<!-- 								<include>**/exception/*.class</include> -->
-<!-- 								<include>**/*.btdesign</include> -->
-<!-- 								<include>**/sculptor-generator.properties</include> -->
 								<include>**/*.gwt.xml</include>
 								<include>**/*.class</include>
-								<include>**/*.btdesign</include>	
 								<include>**/i18n/*.properties</include>
 								<include>**/*.xml</include>
 							</includes>
