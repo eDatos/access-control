@@ -43,7 +43,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return roleRepository.findById(id);
         } catch (RoleNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_ROLE_NOT_FOUND.getErrorCode(), ServiceExceptionType.SERVICE_ROLE_NOT_FOUND.getMessageForReasonType());
+            throw new MetamacException(ServiceExceptionType.SERVICE_ROLE_NOT_FOUND);
         }
     }
 
@@ -67,7 +67,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return appRepository.findById(id);
         } catch (AppNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_APP_NOT_FOUND.getErrorCode(), ServiceExceptionType.SERVICE_APP_NOT_FOUND.getMessageForReasonType());
+            throw new MetamacException(ServiceExceptionType.SERVICE_APP_NOT_FOUND);
         }
     }
 
@@ -92,7 +92,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return userRepository.findById(id);
         } catch (UserNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_USER_NOT_FOUND.getErrorCode(), ServiceExceptionType.SERVICE_USER_NOT_FOUND.getMessageForReasonType());
+            throw new MetamacException(ServiceExceptionType.SERVICE_USER_NOT_FOUND);
         }
     }
 
@@ -116,7 +116,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return accessRepository.findById(id);
         } catch (AccessNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_ACCESS_NOT_FOUND.getErrorCode(), ServiceExceptionType.SERVICE_ACCESS_NOT_FOUND.getMessageForReasonType());
+            throw new MetamacException(ServiceExceptionType.SERVICE_ACCESS_NOT_FOUND);
         }
     }
 
