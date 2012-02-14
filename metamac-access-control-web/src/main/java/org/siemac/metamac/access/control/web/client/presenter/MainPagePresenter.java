@@ -1,7 +1,13 @@
 package org.siemac.metamac.access.control.web.client.presenter;
 
+import java.util.List;
+
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
+import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
+import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
+import org.siemac.metamac.web.common.client.events.ShowMessageEvent.ShowMessageHandler;
+import org.siemac.metamac.web.common.client.widgets.MasterHead;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -12,6 +18,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Place;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
@@ -20,10 +27,12 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
-public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy> implements MainPageUiHandlers {
+public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy> implements MainPageUiHandlers, ShowMessageHandler {
 
 	private final PlaceManager placeManager;
 	private final DispatchAsync dispatcher;
+
+	private static MasterHead masterHead;
 
 	@ProxyStandard
 	@NameToken(NameTokens.mainPage)
@@ -32,6 +41,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 	}
 	
 	public interface MainPageView extends View, HasUiHandlers<MainPageUiHandlers> {
+	    MasterHead getMasterHead();   
+	    void showMessage(List<String> messages, MessageTypeEnum type);
+        void hideMessages();
 	}
 
 	/**
@@ -48,6 +60,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 		getView().setUiHandlers(this);
 		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
+		MainPagePresenter.masterHead = getView().getMasterHead();
 	}
 
 	@Override
@@ -74,5 +87,11 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 	protected void revealInParent() {
 		RevealRootContentEvent.fire(this, this);
 	}
+	
+	@ProxyEvent
+    @Override
+    public void onShowMessage(ShowMessageEvent event) {
+        getView().showMessage(event.getMessages(), event.getMessageType());
+    }
 
 }

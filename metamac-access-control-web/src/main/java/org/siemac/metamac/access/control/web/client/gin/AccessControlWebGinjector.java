@@ -17,6 +17,4 @@ public interface AccessControlWebGinjector extends Ginjector {
 		
 	Provider<MainPagePresenter> getMainPagePresenter();
 
-	
-
 }
