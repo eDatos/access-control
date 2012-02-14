@@ -6,7 +6,7 @@
 	<groupId>org.siemac.metamac.access.control</groupId>
 	<artifactId>metamac-access-control-core</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>${metamac-access-control-core.version}</version>
 	<name>METAMAC :: ACCESS :: CONTROL :: CORE</name>
 	
 	<parent>
