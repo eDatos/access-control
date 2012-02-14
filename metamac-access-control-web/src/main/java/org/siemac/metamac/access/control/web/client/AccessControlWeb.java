@@ -22,8 +22,8 @@ public class AccessControlWeb implements EntryPoint {
 	}
 
 	
-//	private static AccessControlWebConstants constants;
-//	private static AccessControlWebMessages messages;
+	private static AccessControlWebConstants constants;
+	private static AccessControlWebMessages messages;
 	
 	public static final AccessControlWebGinjector ginjector = GWT.create(AccessControlWebGinjector.class);
 	
@@ -37,20 +37,20 @@ public class AccessControlWeb implements EntryPoint {
     }
 
 
-//    public static GopestatWebConstants getConstants() {
-//    	if (constants == null) {
-//    		constants = (GopestatWebConstants) GWT.create(GopestatWebConstants.class);
-//    	}
-//    	return constants;
-//    }
-//    
-//    
-//    public static GopestatWebMessages getMessages() {
-//    	if (messages == null) {
-//    		messages = (GopestatWebMessages) GWT.create(GopestatWebMessages.class);
-//    	}
-//    	return messages;
-//    }
+    public static AccessControlWebConstants getConstants() {
+    	if (constants == null) {
+    		constants = (AccessControlWebConstants) GWT.create(AccessControlWebConstants.class);
+    	}
+    	return constants;
+    }
+    
+    
+    public static AccessControlWebMessages getMessages() {
+    	if (messages == null) {
+    		messages = (AccessControlWebMessages) GWT.create(AccessControlWebMessages.class);
+    	}
+    	return messages;
+    }
 
     
     public static AccessControlWebGinjector getAccessControlWebGinjector() {
