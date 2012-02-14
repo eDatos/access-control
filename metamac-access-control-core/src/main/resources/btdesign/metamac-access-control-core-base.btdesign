@@ -32,7 +32,7 @@ Application Base {
 		   		save;
 		   		delete;
 		   		findByQuery;
-				findByCondition(PagingParameter pagingParameter);
+		   		findByCondition;
 			}
 		}  
 		
@@ -58,7 +58,7 @@ Application Base {
 		   		save;
 		   		delete;
 		   		findByQuery;
-				findByCondition(PagingParameter pagingParameter);
+		   		findByCondition;
 			}
 		}  
 		
@@ -84,7 +84,7 @@ Application Base {
 		   		save;
 		   		delete;
 		   		findByQuery;
-				findByCondition(PagingParameter pagingParameter);
+		   		findByCondition;
 			}
 		}  
 		
@@ -114,9 +114,48 @@ Application Base {
 		   		save;
 		   		delete;
 		   		findByQuery;
-				findByCondition(PagingParameter pagingParameter);
+		   		findByCondition;
 			}
 		}  
+		
+		
+		
+		"Provides access to AccessControlServiceFacade"
+		Service AccessControlBaseServiceFacade {
+       		> @AccessControlBaseService
+       		
+       		"Role"
+       		@RoleDto createRole(@RoleDto roleDto) throws MetamacException;
+       		@RoleDto updateRole(@RoleDto roleDto) throws MetamacException;
+       		deleteRole (Long roleId) throws MetamacException;
+       		List<@RoleDto> findAllRoles throws MetamacException;
+       		List<@RoleDto> findRoleByCondition(List<ConditionalCriteria> condition) throws MetamacException;
+       		@RoleDto findRoleById (Long id) throws MetamacException;
+       		
+       		"App"
+       		@AppDto createApp(@AppDto appDto) throws MetamacException;
+       		@AppDto updateApp(@AppDto appDto) throws MetamacException;
+       		deleteApp (Long appId) throws MetamacException;
+       		List<@AppDto> findAllApps throws MetamacException;
+       		List<@AppDto> findAppByCondition(List<ConditionalCriteria> condition) throws MetamacException;
+       		@AppDto findAppById (Long id) throws MetamacException;
+       		
+       		"User"
+       		@UserDto createUser(@UserDto userDto) throws MetamacException;
+       		@UserDto updateUser(@UserDto userDto) throws MetamacException;
+       		deleteUser (Long userId) throws MetamacException;
+       		List<@UserDto> findAllUsers throws MetamacException;
+       		List<@UserDto> findUserByCondition(List<ConditionalCriteria> condition) throws MetamacException;
+       		@UserDto findUserById (Long id) throws MetamacException;
+       		
+       		"Access"
+       		@AccessDto createAccess(@AccessDto accessDto) throws MetamacException;
+       		@AccessDto updateAccess(@AccessDto accessDto) throws MetamacException;
+       		deleteAccess (Long accessId) throws MetamacException;
+       		List<@AccessDto> findAllAccess throws MetamacException;
+       		List<@AccessDto> findAccessByCondition(List<ConditionalCriteria> condition) throws MetamacException;
+       		@AccessDto findAccessById (Long id) throws MetamacException;
+       	}
 		
 		
 		"Provides access to ACCESS-CONTROL Artefacts"
@@ -131,28 +170,28 @@ Application Base {
     		@Role saveRole(@Role entity) throws MetamacException;
     		deleteRole(@Role entity) throws MetamacException;
     		List<@Role> findAllRoles throws MetamacException;
-    		PagedResult<@Role> findRoleByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+    		List<@Role> findRoleByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 			
 			"App"			
 			@App findAppById(Long id) throws MetamacException;
 			@App saveApp(@App entity) throws MetamacException;
 			deleteApp(@App entity) throws MetamacException;
 			List<@App> findAllApps throws MetamacException;
-			PagedResult<@App> findAppByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+			List<@App> findAppByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 			
 			"User"		
 			@User findUserById(Long id) throws MetamacException;
 			@User saveUser(@User entity) throws MetamacException;
 			deleteUser(@User entity) throws MetamacException;
 			List<@User> findAllUsers throws MetamacException;
-			PagedResult<@User> findUserByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+			List<@User> findUserByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 			
 			"Access"		
 			@Access findAccessById(Long id) throws MetamacException;
 			@Access saveAccess(@Access entity) throws MetamacException;
 			deleteAccess(@Access entity) throws MetamacException;
 			List<@Access> findAllAccess throws MetamacException;
-			PagedResult<@Access> findAccessByCondition(List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException;
+			List<@Access> findAccessByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 	   }
 		
     }

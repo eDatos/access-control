@@ -1,10 +1,9 @@
 package org.siemac.metamac.access.control.base.serviceimpl;
 
-import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
-import org.fornax.cartridges.sculptor.framework.domain.PagedResult;
-import org.fornax.cartridges.sculptor.framework.domain.PagingParameter;
-import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
+import java.util.List;
 
+import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
+import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.AccessRepository;
 import org.siemac.metamac.access.control.base.domain.App;
@@ -17,13 +16,10 @@ import org.siemac.metamac.access.control.base.exception.AccessNotFoundException;
 import org.siemac.metamac.access.control.base.exception.AppNotFoundException;
 import org.siemac.metamac.access.control.base.exception.RoleNotFoundException;
 import org.siemac.metamac.access.control.base.exception.UserNotFoundException;
-import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
-
+import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Implementation of AccessControlBaseService.
@@ -63,8 +59,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return roleRepository.findAll();
     }
 
-    public PagedResult<Role> findRoleByCondition(ServiceContext ctx, List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException {
-        return roleRepository.findByCondition(condition, pagingParameter);
+    public List<Role> findRoleByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
+        return roleRepository.findByCondition(condition);
     }
 
     public App findAppById(ServiceContext ctx, Long id) throws MetamacException {
@@ -87,8 +83,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return appRepository.findAll();
     }
 
-    public PagedResult<App> findAppByCondition(ServiceContext ctx, List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException {
-        return appRepository.findByCondition(condition, pagingParameter);
+    public List<App> findAppByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
+        return appRepository.findByCondition(condition);
 
     }
 
@@ -112,8 +108,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return userRepository.findAll();
     }
 
-    public PagedResult<User> findUserByCondition(ServiceContext ctx, List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException {
-        return userRepository.findByCondition(condition, pagingParameter);
+    public List<User> findUserByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
+        return userRepository.findByCondition(condition);
     }
 
     public Access findAccessById(ServiceContext ctx, Long id) throws MetamacException {
@@ -136,8 +132,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return accessRepository.findAll();
     }
 
-    public PagedResult<Access> findAccessByCondition(ServiceContext ctx, List<ConditionalCriteria> condition, PagingParameter pagingParameter) throws MetamacException {
-        return accessRepository.findByCondition(condition, pagingParameter);
+    public List<Access> findAccessByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
+        return accessRepository.findByCondition(condition);
     }
 
 }

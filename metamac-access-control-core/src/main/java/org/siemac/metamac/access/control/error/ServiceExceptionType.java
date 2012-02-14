@@ -1,131 +1,19 @@
 package org.siemac.metamac.access.control.error;
 
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import org.siemac.metamac.core.common.error.CommonServiceExceptionType;
 
-import org.siemac.metamac.core.common.lang.LocaleUtil;
+public class ServiceExceptionType extends CommonServiceExceptionType {
 
-public enum ServiceExceptionType {
+    // Extended Error Codes
+    public static final CommonServiceExceptionType SERVICE_ROLE_NOT_OK      = create("0501", "exception.service.role.not_ok");
+    public static final CommonServiceExceptionType SERVICE_ROLE_NOT_FOUND   = create("0502", "exception.service.role.not_found");
 
-    SERVICE_INVALID_PARAMETER_COLLECTION_EMPTY("0201"),
-    SERVICE_INVALID_PARAMETER_UNEXPECTED("0202"),
-    SERVICE_INVALID_PARAMETER_NULL("0203"),
-    SERVICE_INVALID_NOT_FOUND("0204"),
-    SERVICE_INVALID_PROC_STATUS("0205"),
+    public static final CommonServiceExceptionType SERVICE_APP_NOT_OK       = create("0601", "exception.service.app.not_ok");
+    public static final CommonServiceExceptionType SERVICE_APP_NOT_FOUND    = create("0602", "exception.service.app.not_found");
 
-    SERVICE_SEARCH_NOT_FOUND("0301"),
+    public static final CommonServiceExceptionType SERVICE_USER_NOT_OK      = create("0701", "exception.service.user.not_ok");
+    public static final CommonServiceExceptionType SERVICE_USER_NOT_FOUND   = create("0702", "exception.service.user.not_found");
 
-    SERVICE_VALIDATION_CONSTRAINT_ENUMERATED("0401"),
-    SERVICE_VALIDATION_CONSTRAINT_CARDINALITY_MAX("0402"),
-    SERVICE_VALIDATION_COLLECTION_EMPTY("0403"),
-    SERVICE_VALIDATION_METADATA_REQUIRED("0404"),
-    
-    SERVICE_ROLE_NOT_OK("0501"),
-    SERVICE_ROLE_NOT_FOUND("0502"),
-    
-    SERVICE_APP_NOT_OK("0601"),
-    SERVICE_APP_NOT_FOUND("0502"),
-    
-    SERVICE_USER_NOT_OK("0701"),
-    SERVICE_USER_NOT_FOUND("0502"),
-    
-    SERVICE_ACCESS_NOT_OK("0801"),
-    SERVICE_ACCESS_NOT_FOUND("0502"),;
-
-    
-
-    private String                                         errorCode;
-
-    private static final Map<ServiceExceptionType, String> MESSAGE_MAP = new HashMap<ServiceExceptionType, String>();
-    private static final Map<String, ServiceExceptionType> LOOKUP      = new HashMap<String, ServiceExceptionType>();
-
-    static {
-        // Invalid
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_INVALID_PARAMETER_COLLECTION_EMPTY, "exception.service.invalid.parameter.collection_empty");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_INVALID_PARAMETER_UNEXPECTED, "exception.service.invalid.parameter.unexpected");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_INVALID_PARAMETER_NULL, "exception.service.invalid.parameter.null");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_INVALID_NOT_FOUND, "exception.service.invalid.parameter.not_found");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_INVALID_PROC_STATUS, "exception.service.invalid.procStatus");
-
-        // Search
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_SEARCH_NOT_FOUND, "exception.service.search.not_found");
-
-        // Constraints
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_VALIDATION_CONSTRAINT_ENUMERATED, "exception.service.validation.constraint.enumerated");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_VALIDATION_CONSTRAINT_CARDINALITY_MAX, "exception.service.validation.constraint.cardinality_max");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_VALIDATION_COLLECTION_EMPTY, "exception.service.validation.collection_empty");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_VALIDATION_METADATA_REQUIRED, "exception.service.validation.metadata.required");
-        
-        // Roles
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ROLE_NOT_OK, "exception.service.role.not_ok");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ROLE_NOT_FOUND, "exception.service.role.not_found");
-        
-        // Apps
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_APP_NOT_OK, "exception.service.app.not_ok");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_APP_NOT_FOUND, "exception.service.app.not_found");
-        
-        // Users
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_USER_NOT_OK, "exception.service.user.not_ok");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_USER_NOT_FOUND, "exception.service.user.not_found");
-        
-        // Access
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ACCESS_NOT_OK, "exception.service.access.not_ok");
-        MESSAGE_MAP.put(ServiceExceptionType.SERVICE_ACCESS_NOT_FOUND, "exception.service.access.not_found");
-        
-        
-        
-        for (ServiceExceptionType s : EnumSet.allOf(ServiceExceptionType.class)) {
-            LOOKUP.put(s.getErrorCode(), s);
-        }
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    /**
-     * @param number
-     */
-    private ServiceExceptionType(String errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    /**
-     * @param exception
-     * @return
-     */
-    public static ServiceExceptionType get(String exception) {
-        return LOOKUP.get(exception);
-    }
-
-    /**
-     * Returns a localized message for this reason type and locale.
-     * 
-     * @param locale
-     *            The locale.
-     * @return A localized message given a reason type and locale.
-     */
-    public String getMessageForReasonType(Locale locale) {
-        return LocaleUtil.getLocalizedMessageFromBundle("i18n/messages-service", MESSAGE_MAP.get(this), locale);
-    }
-
-    /**
-     * Returns a message for this reason type in the default locale.
-     * 
-     * @return A message message for this reason type in the default locale.
-     */
-    public String getMessageForReasonType() {
-        return getMessageForReasonType(null);
-    }
-
-    /**
-     * Returns a lower case string of this enum.
-     * 
-     * @return a lower case string of this enum
-     */
-    public String lowerCaseString() {
-        return this.toString().toLowerCase();
-    }
+    public static final CommonServiceExceptionType SERVICE_ACCESS_NOT_OK    = create("0801", "exception.service.access.not_ok");
+    public static final CommonServiceExceptionType SERVICE_ACCESS_NOT_FOUND = create("0802", "exception.service.access.not_found");
 }

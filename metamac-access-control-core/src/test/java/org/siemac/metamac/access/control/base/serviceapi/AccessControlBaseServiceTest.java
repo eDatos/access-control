@@ -185,7 +185,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         Access access = accessControlBaseService.findAccessById(getServiceContext(), ACCESS_1);
         assertNotNull(access);
     }
-
+    
     @Test
     public void testSaveAccess() throws Exception {
         // Create access
