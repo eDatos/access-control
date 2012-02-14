@@ -1,6 +1,7 @@
 package org.siemac.metamac.access.control.web.client.gin;
 
 import org.siemac.metamac.access.control.web.client.AccessControlPlaceManager;
+import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.view.MainPageViewImpl;
 
@@ -18,6 +19,9 @@ public class ClientModule extends AbstractPresenterModule {
 		//	 |_   bind(PlaceManager.class).to(MyPlaceManager.class).in(Singleton.class);
 		//	 |_   bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class).in(Singleton.class);		
 	    install(new DefaultModule(AccessControlPlaceManager.class));
+	    
+	    // Constants
+        bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.mainPage);
 	    
 		// Presenters
 	    bindPresenter(MainPagePresenter.class, MainPagePresenter.MainPageView.class, MainPageViewImpl.class, MainPagePresenter.MainPageProxy.class);
