@@ -38,6 +38,12 @@
 			<artifactId>metamac-web-common</artifactId>
 			<version>${metamac-web-common.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.access.control</groupId>
+            <artifactId>metamac-access-control-core</artifactId>
+            <version>${metamac-access-control-core.version}</version>
+            <classifier>client</classifier>
+        </dependency>
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
@@ -166,6 +172,7 @@
 					<runTarget>AccessControlWeb.html</runTarget>
 					<hostedWebapp>${webappDirectory}</hostedWebapp>
 					<compileSourcesArtifacts>
+                        <artifact>org.siemac.metamac.access.control:metamac-access-control-core:jar:client</artifact>
 				    	<artifact>org.siemac.metamac:metamac-core-common:jar:client</artifact>
 				    </compileSourcesArtifacts>
 				</configuration>
