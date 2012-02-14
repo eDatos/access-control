@@ -4,8 +4,7 @@
   <inherits name='com.google.gwt.user.User'/>
 
   <!-- Specify the paths for translatable code  -->
-  <source path='domain'/>
-  <source path='serviceapi'/>
-  <source path='tool'/>
+  <source path='dto/serviceapi'/>
+  <source path='enume/domain'/>
 
 </module>
