@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>metamac-access-control-web</name>
-	<comment>gopestat-web project</comment>
+	<comment>metamac-access-control-web project</comment>
+	<projects>
+	</projects>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
