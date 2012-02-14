@@ -28,7 +28,7 @@
 	
 	<!-- ******************* Default page to serve ******************** -->
 	<welcome-file-list>
-		<welcome-file>GopestatWeb.html</welcome-file>
+		<welcome-file>AccessControlWeb.html</welcome-file>
 	</welcome-file-list>
 
 </web-app>
