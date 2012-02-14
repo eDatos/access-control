@@ -6,14 +6,18 @@ import org.siemac.metamac.web.common.client.widgets.ErrorMessagePanel;
 import org.siemac.metamac.web.common.client.widgets.SuccessMessagePanel;
 
 import com.google.gwt.user.client.ui.Widget;
+import com.google.inject.Inject;
+import com.gwtplatform.mvp.client.ViewWithUiHandlers;
+import com.smartgwt.client.widgets.layout.HLayout;
+import com.smartgwt.client.widgets.layout.VLayout;
 
 public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> implements MainPagePresenter.MainPageView {
 
 	private static final int NORTH_HEIGHT = 85;
 	private static final String DEFAULT_MARGIN = "0px";
 
-	private final SuccessMessagePanel successMessagePanel;
-	private final ErrorMessagePanel errorMessagePanel;
+	private final SuccessMessagePanel successMessagePanel = null;
+	private final ErrorMessagePanel errorMessagePanel = null;
 	
 	private VLayout panel;
 	private HLayout northLayout;
