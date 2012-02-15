@@ -1,6 +1,6 @@
 package org.siemac.metamac.access.control.error;
 
-import org.siemac.metamac.core.common.error.CommonServiceExceptionType;
+import org.siemac.metamac.core.common.exception.CommonServiceExceptionType;
 
 public class ServiceExceptionType extends CommonServiceExceptionType {
 
