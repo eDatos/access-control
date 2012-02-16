@@ -85,7 +85,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
 
     @Override
     public Widget asWidget() {
-        return null;
+        return panel;
     }
 
 

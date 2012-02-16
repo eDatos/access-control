@@ -2,9 +2,9 @@ package org.siemac.metamac.access.control.web.server.handlers;
 
 import java.util.List;
 
-import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContextStore;
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
 import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.access.control.web.server.ServiceContextHelper;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessResult;
 import org.siemac.metamac.access.control.web.shared.exception.MetamacWebException;
@@ -29,7 +29,7 @@ public class FindAllAccessActionHandler extends AbstractActionHandler<FindAllAcc
     @Override
     public FindAllAccessResult execute(FindAllAccessAction action, ExecutionContext context) throws ActionException {
         try {
-            List<AccessDto> accessDtos = accessControlBaseServiceFacade.findAllAccess(ServiceContextStore.get());
+            List<AccessDto> accessDtos = accessControlBaseServiceFacade.findAllAccess(ServiceContextHelper.getServiceContext());
             return new FindAllAccessResult(accessDtos);
         } catch (MetamacException e) {
             throw new MetamacWebException(e.getExceptionItems());

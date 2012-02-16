@@ -1,13 +1,25 @@
 package org.siemac.metamac.access.control.web.server;
 
+import org.siemac.metamac.access.control.web.server.handlers.DeleteAccessListActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.DeleteAppListActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.DeleteRoleListActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.DeleteUserListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAppsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRolesActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllUsersActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.SaveAccessActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.SaveUserActionHandler;
+import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
+import org.siemac.metamac.access.control.web.shared.DeleteAppListAction;
+import org.siemac.metamac.access.control.web.shared.DeleteRoleListAction;
+import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
+import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
+import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -52,11 +64,47 @@ public class ServerModule extends HandlerModule {
 	    return new FindAllUsersActionHandler();
 	}
 	
+	@Bean
+	public DeleteAccessListActionHandler getDeleteAccessListActionHandler() {
+	    return new DeleteAccessListActionHandler();
+	}
+	
+	@Bean
+	public DeleteUserListActionHandler getDeleteUserListActionHandler() {
+	    return new DeleteUserListActionHandler();
+	}
+	
+	@Bean
+	public DeleteRoleListActionHandler getDeleteRoleListActionHandler() {
+	    return new DeleteRoleListActionHandler();
+	}
+	
+	@Bean
+	public DeleteAppListActionHandler getDeleteAppListActionHandler() {
+	    return new DeleteAppListActionHandler();
+	}
+	
+	@Bean
+	public SaveAccessActionHandler getsaSaveAccessActionHandler() {
+	    return new SaveAccessActionHandler();
+	}
+	
+	@Bean
+	public SaveUserActionHandler getsaSaveUsersActionHandler() {
+	    return new SaveUserActionHandler();
+	}
+	
 	protected void configureHandlers() {
 	    bindHandler(FindAllAccessAction.class, FindAllAccessActionHandler.class);
 	    bindHandler(FindAllAppsAction.class, FindAllAppsActionHandler.class);
 	    bindHandler(FindAllRolesAction.class, FindAllRolesActionHandler.class);
 	    bindHandler(FindAllUsersAction.class, FindAllUsersActionHandler.class);
+	    bindHandler(DeleteAccessListAction.class, DeleteAccessListActionHandler.class);
+	    bindHandler(DeleteUserListAction.class, DeleteUserListActionHandler.class);
+	    bindHandler(DeleteRoleListAction.class, DeleteRoleListActionHandler.class);
+	    bindHandler(DeleteAppListAction.class, DeleteAppListActionHandler.class);
+	    bindHandler(SaveAccessAction.class, SaveAccessActionHandler.class);
+	    bindHandler(SaveUserAction.class, SaveUserActionHandler.class);
 	}
 	
 }

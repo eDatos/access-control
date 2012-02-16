@@ -2,9 +2,9 @@ package org.siemac.metamac.access.control.web.server.handlers;
 
 import java.util.List;
 
-import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContextStore;
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
 import org.siemac.metamac.access.control.dto.serviceapi.RoleDto;
+import org.siemac.metamac.access.control.web.server.ServiceContextHelper;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesResult;
 import org.siemac.metamac.access.control.web.shared.exception.MetamacWebException;
@@ -29,7 +29,7 @@ public class FindAllRolesActionHandler extends AbstractActionHandler<FindAllRole
     @Override
     public FindAllRolesResult execute(FindAllRolesAction action, ExecutionContext context) throws ActionException {
         try {
-            List<RoleDto> roleDtos = accessControlBaseServiceFacade.findAllRoles(ServiceContextStore.get());
+            List<RoleDto> roleDtos = accessControlBaseServiceFacade.findAllRoles(ServiceContextHelper.getServiceContext());
             return new FindAllRolesResult(roleDtos);
         } catch (MetamacException e) {
             throw new MetamacWebException(e.getExceptionItems());
