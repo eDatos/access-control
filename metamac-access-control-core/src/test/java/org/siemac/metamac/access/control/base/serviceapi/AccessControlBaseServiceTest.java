@@ -15,7 +15,7 @@ import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
-import org.siemac.metamac.access.control.base.serviceapi.utils.EntitiesAsserts;
+import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDoAsserts;
 import org.siemac.metamac.common.test.MetamacBaseTests;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
@@ -89,7 +89,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         
         // Validation
         assertNotNull(roleUpdated);
-        EntitiesAsserts.assertEqualsRole(role, roleUpdated);
+        AccessControlDoAsserts.assertEqualsRole(role, roleUpdated);
         assertTrue(roleUpdated.getLastUpdated().isAfter(roleUpdated.getCreatedDate()));
     }
     
@@ -145,7 +145,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         
         // Validation
         assertNotNull(appUpdated);
-        EntitiesAsserts.assertEqualsApp(app, appUpdated);
+        AccessControlDoAsserts.assertEqualsApp(app, appUpdated);
         assertTrue(appUpdated.getLastUpdated().isAfter(appUpdated.getCreatedDate()));
     }
 
@@ -202,7 +202,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         
         // Validation
         assertNotNull(userUpdated);
-        EntitiesAsserts.assertEqualsUser(user, userUpdated);
+        AccessControlDoAsserts.assertEqualsUser(user, userUpdated);
         assertTrue(userUpdated.getLastUpdated().isAfter(userUpdated.getCreatedDate()));
     }
 
@@ -272,7 +272,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         
         // Validation
         assertNotNull(accessUpdated);
-        EntitiesAsserts.assertEqualsAccess(access, accessUpdated);
+        AccessControlDoAsserts.assertEqualsAccess(access, accessUpdated);
         assertTrue(accessUpdated.getLastUpdated().isAfter(accessUpdated.getCreatedDate()));
     }
 

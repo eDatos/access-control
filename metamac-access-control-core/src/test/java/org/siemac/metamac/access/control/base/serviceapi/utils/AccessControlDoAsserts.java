@@ -2,9 +2,6 @@ package org.siemac.metamac.access.control.base.serviceapi.utils;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Date;
-
-import org.joda.time.DateTime;
 import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
@@ -14,7 +11,7 @@ import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 /**
  * Asserts to tests
  */
-public class EntitiesAsserts {
+public class AccessControlDoAsserts {
     
     public static void assertEqualsRole(Role expected, Role actual) {
         assertEquals(expected.getUuid(), actual.getUuid());
@@ -57,7 +54,4 @@ public class EntitiesAsserts {
         assertEquals(expected.getUriInt(), actual.getUriInt());
     }
     
-    public static void assertEqualsDate(String expected, Date actual) {
-        assertEquals(expected, (new DateTime(actual)).toString("yyyy-MM-dd HH:mm:ss"));
-    }
 }
