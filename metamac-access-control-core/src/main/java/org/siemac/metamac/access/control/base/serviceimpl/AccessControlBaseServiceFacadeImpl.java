@@ -38,7 +38,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     
     public RoleDto createRole(ServiceContext ctx, RoleDto roleDto) throws MetamacException {
         // Transform to Entity
-        Role role = dto2DoMapper.roleDtoToDo(roleDto);
+        Role role = dto2DoMapper.roleDtoToDo(ctx, roleDto);
         
         // Service call
         role = getAccessControlBaseService().createRole(ctx, role);
@@ -55,7 +55,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     public RoleDto updateRole(ServiceContext ctx, RoleDto roleDto) throws MetamacException {
         // Transform to Entity
-        Role role = dto2DoMapper.roleDtoToDo(roleDto);
+        Role role = dto2DoMapper.roleDtoToDo(ctx, roleDto);
         
         // Service call
         role = getAccessControlBaseService().updateRole(ctx, role);
@@ -105,7 +105,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     public AppDto createApp(ServiceContext ctx, AppDto appDto) throws MetamacException {
         // Transform to Entity
-        App app = dto2DoMapper.appDtoToDo(appDto);
+        App app = dto2DoMapper.appDtoToDo(ctx, appDto);
         
         // Service call
         app = getAccessControlBaseService().createApp(ctx, app);
@@ -119,7 +119,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     public AppDto updateApp(ServiceContext ctx, AppDto appDto) throws MetamacException {
         // Transform to Entity
-        App app = dto2DoMapper.appDtoToDo(appDto);
+        App app = dto2DoMapper.appDtoToDo(ctx, appDto);
         
         // Service call
         app = getAccessControlBaseService().updateApp(ctx, app);
@@ -170,7 +170,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     public UserDto createUser(ServiceContext ctx, UserDto userDto) throws MetamacException {
         // Transform to Entity
-        User user = dto2DoMapper.userDtoToDo(userDto);
+        User user = dto2DoMapper.userDtoToDo(ctx, userDto);
         
         // Service call
         user = getAccessControlBaseService().createUser(ctx, user);
@@ -184,7 +184,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     public UserDto updateUser(ServiceContext ctx, UserDto userDto) throws MetamacException {
         // Transform to Entity
-        User user = dto2DoMapper.userDtoToDo(userDto);
+        User user = dto2DoMapper.userDtoToDo(ctx, userDto);
         
         // Service call
         user = getAccessControlBaseService().updateUser(ctx, user);
@@ -233,7 +233,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     public AccessDto createAccess(ServiceContext ctx, AccessDto accessDto) throws MetamacException {
         // Transform to Entity
-        Access access = dto2DoMapper.accessDtoToDo(accessDto);
+        Access access = dto2DoMapper.accessDtoToDo(ctx, accessDto);
         
         // Service call
         access = getAccessControlBaseService().createAccess(ctx, access);
@@ -248,7 +248,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     public AccessDto updateAccess(ServiceContext ctx, AccessDto accessDto) throws MetamacException {
         // Transform to Entity
-        Access access = dto2DoMapper.accessDtoToDo(accessDto);
+        Access access = dto2DoMapper.accessDtoToDo(ctx, accessDto);
         
         // Service call
         access = getAccessControlBaseService().updateAccess(ctx, access);

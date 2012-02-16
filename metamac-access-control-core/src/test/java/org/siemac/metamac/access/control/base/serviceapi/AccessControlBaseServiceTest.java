@@ -3,6 +3,7 @@ package org.siemac.metamac.access.control.base.serviceapi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
+import org.siemac.metamac.access.control.base.serviceapi.utils.EntitiesAsserts;
 import org.siemac.metamac.common.test.MetamacBaseTests;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
@@ -74,10 +76,23 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     
     @Test
     public void testUpdateRole() throws Exception {
-        Role role = accessControlBaseService.updateRole(getServiceContext(), createRole());
-        assertNotNull(role);
-    }
+        Long id = ROLE_1;
 
+        // Retrieve
+        Role role = accessControlBaseService.findRoleById(getServiceContext(), id);
+        role.setCode("newCode");
+        role.setTitle("newTitle");
+        role.setDescription("newDescription");
+        
+        // Update
+        Role roleUpdated = accessControlBaseService.updateRole(getServiceContext(), role);
+        
+        // Validation
+        assertNotNull(roleUpdated);
+        EntitiesAsserts.assertEqualsRole(role, roleUpdated);
+        assertTrue(roleUpdated.getLastUpdated().isAfter(roleUpdated.getCreatedDate()));
+    }
+    
     @Test
     public void testFindAllRoles() throws Exception {
         List<Role> roles = accessControlBaseService.findAllRoles(getServiceContext());
@@ -117,8 +132,21 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     
     @Test
     public void testUpdateApp() throws Exception {
-        App app = accessControlBaseService.updateApp(getServiceContext(), createApp());
-        assertNotNull(app);
+        Long id = APP_1;
+
+        // Retrieve
+        App app = accessControlBaseService.findAppById(getServiceContext(), id);
+        app.setCode("newCode");
+        app.setTitle("newTitle");
+        app.setDescription("newDescription");
+        
+        // Update
+        App appUpdated = accessControlBaseService.updateApp(getServiceContext(), app);
+        
+        // Validation
+        assertNotNull(appUpdated);
+        EntitiesAsserts.assertEqualsApp(app, appUpdated);
+        assertTrue(appUpdated.getLastUpdated().isAfter(appUpdated.getCreatedDate()));
     }
 
     @Test
@@ -160,8 +188,22 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     
     @Test
     public void testUpdateUser() throws Exception {
-        User user = accessControlBaseService.updateUser(getServiceContext(), createUser());
-        assertNotNull(user);
+        Long id = USER_1;
+
+        // Retrieve
+        User user = accessControlBaseService.findUserById(getServiceContext(), id);
+        user.setUsername("newUsername");
+        user.setName("newName");
+        user.setSurname("newSurname");
+        user.setMail("newMail");
+        
+        // Update
+        User userUpdated = accessControlBaseService.updateUser(getServiceContext(), user);
+        
+        // Validation
+        assertNotNull(userUpdated);
+        EntitiesAsserts.assertEqualsUser(user, userUpdated);
+        assertTrue(userUpdated.getLastUpdated().isAfter(userUpdated.getCreatedDate()));
     }
 
     @Test
@@ -210,14 +252,28 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     
     @Test
     public void testUpdateAccess() throws Exception {
-        // Create access
-        App app = accessControlBaseService.findAppById(getServiceContext(), APP_1);
-        Role role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_1);
-        User user = accessControlBaseService.findUserById(getServiceContext(), USER_1);
-        ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        Long id = ACCESS_1;
 
-        Access access = accessControlBaseService.updateAccess(getServiceContext(), createAccess(app, role, user, operation));
-        assertNotNull(access);
+        // Retrieve
+        Access access = accessControlBaseService.findAccessById(getServiceContext(), id);
+        
+        App app = accessControlBaseService.findAppById(getServiceContext(), APP_2);
+        Role role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_2);
+        User user = accessControlBaseService.findUserById(getServiceContext(), USER_2);
+        ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP2", "MNP2", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        
+        access.setApp(app);
+        access.setRole(role);
+        access.setUser(user);
+        access.setOperation(operation);
+        
+        // Update
+        Access accessUpdated = accessControlBaseService.updateAccess(getServiceContext(), access);
+        
+        // Validation
+        assertNotNull(accessUpdated);
+        EntitiesAsserts.assertEqualsAccess(access, accessUpdated);
+        assertTrue(accessUpdated.getLastUpdated().isAfter(accessUpdated.getCreatedDate()));
     }
 
     @Test
