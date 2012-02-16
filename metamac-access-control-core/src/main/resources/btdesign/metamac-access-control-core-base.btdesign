@@ -167,29 +167,33 @@ Application Base {
 			
        		"Role" 
        		@Role findRoleById(Long id) throws MetamacException;
-    		@Role saveRole(@Role entity) throws MetamacException;
-    		deleteRole(@Role entity) throws MetamacException;
+    		@Role createRole(@Role entity) throws MetamacException;
+    		@Role updateRole(@Role entity) throws MetamacException;
+    		deleteRole(Long id) throws MetamacException;
     		List<@Role> findAllRoles throws MetamacException;
     		List<@Role> findRoleByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 			
 			"App"			
 			@App findAppById(Long id) throws MetamacException;
-			@App saveApp(@App entity) throws MetamacException;
-			deleteApp(@App entity) throws MetamacException;
+			@App createApp(@App entity) throws MetamacException;
+			@App updateApp(@App entity) throws MetamacException;
+			deleteApp(Long appId) throws MetamacException;
 			List<@App> findAllApps throws MetamacException;
 			List<@App> findAppByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 			
 			"User"		
 			@User findUserById(Long id) throws MetamacException;
-			@User saveUser(@User entity) throws MetamacException;
-			deleteUser(@User entity) throws MetamacException;
+			@User createUser(@User entity) throws MetamacException;
+			@User updateUser(@User entity) throws MetamacException;
+			deleteUser(Long userId) throws MetamacException;
 			List<@User> findAllUsers throws MetamacException;
 			List<@User> findUserByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 			
 			"Access"		
 			@Access findAccessById(Long id) throws MetamacException;
-			@Access saveAccess(@Access entity) throws MetamacException;
-			deleteAccess(@Access entity) throws MetamacException;
+			@Access createAccess(@Access entity) throws MetamacException;
+			@Access updateAccess(@Access entity) throws MetamacException;
+			deleteAccess(Long accessId) throws MetamacException;
 			List<@Access> findAllAccess throws MetamacException;
 			List<@Access> findAccessByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 	   }

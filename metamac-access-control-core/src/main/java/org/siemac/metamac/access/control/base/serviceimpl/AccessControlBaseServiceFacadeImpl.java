@@ -1,16 +1,20 @@
 package org.siemac.metamac.access.control.base.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
+import org.siemac.metamac.access.control.base.domain.Access;
+import org.siemac.metamac.access.control.base.domain.App;
+import org.siemac.metamac.access.control.base.domain.Role;
+import org.siemac.metamac.access.control.base.domain.User;
 import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.access.control.dto.serviceapi.AppDto;
 import org.siemac.metamac.access.control.dto.serviceapi.RoleDto;
 import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
 import org.siemac.metamac.access.control.service.dto.Do2DtoMapper;
 import org.siemac.metamac.access.control.service.dto.Dto2DoMapper;
-import org.siemac.metamac.access.control.service.utils.InvocationValidator;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,343 +37,303 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
     
     public RoleDto createRole(ServiceContext ctx, RoleDto roleDto) throws MetamacException {
-
-        // Validation of parameters
-        InvocationValidator.checkCreateRole(roleDto, null);
-        
         // Transform to Entity
+        Role role = dto2DoMapper.roleDtoToDo(roleDto);
         
         // Service call
+        role = getAccessControlBaseService().createRole(ctx, role);
         
         // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("createRole not implemented");
+        roleDto = do2DtoMapper.roleDoToDto(role);
+
+        // Return 
+        return roleDto;
     }
 
-    public RoleDto updateRole(ServiceContext ctx, RoleDto roleDto) throws MetamacException {
 
-        // Validation of parameters
-        
+
+
+    public RoleDto updateRole(ServiceContext ctx, RoleDto roleDto) throws MetamacException {
         // Transform to Entity
+        Role role = dto2DoMapper.roleDtoToDo(roleDto);
         
         // Service call
+        role = getAccessControlBaseService().updateRole(ctx, role);
         
         // Transform to Dto
+        roleDto = do2DtoMapper.roleDoToDto(role);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("updateRole not implemented");
-
+        // Return 
+        return roleDto;
     }
 
     public void deleteRole(ServiceContext ctx, Long roleId) throws MetamacException {
-
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
-        
-        // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("deleteRole not implemented");
-
+        getAccessControlBaseService().deleteRole(ctx, roleId);
     }
 
     public List<RoleDto> findAllRoles(ServiceContext ctx) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<Role> roles = getAccessControlBaseService().findAllRoles(ctx);
         
         // Transform to Dto
+        List<RoleDto> rolesDto = rolesListDo2Dto(roles);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAllRoles not implemented");
-
+        return rolesDto;
     }
 
+
     public List<RoleDto> findRoleByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<Role> roles = getAccessControlBaseService().findRoleByCondition(ctx, condition);
         
         // Transform to Dto
+        List<RoleDto> rolesDto = rolesListDo2Dto(roles);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findRoleByCondition not implemented");
-
+        return rolesDto;
     }
 
     public RoleDto findRoleById(ServiceContext ctx, Long id) throws MetamacException {
-
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        Role role = getAccessControlBaseService().findRoleById(ctx, id);
         
         // Transform to Dto
+        RoleDto roleDto = do2DtoMapper.roleDoToDto(role);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findRoleById not implemented");
-
+        return roleDto;
     }
 
     public AppDto createApp(ServiceContext ctx, AppDto appDto) throws MetamacException {
-
-        // Validation of parameters
-        
         // Transform to Entity
+        App app = dto2DoMapper.appDtoToDo(appDto);
         
         // Service call
+        app = getAccessControlBaseService().createApp(ctx, app);
         
         // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("createApp not implemented");
+        appDto = do2DtoMapper.appDoToDto(app);
 
+        // Return 
+        return appDto;
     }
 
     public AppDto updateApp(ServiceContext ctx, AppDto appDto) throws MetamacException {
-        // Validation of parameters
-        
         // Transform to Entity
+        App app = dto2DoMapper.appDtoToDo(appDto);
         
         // Service call
+        app = getAccessControlBaseService().updateApp(ctx, app);
         
         // Transform to Dto
+        appDto = do2DtoMapper.appDoToDto(app);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("updateApp not implemented");
-
+        // Return 
+        return appDto;
     }
 
     public void deleteApp(ServiceContext ctx, Long appId) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
-        
-        // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("deleteApp not implemented");
-
+        getAccessControlBaseService().deleteApp(ctx, appId);
     }
 
     public List<AppDto> findAllApps(ServiceContext ctx) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<App> apps = getAccessControlBaseService().findAllApps(ctx);
         
         // Transform to Dto
+        List<AppDto> appsDto = appsListDo2Dto(apps);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAllApps not implemented");
-
+        return appsDto;
     }
 
     public List<AppDto> findAppByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<App> apps = getAccessControlBaseService().findAppByCondition(ctx, condition);
         
         // Transform to Dto
+        List<AppDto> appsDto = appsListDo2Dto(apps);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAppByCondition not implemented");
-
+        return appsDto;
     }
 
     public AppDto findAppById(ServiceContext ctx, Long id) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        App app = getAccessControlBaseService().findAppById(ctx, id);
         
         // Transform to Dto
+        AppDto appDto = do2DtoMapper.appDoToDto(app);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAppById not implemented");
+        return appDto;
+
 
     }
 
     public UserDto createUser(ServiceContext ctx, UserDto userDto) throws MetamacException {
-        // Validation of parameters
-        
         // Transform to Entity
+        User user = dto2DoMapper.userDtoToDo(userDto);
         
         // Service call
+        user = getAccessControlBaseService().createUser(ctx, user);
         
         // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("createUser not implemented");
+        userDto = do2DtoMapper.userDoToDto(user);
 
+        // Return 
+        return userDto;
     }
 
     public UserDto updateUser(ServiceContext ctx, UserDto userDto) throws MetamacException {
-        // Validation of parameters
-        
         // Transform to Entity
+        User user = dto2DoMapper.userDtoToDo(userDto);
         
         // Service call
+        user = getAccessControlBaseService().updateUser(ctx, user);
         
         // Transform to Dto
+        userDto = do2DtoMapper.userDoToDto(user);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("updateUser not implemented");
-
+        // Return 
+        return userDto;
     }
 
     public void deleteUser(ServiceContext ctx, Long userId) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
-        
-        // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("deleteUser not implemented");
-
+        getAccessControlBaseService().deleteUser(ctx, userId);
     }
 
     public List<UserDto> findAllUsers(ServiceContext ctx) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<User> users = getAccessControlBaseService().findAllUsers(ctx);
         
         // Transform to Dto
+        List<UserDto> usersDto = usersListDo2Dto(users);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAllUsers not implemented");
-
+        return usersDto;
     }
 
     public List<UserDto> findUserByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<User> users = getAccessControlBaseService().findUserByCondition(ctx, condition);
         
         // Transform to Dto
+        List<UserDto> usersDto = usersListDo2Dto(users);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findUserByCondition not implemented");
-
+        return usersDto;
     }
 
     public UserDto findUserById(ServiceContext ctx, Long id) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        User user = getAccessControlBaseService().findUserById(ctx, id);
         
         // Transform to Dto
+        UserDto userDto = do2DtoMapper.userDoToDto(user);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findUserById not implemented");
-
+        return userDto;
     }
 
     public AccessDto createAccess(ServiceContext ctx, AccessDto accessDto) throws MetamacException {
-        // Validation of parameters
-        
         // Transform to Entity
+        Access access = dto2DoMapper.accessDtoToDo(accessDto);
         
         // Service call
+        access = getAccessControlBaseService().createAccess(ctx, access);
         
         // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("createAccess not implemented");
+        accessDto = do2DtoMapper.accessDoToDto(access);
+
+        // Return 
+        return accessDto;
 
     }
 
     public AccessDto updateAccess(ServiceContext ctx, AccessDto accessDto) throws MetamacException {
-        // Validation of parameters
-        
         // Transform to Entity
+        Access access = dto2DoMapper.accessDtoToDo(accessDto);
         
         // Service call
+        access = getAccessControlBaseService().updateAccess(ctx, access);
         
         // Transform to Dto
+        accessDto = do2DtoMapper.accessDoToDto(access);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("updateAccess not implemented");
+        // Return 
+        return accessDto;
 
     }
 
     public void deleteAccess(ServiceContext ctx, Long accessId) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
-        
-        // Transform to Dto
-        
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("deleteAccess not implemented");
-
+        getAccessControlBaseService().deleteAccess(ctx, accessId);
     }
 
     public List<AccessDto> findAllAccess(ServiceContext ctx) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<Access> access = getAccessControlBaseService().findAllAccess(ctx);
         
         // Transform to Dto
+        List<AccessDto> accessDto = accessListDo2Dto(access);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAllAccess not implemented");
-
+        return accessDto;
     }
 
     public List<AccessDto> findAccessByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, condition);
         
         // Transform to Dto
+        List<AccessDto> accessDto = accessListDo2Dto(access);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAccessByCondition not implemented");
-
+        return accessDto;
     }
 
     public AccessDto findAccessById(ServiceContext ctx, Long id) throws MetamacException {
-        // Validation of parameters
-        
-        // Transform to Entity
-        
         // Service call
+        Access access = getAccessControlBaseService().findAccessById(ctx, id);
         
         // Transform to Dto
+        AccessDto accessDto = do2DtoMapper.accessDoToDto(access);
         
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("findAccessById not implemented");
-
+        return accessDto;
     }
+    
+    
+    // --------------------------------------------------------------------------------
+    //                          TRANSFORM LISTS
+    // --------------------------------------------------------------------------------
+    
+    
+    
+    private List<RoleDto> rolesListDo2Dto(List<Role> rolesList) {
+        List<RoleDto> rolesDto = new ArrayList<RoleDto>();
+        for (Role role : rolesList) {
+            rolesDto.add(do2DtoMapper.roleDoToDto(role));
+        }
+        return rolesDto;
+    }
+    
+    private List<AppDto> appsListDo2Dto(List<App> appsList) {
+        List<AppDto> appsDto = new ArrayList<AppDto>();
+        for (App app : appsList) {
+            appsDto.add(do2DtoMapper.appDoToDto(app));
+        }
+        return appsDto;
+    }
+    
+    private List<UserDto> usersListDo2Dto(List<User> usersList) {
+        List<UserDto> usersDto = new ArrayList<UserDto>();
+        for (User user : usersList) {
+            usersDto.add(do2DtoMapper.userDoToDto(user));
+        }
+        return usersDto;
+    }
+    
+    private List<AccessDto> accessListDo2Dto(List<Access> accessList) {
+        List<AccessDto> accessDto = new ArrayList<AccessDto>();
+        for (Access access : accessList) {
+            accessDto.add(do2DtoMapper.accessDoToDto(access));
+        }
+        return accessDto;
+    }
+    
+  
 }

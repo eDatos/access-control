@@ -65,9 +65,16 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         assertNotNull(role);
     }
 
+    
     @Test
-    public void testSaveRole() throws Exception {
-        Role role = accessControlBaseService.saveRole(getServiceContext(), createRole());
+    public void testCreateRole() throws Exception {
+        Role role = accessControlBaseService.createRole(getServiceContext(), createRole());
+        assertNotNull(role);
+    }
+    
+    @Test
+    public void testUpdateRole() throws Exception {
+        Role role = accessControlBaseService.updateRole(getServiceContext(), createRole());
         assertNotNull(role);
     }
 
@@ -80,14 +87,10 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test(expected = MetamacException.class)
     public void testDeleteRole() throws Exception {
+        accessControlBaseService.deleteRole(getServiceContext(), ROLE_2);
+
         Role role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_2);
-        assertNotNull(role);
-
-        accessControlBaseService.deleteRole(getServiceContext(), role);
-
-        role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_2);
         assertNull(role);
-
     }
 
     @Test
@@ -107,8 +110,14 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     }
 
     @Test
-    public void testSaveApp() throws Exception {
-        App app = accessControlBaseService.saveApp(getServiceContext(), createApp());
+    public void testCreateApp() throws Exception {
+        App app = accessControlBaseService.createApp(getServiceContext(), createApp());
+        assertNotNull(app);
+    }
+    
+    @Test
+    public void testUpdateApp() throws Exception {
+        App app = accessControlBaseService.updateApp(getServiceContext(), createApp());
         assertNotNull(app);
     }
 
@@ -121,12 +130,9 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test(expected = MetamacException.class)
     public void testDeleteApp() throws Exception {
+        accessControlBaseService.deleteApp(getServiceContext(), APP_2);
+
         App app = accessControlBaseService.findAppById(getServiceContext(), APP_2);
-        assertNotNull(app);
-
-        accessControlBaseService.deleteApp(getServiceContext(), app);
-
-        app = accessControlBaseService.findAppById(getServiceContext(), APP_2);
         assertNull(app);
     }
 
@@ -147,8 +153,14 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     }
 
     @Test
-    public void testSaveUser() throws Exception {
-        User user = accessControlBaseService.saveUser(getServiceContext(), createUser());
+    public void testCreateUser() throws Exception {
+        User user = accessControlBaseService.createUser(getServiceContext(), createUser());
+        assertNotNull(user);
+    }
+    
+    @Test
+    public void testUpdateUser() throws Exception {
+        User user = accessControlBaseService.updateUser(getServiceContext(), createUser());
         assertNotNull(user);
     }
 
@@ -161,12 +173,9 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test(expected = MetamacException.class)
     public void testDeleteUser() throws Exception {
+        accessControlBaseService.deleteUser(getServiceContext(), USER_2);
+
         User user = accessControlBaseService.findUserById(getServiceContext(), USER_2);
-        assertNotNull(user);
-
-        accessControlBaseService.deleteUser(getServiceContext(), user);
-
-        user = accessControlBaseService.findUserById(getServiceContext(), USER_2);
         assertNull(user);
     }
 
@@ -187,14 +196,27 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     }
     
     @Test
-    public void testSaveAccess() throws Exception {
+    public void testCreateAccess() throws Exception {
         // Create access
         App app = accessControlBaseService.findAppById(getServiceContext(), APP_1);
         Role role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_1);
         User user = accessControlBaseService.findUserById(getServiceContext(), USER_1);
         ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
-        Access access = accessControlBaseService.saveAccess(getServiceContext(), createAccess(app, role, user, operation));
+        Access access = accessControlBaseService.createAccess(getServiceContext(), createAccess(app, role, user, operation));
+        assertNotNull(access);
+    }
+    
+    
+    @Test
+    public void testUpdateAccess() throws Exception {
+        // Create access
+        App app = accessControlBaseService.findAppById(getServiceContext(), APP_1);
+        Role role = accessControlBaseService.findRoleById(getServiceContext(), ROLE_1);
+        User user = accessControlBaseService.findUserById(getServiceContext(), USER_1);
+        ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+
+        Access access = accessControlBaseService.updateAccess(getServiceContext(), createAccess(app, role, user, operation));
         assertNotNull(access);
     }
 
@@ -207,12 +229,9 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test(expected = MetamacException.class)
     public void testDeleteAccess() throws Exception {
+        accessControlBaseService.deleteAccess(getServiceContext(), ACCESS_2);
+
         Access access = accessControlBaseService.findAccessById(getServiceContext(), ACCESS_2);
-        assertNotNull(access);
-
-        accessControlBaseService.deleteAccess(getServiceContext(), access);
-
-        access = accessControlBaseService.findAccessById(getServiceContext(), ACCESS_2);
         assertNull(access);
     }
 

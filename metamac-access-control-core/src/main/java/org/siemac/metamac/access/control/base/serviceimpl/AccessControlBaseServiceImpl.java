@@ -1,5 +1,7 @@
 package org.siemac.metamac.access.control.base.serviceimpl;
 
+import static org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder.criteriaFor;
+
 import java.util.List;
 
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
@@ -43,16 +45,29 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return roleRepository.findById(id);
         } catch (RoleNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_ROLE_NOT_FOUND);
+            throw new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND);
         }
     }
 
-    public Role saveRole(ServiceContext ctx, Role entity) throws MetamacException {
+    public Role createRole(ServiceContext ctx, Role entity) throws MetamacException {
+//        // Validation of parameters
+//        InvocationValidator.checkCreateRole(roleDto, exceptions);
+//        validateRoleCodeUnique(roleDto.getCode(), exceptions);
+        
            return roleRepository.save(entity);
     }
+    
+    public Role updateRole(ServiceContext ctx, Role entity) throws MetamacException {
+//      // Validation of parameters
+//      InvocationValidator.checkCreateRole(roleDto, exceptions);
+//      validateRoleCodeUnique(roleDto.getCode(), exceptions);
+      
+         return roleRepository.save(entity);
+  }
 
-    public void deleteRole(ServiceContext ctx, Role entity) throws MetamacException {
-        roleRepository.delete(entity);
+    public void deleteRole(ServiceContext ctx, Long roleId) throws MetamacException {
+        Role role = findRoleById(ctx, roleId);
+        roleRepository.delete(role);
     }
 
     public List<Role> findAllRoles(ServiceContext ctx) throws MetamacException {
@@ -67,16 +82,21 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return appRepository.findById(id);
         } catch (AppNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_APP_NOT_FOUND);
+            throw new MetamacException(ServiceExceptionType.APP_NOT_FOUND);
         }
     }
 
-    public App saveApp(ServiceContext ctx, App entity) throws MetamacException {
+    public App createApp(ServiceContext ctx, App entity) throws MetamacException {
+        return appRepository.save(entity);
+    }
+    
+    public App updateApp(ServiceContext ctx, App entity) throws MetamacException {
         return appRepository.save(entity);
     }
 
-    public void deleteApp(ServiceContext ctx, App entity) throws MetamacException {
-        appRepository.delete(entity);
+    public void deleteApp(ServiceContext ctx, Long appId) throws MetamacException {
+        App app = findAppById(ctx, appId);
+        appRepository.delete(app);
     }
 
     public List<App> findAllApps(ServiceContext ctx) throws MetamacException {
@@ -92,16 +112,21 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return userRepository.findById(id);
         } catch (UserNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_USER_NOT_FOUND);
+            throw new MetamacException(ServiceExceptionType.USER_NOT_FOUND);
         }
     }
 
-    public User saveUser(ServiceContext ctx, User entity) throws MetamacException {
+    public User createUser(ServiceContext ctx, User entity) throws MetamacException {
+        return userRepository.save(entity);
+    }
+    
+    public User updateUser(ServiceContext ctx, User entity) throws MetamacException {
         return userRepository.save(entity);
     }
 
-    public void deleteUser(ServiceContext ctx, User entity) throws MetamacException {
-        userRepository.delete(entity);
+    public void deleteUser(ServiceContext ctx, Long userId) throws MetamacException {
+        User user = findUserById(ctx, userId);
+        userRepository.delete(user);
     }
 
     public List<User> findAllUsers(ServiceContext ctx) throws MetamacException {
@@ -116,16 +141,21 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return accessRepository.findById(id);
         } catch (AccessNotFoundException e) {
-            throw new MetamacException(ServiceExceptionType.SERVICE_ACCESS_NOT_FOUND);
+            throw new MetamacException(ServiceExceptionType.ACCESS_NOT_FOUND);
         }
     }
 
-    public Access saveAccess(ServiceContext ctx, Access entity) throws MetamacException {
+    public Access createAccess(ServiceContext ctx, Access entity) throws MetamacException {
+        return accessRepository.save(entity);
+    }
+    
+    public Access updateAccess(ServiceContext ctx, Access entity) throws MetamacException {
         return accessRepository.save(entity);
     }
 
-    public void deleteAccess(ServiceContext ctx, Access entity) throws MetamacException {
-        accessRepository.delete(entity);
+    public void deleteAccess(ServiceContext ctx, Long accessId) throws MetamacException {
+        Access access = findAccessById(ctx, accessId);
+        accessRepository.delete(access);
     }
 
     public List<Access> findAllAccess(ServiceContext ctx) throws MetamacException {
@@ -134,6 +164,22 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
 
     public List<Access> findAccessByCondition(ServiceContext ctx, List<ConditionalCriteria> condition) throws MetamacException {
         return accessRepository.findByCondition(condition);
+    }
+    
+    
+    
+    // ----------------------------------------------------------------------
+    //                              VALIDATORS
+    // ----------------------------------------------------------------------
+    
+    
+    private void validateRoleCodeUnique(ServiceContext ctx, String code, String actualId) throws MetamacException {
+        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.base.domain.RoleProperties.code()).eq(code).build();
+        List<Role> roles = findRoleByCondition(ctx, condition);
+        
+        if (roles != null && roles.size() != 0 && !roles.get(0).getUuid().equals(actualId)) {
+            throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
+        }
     }
 
 }
