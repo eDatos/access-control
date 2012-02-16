@@ -3,6 +3,7 @@ package org.siemac.metamac.access.control.web.server.handlers;
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
 import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
 import org.siemac.metamac.access.control.web.server.ServiceContextHelper;
+import org.siemac.metamac.access.control.web.server.utils.WebExceptionUtils;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserResult;
 import org.siemac.metamac.access.control.web.shared.exception.MetamacWebException;
@@ -36,7 +37,7 @@ public class SaveUserActionHandler extends AbstractActionHandler<SaveUserAction,
             }
             return new SaveUserResult(userDto);
         } catch (MetamacException e) {
-            throw new MetamacWebException(e.getExceptionItems());
+            throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
         }
     }
 

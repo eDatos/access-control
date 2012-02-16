@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.access.control.web.client.NameTokens;
+import org.siemac.metamac.access.control.web.client.utils.MessageUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.AccessUiHandlers;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessResult;
+import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
+import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -58,6 +61,7 @@ public class AccessPresenter extends Presenter<AccessPresenter.AccessView, Acces
         dispatcher.execute(new FindAllAccessAction(), new AsyncCallback<FindAllAccessResult>() {
             @Override
             public void onFailure(Throwable caught) {
+                ShowMessageEvent.fire(AccessPresenter.this, MessageUtils.getErrorMessages(caught, "Error al obtener accesos"), MessageTypeEnum.ERROR);
                 // TODO ERROR
                 System.out.println();
             }

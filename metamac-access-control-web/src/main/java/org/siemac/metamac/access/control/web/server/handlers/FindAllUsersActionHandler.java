@@ -5,6 +5,7 @@ import java.util.List;
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
 import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
 import org.siemac.metamac.access.control.web.server.ServiceContextHelper;
+import org.siemac.metamac.access.control.web.server.utils.WebExceptionUtils;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersResult;
 import org.siemac.metamac.access.control.web.shared.exception.MetamacWebException;
@@ -32,7 +33,7 @@ public class FindAllUsersActionHandler extends AbstractActionHandler<FindAllUser
             List<UserDto> userDtos = accessControlBaseServiceFacade.findAllUsers(ServiceContextHelper.getServiceContext());
             return new FindAllUsersResult(userDtos);
         } catch (MetamacException e) {
-            throw new MetamacWebException(e.getExceptionItems());
+            throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
         }
         
     }
