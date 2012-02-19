@@ -332,11 +332,6 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertEquals(2, roles.size());
     }
 
-    @Test
-    public void testFindRoleByCondition() throws Exception {
-        // TODO: Pensar si quitar esta operacion del Facade
-    }
-
     /**************************************************************************
      * APPS
      **************************************************************************/
@@ -556,11 +551,6 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testFindAllApps() throws Exception {
         List<AppDto> apps = accessControlBaseServiceFacade.findAllApps(getServiceContext());
         assertEquals(2, apps.size());
-    }
-
-    @Test
-    public void testFindAppByCondition() throws Exception {
-        // TODO: Pensar si eliminar esta operacion del facade
     }
 
     @Test
@@ -914,11 +904,6 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertEquals(2, users.size());
     }
 
-    @Test
-    public void testFindUserByCondition() throws Exception {
-        // TODO: Pensar si quitar esta operacion del Facade
-    }
-
     /**************************************************************************
      * ACCESS
      **************************************************************************/
@@ -959,12 +944,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertEquals(getServiceContext().getUserId(), accessDtoCreated.getLastUpdatedBy());
 
     }
-    
+
     @Test
     public void testCreateAccessWithoutOperation() throws Exception {
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_2);
         AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
         UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
 
@@ -994,6 +979,32 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertTrue(DateUtils.isSameDay(new Date(), accessDtoCreated.getLastUpdated()));
         assertEquals(getServiceContext().getUserId(), accessDtoCreated.getLastUpdatedBy());
 
+    }
+
+    @Test
+    public void testCreateDuplicatedAccessWithoutOperation() throws Exception {
+
+        // Retrieve related entities
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+
+        AccessDto accessDto = new AccessDto();
+        accessDto.setRole(roleDto);
+        accessDto.setApp(appDto);
+        accessDto.setUser(userDto);
+
+        try {
+            accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+            fail("duplicated access");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
+            assertEquals(4, e.getExceptionItems().get(0).getMessageParameters().length);
+            assertEquals("aDMINISTRADOR", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("gOPESTAT", e.getExceptionItems().get(0).getMessageParameters()[1]);
+            assertEquals("arte", e.getExceptionItems().get(0).getMessageParameters()[2]);
+        }
     }
 
     @Test
@@ -1064,7 +1075,6 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals("ACCESS.USER", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
-
 
     @Test
     public void testCreateDuplicatedAccess() throws Exception {
@@ -1183,12 +1193,50 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     @Test
     public void testFindAllAccess() throws Exception {
         List<AccessDto> access = accessControlBaseServiceFacade.findAllAccess(getServiceContext());
-        assertEquals(1, access.size());
+        assertEquals(2, access.size());
     }
 
     @Test
     public void testFindAccessByCondition() throws Exception {
-        // TODO: Pensar si eliminar esta operacion del facade
+        // All conditions
+        String roleCode = "aDMINISTRADOR";
+        String appCode = "gOPESTAT";
+        String username = "arte";
+        String operationCodeId = "OPERATION-TODO-01";
+        List<AccessDto> access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        assertEquals(1, access.size());
+        
+        // Without operation condition
+        roleCode = "aDMINISTRADOR";
+        appCode = "gOPESTAT";
+        username = "arte";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        assertEquals(2, access.size());
+
+        // Role condition
+        roleCode = "TEC_PLANI";
+        appCode = "";
+        username = "";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        assertEquals(0, access.size());
+
+        // Role condition
+        roleCode = "ADMINISTRADOR";
+        appCode = "";
+        username = "";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        assertEquals(2, access.size());
+
+        // Without conditions
+        roleCode = "";
+        appCode = "";
+        username = "";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        assertEquals(2, access.size());
     }
 
     @Test

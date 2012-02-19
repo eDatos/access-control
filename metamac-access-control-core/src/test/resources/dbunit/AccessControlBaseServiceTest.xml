@@ -115,4 +115,20 @@
 				LAST_UPDATED="2011-08-24 01:02:03"
 				LAST_UPDATED_TZ="Europe/London" />
 	
+	<TBL_ACCESS ID="2"
+				OPERATION_CODE_ID=""
+				OPERATION_TYPE=""
+				OPERATION_URI_INT=""
+				APP_FK="1"
+				ROLE_FK="1"
+				USER_FK="1"
+				UUID="A-2" 
+				VERSION="1" 
+				CREATED_BY="user1" 
+				CREATED_DATE="2010-07-22 12:47:22"
+				CREATED_DATE_TZ="Europe/London" 
+				LAST_UPDATED_BY="user2" 
+				LAST_UPDATED="2011-08-24 01:02:03"
+				LAST_UPDATED_TZ="Europe/London" />
+	
 </dataset>
