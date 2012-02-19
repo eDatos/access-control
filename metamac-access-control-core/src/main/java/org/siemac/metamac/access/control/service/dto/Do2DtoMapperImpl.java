@@ -102,12 +102,12 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
     
     
     private ExternalItemBtDto externalItemBtToDto(ExternalItemBt source) {
-        ExternalItemBtDto target = new ExternalItemBtDto();
-        
-        target.setCodeId(source.getCodeId());
-        target.setUriInt(source.getUriInt());
-        target.setType(source.getType());
-        
+        if (source == null) {
+            return null;
+        }
+
+        ExternalItemBtDto target = new ExternalItemBtDto(source.getUriInt(), source.getCodeId(), source.getType());
+
         return target;
     }
     

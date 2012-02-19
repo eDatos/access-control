@@ -2,6 +2,7 @@ package org.siemac.metamac.access.control.base.serviceimpl;
 
 import static org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder.criteriaFor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
@@ -251,6 +252,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public Access createAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
         InvocationValidator.checkCreateAccess(entity, null);
+        validateAccessUnique(ctx, entity, null);
 
         // Repository operation
         return accessRepository.save(entity);
@@ -298,32 +300,104 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     // ----------------------------------------------------------------------
 
     private void validateRoleCodeUnique(ServiceContext ctx, String code, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.base.domain.RoleProperties.code()).eq(code).build();
+        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.base.domain.RoleProperties.code()).ignoreCaseEq(code).build();
+
         List<Role> roles = findRoleByCondition(ctx, condition);
 
-        if (roles != null && roles.size() != 0 && !roles.get(0).getId().equals(actualId)) {
-            throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
+        if (roles != null) {
+            if (actualId == null) {
+                if (roles.size() == 1) {
+                    throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
+                } else if (roles.size() > 1) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code code " + code);
+                }
+            } else {
+                if (roles.size() == 2) {
+                    throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
+                } else if (roles.size() > 2) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code code " + code);
+                }
+            }
         }
     }
 
     private void validateAppCodeUnique(ServiceContext ctx, String code, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.base.domain.AppProperties.code()).eq(code).build();
+        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.base.domain.AppProperties.code()).ignoreCaseEq(code).build();
         List<App> apps = findAppByCondition(ctx, condition);
 
-        if (apps != null && apps.size() != 0 && !apps.get(0).getId().equals(actualId)) {
-            throw new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, code);
+        if (apps != null) {
+            if (actualId == null) {
+                if (apps.size() == 1) {
+                    throw new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, code);
+                } else if (apps.size() > 1) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one app with code code " + code);
+                }
+            } else {
+                if (apps.size() == 2) {
+                    throw new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, code);
+                } else if (apps.size() > 2) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one app with code code " + code);
+                }
+            }
         }
 
     }
 
     private void validateUserUsernameUnique(ServiceContext ctx, String username, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.base.domain.UserProperties.username()).eq(username).build();
+        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.base.domain.UserProperties.username()).ignoreCaseEq(username).build();
         List<User> users = findUserByCondition(ctx, condition);
 
-        if (users != null && users.size() != 0 && !users.get(0).getId().equals(actualId)) {
-            throw new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, username);
+        if (users != null) {
+            if (actualId == null) {
+                if (users.size() == 1) {
+                    throw new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, username);
+                } else if (users.size() > 1) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one user with username code " + username);
+                }
+            } else {
+                if (users.size() == 2) {
+                    throw new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, username);
+                } else if (users.size() > 2) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one user with username code " + username);
+                }
+            }
         }
-
+    }
+    
+    
+    private void validateAccessUnique(ServiceContext ctx, Access entity, Object object) throws MetamacException {
+        List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
+        
+        // Role condition
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.role().code(), entity.getRole().getCode()));
+        
+        // App condition
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.app().code(), entity.getApp().getCode()));
+        
+        // User condition
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.user().username(), entity.getUser().getUsername()));
+        
+        // Operation condition
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId(), entity.getOperation().getCodeId()));
+        
+        List<Access> access = findAccessByCondition(ctx, conditions);
+        
+        if (access != null) {
+            if (entity.getId() == null) {
+                if (access.size() == 1) {
+                    throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(), entity.getOperation().getCodeId());
+                } else if (access.size() > 1) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: " +  entity.getUser().getUsername() + " Operation: " +  entity.getOperation().getCodeId());
+                }
+            } else {
+                if (access.size() == 2) {
+                    throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(), entity.getOperation().getCodeId());
+                } else if (access.size() > 2) {
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: " +  entity.getUser().getUsername() + " Operation: " +  entity.getOperation().getCodeId());
+                }
+            }
+        }
+        
     }
 
     // ----------------------------------------------------------------------

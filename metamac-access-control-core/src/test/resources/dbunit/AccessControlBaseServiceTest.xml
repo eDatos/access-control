@@ -5,7 +5,7 @@
 	<!-- ************************************************************************************ -->
 
 	<TBL_ROLES ID="1" 
-				CODE="ADMINISTRADOR" 
+				CODE="aDMINISTRADOR" 
 				UUID="R-1" 
 				TITLE="Administrador" 
 				DESCRIPTION="Administrador del sistema"
@@ -36,7 +36,7 @@
 	<!-- ************************************************************************************ -->
 	
 	<TBL_APPS ID="1" 
-				CODE="GOPESTAT" 
+				CODE="gOPESTAT" 
 				UUID="A-1" 
 				TITLE="Gestor de Operaciones" 
 				DESCRIPTION="Gestor de operaciones estadísticas del ISTAC"
@@ -49,7 +49,7 @@
 				LAST_UPDATED_TZ="Europe/London" />
 	
 	<TBL_APPS ID="2" 
-				CODE="GPE" 
+				CODE="gPE" 
 				UUID="A-2" 
 				TITLE="Gestor de publicaciones estadísticas" 
 				DESCRIPTION="Gestor de publicaciones estadísticas del ISTAC"
@@ -67,7 +67,7 @@
 	<!-- ************************************************************************************ -->
 	
 	<TBL_USERS ID="1" 
-				USERNAME="prueba"
+				USERNAME="arte"
 				NAME="Pruebas"
 				SURNAME="Arte Consultores"
 				MAIL="pruebas@arte-consultores.com" 

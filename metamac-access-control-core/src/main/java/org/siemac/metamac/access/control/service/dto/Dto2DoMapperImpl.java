@@ -26,6 +26,10 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     @Override
     public Role roleDtoToDo(ServiceContext ctx, RoleDto source) throws MetamacException {
+        if (source == null) {
+            return null;
+        }
+        
         Role target = new Role();
         if (source.getId() != null) {
             target = accessControlBaseService.findRoleById(ctx, source.getId());
@@ -37,6 +41,10 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     @Override
     public App appDtoToDo(ServiceContext ctx, AppDto source) throws MetamacException {
+        if (source == null) {
+            return null;
+        }
+        
         App target = new App();
         if (source.getId() != null) {
             target = accessControlBaseService.findAppById(ctx, source.getId());
@@ -48,6 +56,10 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     @Override
     public User userDtoToDo(ServiceContext ctx, UserDto source) throws MetamacException {
+        if (source == null) {
+            return null;
+        }
+        
         User target = new User();
         if (source.getId() != null) {
             target = accessControlBaseService.findUserById(ctx, source.getId());
@@ -58,11 +70,15 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     @Override
     public Access accessDtoToDo(ServiceContext ctx, AccessDto source) throws MetamacException {
+        if (source == null) {
+            return null;
+        }
+        
         Access target = new Access();
         if (source.getId() != null) {
             target = accessControlBaseService.findAccessById(ctx, source.getId());
         }
-        accessDtoToDo(source, target);
+        accessDtoToDo(ctx, source, target);
         return target;
     }
 
@@ -71,10 +87,6 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
     // -------------------------------------------------------------------------------------------------
 
     private Role roleDtoToDo(RoleDto source, Role target) throws MetamacException {
-        if (source == null) {
-            return null;
-        }
-
         if (target == null) {
             throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "ROLE");
         }
@@ -90,10 +102,6 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
     }
 
     private App appDtoToDo(AppDto source, App target) throws MetamacException {
-        if (source == null) {
-            return null;
-        }
-
         if (target == null) {
             throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "APP");
         }
@@ -110,18 +118,12 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     
     private User userDtoToDo(UserDto source, User target) throws MetamacException {
-        if (source == null) {
-            return null;
-        }
-
         if (target == null) {
             throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "USER");
         }
 
-        // Non modifiables after creation
-
         // Attributes modifiables
-        target.setSurname(source.getUsername());
+        target.setUsername(source.getUsername());
         target.setName(source.getName());
         target.setSurname(source.getSurname());
         target.setMail(source.getMail());
@@ -129,30 +131,26 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         return target;
     }
     
-    private Access accessDtoToDo(AccessDto source, Access target) throws MetamacException {
-        if (source == null) {
-            return null;
-        }
-
+    private Access accessDtoToDo(ServiceContext ctx, AccessDto source, Access target) throws MetamacException {
         if (target == null) {
             throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "ACCESS");
         }
 
-        // Non modifiable after creation
+        target.setRole(roleDtoToDo(ctx, source.getRole()));
+        target.setApp(appDtoToDo(ctx, source.getApp()));
+        target.setUser(userDtoToDo(ctx, source.getUser()));
 
-        // Attributes that we modified at service
-        // ROLE
-        // APP
-        // USER
-
-        // Modifiable attributes
         target.setOperation(externalItemBtDtoToDo(source.getOperation()));
 
         return target;
     }
 
     private ExternalItemBt externalItemBtDtoToDo(ExternalItemBtDto source) {
-        return new ExternalItemBt(source.getUriInt(), source.getCodeId(), source.getType());
+        if (source != null) {
+            return new ExternalItemBt(source.getUriInt(), source.getCodeId(), source.getType());
+        } else {
+            return null;
+        }
     }
 
 }

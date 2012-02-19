@@ -25,6 +25,7 @@ Application Base {
        		"DESCRIPTION"
        		String description nullable;
 
+			- Bag<@Access> access inverse <-> role orderby="user asc";
 		
 			Repository RoleRepository {
 				findById;
@@ -51,6 +52,7 @@ Application Base {
        		"DESCRIPTION"
        		String description nullable;
 
+			- Bag<@Access> access inverse <-> app orderby="user asc";
 		
 			Repository AppRepository {
 				findById;
@@ -78,6 +80,8 @@ Application Base {
        		"E-MAIL"
        		String mail not nullable;
 
+			- Bag<@Access> access inverse <-> user orderby="user asc";
+
 			Repository UserRepository {
 				findById;
 		   		findAll;
@@ -97,11 +101,11 @@ Application Base {
 			gap
 			
 			"ROLE"
-			- @Role role not nullable cascade="none" databaseColumn="ROLE_FK";
+			- @Role role not nullable cascade="none" databaseColumn="ROLE_FK" <-> access;
 			"APP"
-			- @App app not nullable cascade="none" databaseColumn="APP_FK";
+			- @App app not nullable cascade="none" databaseColumn="APP_FK" <-> access;
 			"USER"
-			- @User user not nullable cascade="none" databaseColumn="USER_FK";
+			- @User user not nullable cascade="none" databaseColumn="USER_FK" <-> access;
 			"OPERATION"
        		- @ExternalItemBt operation nullable;
 			

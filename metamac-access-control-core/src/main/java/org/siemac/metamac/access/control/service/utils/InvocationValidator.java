@@ -330,7 +330,6 @@ public class InvocationValidator {
         ValidationUtils.checkMetadataRequired(access.getUser(), "ACCESS.USER", exceptions);
         ValidationUtils.checkMetadataRequired(access.getRole(), "ACCESS.ROLE", exceptions);
         ValidationUtils.checkMetadataRequired(access.getApp(), "ACCESS.APP", exceptions);
-        ValidationUtils.checkMetadataRequired(access.getOperation(), "ACCESS.OPERATION", exceptions);
     }
 
 }

@@ -1,5 +1,6 @@
 package org.siemac.metamac.access.control.base.serviceapi;
 
+import static org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder.criteriaFor;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -8,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,7 @@ import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
 import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDoAsserts;
+import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDoMocks;
 import org.siemac.metamac.common.test.MetamacBaseTests;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
@@ -70,7 +73,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     
     @Test
     public void testCreateRole() throws Exception {
-        Role role = accessControlBaseService.createRole(getServiceContext(), createRole());
+        Role role = accessControlBaseService.createRole(getServiceContext(), AccessControlDoMocks.createRole());
         assertNotNull(role);
     }
     
@@ -110,8 +113,12 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test
     public void testFindRoleByCondition() throws Exception {
-        // TODO Auto-generated method stub
-        // fail("testFindRoleByCondition not implemented");
+        String code = "Admin";
+        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.base.domain.RoleProperties.code()).ignoreCaseLike("%" + code + "%").build();
+        
+        List<Role> roles = accessControlBaseService.findRoleByCondition(getServiceContext(), condition);
+        
+        assertEquals(1, roles.size());
     }
 
     /**************************************************************************
@@ -126,7 +133,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test
     public void testCreateApp() throws Exception {
-        App app = accessControlBaseService.createApp(getServiceContext(), createApp());
+        App app = accessControlBaseService.createApp(getServiceContext(), AccessControlDoMocks.createApp());
         assertNotNull(app);
     }
     
@@ -166,8 +173,12 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test
     public void testFindAppByCondition() throws Exception {
-        // TODO Auto-generated method stub
-        // fail("testFindAppByCondition not implemented");
+        String code = "Gpe";
+        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.base.domain.AppProperties.code()).ignoreCaseLike("%" + code + "%").build();
+        
+        List<App> apps = accessControlBaseService.findAppByCondition(getServiceContext(), condition);
+        
+        assertEquals(1, apps.size());
     }
 
     /**************************************************************************
@@ -182,7 +193,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test
     public void testCreateUser() throws Exception {
-        User user = accessControlBaseService.createUser(getServiceContext(), createUser());
+        User user = accessControlBaseService.createUser(getServiceContext(), AccessControlDoMocks.createUser());
         assertNotNull(user);
     }
     
@@ -223,8 +234,12 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test
     public void testFindUserByCondition() throws Exception {
-        // TODO Auto-generated method stub
-        // fail("testFindUserByCondition not implemented");
+        String username = "ARTE";
+        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.base.domain.UserProperties.username()).ignoreCaseLike("%" + username + "%").build();
+        
+        List<User> users = accessControlBaseService.findUserByCondition(getServiceContext(), condition);
+        
+        assertEquals(1, users.size());
     }
 
     /**************************************************************************
@@ -245,7 +260,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         User user = accessControlBaseService.findUserById(getServiceContext(), USER_1);
         ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
-        Access access = accessControlBaseService.createAccess(getServiceContext(), createAccess(app, role, user, operation));
+        Access access = accessControlBaseService.createAccess(getServiceContext(), AccessControlDoMocks.createAccess(app, role, user, operation));
         assertNotNull(access);
     }
     
@@ -293,47 +308,25 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
     @Test
     public void testFindAccessByCondition() throws Exception {
-        // TODO Auto-generated method stub
-        // fail("testFindAccessByCondition not implemented");
+        String username = "ARTE";
+        List<ConditionalCriteria> condition = criteriaFor(Access.class).withProperty(org.siemac.metamac.access.control.base.domain.AccessProperties.user().username()).ignoreCaseLike("%" + username + "%").build();
+        
+        List<Access> access = accessControlBaseService.findAccessByCondition(getServiceContext(), condition);
+        
+        assertEquals(1, access.size());
+    }
+    
+    @Test
+    public void testFindAccessByConditionWithoutResults() throws Exception {
+        String username = "prueba";
+        List<ConditionalCriteria> condition = criteriaFor(Access.class).withProperty(org.siemac.metamac.access.control.base.domain.AccessProperties.user().username()).ignoreCaseLike("%" + username + "%").build();
+        
+        List<Access> access = accessControlBaseService.findAccessByCondition(getServiceContext(), condition);
+        
+        assertEquals(0, access.size());
     }
 
-    /**************************************************************************
-     * MOCKS
-     **************************************************************************/
-
-    private Role createRole() {
-        Role role = new Role();
-        role.setCode("TECNICO_DIFUSION");
-        role.setTitle("Técnico de difusión");
-        role.setDescription("Técnico de difusión estadística encargado de las labores de publicación");
-        return role;
-    }
-
-    private App createApp() {
-        App app = new App();
-        app.setCode("METAMAC");
-        app.setTitle("Usuario METAMAC");
-        app.setDescription("Usuario de pruebas METAMAC");
-        return app;
-    }
-
-    private User createUser() {
-        User user = new User();
-        user.setUsername("rdiaada");
-        user.setName("Rita");
-        user.setSurname("Díaz Adán");
-        user.setMail("rdiaada@arte-consultores.com");
-        return user;
-    }
-
-    private Access createAccess(App app, Role role, User user, ExternalItemBt operation) {
-        Access access = new Access();
-        access.setApp(app);
-        access.setUser(user);
-        access.setRole(role);
-        access.setOperation(operation);
-        return access;
-    }
+    
 
     /**************************************************************************
      * DBUNIT CONFIGURATION
