@@ -295,7 +295,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     public void testFindAllAccess() throws Exception {
         List<Access> access = accessControlBaseService.findAllAccess(getServiceContext());
         assertNotNull(access);
-        assertEquals(1, access.size());
+        assertEquals(2, access.size());
     }
 
     @Test(expected = MetamacException.class)
@@ -313,7 +313,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
         
         List<Access> access = accessControlBaseService.findAccessByCondition(getServiceContext(), condition);
         
-        assertEquals(1, access.size());
+        assertEquals(2, access.size());
     }
     
     @Test

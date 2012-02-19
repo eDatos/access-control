@@ -11,15 +11,6 @@
 	<!-- Access to Spring Context from anywhere -->
     <bean id="contextApplicationContextProvider" class="org.siemac.metamac.core.common.util.ApplicationContextProvider"></bean> 
     
-    <!-- Dozer is a Java Bean to Java Bean mapper that recursively copies data from one object to another.-->
-    <bean id="mapper" name="mapper" class="org.dozer.DozerBeanMapper">
-        <property name="mappingFiles">
-            <list>
-                <value>dozerBeanMapping.xml</value>
-            </list>
-        </property>
-    </bean>
-    
     <!-- Domain Object to Data Transfers Object -->
     <bean id="do2DtoMapper" name="do2DtoMapper" class="org.siemac.metamac.access.control.service.dto.Do2DtoMapperImpl"></bean>
     
