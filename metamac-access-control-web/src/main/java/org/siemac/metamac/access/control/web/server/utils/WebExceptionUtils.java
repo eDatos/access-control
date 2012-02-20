@@ -3,8 +3,8 @@ package org.siemac.metamac.access.control.web.server.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.siemac.metamac.access.control.web.shared.exception.MetamacWebExceptionItem;
 import org.siemac.metamac.core.common.exception.MetamacExceptionItem;
+import org.siemac.metamac.web.common.shared.exception.MetamacWebExceptionItem;
 
 
 public class WebExceptionUtils {

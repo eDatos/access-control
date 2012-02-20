@@ -13,7 +13,7 @@ public class RecordUtils {
      * @return
      */
     public static AccessRecord getAccessRecord(AccessDto accessDto) {
-        AccessRecord record = new AccessRecord(accessDto.getId(), 
+        AccessRecord record = new AccessRecord(accessDto.getId().toString(), 
                 accessDto.getUser() != null ? accessDto.getUser().getUsername() : null, 
                 accessDto.getRole() != null ? accessDto.getRole().getTitle() : null, 
                 accessDto.getApp() != null ? accessDto.getApp().getTitle() :  null, 

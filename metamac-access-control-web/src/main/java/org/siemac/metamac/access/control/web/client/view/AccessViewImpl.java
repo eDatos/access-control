@@ -29,14 +29,16 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         panel = new VLayout();
         
         listGrid = new CustomListGrid();
+        ListGridField idField = new ListGridField(AccessRecord.ID, getConstants().identifier());
         ListGridField userField = new ListGridField(AccessRecord.USER, getConstants().user());
         ListGridField roleField = new ListGridField(AccessRecord.ROLE, getConstants().role());
         ListGridField appField = new ListGridField(AccessRecord.APP, getConstants().app());
         ListGridField opField = new ListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
-        listGrid.setFields(userField, roleField, appField, opField);
         
         AccessDS accessDS = new AccessDS();
         listGrid.setDataSource(accessDS);
+        listGrid.setUseAllDataSourceFields(false);
+        listGrid.setFields(idField, userField, roleField, appField, opField);
         
         panel.addMember(listGrid);
         
@@ -50,10 +52,11 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
     @Override
     public void setAccessList(List<AccessDto> accessDtos) {
         listGrid.removeAllData();
-        for (AccessDto accessDto : accessDtos) {
-            AccessRecord record = RecordUtils.getAccessRecord(accessDto);
-            listGrid.addData(record);
+        AccessRecord[] records = new AccessRecord[accessDtos.size()];
+        for (int i = 0; i < accessDtos.size(); i++) {
+            records[i] = RecordUtils.getAccessRecord(accessDtos.get(i));
         }
+        listGrid.setData(records);
     }
     
 }
