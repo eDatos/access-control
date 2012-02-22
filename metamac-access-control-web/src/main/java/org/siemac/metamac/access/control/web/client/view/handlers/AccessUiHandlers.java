@@ -9,6 +9,7 @@ import com.gwtplatform.mvp.client.UiHandlers;
 
 public interface AccessUiHandlers extends UiHandlers {
 
+    void retrieveUserAccess(String username);
     void saveUser(UserDto userDto);
     void deleteUsers(List<Long> selectedUsers);
     

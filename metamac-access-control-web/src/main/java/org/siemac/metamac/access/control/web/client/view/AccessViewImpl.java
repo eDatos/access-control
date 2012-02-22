@@ -6,8 +6,11 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getM
 import java.util.ArrayList;
 import java.util.List;
 
+import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
+import org.siemac.metamac.access.control.web.client.model.ds.AccessDS;
 import org.siemac.metamac.access.control.web.client.model.ds.UserDS;
+import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
 import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
 import org.siemac.metamac.access.control.web.client.presenter.AccessPresenter;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
@@ -24,7 +27,6 @@ import org.siemac.metamac.web.common.client.widgets.form.fields.ViewTextItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.smartgwt.client.types.GroupStartOpen;
-import com.smartgwt.client.types.Visibility;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
@@ -45,12 +47,15 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
     
     private VLayout panel;
     private ListGridToolStrip toolStrip;
-    private CustomListGrid listGrid;
+    private CustomListGrid usersListGrid;
     
+    private VLayout userLayout;
     private TitleLabel title;
     private MainFormLayout mainFormLayout;
     private GroupDynamicForm viewForm;
     private GroupDynamicForm editionForm;
+    
+    private ListGrid accessListGrid;
     
     private UserDto userDto;
     
@@ -59,7 +64,7 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         super();
         panel = new VLayout();
         
-        // ListGrid
+        // Users ListGrid
         
         toolStrip = new ListGridToolStrip(getMessages().userDeleteTitle(), getMessages().userDeleteConfirmation());
         toolStrip.getNewButton().addClickHandler(new ClickHandler() {
@@ -75,8 +80,8 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
             }
         });
         
-        listGrid = new CustomListGrid();
-        listGrid.setHeight(250);
+        usersListGrid = new CustomListGrid();
+        usersListGrid.setHeight(250);
         ListGridField idField = new ListGridField(UserRecord.ID, getConstants().identifier());
         idField.setShowIfCondition(new ListGridFieldIfFunction() {
             @Override
@@ -90,21 +95,21 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         ListGridField mailField = new ListGridField(UserRecord.MAIL, getConstants().userMail());
         
         UserDS userDS = new UserDS();
-        listGrid.setDataSource(userDS);
-        listGrid.setUseAllDataSourceFields(false);
-        listGrid.setFields(idField, usernameField, nameField, surnameField, mailField);
-        listGrid.setShowGroupSummary(true);
-        listGrid.setGroupStartOpen(GroupStartOpen.ALL);
-        listGrid.addSelectionChangedHandler(new SelectionChangedHandler() {
+        usersListGrid.setDataSource(userDS);
+        usersListGrid.setUseAllDataSourceFields(false);
+        usersListGrid.setFields(idField, usernameField, nameField, surnameField, mailField);
+        usersListGrid.setShowGroupSummary(true);
+        usersListGrid.setGroupStartOpen(GroupStartOpen.ALL);
+        usersListGrid.addSelectionChangedHandler(new SelectionChangedHandler() {
             @Override
             public void onSelectionChanged(SelectionEvent event) {
-                if (listGrid.getSelectedRecords() != null && listGrid.getSelectedRecords().length == 1) {
-                    UserRecord record = (UserRecord) listGrid.getSelectedRecord();
+                if (usersListGrid.getSelectedRecords() != null && usersListGrid.getSelectedRecords().length == 1) {
+                    UserRecord record = (UserRecord) usersListGrid.getSelectedRecord();
                     selectUser(record.getUserDto());
                 } else {
                     // No record selected
                     deselectUser();
-                    if (listGrid.getSelectedRecords().length > 1) {
+                    if (usersListGrid.getSelectedRecords().length > 1) {
                         // Delete more than one Family with one click
                         toolStrip.getDeleteButton().show();
                     }
@@ -114,18 +119,17 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         
        
         
-        VLayout layout = new VLayout();
-        layout.setMargin(15);
-        layout.setAutoHeight();
-        layout.addMember(toolStrip);
-        layout.addMember(listGrid);
+        VLayout listGridLayout = new VLayout();
+        listGridLayout.setMargin(15);
+        listGridLayout.setAutoHeight();
+        listGridLayout.addMember(toolStrip);
+        listGridLayout.addMember(usersListGrid);
         
-        // MainFormLayout
+        // User Details
         
         title = new TitleLabel();
         title.setStyleName("subsectionTitle");
         mainFormLayout = new MainFormLayout();
-        mainFormLayout.setVisibility(Visibility.HIDDEN);
         mainFormLayout.getSave().addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
@@ -137,9 +141,34 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         createViewForm();
         createEditionForm();
         
-        panel.addMember(layout);
-        panel.addMember(title);
-        panel.addMember(mainFormLayout);
+        // User Access
+        
+        TitleLabel userAccessTitle = new TitleLabel(getConstants().userAccess());
+        userAccessTitle.setStyleName("subsectionTitle");
+        
+        accessListGrid = new ListGrid();
+        accessListGrid.setMargin(15);
+        ListGridField accessIdField = new ListGridField(AccessRecord.ID, getConstants().identifier());
+        accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
+            @Override
+            public boolean execute(ListGrid grid, ListGridField field, int fieldNum) {
+                return false;
+            }
+        });
+        ListGridField roleField = new ListGridField(AccessRecord.ROLE, getConstants().role());
+        ListGridField appField = new ListGridField(AccessRecord.APP, getConstants().app());
+        ListGridField opField = new ListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
+        accessListGrid.setFields(accessIdField, roleField, appField, opField);
+        accessListGrid.setDataSource(new AccessDS());
+        
+        userLayout = new VLayout();
+        userLayout.addMember(title);
+        userLayout.addMember(mainFormLayout);
+        userLayout.addMember(userAccessTitle);
+        userLayout.addMember(accessListGrid);
+        
+        panel.addMember(listGridLayout);
+        panel.addMember(userLayout);
     }
     
     @Override
@@ -153,12 +182,21 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         for (int i = 0; i < usersDtos.size(); i++) {
             records[i] = RecordUtils.getUserRecord(usersDtos.get(i));
         }
-        listGrid.setData(records);
+        usersListGrid.setData(records);
+    }
+    
+    @Override
+    public void setUserAccess(List<AccessDto> accessDtos) {
+        AccessRecord[] records = new AccessRecord[accessDtos.size()];
+        for (int i = 0; i < accessDtos.size(); i++) {
+            records[i] = RecordUtils.getAccessRecord(accessDtos.get(i));
+        }
+        accessListGrid.setData(records);
     }
     
     private List<Long> getSelectedUsers() {
         List<Long> selectedUsers = new ArrayList<Long>();
-        ListGridRecord[] records = listGrid.getSelectedRecords();
+        ListGridRecord[] records = usersListGrid.getSelectedRecords();
         for (int i = 0; i < records.length; i++) {
             UserRecord record = (UserRecord) records[i];
             selectedUsers.add(record.getId());
@@ -170,21 +208,20 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         this.userDto = userDto;
         if (userDto.getId() == null) {
             toolStrip.getDeleteButton().hide();
-            listGrid.deselectAllRecords();
+            usersListGrid.deselectAllRecords();
             mainFormLayout.setEditionMode();
         } else {
             toolStrip.getDeleteButton().show();
             mainFormLayout.setViewMode();
+            getUiHandlers().retrieveUserAccess(userDto.getUsername());
         }
-        title.show();
-        mainFormLayout.show();
+        userLayout.show();
         setUser(userDto);
     }
 
     private void deselectUser() {
         toolStrip.getDeleteButton().hide();
-        title.hide();
-        mainFormLayout.hide();
+        userLayout.hide();
     }
     
     private void createViewForm() {
@@ -211,13 +248,13 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
     @Override
     public void onUserSaved(UserDto userDto) {
         UserRecord record = RecordUtils.getUserRecord(userDto);
-        ListGridRecord[] records = new ListGridRecord[listGrid.getRecords().length + 1];
-        for (int i = 0; i < listGrid.getRecords().length; i++) {
-            records[i] = listGrid.getRecords()[i];
+        ListGridRecord[] records = new ListGridRecord[usersListGrid.getRecords().length + 1];
+        for (int i = 0; i < usersListGrid.getRecords().length; i++) {
+            records[i] = usersListGrid.getRecords()[i];
         }
-        records[listGrid.getRecords().length] = record;
-        listGrid.setData(records);
-        listGrid.selectRecord(record);
+        records[usersListGrid.getRecords().length] = record;
+        usersListGrid.setData(records);
+        usersListGrid.selectRecord(record);
     }
     
     private void setUser(UserDto userDto) {
@@ -247,5 +284,5 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
         userDto.setMail(editionForm.getValueAsString(USER_MAIL));
         return userDto;
     }
-    
+
 }

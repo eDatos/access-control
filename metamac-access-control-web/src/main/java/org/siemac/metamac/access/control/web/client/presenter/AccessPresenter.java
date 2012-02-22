@@ -4,11 +4,14 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getM
 
 import java.util.List;
 
+import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.view.handlers.AccessUiHandlers;
 import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteUserListResult;
+import org.siemac.metamac.access.control.web.shared.FindAccessByUserAction;
+import org.siemac.metamac.access.control.web.shared.FindAccessByUserResult;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersResult;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
@@ -45,6 +48,7 @@ public class AccessPresenter extends Presenter<AccessPresenter.AccessView, Acces
     public interface AccessView extends View, HasUiHandlers<AccessUiHandlers> {
         void setUsersList(List<UserDto> userDtos);
         void onUserSaved(UserDto userDto);
+        void setUserAccess(List<AccessDto> accessDtos);
     }
     
     @Inject
@@ -110,6 +114,20 @@ public class AccessPresenter extends Presenter<AccessPresenter.AccessView, Acces
             public void onSuccess(SaveUserResult result) {
                 ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getMessageList(getMessages().userSaved()), MessageTypeEnum.SUCCESS);
                 getView().onUserSaved(result.getUserDto());
+            }
+        });
+    }
+    
+    @Override
+    public void retrieveUserAccess(String username) {
+        dispatcher.execute(new FindAccessByUserAction(username), new AsyncCallback<FindAccessByUserResult>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUserAccess()), MessageTypeEnum.ERROR);
+            }
+            @Override
+            public void onSuccess(FindAccessByUserResult result) {
+                getView().setUserAccess(result.getAccessDtos());
             }
         });
     }

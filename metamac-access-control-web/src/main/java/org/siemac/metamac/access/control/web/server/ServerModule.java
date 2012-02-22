@@ -4,6 +4,7 @@ import org.siemac.metamac.access.control.web.server.handlers.DeleteAccessListAct
 import org.siemac.metamac.access.control.web.server.handlers.DeleteAppListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteRoleListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteUserListActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.FindAccessByUserActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAppsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRolesActionHandler;
@@ -16,6 +17,7 @@ import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAppListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteRoleListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
+import org.siemac.metamac.access.control.web.shared.FindAccessByUserAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
@@ -106,7 +108,12 @@ public class ServerModule extends HandlerModule {
     @Bean
     public SaveAppActionHandler getSaveAppsActionHandler() {
         return new SaveAppActionHandler();
-    }   
+    }
+    
+    @Bean
+    public FindAccessByUserActionHandler getFindAccessByUserActionHandler() {
+        return new FindAccessByUserActionHandler();
+    }
 
     protected void configureHandlers() {
         bindHandler(FindAllAccessAction.class, FindAllAccessActionHandler.class);
@@ -121,6 +128,7 @@ public class ServerModule extends HandlerModule {
         bindHandler(SaveUserAction.class, SaveUserActionHandler.class);
         bindHandler(SaveRoleAction.class, SaveRoleActionHandler.class);
         bindHandler(SaveAppAction.class, SaveAppActionHandler.class);
+        bindHandler(FindAccessByUserAction.class, FindAccessByUserActionHandler.class);
     }
 
 }

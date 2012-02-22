@@ -44,3 +44,11 @@
     margin-left: 15px;
     padding-left: 15px;
 }
+
+.titleLabel {
+    font-size: 16px;
+    color: #008BD0; /* Blue */
+    margin-left: 15px;
+    padding-left: 15px;
+    font-weight: bold;
+}
