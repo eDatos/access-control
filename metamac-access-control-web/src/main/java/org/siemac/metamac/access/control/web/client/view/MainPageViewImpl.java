@@ -94,11 +94,6 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
      ***************************************************/
 
 
-    @Override
-    public MasterHead getMasterHead() {
-        return masterHead;
-    }
-    
     /*
      * GWTP will call setInSlot when a child presenter asks to be added under this view
      */
@@ -146,6 +141,11 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
     public void hideMessages() {
         successMessagePanel.hide();
         errorMessagePanel.hide();
+    }
+
+    @Override
+    public void setTitle(String title) {
+        masterHead.setTitleLabel(title);
     }
 
 }

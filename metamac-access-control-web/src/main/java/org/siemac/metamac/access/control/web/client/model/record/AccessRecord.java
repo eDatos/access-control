@@ -17,7 +17,7 @@ public class AccessRecord extends ListGridRecord {
     
     public AccessRecord() { }
     
-    public AccessRecord(String id,
+    public AccessRecord(Long id,
             String user,
             String role,
             String app,
@@ -31,12 +31,12 @@ public class AccessRecord extends ListGridRecord {
         setAccessDto(accessDto);
     }
     
-    public void setId(String value) {
+    public void setId(Long value) {
         setAttribute(ID, value);
     }
     
-    public String getId() {
-        return getAttributeAsString(ID);
+    public Long getId() {
+        return getAttributeAsLong(ID);
     }
     
     public void setUser(String value) {

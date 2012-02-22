@@ -1,13 +1,18 @@
 package org.siemac.metamac.access.control.web.client.presenter;
 
+import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getMessages;
+
 import java.util.List;
 
-import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.view.handlers.AccessUiHandlers;
-import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
-import org.siemac.metamac.access.control.web.shared.FindAllAccessResult;
+import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
+import org.siemac.metamac.access.control.web.shared.DeleteUserListResult;
+import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
+import org.siemac.metamac.access.control.web.shared.FindAllUsersResult;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
+import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 import org.siemac.metamac.web.common.client.utils.ErrorUtils;
 
@@ -36,7 +41,7 @@ public class AccessPresenter extends Presenter<AccessPresenter.AccessView, Acces
     }
     
     public interface AccessView extends View, HasUiHandlers<AccessUiHandlers> {
-        void setAccessList(List<AccessDto> accessDtos);
+        void setUsersList(List<UserDto> userDtos);
     }
     
     @Inject
@@ -54,18 +59,39 @@ public class AccessPresenter extends Presenter<AccessPresenter.AccessView, Acces
     @Override
     public void prepareFromRequest(PlaceRequest request) {
         super.prepareFromRequest(request);
-        retrieveAccessList();
+        retrieveUsersList();
     }
     
-    private void retrieveAccessList() {
-        dispatcher.execute(new FindAllAccessAction(), new AsyncCallback<FindAllAccessResult>() {
+    @Override
+    protected void onReset() {
+        super.onReset();
+        SetTitleEvent.fire(AccessPresenter.this, getMessages().metamacAccessControl());
+    }
+    
+    private void retrieveUsersList() {
+        dispatcher.execute(new FindAllUsersAction(), new AsyncCallback<FindAllUsersResult>() {
             @Override
             public void onFailure(Throwable caught) {
-                ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getErrorMessages(caught, "Error al obtener accesos"), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUsers()), MessageTypeEnum.ERROR);
             }
             @Override
-            public void onSuccess(FindAllAccessResult result) {
-                getView().setAccessList(result.getAccess());
+            public void onSuccess(FindAllUsersResult result) {
+                getView().setUsersList(result.getUsers());
+            }
+        });
+    }
+
+    @Override
+    public void deleteUsers(final List<Long> selectedUsers) {
+        dispatcher.execute(new DeleteUserListAction(selectedUsers), new AsyncCallback<DeleteUserListResult>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorDeletingUser()), MessageTypeEnum.ERROR);
+            }
+            @Override
+            public void onSuccess(DeleteUserListResult result) {
+                ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getMessageList(selectedUsers.size() > 1 ? getMessages().usersDeleted() : getMessages().userDeleted()), MessageTypeEnum.SUCCESS);
+                retrieveUsersList();
             }
         });
     }
