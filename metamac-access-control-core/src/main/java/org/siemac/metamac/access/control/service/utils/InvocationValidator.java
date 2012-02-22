@@ -279,6 +279,16 @@ public class InvocationValidator {
         ExceptionUtils.throwIfException(exceptions);
 
     }
+    
+    public static void checkDischargeAccess(Long accessId, List<MetamacExceptionItem> exceptions) throws MetamacException {
+        if (exceptions == null) {
+            exceptions = new ArrayList<MetamacExceptionItem>();
+        }
+
+        ValidationUtils.checkParameterRequired(accessId, "ID", exceptions);
+
+        ExceptionUtils.throwIfException(exceptions);
+    }
 
     public static void checkFindAllAccess(List<MetamacExceptionItem> exceptions) throws MetamacException {
         if (exceptions == null) {

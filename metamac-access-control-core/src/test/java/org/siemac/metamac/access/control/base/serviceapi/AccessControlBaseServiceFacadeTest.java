@@ -54,6 +54,8 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     private static Long                      USER_2         = Long.valueOf(2);
 
     private static Long                      ACCESS_1       = Long.valueOf(1);
+    private static Long                      ACCESS_2       = Long.valueOf(2);
+    private static Long                      ACCESS_3       = Long.valueOf(3);
 
     /**************************************************************************
      * SERVICE CONTEXT
@@ -1144,6 +1146,23 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(NOT_EXISTS, e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
+    
+    @Test
+    public void testUpdateAccessDischarged() throws Exception {
+        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), ACCESS_3);
+
+        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:05", "OPERATION-TODO-05", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        
+        try {
+            accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
+            fail("access discharged");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.ACCESS_DISCHARGED.getCode(), e.getExceptionItems().get(0).getCode());
+            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+            assertEquals(ACCESS_3, e.getExceptionItems().get(0).getMessageParameters()[0]);
+        }
+    }
 
     @Test
     public void testDeleteAccess() throws Exception {
@@ -1187,13 +1206,63 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
             assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
+    }
+    
+    @Test
+    public void testDeleteAccessDischarged() throws Exception {
+        Long id = ACCESS_3;
+
+        // Delete access
+        try {
+            accessControlBaseServiceFacade.dischargeAccess(getServiceContext(), id);
+            fail("access discharged");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.ACCESS_DISCHARGED.getCode(), e.getExceptionItems().get(0).getCode());
+            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
+        }
+    }
+    
+    @Test
+    public void testDischargeAccess() throws Exception {
+        Long id = ACCESS_1;
+        
+        // Access
+        AccessDto access = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
+        
+        // Discharge access
+        accessControlBaseServiceFacade.dischargeAccess(getServiceContext(), id);
+        
+        // Retrieve discharged access
+        AccessDto dischargedAccess = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
+        
+        // Validations
+        assertNotNull(dischargedAccess.getDischargeDate());
+        AccessControlDtoAsserts.assertEqualsAccessDto(access, dischargedAccess);
+    }
+    
+    @Test
+    public void testDischargeAccessNotExists() throws Exception {
+        Long id = NOT_EXISTS;
+
+        // Delete access
+        try {
+            accessControlBaseServiceFacade.dischargeAccess(getServiceContext(), id);
+            fail("access not exists");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
+            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
+        }
 
     }
 
     @Test
     public void testFindAllAccess() throws Exception {
         List<AccessDto> access = accessControlBaseServiceFacade.findAllAccess(getServiceContext());
-        assertEquals(2, access.size());
+        assertEquals(3, access.size());
     }
 
     @Test
@@ -1203,7 +1272,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         String appCode = "gOPESTAT";
         String username = "arte";
         String operationCodeId = "OPERATION-TODO-01";
-        List<AccessDto> access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        List<AccessDto> access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        assertEquals(2, access.size());
+        
+        roleCode = "aDMINISTRADOR";
+        appCode = "gOPESTAT";
+        username = "arte";
+        operationCodeId = "OPERATION-TODO-01";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(1, access.size());
         
         // Without operation condition
@@ -1211,7 +1287,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "gOPESTAT";
         username = "arte";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        assertEquals(3, access.size());
+        
+        roleCode = "aDMINISTRADOR";
+        appCode = "gOPESTAT";
+        username = "arte";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(2, access.size());
 
         // Role condition
@@ -1219,7 +1302,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        assertEquals(0, access.size());
+        
+        roleCode = "TEC_PLANI";
+        appCode = "";
+        username = "";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(0, access.size());
 
         // Role condition
@@ -1227,7 +1317,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        assertEquals(3, access.size());
+        
+        roleCode = "ADMINISTRADOR";
+        appCode = "";
+        username = "";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(2, access.size());
 
         // Without conditions
@@ -1235,7 +1332,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        assertEquals(3, access.size());
+        
+        roleCode = "";
+        appCode = "";
+        username = "";
+        operationCodeId = "";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(2, access.size());
     }
 
@@ -1310,4 +1414,5 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         sequences.add("SEQ_ACCESS");
         return sequences;
     }
+
 }

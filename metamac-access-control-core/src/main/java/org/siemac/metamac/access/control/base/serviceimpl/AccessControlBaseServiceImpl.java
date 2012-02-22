@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
-import org.hibernate.action.EntityUpdateAction;
+import org.joda.time.DateTime;
 import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.AccessRepository;
 import org.siemac.metamac.access.control.base.domain.App;
@@ -22,7 +22,6 @@ import org.siemac.metamac.access.control.base.exception.AccessNotFoundException;
 import org.siemac.metamac.access.control.base.exception.AppNotFoundException;
 import org.siemac.metamac.access.control.base.exception.RoleNotFoundException;
 import org.siemac.metamac.access.control.base.exception.UserNotFoundException;
-import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.access.control.service.utils.InvocationValidator;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -84,7 +83,6 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public void deleteRole(ServiceContext ctx, Long roleId) throws MetamacException {
         // Validations
         InvocationValidator.checkDeleteRole(roleId, null);
-        // TODO: Comprobar que si está asociado a un acceso no puede borrarse
 
         // Repository operation
         Role role = findRoleById(ctx, roleId);
@@ -146,7 +144,6 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public void deleteApp(ServiceContext ctx, Long appId) throws MetamacException {
         // Validations
         InvocationValidator.checkDeleteApp(appId, null);
-        // TODO: Comprobar que si está asociado a un acceso no puede borrarse
 
         // Repository operation
         App app = findAppById(ctx, appId);
@@ -211,7 +208,6 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public void deleteUser(ServiceContext ctx, Long userId) throws MetamacException {
         // Validations
         InvocationValidator.checkDeleteUser(userId, null);
-        // TODO: Comprobar que si está asociado a un acceso no puede borrarse
 
         // Repository operation
         User user = findUserById(ctx, userId);
@@ -264,6 +260,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public Access updateAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
         InvocationValidator.checkUpdateAccess(entity, null);
+        validateDischargeDate(ctx, entity, null);
+        validateAccessUnique(ctx, entity, null);
 
         // Repository operation
         return accessRepository.save(entity);
@@ -272,7 +270,6 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public void deleteAccess(ServiceContext ctx, Long accessId) throws MetamacException {
         // Validations
         InvocationValidator.checkDeleteAccess(accessId, null);
-        // TODO: Comprobar que si está asociado a un acceso no puede borrarse
 
         // Repository operation
         Access access = findAccessById(ctx, accessId);
@@ -298,7 +295,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return accessRepository.findByCondition(conditions);
     }
 
-    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId) throws MetamacException {
+    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, boolean addDischargedAccess) throws MetamacException {
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
         // Role condition
@@ -320,10 +317,34 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         if (!StringUtils.isEmpty(operationCodeId)) {
             conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId(), operationCodeId));
         }
+        
+        // Discharged access conditions
+        if (!addDischargedAccess) {
+            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.dischargeDate()));
+        }
 
         List<Access> access = findAccessByCondition(ctx, conditions);
 
         return access;
+    }
+
+    @Override
+    public void dischargeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
+        // Validations
+        InvocationValidator.checkDischargeAccess(accessId, null);
+
+        // Retrieve entity
+        Access access = findAccessById(ctx, accessId);
+        
+        // Validate if it's already discharge
+        validateDischargeDate(ctx, access, null);
+        
+        // Set attributes
+        access.setDischargeDate(new DateTime());
+        
+        // Repository operation
+        accessRepository.save(access);
+
     }
 
     // ----------------------------------------------------------------------
@@ -418,6 +439,9 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         } else {
             conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId()));
         }
+        
+        // Discharge date
+        conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.dischargeDate()));
 
         List<Access> access = findAccessByCondition(ctx, conditions);
 
@@ -441,6 +465,13 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
             }
         }
 
+    }
+    
+    
+    private void validateDischargeDate(ServiceContext ctx, Access entity, Object object) throws MetamacException {
+        if (entity.getDischargeDate() != null) {
+            throw new MetamacException(ServiceExceptionType.ACCESS_DISCHARGED, entity.getId());
+        }
     }
 
     // ----------------------------------------------------------------------

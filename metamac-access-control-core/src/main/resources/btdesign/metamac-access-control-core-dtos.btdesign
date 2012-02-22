@@ -42,6 +42,7 @@ Application AccessControlDto {
 			- @AppDto app required;
        		- @UserDto user required;
        		- @ExternalItemBtDto operation nullable;
+       		JAVADATE dischargeDate nullable;
        	}
        	
     }

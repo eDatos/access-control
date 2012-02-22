@@ -92,6 +92,8 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setLastUpdated(dateDoToDto(source.getLastUpdated()));
         target.setLastUpdatedBy(source.getLastUpdatedBy());
         
+        target.setDischargeDate(dateDoToDto(source.getDischargeDate()));
+        
         target.setRole(roleDoToDto(source.getRole()));
         target.setApp(appDoToDto(source.getApp()));
         target.setUser(userDoToDto(source.getUser()));

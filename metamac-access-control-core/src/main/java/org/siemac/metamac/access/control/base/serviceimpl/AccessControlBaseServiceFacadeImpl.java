@@ -3,7 +3,6 @@ package org.siemac.metamac.access.control.base.serviceimpl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
@@ -230,6 +229,12 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
         // Service call
         getAccessControlBaseService().deleteAccess(ctx, accessId);
     }
+    
+    
+    public void dischargeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
+     // Service call
+        getAccessControlBaseService().dischargeAccess(ctx, accessId);
+    }
 
     public List<AccessDto> findAllAccess(ServiceContext ctx) throws MetamacException {
         // Service call
@@ -251,16 +256,17 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
         return accessDto;
     }
 
-    public List<AccessDto> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId) throws MetamacException {
+    public List<AccessDto> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, boolean addDischargedAccess) throws MetamacException {
         // Service call
-        List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, roleCode, appCode, username, operationCodeId);
+        List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, roleCode, appCode, username, operationCodeId, addDischargedAccess);
 
         // Transform to Dto
         List<AccessDto> accessDto = accessListDo2Dto(access);
 
         return accessDto;
     }
-
+    
+    
     // --------------------------------------------------------------------------------
     // TRANSFORM LISTS
     // --------------------------------------------------------------------------------
