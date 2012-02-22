@@ -176,12 +176,14 @@ public class AccessViewImpl extends ViewWithUiHandlers<AccessUiHandlers> impleme
             toolStrip.getDeleteButton().show();
             mainFormLayout.setViewMode();
         }
-        setUser(userDto);
+        title.show();
         mainFormLayout.show();
+        setUser(userDto);
     }
 
     private void deselectUser() {
         toolStrip.getDeleteButton().hide();
+        title.hide();
         mainFormLayout.hide();
     }
     
