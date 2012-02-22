@@ -13,7 +13,6 @@ import org.siemac.metamac.web.common.client.events.ShowMessageEvent.ShowMessageH
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
-import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
@@ -22,16 +21,12 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Place;
-import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
 
 public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy> implements MainPageUiHandlers, ShowMessageHandler, SetTitleHandler {
-
-	private final PlaceManager placeManager;
-	private final DispatchAsync dispatcher;
 
 	@ProxyStandard
 	@NameToken(NameTokens.mainPage)
@@ -54,11 +49,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 	public static final Type<RevealContentHandler<?>> TYPE_SetContextAreaContent = new Type<RevealContentHandler<?>>();
 
 	@Inject
-	public MainPagePresenter(EventBus eventBus, MainPageView view, MainPageProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
+	public MainPagePresenter(EventBus eventBus, MainPageView view, MainPageProxy proxy) {
 		super(eventBus, view, proxy);
 		getView().setUiHandlers(this);
-		this.placeManager = placeManager;
-		this.dispatcher = dispatcher;
 	}
 
 	@Override
