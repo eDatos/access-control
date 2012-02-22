@@ -11,6 +11,8 @@ import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteUserListResult;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersResult;
+import org.siemac.metamac.access.control.web.shared.SaveUserAction;
+import org.siemac.metamac.access.control.web.shared.SaveUserResult;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
@@ -42,6 +44,7 @@ public class AccessPresenter extends Presenter<AccessPresenter.AccessView, Acces
     
     public interface AccessView extends View, HasUiHandlers<AccessUiHandlers> {
         void setUsersList(List<UserDto> userDtos);
+        void onUserSaved(UserDto userDto);
     }
     
     @Inject
@@ -92,6 +95,21 @@ public class AccessPresenter extends Presenter<AccessPresenter.AccessView, Acces
             public void onSuccess(DeleteUserListResult result) {
                 ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getMessageList(selectedUsers.size() > 1 ? getMessages().usersDeleted() : getMessages().userDeleted()), MessageTypeEnum.SUCCESS);
                 retrieveUsersList();
+            }
+        });
+    }
+
+    @Override
+    public void saveUser(UserDto userDto) {
+        dispatcher.execute(new SaveUserAction(userDto), new AsyncCallback<SaveUserResult>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingUser()), MessageTypeEnum.ERROR);
+            }
+            @Override
+            public void onSuccess(SaveUserResult result) {
+                ShowMessageEvent.fire(AccessPresenter.this, ErrorUtils.getMessageList(getMessages().userSaved()), MessageTypeEnum.SUCCESS);
+                getView().onUserSaved(result.getUserDto());
             }
         });
     }
