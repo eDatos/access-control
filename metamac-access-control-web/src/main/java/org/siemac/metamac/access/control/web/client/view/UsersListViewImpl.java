@@ -73,6 +73,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private GroupDynamicForm viewAccessForm;
     private GroupDynamicForm editionAccessForm;
     
+    private VLayout accessLayout;
+    
     private UserDto userDto;
     private AccessDto accessDto;
     
@@ -159,13 +161,22 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 }
             }
         });
+        userMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                // If it is a new user, hide mainFormLayout
+                if (userDto.getId() == null) {
+                    userLayout.hide();
+                }
+            }
+        });
         createViewUserForm();
         createEditionUserForm();
         
         // User Access
         
-        TitleLabel userAccessTitle = new TitleLabel(getConstants().userAccess());
-        userAccessTitle.setStyleName("subsectionTitle");
+        TitleLabel accessTitle = new TitleLabel(getConstants().userAccess());
+        accessTitle.setStyleName("subsectionTitle");
         
         accessToolStrip = new ListGridToolStrip(getMessages().accessDeleteTitle(), getMessages().accessDeleteConfirmation());
         accessToolStrip.getNewButton().addClickHandler(new ClickHandler() {
@@ -227,22 +238,35 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                }
             }
         });
+        accessMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                // If it is a new user, hide mainFormLayout
+                if (accessDto.getId() == null) {
+                    accessMainFormLayout.hide();
+                }
+            }
+        });
         createViewAccessForm();
         createEditionAccessForm();
         
-        VLayout accessLayout = new VLayout();
-        accessLayout.setAutoHeight();
-        accessLayout.setBorder("1px solid #D9D9D9");
-        accessLayout.setMargin(15);
-        accessLayout.addMember(accessToolStrip);
-        accessLayout.addMember(accessListGrid);
-        accessLayout.addMember(accessMainFormLayout);
+        VLayout subAccessLayout = new VLayout();
+        subAccessLayout.setAutoHeight();
+        subAccessLayout.setBorder("1px solid #D9D9D9");
+        subAccessLayout.setMargin(15);
+        subAccessLayout.addMember(accessToolStrip);
+        subAccessLayout.addMember(accessListGrid);
+        subAccessLayout.addMember(accessMainFormLayout);
         
         userLayout = new VLayout();
         userLayout.setVisibility(Visibility.HIDDEN);
         userLayout.addMember(title);
         userLayout.addMember(userMainFormLayout);
-        userLayout.addMember(userAccessTitle);
+        
+        accessLayout = new VLayout();
+        accessLayout.addMember(accessTitle);
+        accessLayout.addMember(subAccessLayout);
+        
         userLayout.addMember(accessLayout);
         
         panel.addMember(listGridLayout);
@@ -270,6 +294,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             records[i] = RecordUtils.getAccessRecord(accessDtos.get(i));
         }
         accessListGrid.setData(records);
+        accessLayout.show();
     }
     
     private List<Long> getSelectedUsers() {
@@ -284,6 +309,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     
     private void selectUser(UserDto userDto) {
         this.userDto = userDto;
+        title.setContents(new String());
         if (userDto.getId() == null) {
             userToolStrip.getDeleteButton().hide();
             usersListGrid.deselectAllRecords();
@@ -294,6 +320,10 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             getUiHandlers().retrieveUserAccess(userDto.getUsername());
         }
         userLayout.show();
+        if (userDto.getId() == null) {
+            // Do not show user access panel
+            accessLayout.hide();
+        }
         setUser(userDto);
     }
 
@@ -425,6 +455,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
     
     private AccessDto getAccess() {
+        accessDto.setUser(userDto);
         accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
         return accessDto;
     }
