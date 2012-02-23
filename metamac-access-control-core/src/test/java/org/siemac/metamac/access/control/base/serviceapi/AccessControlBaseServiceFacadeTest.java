@@ -1106,123 +1106,123 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         }
     }
 
-    @Test
-    public void testUpdateAccess() throws Exception {
-        Long id = ACCESS_1;
+//    @Test
+//    public void testUpdateAccess() throws Exception {
+//        Long id = ACCESS_1;
+//
+//        // Retrieve new related entities
+//        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
+//        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
+//        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+//
+//        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
+//
+//        accessDto.setRole(roleDto);
+//        accessDto.setApp(appDto);
+//        accessDto.setUser(userDto);
+//        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+//
+//        // Update
+//        AccessDto accessDtoUpdated = accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
+//
+//        // Validations
+//        AccessControlDtoAsserts.assertEqualsAccessDto(accessDto, accessDtoUpdated);
+//        assertTrue(accessDtoUpdated.getLastUpdated().after(accessDtoUpdated.getCreatedDate()));
+//    }
 
-        // Retrieve new related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
-
-        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
-
-        accessDto.setRole(roleDto);
-        accessDto.setApp(appDto);
-        accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
-
-        // Update
-        AccessDto accessDtoUpdated = accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
-
-        // Validations
-        AccessControlDtoAsserts.assertEqualsAccessDto(accessDto, accessDtoUpdated);
-        assertTrue(accessDtoUpdated.getLastUpdated().after(accessDtoUpdated.getCreatedDate()));
-    }
-
-    @Test
-    public void testUpdateAccessNotExists() throws Exception {
-        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), ACCESS_1);
-
-        accessDto.setId(NOT_EXISTS);
-
-        try {
-            accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
-            fail("access not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(NOT_EXISTS, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-    }
+//    @Test
+//    public void testUpdateAccessNotExists() throws Exception {
+//        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), ACCESS_1);
+//
+//        accessDto.setId(NOT_EXISTS);
+//
+//        try {
+//            accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
+//            fail("access not exists");
+//        } catch (MetamacException e) {
+//            assertEquals(1, e.getExceptionItems().size());
+//            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
+//            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+//            assertEquals(NOT_EXISTS, e.getExceptionItems().get(0).getMessageParameters()[0]);
+//        }
+//    }
     
-    @Test
-    public void testUpdateAccessDischarged() throws Exception {
-        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), ACCESS_3);
+//    @Test
+//    public void testUpdateAccessDischarged() throws Exception {
+//        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), ACCESS_3);
+//
+//        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:05", "OPERATION-TODO-05", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+//        
+//        try {
+//            accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
+//            fail("access discharged");
+//        } catch (MetamacException e) {
+//            assertEquals(1, e.getExceptionItems().size());
+//            assertEquals(ServiceExceptionType.ACCESS_DISCHARGED.getCode(), e.getExceptionItems().get(0).getCode());
+//            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+//            assertEquals(ACCESS_3, e.getExceptionItems().get(0).getMessageParameters()[0]);
+//        }
+//    }
 
-        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:05", "OPERATION-TODO-05", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
-        
-        try {
-            accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
-            fail("access discharged");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_DISCHARGED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(ACCESS_3, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-    }
+//    @Test
+//    public void testDeleteAccess() throws Exception {
+//        Long id = ACCESS_1;
+//
+//        // Delete access
+//        accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
+//
+//        // Validation
+//        try {
+//            accessControlBaseServiceFacade.findAccessById(serviceContext, id);
+//            fail("access deleted");
+//        } catch (MetamacException e) {
+//            assertEquals(1, e.getExceptionItems().size());
+//            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
+//            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+//            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
+//
+//            // Validate related entities
+//            RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
+//            assertNotNull(roleDto);
+//            AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
+//            assertNotNull(appDto);
+//            UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+//            assertNotNull(userDto);
+//        }
+//
+//    }
 
-    @Test
-    public void testDeleteAccess() throws Exception {
-        Long id = ACCESS_1;
-
-        // Delete access
-        accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
-
-        // Validation
-        try {
-            accessControlBaseServiceFacade.findAccessById(serviceContext, id);
-            fail("access deleted");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-
-            // Validate related entities
-            RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-            assertNotNull(roleDto);
-            AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-            assertNotNull(appDto);
-            UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
-            assertNotNull(userDto);
-        }
-
-    }
-
-    @Test
-    public void testDeleteAccessNotExists() throws Exception {
-        Long id = NOT_EXISTS;
-
-        // Delete access
-        try {
-            accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
-            fail("access not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-    }
+//    @Test
+//    public void testDeleteAccessNotExists() throws Exception {
+//        Long id = NOT_EXISTS;
+//
+//        // Delete access
+//        try {
+//            accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
+//            fail("access not exists");
+//        } catch (MetamacException e) {
+//            assertEquals(1, e.getExceptionItems().size());
+//            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
+//            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+//            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
+//        }
+//    }
     
-    @Test
-    public void testDeleteAccessDischarged() throws Exception {
-        Long id = ACCESS_3;
-
-        // Delete access
-        try {
-            accessControlBaseServiceFacade.dischargeAccess(getServiceContext(), id);
-            fail("access discharged");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_DISCHARGED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-    }
+//    @Test
+//    public void testDeleteAccessDischarged() throws Exception {
+//        Long id = ACCESS_3;
+//
+//        // Delete access
+//        try {
+//            accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
+//            fail("access discharged");
+//        } catch (MetamacException e) {
+//            assertEquals(1, e.getExceptionItems().size());
+//            assertEquals(ServiceExceptionType.ACCESS_DISCHARGED.getCode(), e.getExceptionItems().get(0).getCode());
+//            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+//            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
+//        }
+//    }
     
     @Test
     public void testDischargeAccess() throws Exception {

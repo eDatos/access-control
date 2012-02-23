@@ -151,9 +151,9 @@ Application Base {
        		
        		"Access"
        		@AccessDto createAccess(@AccessDto accessDto) throws MetamacException;
-       		@AccessDto updateAccess(@AccessDto accessDto) throws MetamacException;
+       		// @AccessDto updateAccess(@AccessDto accessDto) throws MetamacException;
        		dischargeAccess(Long accessId) throws MetamacException;
-       		deleteAccess (Long accessId) throws MetamacException;
+       		// deleteAccess (Long accessId) throws MetamacException;
        		List<@AccessDto> findAllAccess throws MetamacException;
        		List<@AccessDto> findAccessByCondition(String roleCode, String appCode, String username, String operationCodeId, boolean addDischargedAccess) throws MetamacException;
        		@AccessDto findAccessById (Long id) throws MetamacException;
