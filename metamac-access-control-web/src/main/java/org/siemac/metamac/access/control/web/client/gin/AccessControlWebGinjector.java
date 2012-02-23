@@ -2,7 +2,7 @@ package org.siemac.metamac.access.control.web.client.gin;
 
 import org.siemac.metamac.access.control.web.client.AccessControlWebConstants;
 import org.siemac.metamac.access.control.web.client.AccessControlWebMessages;
-import org.siemac.metamac.access.control.web.client.presenter.AccessPresenter;
+import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
 import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -20,7 +20,7 @@ public interface AccessControlWebGinjector extends Ginjector {
 	EventBus getEventBus();
 		
 	Provider<MainPagePresenter> getMainPagePresenter();
-	AsyncProvider<AccessPresenter> getAccessPresente();
+	AsyncProvider<UsersListPresenter> getUsersListPresenter();
 	
 	public AccessControlWebConstants getAccessControlWebConstants();
 	public AccessControlWebMessages getAccessControlWebMessages();
