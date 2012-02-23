@@ -8,6 +8,7 @@ import org.siemac.metamac.access.control.web.server.handlers.FindAccessByUserAct
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAppsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRolesActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.FindAllStatisticalOperationsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllUsersActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAppActionHandler;
@@ -21,6 +22,7 @@ import org.siemac.metamac.access.control.web.shared.FindAccessByUserAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
+import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
 import org.siemac.metamac.access.control.web.shared.SaveAppAction;
@@ -114,6 +116,11 @@ public class ServerModule extends HandlerModule {
     public FindAccessByUserActionHandler getFindAccessByUserActionHandler() {
         return new FindAccessByUserActionHandler();
     }
+    
+    @Bean
+    public FindAllStatisticalOperationsActionHandler getFindAllStatisticalOperationsActionHandler() {
+        return new FindAllStatisticalOperationsActionHandler();
+    }
 
     protected void configureHandlers() {
         bindHandler(FindAllAccessAction.class, FindAllAccessActionHandler.class);
@@ -129,6 +136,7 @@ public class ServerModule extends HandlerModule {
         bindHandler(SaveRoleAction.class, SaveRoleActionHandler.class);
         bindHandler(SaveAppAction.class, SaveAppActionHandler.class);
         bindHandler(FindAccessByUserAction.class, FindAccessByUserActionHandler.class);
+        bindHandler(FindAllStatisticalOperationsAction.class, FindAllStatisticalOperationsActionHandler.class);
     }
 
 }
