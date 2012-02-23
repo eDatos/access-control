@@ -256,9 +256,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
         return accessDto;
     }
 
-    public List<AccessDto> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, boolean addDischargedAccess) throws MetamacException {
+    public List<AccessDto> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean dischargedAccess) throws MetamacException {
         // Service call
-        List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, roleCode, appCode, username, operationCodeId, addDischargedAccess);
+        List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, roleCode, appCode, username, operationCodeId, dischargedAccess);
 
         // Transform to Dto
         List<AccessDto> accessDto = accessListDo2Dto(access);

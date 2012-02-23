@@ -295,7 +295,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return accessRepository.findByCondition(conditions);
     }
 
-    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, boolean addDischargedAccess) throws MetamacException {
+    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean dischargedAccess) throws MetamacException {
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
         // Role condition
@@ -319,8 +319,10 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         }
         
         // Discharged access conditions
-        if (!addDischargedAccess) {
+        if (Boolean.FALSE.equals(dischargedAccess)) {
             conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.dischargeDate()));
+        } else if (Boolean.TRUE.equals(dischargedAccess)) {
+            conditions.add(ConditionalCriteria.isNotNull(org.siemac.metamac.access.control.base.domain.AccessProperties.dischargeDate()));
         }
 
         List<Access> access = findAccessByCondition(ctx, conditions);

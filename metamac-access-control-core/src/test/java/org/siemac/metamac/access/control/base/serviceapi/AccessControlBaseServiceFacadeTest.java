@@ -1273,7 +1273,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         String username = "arte";
         String operationCodeId = "OPERATION-TODO-01";
         List<AccessDto> access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
-        assertEquals(2, access.size());
+        assertEquals(1, access.size());
         
         roleCode = "aDMINISTRADOR";
         appCode = "gOPESTAT";
@@ -1282,13 +1282,20 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(1, access.size());
         
+        roleCode = "aDMINISTRADOR";
+        appCode = "gOPESTAT";
+        username = "arte";
+        operationCodeId = "OPERATION-TODO-01";
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, null);
+        assertEquals(2, access.size());
+        
         // Without operation condition
         roleCode = "aDMINISTRADOR";
         appCode = "gOPESTAT";
         username = "arte";
         operationCodeId = "";
         access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
-        assertEquals(3, access.size());
+        assertEquals(1, access.size());
         
         roleCode = "aDMINISTRADOR";
         appCode = "gOPESTAT";
@@ -1318,7 +1325,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         username = "";
         operationCodeId = "";
         access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
-        assertEquals(3, access.size());
+        assertEquals(1, access.size());
         
         roleCode = "ADMINISTRADOR";
         appCode = "";
@@ -1333,7 +1340,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         username = "";
         operationCodeId = "";
         access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
-        assertEquals(3, access.size());
+        assertEquals(1, access.size());
         
         roleCode = "";
         appCode = "";
