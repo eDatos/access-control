@@ -30,7 +30,7 @@ public class FindAllAccessActionHandler extends AbstractActionHandler<FindAllAcc
     @Override
     public FindAllAccessResult execute(FindAllAccessAction action, ExecutionContext context) throws ActionException {
         try {
-            List<AccessDto> accessDtos = accessControlBaseServiceFacade.findAllAccess(ServiceContextHelper.getServiceContext());
+            List<AccessDto> accessDtos = accessControlBaseServiceFacade.findAccessByCondition(ServiceContextHelper.getServiceContext(), null, null, null, null, Boolean.valueOf(false));
             return new FindAllAccessResult(accessDtos);
         } catch (MetamacException e) {
             throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));

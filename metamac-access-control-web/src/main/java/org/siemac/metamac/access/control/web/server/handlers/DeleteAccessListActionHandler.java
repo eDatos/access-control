@@ -30,7 +30,7 @@ public class DeleteAccessListActionHandler extends AbstractActionHandler<DeleteA
         List<Long> ids = action.getAccessIds();
         for (Long id : ids) {
             try {
-                accessControlBaseServiceFacade.deleteAccess(ServiceContextHelper.getServiceContext(), id);
+                accessControlBaseServiceFacade.dischargeAccess(ServiceContextHelper.getServiceContext(), id);
             } catch (MetamacException e) {
                 throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
             }

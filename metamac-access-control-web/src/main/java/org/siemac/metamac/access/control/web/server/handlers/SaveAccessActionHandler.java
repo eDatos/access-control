@@ -33,7 +33,8 @@ public class SaveAccessActionHandler extends AbstractActionHandler<SaveAccessAct
             if (accessToSave.getId() == null) {
                 accessDto = accessControlBaseServiceFacade.createAccess(ServiceContextHelper.getServiceContext(), accessToSave);
             } else {
-                accessDto = accessControlBaseServiceFacade.updateAccess(ServiceContextHelper.getServiceContext(), accessToSave);
+                // DO NOT EDIT ACCESS: delete access and create a new one instead
+                // accessDto = accessControlBaseServiceFacade.updateAccess(ServiceContextHelper.getServiceContext(), accessToSave);
             }
             return new SaveAccessResult(accessDto);
         } catch (MetamacException e) {
