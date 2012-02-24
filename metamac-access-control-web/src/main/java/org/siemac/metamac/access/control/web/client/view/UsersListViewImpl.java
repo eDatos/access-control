@@ -24,6 +24,7 @@ import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
 import org.siemac.metamac.web.common.client.widgets.form.GroupDynamicForm;
 import org.siemac.metamac.web.common.client.widgets.form.MainFormLayout;
+import org.siemac.metamac.web.common.client.widgets.form.ViewMainFormLayout;
 import org.siemac.metamac.web.common.client.widgets.form.fields.EmailItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredSelectItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredTextItem;
@@ -73,6 +74,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private CustomListGrid accessListGrid;
     
     private MainFormLayout accessMainFormLayout;
+    private ViewMainFormLayout accessViewMainFormLayout;
+    
     private GroupDynamicForm viewAccessForm;
     private GroupDynamicForm editionAccessForm;
     
@@ -250,11 +253,15 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             @Override
             public void onClick(ClickEvent event) {
                 // If it is a new user, hide mainFormLayout
-                if (accessDto.getId() == null) {
+                // if (accessDto.getId() == null) {
                     accessMainFormLayout.hide();
-                }
+                // }
             }
         });
+        
+        accessViewMainFormLayout = new ViewMainFormLayout();
+        accessViewMainFormLayout.setVisibility(Visibility.HIDDEN);
+        
         createViewAccessForm();
         createEditionAccessForm();
         
@@ -265,6 +272,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         subAccessLayout.addMember(accessToolStrip);
         subAccessLayout.addMember(accessListGrid);
         subAccessLayout.addMember(accessMainFormLayout);
+        subAccessLayout.addMember(accessViewMainFormLayout);
         
         userLayout = new VLayout();
         userLayout.setVisibility(Visibility.HIDDEN);
@@ -422,24 +430,27 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             accessToolStrip.getDeleteButton().hide();
             accessListGrid.deselectAllRecords();
             accessMainFormLayout.setEditionMode();
+            accessMainFormLayout.show();
+            accessViewMainFormLayout.hide();
         } else {
             accessToolStrip.getDeleteButton().show();
-            accessMainFormLayout.setViewMode();
+            accessViewMainFormLayout.show();
+            accessMainFormLayout.hide();
         }
-        accessMainFormLayout.show();
+        
         setAccess(accessDto);
     }
 
     private void deselectAccess() {
         accessToolStrip.getDeleteButton().hide();
-        accessMainFormLayout.hide();
+        accessViewMainFormLayout.hide();
     }
     
     private void createViewAccessForm() {
         viewAccessForm = new GroupDynamicForm(getConstants().role());
         ViewTextItem role = new ViewTextItem(ACCESS_ROLE, getConstants().role());
         viewAccessForm.setFields(role);
-        accessMainFormLayout.addViewCanvas(viewAccessForm);
+        accessViewMainFormLayout.addViewCanvas(viewAccessForm);
     }
     
     private void createEditionAccessForm() {
