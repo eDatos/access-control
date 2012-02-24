@@ -22,7 +22,7 @@ public class RecordUtils {
                 accessDto.getRole() != null ? accessDto.getRole().getTitle() : null, 
                 accessDto.getApp() != null ? accessDto.getApp().getTitle() :  null, 
                 accessDto.getOperation() != null ? accessDto.getOperation().getCodeId() : null,
-                accessDto.getDischargeDate() != null ? accessDto.getDischargeDate().toString() : null,
+                accessDto.getRemovalDate() != null ? accessDto.getRemovalDate().toString() : null,
                 accessDto);
         return record;
     }
