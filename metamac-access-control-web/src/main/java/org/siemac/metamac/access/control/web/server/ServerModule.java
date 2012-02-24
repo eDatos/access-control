@@ -7,6 +7,7 @@ import org.siemac.metamac.access.control.web.server.handlers.DeleteUserListActio
 import org.siemac.metamac.access.control.web.server.handlers.FindAccessByUserActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAppsActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.FindAllRemovedAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRolesActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllStatisticalOperationsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllUsersActionHandler;
@@ -21,6 +22,7 @@ import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
 import org.siemac.metamac.access.control.web.shared.FindAccessByUserAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
+import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
 import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
@@ -121,6 +123,11 @@ public class ServerModule extends HandlerModule {
     public FindAllStatisticalOperationsActionHandler getFindAllStatisticalOperationsActionHandler() {
         return new FindAllStatisticalOperationsActionHandler();
     }
+    
+    @Bean
+    public FindAllRemovedAccessActionHandler getFindAllRemovedAccessActionHandler() {
+        return new FindAllRemovedAccessActionHandler();
+    }
 
     protected void configureHandlers() {
         bindHandler(FindAllAccessAction.class, FindAllAccessActionHandler.class);
@@ -137,6 +144,7 @@ public class ServerModule extends HandlerModule {
         bindHandler(SaveAppAction.class, SaveAppActionHandler.class);
         bindHandler(FindAccessByUserAction.class, FindAccessByUserActionHandler.class);
         bindHandler(FindAllStatisticalOperationsAction.class, FindAllStatisticalOperationsActionHandler.class);
+        bindHandler(FindAllRemovedAccessAction.class, FindAllRemovedAccessActionHandler.class);
     }
 
 }
