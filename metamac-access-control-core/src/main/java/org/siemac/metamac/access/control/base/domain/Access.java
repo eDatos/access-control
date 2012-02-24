@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
  * Access
  */
 @Entity
-@Table(name = "TBL_ACCESS", uniqueConstraints = {@UniqueConstraint(columnNames = {"ROLE_FK", "APP_FK", "USER_FK", "OPERATION_CODE_ID", "DISCHARGE_DATE"})})
+@Table(name = "TBL_ACCESS", uniqueConstraints = {@UniqueConstraint(columnNames = {"ROLE_FK", "APP_FK", "USER_FK", "OPERATION_CODE_ID", "REMOVAL_DATE"})})
 public class Access extends AccessBase {
     private static final long serialVersionUID = 1L;
 

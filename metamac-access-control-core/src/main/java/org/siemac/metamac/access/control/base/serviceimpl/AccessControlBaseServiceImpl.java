@@ -260,7 +260,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public Access updateAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
         InvocationValidator.checkUpdateAccess(entity, null);
-        validateDischargeDate(ctx, entity, null);
+        validateRemovalDate(ctx, entity, null);
         validateAccessUnique(ctx, entity, null);
 
         // Repository operation
@@ -295,7 +295,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return accessRepository.findByCondition(conditions);
     }
 
-    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean dischargedAccess) throws MetamacException {
+    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean removalAccess) throws MetamacException {
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
         // Role condition
@@ -318,11 +318,11 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
             conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId(), operationCodeId));
         }
         
-        // Discharged access conditions
-        if (Boolean.FALSE.equals(dischargedAccess)) {
-            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.dischargeDate()));
-        } else if (Boolean.TRUE.equals(dischargedAccess)) {
-            conditions.add(ConditionalCriteria.isNotNull(org.siemac.metamac.access.control.base.domain.AccessProperties.dischargeDate()));
+        // Removal date conditions
+        if (Boolean.FALSE.equals(removalAccess)) {
+            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
+        } else if (Boolean.TRUE.equals(removalAccess)) {
+            conditions.add(ConditionalCriteria.isNotNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
         }
 
         List<Access> access = findAccessByCondition(ctx, conditions);
@@ -331,18 +331,18 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     }
 
     @Override
-    public void dischargeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
+    public void removeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
         // Validations
-        InvocationValidator.checkDischargeAccess(accessId, null);
+        InvocationValidator.checkRemoveAccess(accessId, null);
 
         // Retrieve entity
         Access access = findAccessById(ctx, accessId);
         
-        // Validate if it's already discharge
-        validateDischargeDate(ctx, access, null);
+        // Validate if it's already removed
+        validateRemovalDate(ctx, access, null);
         
         // Set attributes
-        access.setDischargeDate(new DateTime());
+        access.setRemovalDate(new DateTime());
         
         // Repository operation
         accessRepository.save(access);
@@ -442,8 +442,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
             conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId()));
         }
         
-        // Discharge date
-        conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.dischargeDate()));
+        // Removal date
+        conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
 
         List<Access> access = findAccessByCondition(ctx, conditions);
 
@@ -470,9 +470,9 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     }
     
     
-    private void validateDischargeDate(ServiceContext ctx, Access entity, Object object) throws MetamacException {
-        if (entity.getDischargeDate() != null) {
-            throw new MetamacException(ServiceExceptionType.ACCESS_DISCHARGED, entity.getId());
+    private void validateRemovalDate(ServiceContext ctx, Access entity, Object object) throws MetamacException {
+        if (entity.getRemovalDate() != null) {
+            throw new MetamacException(ServiceExceptionType.ACCESS_REMOVED, entity.getId());
         }
     }
 

@@ -280,7 +280,7 @@ public class InvocationValidator {
 
     }
     
-    public static void checkDischargeAccess(Long accessId, List<MetamacExceptionItem> exceptions) throws MetamacException {
+    public static void checkRemoveAccess(Long accessId, List<MetamacExceptionItem> exceptions) throws MetamacException {
         if (exceptions == null) {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }

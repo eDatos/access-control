@@ -306,21 +306,21 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     }
 
     @Test
-    public void testDischargeAccess() throws Exception {
+    public void testRemoveAccess() throws Exception {
         Long id = ACCESS_1;
 
         // Retrieve access
         Access access = accessControlBaseService.findAccessById(getServiceContext(), id);
 
-        // Discharge
-        accessControlBaseService.dischargeAccess(getServiceContext(), id);
+        // Remove
+        accessControlBaseService.removeAccess(getServiceContext(), id);
 
-        // Retrieve discharged access
-        Access dischargedAccess = accessControlBaseService.findAccessById(getServiceContext(), id);
+        // Retrieve removed access
+        Access removedAccess = accessControlBaseService.findAccessById(getServiceContext(), id);
         
         // Validations
-        assertNotNull(dischargedAccess.getDischargeDate());
-        AccessControlDoAsserts.assertEqualsAccess(access, dischargedAccess);
+        assertNotNull(removedAccess.getRemovalDate());
+        AccessControlDoAsserts.assertEqualsAccess(access, removedAccess);
     }
 
     @Test

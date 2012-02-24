@@ -231,9 +231,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
     
     
-    public void dischargeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
+    public void removeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
      // Service call
-        getAccessControlBaseService().dischargeAccess(ctx, accessId);
+        getAccessControlBaseService().removeAccess(ctx, accessId);
     }
 
     public List<AccessDto> findAllAccess(ServiceContext ctx) throws MetamacException {
@@ -256,9 +256,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
         return accessDto;
     }
 
-    public List<AccessDto> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean dischargedAccess) throws MetamacException {
+    public List<AccessDto> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean removalAccess) throws MetamacException {
         // Service call
-        List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, roleCode, appCode, username, operationCodeId, dischargedAccess);
+        List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, roleCode, appCode, username, operationCodeId, removalAccess);
 
         // Transform to Dto
         List<AccessDto> accessDto = accessListDo2Dto(access);

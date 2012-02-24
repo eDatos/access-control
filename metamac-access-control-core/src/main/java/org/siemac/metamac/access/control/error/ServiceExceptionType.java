@@ -16,5 +16,5 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
 
     public static final CommonServiceExceptionType ACCESS_NOT_FOUND                     = create("exception.acl.access.not_found");
     public static final CommonServiceExceptionType ACCESS_ALREADY_EXIST_CODE_DUPLICATED = create("exception.acl.access.already_exists.code_duplicated");
-    public static final CommonServiceExceptionType ACCESS_DISCHARGED                    = create("exception.acl.access.discharged");
+    public static final CommonServiceExceptionType ACCESS_REMOVED                       = create("exception.acl.access.removed");
 }
