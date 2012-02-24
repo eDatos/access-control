@@ -4,8 +4,10 @@ import org.siemac.metamac.access.control.web.client.AccessControlPlaceManager;
 import org.siemac.metamac.access.control.web.client.AccessControlWebConstants;
 import org.siemac.metamac.access.control.web.client.AccessControlWebMessages;
 import org.siemac.metamac.access.control.web.client.NameTokens;
+import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
 import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
+import org.siemac.metamac.access.control.web.client.view.RoleHistoryViewImpl;
 import org.siemac.metamac.access.control.web.client.view.UsersListViewImpl;
 import org.siemac.metamac.access.control.web.client.view.MainPageViewImpl;
 
@@ -31,6 +33,7 @@ public class ClientModule extends AbstractPresenterModule {
 		// Presenters
 	    bindPresenter(MainPagePresenter.class, MainPagePresenter.MainPageView.class, MainPageViewImpl.class, MainPagePresenter.MainPageProxy.class);
 	    bindPresenter(UsersListPresenter.class, UsersListPresenter.UsersListView.class, UsersListViewImpl.class, UsersListPresenter.UsersListProxy.class);
+	    bindPresenter(RoleHistoryPresenter.class, RoleHistoryPresenter.RoleHistoryView.class, RoleHistoryViewImpl.class, RoleHistoryPresenter.RoleHistoryProxy.class);
 	    
 	    bind(AccessControlWebConstants.class).in(Singleton.class);
 	    bind(AccessControlWebMessages.class).in(Singleton.class);

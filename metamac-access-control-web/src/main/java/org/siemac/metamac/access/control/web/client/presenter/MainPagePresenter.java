@@ -35,13 +35,18 @@ import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
 import com.gwtplatform.mvp.client.proxy.Place;
+import com.gwtplatform.mvp.client.proxy.PlaceManager;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 import com.gwtplatform.mvp.client.proxy.RevealRootContentEvent;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.HasClickHandlers;
 
 public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy> implements MainPageUiHandlers, ShowMessageHandler, SetTitleHandler {
 
+    private final PlaceManager placeManager;
     private final DispatchAsync dispatcher;
     
 	@ProxyStandard
@@ -54,6 +59,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 	    void showMessage(List<String> messages, MessageTypeEnum type);
         void hideMessages();
         void setTitle(String title);
+        
+        HasClickHandlers goToUsersListPage();
+        HasClickHandlers goToRoleHistoryPage();
 	}
 
 	/**
@@ -65,8 +73,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 	public static final Type<RevealContentHandler<?>> TYPE_SetContextAreaContent = new Type<RevealContentHandler<?>>();
 
 	@Inject
-	public MainPagePresenter(EventBus eventBus, MainPageView view, MainPageProxy proxy, DispatchAsync dispatcher) {
+	public MainPagePresenter(EventBus eventBus, MainPageView view, MainPageProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
 		super(eventBus, view, proxy);
+		this.placeManager = placeManager;
 		this.dispatcher = dispatcher;
 		getView().setUiHandlers(this);
 	}
@@ -74,6 +83,21 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 	@Override
 	protected void onBind() {
 		super.onBind();
+		
+		registerHandler(getView().goToUsersListPage().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                placeManager.revealPlace(new PlaceRequest(NameTokens.usersListPage));
+            }
+        }));
+
+		registerHandler(getView().goToRoleHistoryPage().addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent event) {
+                placeManager.revealPlace(new PlaceRequest(NameTokens.roleHistoryPage));
+            }
+		}));
+		
 		// TODO Is this the proper place to load value lists?
 		loadRoles();
 		loadOperations();

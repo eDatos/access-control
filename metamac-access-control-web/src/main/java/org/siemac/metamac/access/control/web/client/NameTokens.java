@@ -5,6 +5,7 @@ public class NameTokens {
     public static final String mainPage = "!MainPage";
 	public static final String errorPage = "!ErrorPage";
 	
-	public static final String usersListPage = "!UsersListPage";
+	public static final String usersListPage = "!UserListPage";
+	public static final String roleHistoryPage = "!RoleHistoryPage";
 
 }

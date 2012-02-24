@@ -34,6 +34,7 @@ import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.smartgwt.client.types.GroupStartOpen;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.types.Visibility;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
@@ -60,8 +61,10 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private ListGridToolStrip userToolStrip;
     private CustomListGrid usersListGrid;
     
+    private Label title;
+    
     private VLayout userLayout;
-    private TitleLabel title;
+    private TitleLabel userTitle;
     private MainFormLayout userMainFormLayout;
     private GroupDynamicForm viewUserForm;
     private GroupDynamicForm editionUserForm;
@@ -87,6 +90,10 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         super();
         panel = new VLayout();
         panel.setOverflow(Overflow.SCROLL);
+        
+        title = new Label(getConstants().users());
+        title.setStyleName("sectionTitle");
+        title.setHeight(50);
         
         // Users ListGrid
         
@@ -145,13 +152,14 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         
         VLayout listGridLayout = new VLayout();
         listGridLayout.setAutoHeight();
+        listGridLayout.addMember(title);
         listGridLayout.addMember(userToolStrip);
         listGridLayout.addMember(usersListGrid);
         
         // User Details
         
-        title = new TitleLabel();
-        title.setStyleName("subsectionTitle");
+        userTitle = new TitleLabel();
+        userTitle.setStyleName("subsectionTitle");
         userMainFormLayout = new MainFormLayout();
         userMainFormLayout.getSave().addClickHandler(new ClickHandler() {
             @Override
@@ -260,7 +268,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         
         userLayout = new VLayout();
         userLayout.setVisibility(Visibility.HIDDEN);
-        userLayout.addMember(title);
+        userLayout.addMember(userTitle);
         userLayout.addMember(userMainFormLayout);
         
         accessLayout = new VLayout();
@@ -309,7 +317,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     
     private void selectUser(UserDto userDto) {
         this.userDto = userDto;
-        title.setContents(new String());
+        userTitle.setContents(new String());
         if (userDto.getId() == null) {
             userToolStrip.getDeleteButton().hide();
             usersListGrid.deselectAllRecords();
@@ -371,7 +379,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
     
     private void setUser(UserDto userDto) {
-        title.setContents(userDto.getUsername());
+        userTitle.setContents(userDto.getUsername());
         setUserViewMode(userDto);
         setUserEditionMode(userDto);
     }
