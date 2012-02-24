@@ -23,6 +23,9 @@ public class AccessDS extends DataSource {
         DataSourceTextField app = new DataSourceTextField(AccessRecord.APP, "Application");
         addField(app);
         
+        DataSourceTextField date = new DataSourceTextField(AccessRecord.REMOVAL_DATE, "Dischared date");
+        addField(date);
+        
         DataSourceTextField operation = new DataSourceTextField(AccessRecord.OPERATION, "Operation");
         addField(operation);
         

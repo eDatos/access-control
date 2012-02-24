@@ -12,6 +12,7 @@ public class AccessRecord extends ListGridRecord {
     public static final String ROLE = "role";
     public static final String APP = "app";
     public static final String OPERATION = "op";
+    public static final String REMOVAL_DATE = "date";
     public static final String ACCESS_DTO = "acc-dto";
     
     
@@ -22,12 +23,14 @@ public class AccessRecord extends ListGridRecord {
             String role,
             String app,
             String operation,
+            String dischargedDate,
             AccessDto accessDto) {
         setId(id);
         setUser(user);
         setRole(role);
         setApp(app);
         setOperation(operation);
+        setRemovalDate(dischargedDate);
         setAccessDto(accessDto);
     }
     
@@ -77,6 +80,14 @@ public class AccessRecord extends ListGridRecord {
     
     public AccessDto getAccessDto() {
         return (AccessDto) getAttributeAsObject(ACCESS_DTO);
+    }
+    
+    public void setRemovalDate(String value) {
+        setAttribute(REMOVAL_DATE, value);
+    }
+    
+    public String getRemovalDate() {
+        return getAttributeAsString(REMOVAL_DATE);
     }
     
 }

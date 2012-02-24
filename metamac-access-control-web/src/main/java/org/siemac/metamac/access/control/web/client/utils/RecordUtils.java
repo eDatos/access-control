@@ -19,7 +19,8 @@ public class RecordUtils {
                 accessDto.getUser() != null ? accessDto.getUser().getUsername() : null, 
                 accessDto.getRole() != null ? accessDto.getRole().getTitle() : null, 
                 accessDto.getApp() != null ? accessDto.getApp().getTitle() :  null, 
-                accessDto.getOperation() != null ? accessDto.getOperation().getCodeId() : null, 
+                accessDto.getOperation() != null ? accessDto.getOperation().getCodeId() : null,
+                accessDto.getDischargeDate() != null ? accessDto.getDischargeDate().toString() : null,
                 accessDto);
         return record;
     }
@@ -34,7 +35,7 @@ public class RecordUtils {
         UserRecord record = new UserRecord(userDto.getId(), 
                 userDto.getUsername(), 
                 userDto.getName(), 
-                userDto.getSurname(), 
+                userDto.getSurname(),
                 userDto.getMail(), 
                 userDto);
         return record;
