@@ -25,6 +25,8 @@ import org.siemac.metamac.access.control.web.shared.FindAccessByUserResult;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersResult;
 import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
+import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
+import org.siemac.metamac.access.control.web.shared.SaveAccessListResult;
 import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserResult;
@@ -186,6 +188,20 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
             }}
         );
     }
+    
+    @Override
+    public void saveAccess(final List<AccessDto> accessDtos) {
+        dispatcher.execute(new SaveAccessListAction(accessDtos), new AsyncCallback<SaveAccessListResult>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingRole()), MessageTypeEnum.ERROR); 
+            }
+            @Override
+            public void onSuccess(SaveAccessListResult result) {
+                retrieveUserAccess(accessDtos.get(0).getUser().getUsername());
+            }
+        });
+    }
 
     @Override
     public void deleteAccess(List<Long> selectedAccess, final String username) {
@@ -219,5 +235,5 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     public void onUpdateRoles(UpdateRolesEvent event) {
         getView().setRoleList(event.getRoles());
     }
-    
+
 }

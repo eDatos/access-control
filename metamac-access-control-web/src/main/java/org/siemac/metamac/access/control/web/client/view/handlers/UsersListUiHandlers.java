@@ -15,6 +15,7 @@ public interface UsersListUiHandlers extends UiHandlers {
     
     void retrieveUserAccess(String username);
     void saveAccess(AccessDto accessDto);
+    void saveAccess(List<AccessDto> accessDto);
     void deleteAccess(List<Long> selectedAccess, String username);
     
 }

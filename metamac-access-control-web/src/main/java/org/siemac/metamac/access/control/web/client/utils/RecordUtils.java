@@ -1,8 +1,10 @@
 package org.siemac.metamac.access.control.web.client.utils;
 
 import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.access.control.dto.serviceapi.AppDto;
 import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
 import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
+import org.siemac.metamac.access.control.web.client.model.record.AppRecord;
 import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
 
 
@@ -38,6 +40,17 @@ public class RecordUtils {
                 userDto.getSurname(),
                 userDto.getMail(), 
                 userDto);
+        return record;
+    }
+    
+    /**
+     * Returns a {@link AppRecord} from a {@link AppDto} 
+     * 
+     * @param appDto
+     * @return
+     */
+    public static AppRecord getAppRecord(AppDto appDto) {
+        AppRecord record = new AppRecord(appDto.getCode(), appDto.getTitle(), appDto.getDescription(), appDto);
         return record;
     }
     

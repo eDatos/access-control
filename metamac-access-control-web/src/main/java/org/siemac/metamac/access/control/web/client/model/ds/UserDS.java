@@ -26,6 +26,7 @@ public class UserDS extends DataSource {
         DataSourceTextField mail = new DataSourceTextField(UserRecord.MAIL, "mail");
         addField(mail);
         
+        setClientOnly(true);
     }
     
 }

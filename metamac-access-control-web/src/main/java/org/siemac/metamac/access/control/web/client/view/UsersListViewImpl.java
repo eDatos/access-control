@@ -18,18 +18,20 @@ import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
+import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
 import org.siemac.metamac.core.common.dto.serviceapi.ExternalItemBtDto;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
 import org.siemac.metamac.web.common.client.widgets.form.GroupDynamicForm;
 import org.siemac.metamac.web.common.client.widgets.form.MainFormLayout;
-import org.siemac.metamac.web.common.client.widgets.form.ViewMainFormLayout;
 import org.siemac.metamac.web.common.client.widgets.form.fields.EmailItem;
+import org.siemac.metamac.web.common.client.widgets.form.fields.ExternalDragAndDropItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredSelectItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredTextItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.ViewTextItem;
 
+import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.smartgwt.client.types.GroupStartOpen;
@@ -38,6 +40,8 @@ import com.smartgwt.client.types.Visibility;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.VisibilityChangedEvent;
+import com.smartgwt.client.widgets.events.VisibilityChangedHandler;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridFieldIfFunction;
@@ -58,6 +62,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private static final String ACCESS_APP = "app";
     private static final String ACCESS_OPERATION = "operation";
     
+    private static final String USER_LAYOUT_ID = "userlayout";
+    
     private VLayout panel;
     private ListGridToolStrip userToolStrip;
     private CustomListGrid usersListGrid;
@@ -74,20 +80,18 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private CustomListGrid accessListGrid;
     
     private MainFormLayout accessMainFormLayout;
-    private ViewMainFormLayout accessViewMainFormLayout;
     
-    private GroupDynamicForm viewAccessForm;
     private GroupDynamicForm editionAccessForm;
+    
+    private ExternalDragAndDropItem operationItem;
+    private AppDragAndDropItem appItem;
     
     private VLayout accessLayout;
     
     private UserDto userDto;
-    private AccessDto accessDto;
     
     private List<RoleDto> roleDtos;
-    private List<AppDto> appDtos;
-    private List<ExternalItemBtDto> operations;
-    
+
     
     public UsersListViewImpl() {
         super();
@@ -162,7 +166,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         // User Details
         
         userTitle = new TitleLabel();
-        userTitle.setStyleName("subsectionTitle");
+        userTitle.setStyleName("boldSubsectionTitle");
         userMainFormLayout = new MainFormLayout();
         userMainFormLayout.getSave().addClickHandler(new ClickHandler() {
             @Override
@@ -245,7 +249,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             @Override
             public void onClick(ClickEvent event) {
                if (editionAccessForm.validate()) {
-                   getUiHandlers().saveAccess(getAccess());
+                   getUiHandlers().saveAccess(getAccessList());
                }
             }
         });
@@ -258,11 +262,19 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 // }
             }
         });
+        accessMainFormLayout.addVisibilityChangedHandler(new VisibilityChangedHandler() {
+            @Override
+            public void onVisibilityChanged(VisibilityChangedEvent event) {
+                Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+                    @Override
+                    public void execute() {
+                        // Scroll to bottom
+                        panel.scrollTo(0, panel.getMember(USER_LAYOUT_ID).getBottom());
+                    }
+                });
+            }  
+        });
         
-        accessViewMainFormLayout = new ViewMainFormLayout();
-        accessViewMainFormLayout.setVisibility(Visibility.HIDDEN);
-        
-        createViewAccessForm();
         createEditionAccessForm();
         
         VLayout subAccessLayout = new VLayout();
@@ -272,9 +284,9 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         subAccessLayout.addMember(accessToolStrip);
         subAccessLayout.addMember(accessListGrid);
         subAccessLayout.addMember(accessMainFormLayout);
-        subAccessLayout.addMember(accessViewMainFormLayout);
         
         userLayout = new VLayout();
+        userLayout.setID(USER_LAYOUT_ID);
         userLayout.setVisibility(Visibility.HIDDEN);
         userLayout.addMember(userTitle);
         userLayout.addMember(userMainFormLayout);
@@ -311,6 +323,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         }
         accessListGrid.setData(records);
         accessLayout.show();
+        accessMainFormLayout.hide();
     }
     
     private List<Long> getSelectedUsers() {
@@ -425,58 +438,60 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
     
     private void selectAccess(AccessDto accessDto) {
-        this.accessDto = accessDto;
         if (accessDto.getId() == null) {
             accessToolStrip.getDeleteButton().hide();
             accessListGrid.deselectAllRecords();
             accessMainFormLayout.setEditionMode();
             accessMainFormLayout.show();
-            accessViewMainFormLayout.hide();
+            accessMainFormLayout.focus();
+            // Reset dragAndDrop items
+            appItem.resetValues();
+            operationItem.resetValues();
         } else {
             accessToolStrip.getDeleteButton().show();
-            accessViewMainFormLayout.show();
             accessMainFormLayout.hide();
         }
-        
         setAccess(accessDto);
     }
 
     private void deselectAccess() {
         accessToolStrip.getDeleteButton().hide();
-        accessViewMainFormLayout.hide();
-    }
-    
-    private void createViewAccessForm() {
-        viewAccessForm = new GroupDynamicForm(getConstants().role());
-        ViewTextItem role = new ViewTextItem(ACCESS_ROLE, getConstants().role());
-        viewAccessForm.setFields(role);
-        accessViewMainFormLayout.addViewCanvas(viewAccessForm);
     }
     
     private void createEditionAccessForm() {
         editionAccessForm = new GroupDynamicForm(getConstants().role());
         RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
-        editionAccessForm.setFields(role);
+        appItem = new AppDragAndDropItem(ACCESS_APP, getConstants().app(), ACCESS_APP);
+        appItem.setRequired(true);
+        appItem.setStartRow(true);
+        operationItem = new ExternalDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), ACCESS_OPERATION);
+        editionAccessForm.setFields(role, appItem, operationItem);
         accessMainFormLayout.addEditionCanvas(editionAccessForm);
     }
     
     private void setAccess(AccessDto accessDto) {
-        setAccessViewMode(accessDto);
         setAccessEditionMode(accessDto);
-    }
-    
-    private void setAccessViewMode(AccessDto accessDto) {
-        viewAccessForm.setValue(ACCESS_ROLE, accessDto.getRole() != null ? accessDto.getRole().getTitle() : null);
     }
     
     private void setAccessEditionMode(AccessDto accessDto) {
         editionAccessForm.setValue(ACCESS_ROLE, accessDto.getRole() != null ? accessDto.getRole().getId().toString() : null);
     }
     
-    private AccessDto getAccess() {
-        accessDto.setUser(userDto);
-        accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
-        return accessDto;
+    private List<AccessDto> getAccessList() {
+        List<AccessDto> accessList = new ArrayList<AccessDto>();
+        List<AppDto> applications = appItem.getSelectedAppDtos();
+        List<ExternalItemBtDto> operations = operationItem.getSelectedExternalItems();
+        for (AppDto app : applications) {
+            for (ExternalItemBtDto op : operations){
+                AccessDto accessDto = new AccessDto();
+                accessDto.setUser(userDto);
+                accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
+                accessDto.setApp(app);
+                accessDto.setOperation(op);
+                accessList.add(accessDto);
+            }
+        }
+        return accessList;
     }
 
     @Override
@@ -491,12 +506,12 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     @Override
     public void setApplicationList(List<AppDto> apps) {
-       this.appDtos = apps;
+        appItem.setSourceAppDtos(apps);
     }
 
     @Override
     public void setOperationList(List<ExternalItemBtDto> operations) {
-        this.operations = operations;
+        operationItem.setSourceExternalItems(operations);
     }
     
     private RoleDto getRoleDtoById(String id) {
