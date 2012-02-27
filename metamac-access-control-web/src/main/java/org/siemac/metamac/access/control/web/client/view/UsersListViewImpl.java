@@ -248,7 +248,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         accessMainFormLayout.getSave().addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
-               if (editionAccessForm.validate()) {
+               if (editionAccessForm.getItem(ACCESS_ROLE).validate() && appItem.validate()) {
                    getUiHandlers().saveAccess(getAccessList());
                }
             }
@@ -481,14 +481,24 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         List<AccessDto> accessList = new ArrayList<AccessDto>();
         List<AppDto> applications = appItem.getSelectedAppDtos();
         List<ExternalItemBtDto> operations = operationItem.getSelectedExternalItems();
-        for (AppDto app : applications) {
-            for (ExternalItemBtDto op : operations){
+        if (operations.isEmpty()) {
+            for (AppDto app : applications) {
                 AccessDto accessDto = new AccessDto();
                 accessDto.setUser(userDto);
                 accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
                 accessDto.setApp(app);
-                accessDto.setOperation(op);
                 accessList.add(accessDto);
+            }
+        } else {
+            for (AppDto app : applications) {
+                for (ExternalItemBtDto op : operations){
+                    AccessDto accessDto = new AccessDto();
+                    accessDto.setUser(userDto);
+                    accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
+                    accessDto.setApp(app);
+                    accessDto.setOperation(op);
+                    accessList.add(accessDto);
+                }
             }
         }
         return accessList;
