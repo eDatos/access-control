@@ -1,5 +1,4 @@
 import "classpath:/btdesign/metamac-access-control-core-dtos.btdesign"
-import "classpath:/btdesign/metamac-access-control-core-lists.btdesign"
 
 import "classpath:/btdesign/export/metamac-core-common-basictype.btdesign" 
 import "classpath:/btdesign/export/metamac-core-common-vo.btdesign" 
