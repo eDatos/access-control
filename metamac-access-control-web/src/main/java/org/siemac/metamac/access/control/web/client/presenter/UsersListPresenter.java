@@ -54,6 +54,9 @@ import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
 public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListView, UsersListPresenter.UsersListProxy> implements UsersListUiHandlers, UpdateRolesHandler, UpdateApplicationsHandler, UpdateOperationsHandler {
     
+    // private static Logger logger = Logger.getLogger(UsersListPresenter.class.getName());
+    
+    
     private final DispatchAsync dispatcher;
     
     @ProxyCodeSplit
