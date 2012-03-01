@@ -10,7 +10,7 @@
         <dependent-module archiveName="metamac-web-common-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/metamac-web-common/metamac-web-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="metamac-core-common-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/metamac-core-common/metamac-core-common">
+        <dependent-module archiveName="metamac-core-common-1.0-SNAPSHOT-client.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/metamac-core-common/metamac-core-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="metamac-access-control-core-1.0-SNAPSHOT-client.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/metamac-access-control-core/metamac-access-control-core">
