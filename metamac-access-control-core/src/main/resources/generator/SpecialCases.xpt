@@ -54,3 +54,9 @@ Attribute»
     	«targetDef.proceed()»
     «ENDIF»
 «ENDAROUND»
+
+«AROUND templates::db::OracleDDL::dropSequence FOR Application» 
+«ENDAROUND» 
+
+«AROUND templates::db::OracleDDL::createSequence FOR Application» 
+«ENDAROUND»
