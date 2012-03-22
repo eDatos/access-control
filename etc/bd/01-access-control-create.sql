@@ -1,8 +1,3 @@
--- Create pk sequence
-    
-create sequence hibernate_sequence;
-
-
 -- Create normal entities
     
 CREATE TABLE TBL_ROLES (
