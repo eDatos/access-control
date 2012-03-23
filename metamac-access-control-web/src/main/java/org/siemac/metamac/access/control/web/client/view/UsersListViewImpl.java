@@ -71,7 +71,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private Label title;
     
     private VLayout userLayout;
-    private TitleLabel userTitle;
     private MainFormLayout userMainFormLayout;
     private GroupDynamicForm viewUserForm;
     private GroupDynamicForm editionUserForm;
@@ -99,8 +98,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         panel.setOverflow(Overflow.SCROLL);
         
         title = new Label(getConstants().users());
-        title.setStyleName("sectionTitle");
-        title.setHeight(50);
+        title.setStyleName("usersSectionTitle");
+        title.setHeight(30);
         
         // Users ListGrid
         
@@ -159,14 +158,13 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         
         VLayout listGridLayout = new VLayout();
         listGridLayout.setAutoHeight();
+        listGridLayout.setMargin(15);
         listGridLayout.addMember(title);
         listGridLayout.addMember(userToolStrip);
         listGridLayout.addMember(usersListGrid);
         
         // User Details
         
-        userTitle = new TitleLabel();
-        userTitle.setStyleName("boldSubsectionTitle");
         userMainFormLayout = new MainFormLayout();
         userMainFormLayout.getSave().addClickHandler(new ClickHandler() {
             @Override
@@ -191,7 +189,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         // User Access
         
         TitleLabel accessTitle = new TitleLabel(getConstants().userAccess());
-        accessTitle.setStyleName("subsectionTitle");
+        accessTitle.setStyleName("accessSectionTitle");
+        accessTitle.setHeight(30);
         
         accessToolStrip = new ListGridToolStrip(getMessages().accessDeleteTitle(), getMessages().accessDeleteConfirmation());
         accessToolStrip.getNewButton().addClickHandler(new ClickHandler() {
@@ -280,7 +279,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         VLayout subAccessLayout = new VLayout();
         subAccessLayout.setAutoHeight();
         subAccessLayout.setBorder("1px solid #D9D9D9");
-        subAccessLayout.setMargin(15);
         subAccessLayout.addMember(accessToolStrip);
         subAccessLayout.addMember(accessListGrid);
         subAccessLayout.addMember(accessMainFormLayout);
@@ -288,10 +286,10 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         userLayout = new VLayout();
         userLayout.setID(USER_LAYOUT_ID);
         userLayout.setVisibility(Visibility.HIDDEN);
-        userLayout.addMember(userTitle);
         userLayout.addMember(userMainFormLayout);
         
         accessLayout = new VLayout();
+        accessLayout.setMargin(15);
         accessLayout.addMember(accessTitle);
         accessLayout.addMember(subAccessLayout);
         
@@ -338,7 +336,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     
     private void selectUser(UserDto userDto) {
         this.userDto = userDto;
-        userTitle.setContents(new String());
+        userMainFormLayout.clearTitleLabelContents();
         if (userDto.getId() == null) {
             userToolStrip.getDeleteButton().hide();
             usersListGrid.deselectAllRecords();
@@ -400,7 +398,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
     
     private void setUser(UserDto userDto) {
-        userTitle.setContents(userDto.getUsername());
+        userMainFormLayout.setTitleLabelContents(userDto.getUsername());
         setUserViewMode(userDto);
         setUserEditionMode(userDto);
     }
@@ -461,6 +459,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private void createEditionAccessForm() {
         editionAccessForm = new GroupDynamicForm(getConstants().role());
         RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
+        role.setWidth(305);
         appItem = new AppDragAndDropItem(ACCESS_APP, getConstants().app(), ACCESS_APP);
         appItem.setRequired(true);
         appItem.setStartRow(true);

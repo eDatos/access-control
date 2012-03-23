@@ -37,7 +37,8 @@ public class RoleHistoryViewImpl extends ViewWithUiHandlers<RoleHistoryUiHandler
 
         title = new Label(getConstants().roleHistory());
         title.setStyleName("sectionTitle");
-        title.setHeight(50);
+        title.setMargin(15);
+        title.setHeight(30);
         
         accessListGrid = new ListGrid();
         accessListGrid.setLeaveScrollbarGap(false);

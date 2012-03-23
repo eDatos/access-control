@@ -17,6 +17,8 @@ import org.siemac.metamac.access.control.web.shared.FindAllRolesResult;
 import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsResult;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
+import org.siemac.metamac.web.common.client.events.HideMessageEvent.HideMessageHandler;
+import org.siemac.metamac.web.common.client.events.HideMessageEvent;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent.SetTitleHandler;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
@@ -44,7 +46,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.HasClickHandlers;
 
-public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy> implements MainPageUiHandlers, ShowMessageHandler, SetTitleHandler {
+public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy> implements MainPageUiHandlers, ShowMessageHandler, HideMessageHandler, SetTitleHandler {
 
     private final PlaceManager placeManager;
     private final DispatchAsync dispatcher;
@@ -128,6 +130,16 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
     @Override
     public void onShowMessage(ShowMessageEvent event) {
         getView().showMessage(event.getMessages(), event.getMessageType());
+    }
+	
+    @ProxyEvent
+    @Override
+    public void onHideMessage(HideMessageEvent event) {
+        hideMessages();
+    }
+    
+    private void hideMessages() {
+        getView().hideMessages();
     }
 
 	@ProxyEvent
