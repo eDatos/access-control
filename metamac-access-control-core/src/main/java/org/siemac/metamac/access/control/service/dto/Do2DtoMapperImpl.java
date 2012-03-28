@@ -7,12 +7,12 @@ import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
-import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
-import org.siemac.metamac.access.control.dto.serviceapi.AppDto;
-import org.siemac.metamac.access.control.dto.serviceapi.RoleDto;
-import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.dto.serviceapi.ExternalItemBtDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.AppDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.RoleDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.UserDto;
 import org.springframework.stereotype.Component;
 
 @Component

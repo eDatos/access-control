@@ -1,4 +1,3 @@
-import "classpath:/btdesign/metamac-access-control-core-dtos.btdesign"
 import "classpath:/btdesign/metamac-access-control-core-base.btdesign"
 
 Application AccessControl {

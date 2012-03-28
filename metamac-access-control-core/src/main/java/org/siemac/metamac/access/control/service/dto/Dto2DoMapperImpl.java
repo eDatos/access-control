@@ -6,17 +6,16 @@ import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseService;
-import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
-import org.siemac.metamac.access.control.dto.serviceapi.AppDto;
-import org.siemac.metamac.access.control.dto.serviceapi.RoleDto;
-import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
+import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.dto.serviceapi.ExternalItemBtDto;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.AppDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.RoleDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import org.siemac.metamac.access.control.error.ServiceExceptionType;
 
 @Component
 public class Dto2DoMapperImpl implements Dto2DoMapper {
