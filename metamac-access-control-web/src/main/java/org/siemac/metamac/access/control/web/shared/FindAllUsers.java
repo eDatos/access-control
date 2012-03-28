@@ -12,5 +12,5 @@ public class FindAllUsers {
 
     @Out(1)
     List<UserDto> users;
-    
+
 }

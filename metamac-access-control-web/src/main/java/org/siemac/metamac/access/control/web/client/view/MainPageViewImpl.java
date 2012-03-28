@@ -26,23 +26,22 @@ import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
 public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> implements MainPagePresenter.MainPageView {
 
-    private static final int NORTH_HEIGHT = 85;
-    private static final String DEFAULT_MARGIN = "0px";
+    private static final int          NORTH_HEIGHT   = 85;
+    private static final String       DEFAULT_MARGIN = "0px";
 
-    private final MasterHead masterHead;
+    private final MasterHead          masterHead;
 
     private final SuccessMessagePanel successMessagePanel;
-    private final ErrorMessagePanel errorMessagePanel;
+    private final ErrorMessagePanel   errorMessagePanel;
 
-    private VLayout panel;
-    private VLayout northLayout;
-    private HLayout headerLayout;
-    private HLayout southLayout;
-    private HLayout footerLayout;
-    
-    private ToolStripButton usersButton;
-    private ToolStripButton roleHistoryButton;
-    
+    private VLayout                   panel;
+    private VLayout                   northLayout;
+    private HLayout                   headerLayout;
+    private HLayout                   southLayout;
+    private HLayout                   footerLayout;
+
+    private ToolStripButton           usersButton;
+    private ToolStripButton           roleHistoryButton;
 
     @Inject
     public MainPageViewImpl(MasterHead masterHead, SuccessMessagePanel successMessagePanel, ErrorMessagePanel errorMessagePanel) {
@@ -76,18 +75,18 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         ToolStrip toolStrip = new ToolStrip();
         toolStrip.setWidth100();
         toolStrip.setAlign(Alignment.LEFT);
-        
+
         usersButton = new ToolStripButton(getConstants().users());
         usersButton.setAutoFit(true);
         toolStrip.addButton(usersButton);
         roleHistoryButton = new ToolStripButton(getConstants().roleHistory());
         roleHistoryButton.setAutoFit(true);
         toolStrip.addButton(roleHistoryButton);
-        
+
         northLayout = new VLayout();
         northLayout.addMember(headerLayout);
         northLayout.addMember(toolStrip);
-        
+
         // Initialize the South layout container
         southLayout = new HLayout();
         southLayout.setHeight100();
@@ -103,8 +102,6 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         panel.addMember(southLayout);
         panel.addMember(footerLayout);
 
-
-
     }
 
     @Override
@@ -112,11 +109,9 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         return panel;
     }
 
-
     /****************************************************
      * Code for nested presenters.
      ***************************************************/
-
 
     /*
      * GWTP will call setInSlot when a child presenter asks to be added under this view
@@ -128,8 +123,8 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
                 southLayout.setMembers((VLayout) content);
             }
         } else {
-            // To support inheritance in your views it is good practice to call super.setInSlot when you can't handle the call. 
-            // Who knows, maybe the parent class knows what to do with this slot. 
+            // To support inheritance in your views it is good practice to call super.setInSlot when you can't handle the call.
+            // Who knows, maybe the parent class knows what to do with this slot.
             super.setInSlot(slot, content);
         }
     }
@@ -150,6 +145,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         if (MessageTypeEnum.SUCCESS.equals(type)) {
             successMessagePanel.showMessage(messages);
             Timer timer = new Timer() {
+
                 @Override
                 public void run() {
                     successMessagePanel.animateHide(AnimationEffect.FADE);
@@ -160,7 +156,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
             errorMessagePanel.showMessage(messages);
         }
     }
-    
+
     @Override
     public void hideMessages() {
         successMessagePanel.hide();

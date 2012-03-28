@@ -15,12 +15,11 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-
 public class DeleteRoleListActionHandler extends AbstractActionHandler<DeleteRoleListAction, DeleteRoleListResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
- 
+
     public DeleteRoleListActionHandler() {
         super(DeleteRoleListAction.class);
     }
@@ -40,7 +39,7 @@ public class DeleteRoleListActionHandler extends AbstractActionHandler<DeleteRol
 
     @Override
     public void undo(DeleteRoleListAction action, DeleteRoleListResult result, ExecutionContext context) throws ActionException {
-        
+
     }
-    
+
 }

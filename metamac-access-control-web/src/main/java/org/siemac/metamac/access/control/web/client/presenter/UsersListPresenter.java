@@ -51,31 +51,35 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
+public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListView, UsersListPresenter.UsersListProxy>
+        implements
+            UsersListUiHandlers,
+            UpdateRolesHandler,
+            UpdateApplicationsHandler,
+            UpdateOperationsHandler {
 
-public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListView, UsersListPresenter.UsersListProxy> implements UsersListUiHandlers, UpdateRolesHandler, UpdateApplicationsHandler, UpdateOperationsHandler {
-    
     // private static Logger logger = Logger.getLogger(UsersListPresenter.class.getName());
-    
-    
+
     private final DispatchAsync dispatcher;
-    
+
     @ProxyCodeSplit
     @NameToken(NameTokens.usersListPage)
     public interface UsersListProxy extends Proxy<UsersListPresenter>, Place {
     }
-    
+
     public interface UsersListView extends View, HasUiHandlers<UsersListUiHandlers> {
+
         void setUsersList(List<UserDto> userDtos);
         void onUserSaved(List<UserDto> userDtos, UserDto userDto);
         void setUserAccess(List<AccessDto> accessDtos);
-        
+
         void onAccessSaved(List<AccessDto> accessDtos, AccessDto accessDto);
-        
+
         void setRoleList(List<RoleDto> roles);
         void setApplicationList(List<AppDto> apps);
         void setOperationList(List<ExternalItemBtDto> operations);
     }
-    
+
     @Inject
     public UsersListPresenter(EventBus eventBus, UsersListView view, UsersListProxy proxy, DispatchAsync dispatcher) {
         super(eventBus, view, proxy);
@@ -87,21 +91,22 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     protected void revealInParent() {
         RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetContextAreaContent, this);
     }
-    
+
     @Override
     public void prepareFromRequest(PlaceRequest request) {
         super.prepareFromRequest(request);
         retrieveUsersList();
     }
-    
+
     @Override
     protected void onReset() {
         super.onReset();
         SetTitleEvent.fire(UsersListPresenter.this, getMessages().metamacAccessControl());
     }
-    
+
     private void retrieveUsersList() {
         dispatcher.execute(new FindAllUsersAction(), new AsyncCallback<FindAllUsersResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUsers()), MessageTypeEnum.ERROR);
@@ -116,13 +121,15 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     @Override
     public void deleteUsers(final List<Long> selectedUsers) {
         dispatcher.execute(new DeleteUserListAction(selectedUsers), new AsyncCallback<DeleteUserListResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorDeletingUser()), MessageTypeEnum.ERROR);
             }
             @Override
             public void onSuccess(DeleteUserListResult result) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(selectedUsers.size() > 1 ? getMessages().usersDeleted() : getMessages().userDeleted()), MessageTypeEnum.SUCCESS);
+                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(selectedUsers.size() > 1 ? getMessages().usersDeleted() : getMessages().userDeleted()),
+                        MessageTypeEnum.SUCCESS);
                 retrieveUsersList();
             }
         });
@@ -131,6 +138,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     @Override
     public void saveUser(UserDto userDto) {
         dispatcher.execute(new SaveUserAction(userDto), new AsyncCallback<SaveUserResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingUser()), MessageTypeEnum.ERROR);
@@ -140,6 +148,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
                 final UserDto userSaved = result.getUserDto();
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().userSaved()), MessageTypeEnum.SUCCESS);
                 dispatcher.execute(new FindAllUsersAction(), new AsyncCallback<FindAllUsersResult>() {
+
                     @Override
                     public void onFailure(Throwable caught) {
                         ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUsers()), MessageTypeEnum.ERROR);
@@ -152,10 +161,11 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
             }
         });
     }
-    
+
     @Override
     public void retrieveUserAccess(String username) {
         dispatcher.execute(new FindAccessByUserAction(username), new AsyncCallback<FindAccessByUserResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUserAccess()), MessageTypeEnum.ERROR);
@@ -170,15 +180,17 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     @Override
     public void saveAccess(final AccessDto accessDto) {
         dispatcher.execute(new SaveAccessAction(accessDto), new AsyncCallback<SaveAccessResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingRole()), MessageTypeEnum.ERROR); 
+                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingRole()), MessageTypeEnum.ERROR);
             }
             @Override
             public void onSuccess(SaveAccessResult result) {
-                final AccessDto accessSaved = result.getAccess(); 
+                final AccessDto accessSaved = result.getAccess();
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().accessSaved()), MessageTypeEnum.SUCCESS);
                 dispatcher.execute(new FindAccessByUserAction(accessDto.getUser().getUsername()), new AsyncCallback<FindAccessByUserResult>() {
+
                     @Override
                     public void onFailure(Throwable caught) {
                         ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUserAccess()), MessageTypeEnum.ERROR);
@@ -188,16 +200,17 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
                         getView().onAccessSaved(result.getAccessDtos(), accessSaved);
                     }
                 });
-            }}
-        );
+            }
+        });
     }
-    
+
     @Override
     public void saveAccess(final List<AccessDto> accessDtos) {
         dispatcher.execute(new SaveAccessListAction(accessDtos), new AsyncCallback<SaveAccessListResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingRole()), MessageTypeEnum.ERROR); 
+                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingRole()), MessageTypeEnum.ERROR);
             }
             @Override
             public void onSuccess(SaveAccessListResult result) {
@@ -209,6 +222,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     @Override
     public void deleteAccess(List<Long> selectedAccess, final String username) {
         dispatcher.execute(new DeleteAccessListAction(selectedAccess), new AsyncCallback<DeleteAccessListResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUserAccess()), MessageTypeEnum.ERROR);
@@ -217,8 +231,8 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
             public void onSuccess(DeleteAccessListResult result) {
                 retrieveUserAccess(username);
                 ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().accessDeleted()), MessageTypeEnum.SUCCESS);
-            }}
-        );
+            }
+        });
     }
 
     @ProxyEvent

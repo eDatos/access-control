@@ -11,8 +11,8 @@ public class SaveAccess {
 
     @In(1)
     AccessDto accessToSave;
-    
+
     @Out(1)
-    AccessDto access; 
-    
+    AccessDto access;
+
 }

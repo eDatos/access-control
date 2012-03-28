@@ -50,77 +50,78 @@ import com.smartgwt.client.widgets.grid.events.SelectionChangedHandler;
 import com.smartgwt.client.widgets.grid.events.SelectionEvent;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-
 public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> implements UsersListPresenter.UsersListView {
 
-    private static final String USER_USERNAME = "username";
-    private static final String USER_NAME = "name";
-    private static final String USER_SURNAME = "surname";
-    private static final String USER_MAIL = "mail";
-    
-    private static final String ACCESS_ROLE = "role";
-    private static final String ACCESS_APP = "app";
-    private static final String ACCESS_OPERATION = "operation";
-    
-    private static final String USER_LAYOUT_ID = "userlayout";
-    
-    private VLayout panel;
-    private ListGridToolStrip userToolStrip;
-    private CustomListGrid usersListGrid;
-    
-    private Label title;
-    
-    private VLayout userLayout;
-    private MainFormLayout userMainFormLayout;
-    private GroupDynamicForm viewUserForm;
-    private GroupDynamicForm editionUserForm;
-    
-    private ListGridToolStrip accessToolStrip;
-    private CustomListGrid accessListGrid;
-    
-    private MainFormLayout accessMainFormLayout;
-    
-    private GroupDynamicForm editionAccessForm;
-    
-    private ExternalDragAndDropItem operationItem;
-    private AppDragAndDropItem appItem;
-    
-    private VLayout accessLayout;
-    
-    private UserDto userDto;
-    
-    private List<RoleDto> roleDtos;
+    private static final String     USER_USERNAME    = "username";
+    private static final String     USER_NAME        = "name";
+    private static final String     USER_SURNAME     = "surname";
+    private static final String     USER_MAIL        = "mail";
 
-    
+    private static final String     ACCESS_ROLE      = "role";
+    private static final String     ACCESS_APP       = "app";
+    private static final String     ACCESS_OPERATION = "operation";
+
+    private static final String     USER_LAYOUT_ID   = "userlayout";
+
+    private VLayout                 panel;
+    private ListGridToolStrip       userToolStrip;
+    private CustomListGrid          usersListGrid;
+
+    private Label                   title;
+
+    private VLayout                 userLayout;
+    private MainFormLayout          userMainFormLayout;
+    private GroupDynamicForm        viewUserForm;
+    private GroupDynamicForm        editionUserForm;
+
+    private ListGridToolStrip       accessToolStrip;
+    private CustomListGrid          accessListGrid;
+
+    private MainFormLayout          accessMainFormLayout;
+
+    private GroupDynamicForm        editionAccessForm;
+
+    private ExternalDragAndDropItem operationItem;
+    private AppDragAndDropItem      appItem;
+
+    private VLayout                 accessLayout;
+
+    private UserDto                 userDto;
+
+    private List<RoleDto>           roleDtos;
+
     public UsersListViewImpl() {
         super();
         panel = new VLayout();
         panel.setOverflow(Overflow.SCROLL);
-        
+
         title = new Label(getConstants().users());
         title.setStyleName("usersSectionTitle");
         title.setHeight(30);
-        
+
         // Users ListGrid
-        
+
         userToolStrip = new ListGridToolStrip(getMessages().userDeleteTitle(), getMessages().userDeleteConfirmation());
         userToolStrip.getNewButton().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 selectUser(new UserDto());
             }
         });
         userToolStrip.getDeleteConfirmationWindow().getYesButton().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 getUiHandlers().deleteUsers(getSelectedUsers());
             }
         });
-        
+
         usersListGrid = new CustomListGrid();
         usersListGrid.setHeight(200);
         ListGridField idField = new ListGridField(UserRecord.ID, getConstants().identifier());
         idField.setShowIfCondition(new ListGridFieldIfFunction() {
+
             @Override
             public boolean execute(ListGrid grid, ListGridField field, int fieldNum) {
                 return false;
@@ -130,7 +131,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         ListGridField nameField = new ListGridField(UserRecord.NAME, getConstants().userName());
         ListGridField surnameField = new ListGridField(UserRecord.SURNAME, getConstants().userSurname());
         ListGridField mailField = new ListGridField(UserRecord.MAIL, getConstants().userMail());
-        
+
         UserDS userDS = new UserDS();
         usersListGrid.setDataSource(userDS);
         usersListGrid.setUseAllDataSourceFields(false);
@@ -138,6 +139,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         usersListGrid.setShowGroupSummary(true);
         usersListGrid.setGroupStartOpen(GroupStartOpen.ALL);
         usersListGrid.addSelectionChangedHandler(new SelectionChangedHandler() {
+
             @Override
             public void onSelectionChanged(SelectionEvent event) {
                 if (usersListGrid.getSelectedRecords() != null && usersListGrid.getSelectedRecords().length == 1) {
@@ -153,20 +155,19 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 }
             }
         });
-        
-       
-        
+
         VLayout listGridLayout = new VLayout();
         listGridLayout.setAutoHeight();
         listGridLayout.setMargin(15);
         listGridLayout.addMember(title);
         listGridLayout.addMember(userToolStrip);
         listGridLayout.addMember(usersListGrid);
-        
+
         // User Details
-        
+
         userMainFormLayout = new MainFormLayout();
         userMainFormLayout.getSave().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 if (editionUserForm.validate()) {
@@ -175,6 +176,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             }
         });
         userMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 // If it is a new user, hide mainFormLayout
@@ -185,31 +187,34 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         });
         createViewUserForm();
         createEditionUserForm();
-        
+
         // User Access
-        
+
         TitleLabel accessTitle = new TitleLabel(getConstants().userAccess());
         accessTitle.setStyleName("accessSectionTitle");
         accessTitle.setHeight(30);
-        
+
         accessToolStrip = new ListGridToolStrip(getMessages().accessDeleteTitle(), getMessages().accessDeleteConfirmation());
         accessToolStrip.getNewButton().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 selectAccess(new AccessDto());
             }
         });
         accessToolStrip.getDeleteConfirmationWindow().getYesButton().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 getUiHandlers().deleteAccess(getSelectedAccess(), userDto.getUsername());
             }
         });
-        
+
         accessListGrid = new CustomListGrid();
         accessListGrid.setHeight(300);
         ListGridField accessIdField = new ListGridField(AccessRecord.ID, getConstants().identifier());
         accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
+
             @Override
             public boolean execute(ListGrid grid, ListGridField field, int fieldNum) {
                 return false;
@@ -218,7 +223,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         ListGridField roleField = new ListGridField(AccessRecord.ROLE, getConstants().role());
         ListGridField appField = new ListGridField(AccessRecord.APP, getConstants().app());
         ListGridField opField = new ListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
-        
+
         accessListGrid.setDataSource(new AccessDS());
         accessListGrid.setUseAllDataSourceFields(false);
         accessListGrid.setFields(accessIdField, roleField, appField, opField);
@@ -226,6 +231,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         accessListGrid.setGroupStartOpen(GroupStartOpen.ALL);
         accessListGrid.setGroupByField(AccessRecord.ROLE);
         accessListGrid.addSelectionChangedHandler(new SelectionChangedHandler() {
+
             @Override
             public void onSelectionChanged(SelectionEvent event) {
                 if (accessListGrid.getSelectedRecord() != null && accessListGrid.getSelectedRecords().length == 1) {
@@ -241,64 +247,68 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 }
             }
         });
-        
+
         accessMainFormLayout = new MainFormLayout();
         accessMainFormLayout.setVisibility(Visibility.HIDDEN);
         accessMainFormLayout.getSave().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
-               if (editionAccessForm.getItem(ACCESS_ROLE).validate() && appItem.validate()) {
-                   getUiHandlers().saveAccess(getAccessList());
-               }
+                if (editionAccessForm.getItem(ACCESS_ROLE).validate() && appItem.validate()) {
+                    getUiHandlers().saveAccess(getAccessList());
+                }
             }
         });
         accessMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 // If it is a new user, hide mainFormLayout
                 // if (accessDto.getId() == null) {
-                    accessMainFormLayout.hide();
+                accessMainFormLayout.hide();
                 // }
             }
         });
         accessMainFormLayout.addVisibilityChangedHandler(new VisibilityChangedHandler() {
+
             @Override
             public void onVisibilityChanged(VisibilityChangedEvent event) {
                 Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
                     @Override
                     public void execute() {
                         // Scroll to bottom
                         panel.scrollTo(0, panel.getMember(USER_LAYOUT_ID).getBottom());
                     }
                 });
-            }  
+            }
         });
-        
+
         createEditionAccessForm();
-        
+
         VLayout subAccessLayout = new VLayout();
         subAccessLayout.setAutoHeight();
         subAccessLayout.setBorder("1px solid #D9D9D9");
         subAccessLayout.addMember(accessToolStrip);
         subAccessLayout.addMember(accessListGrid);
         subAccessLayout.addMember(accessMainFormLayout);
-        
+
         userLayout = new VLayout();
         userLayout.setID(USER_LAYOUT_ID);
         userLayout.setVisibility(Visibility.HIDDEN);
         userLayout.addMember(userMainFormLayout);
-        
+
         accessLayout = new VLayout();
         accessLayout.setMargin(15);
         accessLayout.addMember(accessTitle);
         accessLayout.addMember(subAccessLayout);
-        
+
         userLayout.addMember(accessLayout);
-        
+
         panel.addMember(listGridLayout);
         panel.addMember(userLayout);
     }
-    
+
     @Override
     public Widget asWidget() {
         return panel;
@@ -312,7 +322,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         }
         usersListGrid.setData(records);
     }
-    
+
     @Override
     public void setUserAccess(List<AccessDto> accessDtos) {
         AccessRecord[] records = new AccessRecord[accessDtos.size()];
@@ -323,7 +333,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         accessLayout.show();
         accessMainFormLayout.hide();
     }
-    
+
     private List<Long> getSelectedUsers() {
         List<Long> selectedUsers = new ArrayList<Long>();
         ListGridRecord[] records = usersListGrid.getSelectedRecords();
@@ -333,7 +343,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         }
         return selectedUsers;
     }
-    
+
     private void selectUser(UserDto userDto) {
         this.userDto = userDto;
         userMainFormLayout.clearTitleLabelContents();
@@ -358,7 +368,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         userToolStrip.getDeleteButton().hide();
         userLayout.hide();
     }
-    
+
     private void createViewUserForm() {
         viewUserForm = new GroupDynamicForm(getConstants().user());
         ViewTextItem username = new ViewTextItem(USER_USERNAME, getConstants().userUsername());
@@ -368,7 +378,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         viewUserForm.setFields(username, name, surname, mail);
         userMainFormLayout.addViewCanvas(viewUserForm);
     }
-    
+
     private void createEditionUserForm() {
         editionUserForm = new GroupDynamicForm(getConstants().user());
         RequiredTextItem username = new RequiredTextItem(USER_USERNAME, getConstants().userUsername());
@@ -385,7 +395,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         UserRecord[] records = new UserRecord[userDtos.size()];
         UserRecord savedRecord = null;
         for (int i = 0; i < userDtos.size(); i++) {
-            UserRecord userRecord = RecordUtils.getUserRecord(userDtos.get(i)); 
+            UserRecord userRecord = RecordUtils.getUserRecord(userDtos.get(i));
             records[i] = userRecord;
             if (userDto.getId().compareTo(userRecord.getId()) == 0) {
                 savedRecord = userRecord;
@@ -396,27 +406,27 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             usersListGrid.selectRecord(savedRecord);
         }
     }
-    
+
     private void setUser(UserDto userDto) {
         userMainFormLayout.setTitleLabelContents(userDto.getUsername());
         setUserViewMode(userDto);
         setUserEditionMode(userDto);
     }
-    
+
     private void setUserViewMode(UserDto userDto) {
         viewUserForm.setValue(USER_USERNAME, userDto.getUsername());
         viewUserForm.setValue(USER_NAME, userDto.getName());
         viewUserForm.setValue(USER_SURNAME, userDto.getSurname());
         viewUserForm.setValue(USER_MAIL, userDto.getMail());
     }
-    
+
     private void setUserEditionMode(UserDto userDto) {
         editionUserForm.setValue(USER_USERNAME, userDto.getUsername());
         editionUserForm.setValue(USER_NAME, userDto.getName());
         editionUserForm.setValue(USER_SURNAME, userDto.getSurname());
         editionUserForm.setValue(USER_MAIL, userDto.getMail());
     }
-    
+
     private UserDto getUser() {
         userDto.setUsername(editionUserForm.getValueAsString(USER_USERNAME));
         userDto.setName(editionUserForm.getValueAsString(USER_NAME));
@@ -424,7 +434,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         userDto.setMail(editionUserForm.getValueAsString(USER_MAIL));
         return userDto;
     }
-    
+
     private List<Long> getSelectedAccess() {
         List<Long> selectedAccess = new ArrayList<Long>();
         ListGridRecord[] records = accessListGrid.getSelectedRecords();
@@ -434,7 +444,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         }
         return selectedAccess;
     }
-    
+
     private void selectAccess(AccessDto accessDto) {
         if (accessDto.getId() == null) {
             accessToolStrip.getDeleteButton().hide();
@@ -455,7 +465,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private void deselectAccess() {
         accessToolStrip.getDeleteButton().hide();
     }
-    
+
     private void createEditionAccessForm() {
         editionAccessForm = new GroupDynamicForm(getConstants().role());
         RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
@@ -467,15 +477,15 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         editionAccessForm.setFields(role, appItem, operationItem);
         accessMainFormLayout.addEditionCanvas(editionAccessForm);
     }
-    
+
     private void setAccess(AccessDto accessDto) {
         setAccessEditionMode(accessDto);
     }
-    
+
     private void setAccessEditionMode(AccessDto accessDto) {
         editionAccessForm.setValue(ACCESS_ROLE, accessDto.getRole() != null ? accessDto.getRole().getId().toString() : null);
     }
-    
+
     private List<AccessDto> getAccessList() {
         List<AccessDto> accessList = new ArrayList<AccessDto>();
         List<AppDto> applications = appItem.getSelectedAppDtos();
@@ -490,7 +500,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             }
         } else {
             for (AppDto app : applications) {
-                for (ExternalItemBtDto op : operations){
+                for (ExternalItemBtDto op : operations) {
                     AccessDto accessDto = new AccessDto();
                     accessDto.setUser(userDto);
                     accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
@@ -522,7 +532,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     public void setOperationList(List<ExternalItemBtDto> operations) {
         operationItem.setSourceExternalItems(operations);
     }
-    
+
     private RoleDto getRoleDtoById(String id) {
         for (RoleDto role : roleDtos) {
             if (role.getId().compareTo(Long.valueOf(id)) == 0) {
@@ -537,7 +547,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         AccessRecord[] records = new AccessRecord[accessDtos.size()];
         AccessRecord savedRecord = null;
         for (int i = 0; i < accessDtos.size(); i++) {
-            AccessRecord accessRecord = RecordUtils.getAccessRecord(accessDtos.get(i)); 
+            AccessRecord accessRecord = RecordUtils.getAccessRecord(accessDtos.get(i));
             records[i] = accessRecord;
             if (accessDto.getId().compareTo(accessRecord.getId()) == 0) {
                 savedRecord = accessRecord;

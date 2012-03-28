@@ -13,13 +13,11 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-
-public class FindAllStatisticalOperationsActionHandler extends AbstractActionHandler< FindAllStatisticalOperationsAction,  FindAllStatisticalOperationsResult> {
+public class FindAllStatisticalOperationsActionHandler extends AbstractActionHandler<FindAllStatisticalOperationsAction, FindAllStatisticalOperationsResult> {
 
     @Autowired
     private MetamacCoreCommonService metamacCoreCommonService;
-    
-    
+
     public FindAllStatisticalOperationsActionHandler() {
         super(FindAllStatisticalOperationsAction.class);
     }
@@ -32,7 +30,7 @@ public class FindAllStatisticalOperationsActionHandler extends AbstractActionHan
 
     @Override
     public void undo(FindAllStatisticalOperationsAction action, FindAllStatisticalOperationsResult result, ExecutionContext context) throws ActionException {
-        
+
     }
-    
+
 }

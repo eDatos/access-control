@@ -21,15 +21,13 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridFieldIfFunction;
 import com.smartgwt.client.widgets.layout.VLayout;
 
-
 public class RoleHistoryViewImpl extends ViewWithUiHandlers<RoleHistoryUiHandlers> implements RoleHistoryPresenter.RoleHistoryView {
 
-    private VLayout panel;
-    private Label title;
-    
+    private VLayout  panel;
+    private Label    title;
+
     private ListGrid accessListGrid;
-    
-    
+
     public RoleHistoryViewImpl() {
         super();
         panel = new VLayout();
@@ -39,11 +37,12 @@ public class RoleHistoryViewImpl extends ViewWithUiHandlers<RoleHistoryUiHandler
         title.setStyleName("sectionTitle");
         title.setMargin(15);
         title.setHeight(30);
-        
+
         accessListGrid = new ListGrid();
         accessListGrid.setLeaveScrollbarGap(false);
         ListGridField accessIdField = new ListGridField(AccessRecord.ID, getConstants().identifier());
         accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
+
             @Override
             public boolean execute(ListGrid grid, ListGridField field, int fieldNum) {
                 return false;
@@ -54,19 +53,19 @@ public class RoleHistoryViewImpl extends ViewWithUiHandlers<RoleHistoryUiHandler
         ListGridField appField = new ListGridField(AccessRecord.APP, getConstants().app());
         ListGridField opField = new ListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
         ListGridField dateField = new ListGridField(AccessRecord.REMOVAL_DATE, getConstants().removalDate());
-        
+
         accessListGrid.setDataSource(new AccessDS());
         accessListGrid.setUseAllDataSourceFields(false);
         accessListGrid.setFields(accessIdField, userField, roleField, appField, opField, dateField);
         accessListGrid.setShowGroupSummary(true);
         accessListGrid.setGroupStartOpen(GroupStartOpen.ALL);
         accessListGrid.setGroupByField(AccessRecord.USER);
-        
+
         panel.addMember(title);
         panel.addMember(accessListGrid);
 
     }
-    
+
     @Override
     public Widget asWidget() {
         return panel;

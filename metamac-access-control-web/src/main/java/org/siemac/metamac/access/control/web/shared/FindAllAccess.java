@@ -12,5 +12,5 @@ public class FindAllAccess {
 
     @Out(1)
     List<AccessDto> access;
-    
+
 }

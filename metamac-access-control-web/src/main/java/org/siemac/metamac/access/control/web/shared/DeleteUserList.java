@@ -10,5 +10,5 @@ public class DeleteUserList {
 
     @In(1)
     List<Long> userIds;
-    
+
 }

@@ -12,5 +12,5 @@ public class FindAllRemovedAccess {
 
     @Out(1)
     List<AccessDto> accessDtos;
-    
+
 }

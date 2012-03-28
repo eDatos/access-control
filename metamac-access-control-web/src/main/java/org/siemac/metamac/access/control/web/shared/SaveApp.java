@@ -11,8 +11,8 @@ public class SaveApp {
 
     @In(1)
     AppDto appToSave;
-    
+
     @Out(1)
     AppDto appDto;
-    
+
 }

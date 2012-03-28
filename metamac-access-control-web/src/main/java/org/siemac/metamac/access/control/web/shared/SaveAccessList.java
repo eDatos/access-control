@@ -13,8 +13,8 @@ public class SaveAccessList {
 
     @In(1)
     List<AccessDto> accessToSave;
- 
+
     @Out(1)
     List<AccessDto> accessDtos;
-    
+
 }

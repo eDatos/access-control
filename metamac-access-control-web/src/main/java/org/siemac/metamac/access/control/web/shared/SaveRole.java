@@ -11,8 +11,8 @@ public class SaveRole {
 
     @In(1)
     RoleDto roleToSave;
-    
+
     @Out(1)
     RoleDto roleDto;
-    
+
 }

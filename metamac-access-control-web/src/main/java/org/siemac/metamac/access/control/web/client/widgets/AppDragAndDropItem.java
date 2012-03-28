@@ -12,28 +12,28 @@ import com.smartgwt.client.widgets.grid.HoverCustomizer;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
-
 public class AppDragAndDropItem extends DragAndDropItem {
 
     private List<AppDto> appDtos;
-    
+
     public AppDragAndDropItem(String name, String title, String dragDropType) {
         super(name, title, dragDropType);
-        
-//        ListGridField codeField = new ListGridField(AppRecord.CODE);
-//        codeField.setWidth("20%");
-//        codeField.setShowHover(true);
-//        codeField.setHoverCustomizer(new HoverCustomizer() {
-//            @Override
-//            public String hoverHTML(Object value, ListGridRecord record, int rowNum, int colNum) {
-//                AppRecord appRecord = (AppRecord) record;
-//                return appRecord.getCode();
-//            }
-//        });
+
+        // ListGridField codeField = new ListGridField(AppRecord.CODE);
+        // codeField.setWidth("20%");
+        // codeField.setShowHover(true);
+        // codeField.setHoverCustomizer(new HoverCustomizer() {
+        // @Override
+        // public String hoverHTML(Object value, ListGridRecord record, int rowNum, int colNum) {
+        // AppRecord appRecord = (AppRecord) record;
+        // return appRecord.getCode();
+        // }
+        // });
 
         ListGridField titleField = new ListGridField(AppRecord.TITLE);
         titleField.setShowHover(true);
         titleField.setHoverCustomizer(new HoverCustomizer() {
+
             @Override
             public String hoverHTML(Object value, ListGridRecord record, int rowNum, int colNum) {
                 AppRecord appRecord = (AppRecord) record;
@@ -44,7 +44,7 @@ public class AppDragAndDropItem extends DragAndDropItem {
         sourceList.setDataSource(new AppDS());
         sourceList.setUseAllDataSourceFields(false);
         sourceList.setFields(titleField);
-        
+
         targetList.setDataSource(new AppDS());
         targetList.setUseAllDataSourceFields(false);
         targetList.setFields(titleField);
@@ -58,7 +58,7 @@ public class AppDragAndDropItem extends DragAndDropItem {
         }
         sourceList.setData(records);
     }
-    
+
     public void setTargetAppDtos(List<AppDto> appDtos) {
         AppRecord[] records = new AppRecord[appDtos.size()];
         for (int i = 0; i < appDtos.size(); i++) {
@@ -66,7 +66,7 @@ public class AppDragAndDropItem extends DragAndDropItem {
         }
         targetList.setData(records);
     }
-    
+
     public List<AppDto> getSelectedAppDtos() {
         List<AppDto> selectedItems = new ArrayList<AppDto>();
         ListGridRecord[] records = targetList.getRecords();
@@ -76,10 +76,10 @@ public class AppDragAndDropItem extends DragAndDropItem {
         }
         return selectedItems;
     }
-    
+
     public void resetValues() {
         clearValue();
         setSourceAppDtos(appDtos);
     }
-    
+
 }

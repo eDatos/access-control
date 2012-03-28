@@ -17,27 +17,27 @@ import com.gwtplatform.mvp.client.gin.DefaultModule;
 
 public class ClientModule extends AbstractPresenterModule {
 
-	@Override
-	protected void configure() {
-	    // Default implementation of standard resources
-		//	 |_   bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
-		//	 |_   bind(TokenFormatter.class).to(ParameterTokenFormatter.class).in(Singleton.class);
-		//	 |_   bind(RootPresenter.class).asEagerSingleton();
-		//	 |_   bind(PlaceManager.class).to(MyPlaceManager.class).in(Singleton.class);
-		//	 |_   bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class).in(Singleton.class);		
-	    install(new DefaultModule(AccessControlPlaceManager.class));
-	    
-	    // Constants
+    @Override
+    protected void configure() {
+        // Default implementation of standard resources
+        // |_ bind(EventBus.class).to(SimpleEventBus.class).in(Singleton.class);
+        // |_ bind(TokenFormatter.class).to(ParameterTokenFormatter.class).in(Singleton.class);
+        // |_ bind(RootPresenter.class).asEagerSingleton();
+        // |_ bind(PlaceManager.class).to(MyPlaceManager.class).in(Singleton.class);
+        // |_ bind(GoogleAnalytics.class).to(GoogleAnalyticsImpl.class).in(Singleton.class);
+        install(new DefaultModule(AccessControlPlaceManager.class));
+
+        // Constants
         bindConstant().annotatedWith(DefaultPlace.class).to(NameTokens.usersListPage);
-	    
-		// Presenters
-	    bindPresenter(MainPagePresenter.class, MainPagePresenter.MainPageView.class, MainPageViewImpl.class, MainPagePresenter.MainPageProxy.class);
-	    bindPresenter(UsersListPresenter.class, UsersListPresenter.UsersListView.class, UsersListViewImpl.class, UsersListPresenter.UsersListProxy.class);
-	    bindPresenter(RoleHistoryPresenter.class, RoleHistoryPresenter.RoleHistoryView.class, RoleHistoryViewImpl.class, RoleHistoryPresenter.RoleHistoryProxy.class);
-	    
-	    bind(AccessControlWebConstants.class).in(Singleton.class);
-	    bind(AccessControlWebMessages.class).in(Singleton.class);
-	    
-	}
-	
+
+        // Presenters
+        bindPresenter(MainPagePresenter.class, MainPagePresenter.MainPageView.class, MainPageViewImpl.class, MainPagePresenter.MainPageProxy.class);
+        bindPresenter(UsersListPresenter.class, UsersListPresenter.UsersListView.class, UsersListViewImpl.class, UsersListPresenter.UsersListProxy.class);
+        bindPresenter(RoleHistoryPresenter.class, RoleHistoryPresenter.RoleHistoryView.class, RoleHistoryViewImpl.class, RoleHistoryPresenter.RoleHistoryProxy.class);
+
+        bind(AccessControlWebConstants.class).in(Singleton.class);
+        bind(AccessControlWebMessages.class).in(Singleton.class);
+
+    }
+
 }

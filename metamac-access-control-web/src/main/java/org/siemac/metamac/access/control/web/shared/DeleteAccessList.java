@@ -10,5 +10,5 @@ public class DeleteAccessList {
 
     @In(1)
     List<Long> accessIds;
-    
+
 }

@@ -15,12 +15,11 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-
 public class DeleteAppListActionHandler extends AbstractActionHandler<DeleteAppListAction, DeleteAppListResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
- 
+
     public DeleteAppListActionHandler() {
         super(DeleteAppListAction.class);
     }
@@ -40,7 +39,7 @@ public class DeleteAppListActionHandler extends AbstractActionHandler<DeleteAppL
 
     @Override
     public void undo(DeleteAppListAction action, DeleteAppListResult result, ExecutionContext context) throws ActionException {
-        
+
     }
-    
+
 }

@@ -16,15 +16,15 @@ import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 @GinModules({DispatchAsyncModule.class, ClientModule.class})
 public interface AccessControlWebGinjector extends Ginjector {
-	
-	PlaceManager getPlaceManager();
-	EventBus getEventBus();
-		
-	Provider<MainPagePresenter> getMainPagePresenter();
-	AsyncProvider<UsersListPresenter> getUsersListPresenter();
-	AsyncProvider<RoleHistoryPresenter> getRoleHistoryPresenter();
-	
-	public AccessControlWebConstants getAccessControlWebConstants();
-	public AccessControlWebMessages getAccessControlWebMessages();
+
+    PlaceManager getPlaceManager();
+    EventBus getEventBus();
+
+    Provider<MainPagePresenter> getMainPagePresenter();
+    AsyncProvider<UsersListPresenter> getUsersListPresenter();
+    AsyncProvider<RoleHistoryPresenter> getRoleHistoryPresenter();
+
+    public AccessControlWebConstants getAccessControlWebConstants();
+    public AccessControlWebMessages getAccessControlWebMessages();
 
 }

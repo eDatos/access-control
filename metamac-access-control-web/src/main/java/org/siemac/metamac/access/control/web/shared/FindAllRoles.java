@@ -12,5 +12,5 @@ public class FindAllRoles {
 
     @Out(1)
     List<RoleDto> roles;
-    
+
 }

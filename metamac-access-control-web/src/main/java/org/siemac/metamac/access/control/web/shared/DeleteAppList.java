@@ -10,5 +10,5 @@ public class DeleteAppList {
 
     @In(1)
     List<Long> appIds;
-    
+
 }

@@ -46,110 +46,119 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.HasClickHandlers;
 
-public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy> implements MainPageUiHandlers, ShowMessageHandler, HideMessageHandler, SetTitleHandler {
+public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView, MainPagePresenter.MainPageProxy>
+        implements
+            MainPageUiHandlers,
+            ShowMessageHandler,
+            HideMessageHandler,
+            SetTitleHandler {
 
-    private final PlaceManager placeManager;
+    private final PlaceManager  placeManager;
     private final DispatchAsync dispatcher;
-    
-	@ProxyStandard
-	@NameToken(NameTokens.mainPage)
-	public interface MainPageProxy extends Proxy<MainPagePresenter>, Place {
 
-	}
-	
-	public interface MainPageView extends View, HasUiHandlers<MainPageUiHandlers> {
-	    void showMessage(List<String> messages, MessageTypeEnum type);
+    @ProxyStandard
+    @NameToken(NameTokens.mainPage)
+    public interface MainPageProxy extends Proxy<MainPagePresenter>, Place {
+
+    }
+
+    public interface MainPageView extends View, HasUiHandlers<MainPageUiHandlers> {
+
+        void showMessage(List<String> messages, MessageTypeEnum type);
         void hideMessages();
         void setTitle(String title);
-        
+
         HasClickHandlers goToUsersListPage();
         HasClickHandlers goToRoleHistoryPage();
-	}
+    }
 
-	/**
-	 * Use this in leaf presenters, inside their {@link #revealInParent} method.
-	 * Is used to define a type to use in child presenters when you want to
-	 * include them inside this page.
-	 */
-	@ContentSlot
-	public static final Type<RevealContentHandler<?>> TYPE_SetContextAreaContent = new Type<RevealContentHandler<?>>();
+    /**
+     * Use this in leaf presenters, inside their {@link #revealInParent} method.
+     * Is used to define a type to use in child presenters when you want to
+     * include them inside this page.
+     */
+    @ContentSlot
+    public static final Type<RevealContentHandler<?>> TYPE_SetContextAreaContent = new Type<RevealContentHandler<?>>();
 
-	@Inject
-	public MainPagePresenter(EventBus eventBus, MainPageView view, MainPageProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
-		super(eventBus, view, proxy);
-		this.placeManager = placeManager;
-		this.dispatcher = dispatcher;
-		getView().setUiHandlers(this);
-	}
+    @Inject
+    public MainPagePresenter(EventBus eventBus, MainPageView view, MainPageProxy proxy, PlaceManager placeManager, DispatchAsync dispatcher) {
+        super(eventBus, view, proxy);
+        this.placeManager = placeManager;
+        this.dispatcher = dispatcher;
+        getView().setUiHandlers(this);
+    }
 
-	@Override
-	protected void onBind() {
-		super.onBind();
-		
-		registerHandler(getView().goToUsersListPage().addClickHandler(new ClickHandler() {
+    @Override
+    protected void onBind() {
+        super.onBind();
+
+        registerHandler(getView().goToUsersListPage().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 placeManager.revealPlace(new PlaceRequest(NameTokens.usersListPage));
             }
         }));
 
-		registerHandler(getView().goToRoleHistoryPage().addClickHandler(new ClickHandler() {
+        registerHandler(getView().goToRoleHistoryPage().addClickHandler(new ClickHandler() {
+
             @Override
             public void onClick(ClickEvent event) {
                 placeManager.revealPlace(new PlaceRequest(NameTokens.roleHistoryPage));
             }
-		}));
-		
-		// TODO Is this the proper place to load value lists?
-		loadRoles();
-		loadOperations();
-		loadApplications();
-	}
+        }));
 
-	@Override
-	public void prepareFromRequest(PlaceRequest request) {
-		super.prepareFromRequest(request);
-	}
+        // TODO Is this the proper place to load value lists?
+        loadRoles();
+        loadOperations();
+        loadApplications();
+    }
 
-	@Override
-	protected void onReveal() {
-		super.onReveal();
-	}
+    @Override
+    public void prepareFromRequest(PlaceRequest request) {
+        super.prepareFromRequest(request);
+    }
 
-	@Override
-	protected void onReset() {
-		super.onReset();
-	}
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+    }
 
-	@Override
-	protected void revealInParent() {
-		RevealRootContentEvent.fire(this, this);
-	}
-	
-	@ProxyEvent
+    @Override
+    protected void onReset() {
+        super.onReset();
+    }
+
+    @Override
+    protected void revealInParent() {
+        RevealRootContentEvent.fire(this, this);
+    }
+
+    @ProxyEvent
     @Override
     public void onShowMessage(ShowMessageEvent event) {
         getView().showMessage(event.getMessages(), event.getMessageType());
     }
-	
+
     @ProxyEvent
     @Override
     public void onHideMessage(HideMessageEvent event) {
         hideMessages();
     }
-    
+
     private void hideMessages() {
         getView().hideMessages();
     }
 
-	@ProxyEvent
+    @ProxyEvent
     @Override
     public void onSetTitle(SetTitleEvent event) {
         getView().setTitle(event.getTitle());
     }
 
-	private void loadRoles() {
-	    dispatcher.execute(new FindAllRolesAction(), new AsyncCallback<FindAllRolesResult>() {
+    private void loadRoles() {
+        dispatcher.execute(new FindAllRolesAction(), new AsyncCallback<FindAllRolesResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingRoles()), MessageTypeEnum.ERROR);
@@ -157,12 +166,13 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
             @Override
             public void onSuccess(FindAllRolesResult result) {
                 UpdateRolesEvent.fire(MainPagePresenter.this, result.getRoles());
-            }}
-	    );
-	}
-	
-	private void loadOperations() {
-	    dispatcher.execute(new FindAllStatisticalOperationsAction(), new AsyncCallback<FindAllStatisticalOperationsResult>() {
+            }
+        });
+    }
+
+    private void loadOperations() {
+        dispatcher.execute(new FindAllStatisticalOperationsAction(), new AsyncCallback<FindAllStatisticalOperationsResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingOperations()), MessageTypeEnum.ERROR);
@@ -170,12 +180,13 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
             @Override
             public void onSuccess(FindAllStatisticalOperationsResult result) {
                 UpdateOperationsEvent.fire(MainPagePresenter.this, result.getOperations());
-            }}
-	    );
-	}
-	
-	private void loadApplications() {
-       dispatcher.execute(new FindAllAppsAction(), new AsyncCallback<FindAllAppsResult>() {
+            }
+        });
+    }
+
+    private void loadApplications() {
+        dispatcher.execute(new FindAllAppsAction(), new AsyncCallback<FindAllAppsResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingApplications()), MessageTypeEnum.ERROR);
@@ -183,8 +194,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
             @Override
             public void onSuccess(FindAllAppsResult result) {
                 UpdateApplicationsEvent.fire(MainPagePresenter.this, result.getApps());
-            }}
-        );
-	}
-	
+            }
+        });
+    }
+
 }

@@ -12,5 +12,5 @@ public class FindAllApps {
 
     @Out(1)
     List<AppDto> apps;
-    
+
 }

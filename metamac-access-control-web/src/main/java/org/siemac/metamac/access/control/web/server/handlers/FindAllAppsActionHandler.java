@@ -16,13 +16,11 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-
 public class FindAllAppsActionHandler extends AbstractActionHandler<FindAllAppsAction, FindAllAppsResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
 
-    
     public FindAllAppsActionHandler() {
         super(FindAllAppsAction.class);
     }
@@ -39,7 +37,7 @@ public class FindAllAppsActionHandler extends AbstractActionHandler<FindAllAppsA
 
     @Override
     public void undo(FindAllAppsAction action, FindAllAppsResult result, ExecutionContext context) throws ActionException {
-        
+
     }
-    
+
 }

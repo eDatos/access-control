@@ -27,21 +27,21 @@ import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 
-
 public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHistoryView, RoleHistoryPresenter.RoleHistoryProxy> implements RoleHistoryUiHandlers {
 
     private final DispatchAsync dispatcher;
-    
+
     @ProxyCodeSplit
     @NameToken(NameTokens.roleHistoryPage)
     public interface RoleHistoryProxy extends Proxy<RoleHistoryPresenter>, Place {
-    
+
     }
-    
+
     public interface RoleHistoryView extends View, HasUiHandlers<RoleHistoryUiHandlers> {
+
         void setRemovedAccess(List<AccessDto> accessDtos);
     }
-    
+
     @Inject
     public RoleHistoryPresenter(EventBus eventBus, RoleHistoryView view, RoleHistoryProxy proxy, DispatchAsync dispatcher) {
         super(eventBus, view, proxy);
@@ -53,15 +53,16 @@ public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHis
     protected void revealInParent() {
         RevealContentEvent.fire(this, MainPagePresenter.TYPE_SetContextAreaContent, this);
     }
-    
+
     @Override
     public void prepareFromRequest(PlaceRequest request) {
         super.prepareFromRequest(request);
         retrieveDischargedAccess();
     }
-    
+
     private void retrieveDischargedAccess() {
         dispatcher.execute(new FindAllRemovedAccessAction(), new AsyncCallback<FindAllRemovedAccessResult>() {
+
             @Override
             public void onFailure(Throwable caught) {
                 ShowMessageEvent.fire(RoleHistoryPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingDischargedAccess()), MessageTypeEnum.ERROR);
@@ -69,8 +70,8 @@ public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHis
             @Override
             public void onSuccess(FindAllRemovedAccessResult result) {
                 getView().setRemovedAccess(result.getAccessDtos());
-            }}
-        );
+            }
+        });
     }
-    
+
 }

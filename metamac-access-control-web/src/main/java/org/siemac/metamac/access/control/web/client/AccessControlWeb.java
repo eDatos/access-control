@@ -9,48 +9,47 @@ import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 
-
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class AccessControlWeb implements EntryPoint {
-	
-    private static AccessControlWebConstants constants;
-    private static AccessControlWebMessages messages;
-    private static AccessControlWebCoreMessages coreMessages;
-    
+
+    private static AccessControlWebConstants      constants;
+    private static AccessControlWebMessages       messages;
+    private static AccessControlWebCoreMessages   coreMessages;
+
     public static final AccessControlWebGinjector ginjector = GWT.create(AccessControlWebGinjector.class);
-    
-    
-	interface GlobalResources extends ClientBundle {
-		@NotStrict
-		@Source("AccessControlWebStyles.css")
-		CssResource css();
-	}
-	
+
+    interface GlobalResources extends ClientBundle {
+
+        @NotStrict
+        @Source("AccessControlWebStyles.css")
+        CssResource css();
+    }
+
     public void onModuleLoad() {
         // This is required for GWT-Platform proxy's generator.
         DelayedBindRegistry.bind(ginjector);
         ginjector.getPlaceManager().revealCurrentPlace();
-        
+
         // Inject global styles
-        GWT.<GlobalResources>create(GlobalResources.class).css().ensureInjected();
+        GWT.<GlobalResources> create(GlobalResources.class).css().ensureInjected();
     }
 
     public static AccessControlWebConstants getConstants() {
-    	if (constants == null) {
-    		constants = (AccessControlWebConstants) GWT.create(AccessControlWebConstants.class);
-    	}
-    	return constants;
+        if (constants == null) {
+            constants = (AccessControlWebConstants) GWT.create(AccessControlWebConstants.class);
+        }
+        return constants;
     }
-    
+
     public static AccessControlWebMessages getMessages() {
-    	if (messages == null) {
-    		messages = (AccessControlWebMessages) GWT.create(AccessControlWebMessages.class);
-    	}
-    	return messages;
+        if (messages == null) {
+            messages = (AccessControlWebMessages) GWT.create(AccessControlWebMessages.class);
+        }
+        return messages;
     }
-    
+
     public static AccessControlWebCoreMessages getCoreMessages() {
         if (coreMessages == null) {
             coreMessages = (AccessControlWebCoreMessages) GWT.create(AccessControlWebCoreMessages.class);
@@ -59,7 +58,7 @@ public class AccessControlWeb implements EntryPoint {
     }
 
     public static AccessControlWebGinjector getAccessControlWebGinjector() {
-      return ginjector;
+        return ginjector;
     }
-    
+
 }

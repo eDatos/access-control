@@ -115,25 +115,25 @@ public class ServerModule extends HandlerModule {
     public SaveAppActionHandler getSaveAppsActionHandler() {
         return new SaveAppActionHandler();
     }
-    
+
     @Bean
     public FindAccessByUserActionHandler getFindAccessByUserActionHandler() {
         return new FindAccessByUserActionHandler();
     }
-    
+
     @Bean
     public FindAllStatisticalOperationsActionHandler getFindAllStatisticalOperationsActionHandler() {
         return new FindAllStatisticalOperationsActionHandler();
     }
-    
+
     @Bean
     public FindAllRemovedAccessActionHandler getFindAllRemovedAccessActionHandler() {
         return new FindAllRemovedAccessActionHandler();
     }
-    
+
     @Bean
     public SaveAccessListActionHandler getSaveAccessListActionHandler() {
-       return new SaveAccessListActionHandler();
+        return new SaveAccessListActionHandler();
     }
 
     protected void configureHandlers() {

@@ -12,5 +12,5 @@ public class FindAllStatisticalOperations {
 
     @Out(1)
     List<ExternalItemBtDto> operations;
-    
+
 }

@@ -14,13 +14,11 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-
 public class SaveAccessActionHandler extends AbstractActionHandler<SaveAccessAction, SaveAccessResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
 
-    
     public SaveAccessActionHandler() {
         super(SaveAccessAction.class);
     }
@@ -42,10 +40,9 @@ public class SaveAccessActionHandler extends AbstractActionHandler<SaveAccessAct
         }
     }
 
-
     @Override
     public void undo(SaveAccessAction action, SaveAccessResult result, ExecutionContext context) throws ActionException {
-        
+
     }
-    
+
 }

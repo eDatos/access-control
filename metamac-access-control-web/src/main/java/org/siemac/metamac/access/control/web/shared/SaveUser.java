@@ -11,8 +11,8 @@ public class SaveUser {
 
     @In(1)
     UserDto userToSave;
-    
+
     @Out(1)
     UserDto userDto;
-    
+
 }

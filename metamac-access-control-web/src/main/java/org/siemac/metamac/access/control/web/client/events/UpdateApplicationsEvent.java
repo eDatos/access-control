@@ -10,41 +10,42 @@ import com.google.gwt.event.shared.HasHandlers;
 
 public class UpdateApplicationsEvent extends GwtEvent<UpdateApplicationsEvent.UpdateApplicationsHandler> {
 
-	public interface UpdateApplicationsHandler extends EventHandler {
-		void onUpdateApplications(UpdateApplicationsEvent event);
-	}
+    public interface UpdateApplicationsHandler extends EventHandler {
 
-	private static Type<UpdateApplicationsHandler> TYPE = new Type<UpdateApplicationsHandler>();
+        void onUpdateApplications(UpdateApplicationsEvent event);
+    }
 
-	@Override
-	public com.google.gwt.event.shared.GwtEvent.Type<UpdateApplicationsHandler> getAssociatedType() {
-		return TYPE;
-	}
-	
-	// TODO HasEventBus should be used instead of HasHandlers ¿?
-	public static void fire(HasHandlers source, List<AppDto> appDtos) {
-		if (TYPE != null) {
-			source.fireEvent(new UpdateApplicationsEvent(appDtos));
-		}
-	}
+    private static Type<UpdateApplicationsHandler> TYPE = new Type<UpdateApplicationsHandler>();
 
-	@Override
-	protected void dispatch(UpdateApplicationsHandler handler) {
-		handler.onUpdateApplications(this);
-	}
-	
-	private final List<AppDto> appDtos;
-	
-	public UpdateApplicationsEvent(List<AppDto> appDtos) {
-		this.appDtos = appDtos;
-	}
-	
-	public List<AppDto> getApplications() {
-		return appDtos;
-	}
+    @Override
+    public com.google.gwt.event.shared.GwtEvent.Type<UpdateApplicationsHandler> getAssociatedType() {
+        return TYPE;
+    }
 
-	public static Type<UpdateApplicationsHandler> getType() {
-		return TYPE;
-	}
+    // TODO HasEventBus should be used instead of HasHandlers ¿?
+    public static void fire(HasHandlers source, List<AppDto> appDtos) {
+        if (TYPE != null) {
+            source.fireEvent(new UpdateApplicationsEvent(appDtos));
+        }
+    }
+
+    @Override
+    protected void dispatch(UpdateApplicationsHandler handler) {
+        handler.onUpdateApplications(this);
+    }
+
+    private final List<AppDto> appDtos;
+
+    public UpdateApplicationsEvent(List<AppDto> appDtos) {
+        this.appDtos = appDtos;
+    }
+
+    public List<AppDto> getApplications() {
+        return appDtos;
+    }
+
+    public static Type<UpdateApplicationsHandler> getType() {
+        return TYPE;
+    }
 
 }

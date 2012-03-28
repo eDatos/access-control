@@ -16,17 +16,14 @@ import com.gwtplatform.dispatch.server.ExecutionContext;
 import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
-
 public class FindAllRemovedAccessActionHandler extends AbstractActionHandler<FindAllRemovedAccessAction, FindAllRemovedAccessResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
 
-    
     public FindAllRemovedAccessActionHandler() {
         super(FindAllRemovedAccessAction.class);
     }
-
 
     @Override
     public FindAllRemovedAccessResult execute(FindAllRemovedAccessAction action, ExecutionContext context) throws ActionException {
@@ -38,10 +35,9 @@ public class FindAllRemovedAccessActionHandler extends AbstractActionHandler<Fin
         }
     }
 
-
     @Override
     public void undo(FindAllRemovedAccessAction action, FindAllRemovedAccessResult result, ExecutionContext context) throws ActionException {
-        
+
     }
 
 }

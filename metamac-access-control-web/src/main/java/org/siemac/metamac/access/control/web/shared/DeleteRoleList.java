@@ -10,5 +10,5 @@ public class DeleteRoleList {
 
     @In(1)
     List<Long> roleIds;
-    
+
 }
