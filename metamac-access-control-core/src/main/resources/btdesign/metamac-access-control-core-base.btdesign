@@ -12,7 +12,7 @@ Application Base {
 		
 		"Roles definitions"
 		Entity Role {
-			databaseTable="TBL_ROLES"
+			databaseTable="TB_ROLES"
 			hint="idSequence=ROLES"
 			
 			gap
@@ -39,7 +39,7 @@ Application Base {
 		
 		"Applications"
 		Entity App {
-			databaseTable="TBL_APPS"
+			databaseTable="TB_APPS"
 			hint="idSequence=APPS"
 			
 			gap
@@ -65,7 +65,7 @@ Application Base {
 		
 		"Users"
 		Entity User {
-			databaseTable="TBL_USERS"
+			databaseTable="TB_USERS"
 			hint="idSequence=USERS"
 			
 			gap
@@ -94,7 +94,7 @@ Application Base {
 		
 		"Access"
 		Entity Access {
-			databaseTable="TBL_ACCESS"
+			databaseTable="TB_ACCESS"
 			hint="idSequence=ACCESS"
 			
 			gap

@@ -357,10 +357,10 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
     @Override
     protected List<String> getTablesToRemoveContent() {
         List<String> tables = new ArrayList<String>();
-        tables.add("TBL_ACCESS");
-        tables.add("TBL_APPS");
-        tables.add("TBL_ROLES");
-        tables.add("TBL_USERS");
+        tables.add("TB_ACCESS");
+        tables.add("TB_APPS");
+        tables.add("TB_ROLES");
+        tables.add("TB_USERS");
         return tables;
     }
 

@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
  * Users
  */
 @Entity
-@Table(name = "TBL_USERS", uniqueConstraints = {@UniqueConstraint(columnNames = {"USERNAME"})})
+@Table(name = "TB_USERS", uniqueConstraints = {@UniqueConstraint(columnNames = {"USERNAME"})})
 public class User extends UserBase {
 
     private static final long serialVersionUID = 1L;

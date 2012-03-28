@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
  * Applications
  */
 @Entity
-@Table(name = "TBL_APPS", uniqueConstraints = {@UniqueConstraint(columnNames = {"CODE"})})
+@Table(name = "TB_APPS", uniqueConstraints = {@UniqueConstraint(columnNames = {"CODE"})})
 public class App extends AppBase {
 
     private static final long serialVersionUID = 1L;

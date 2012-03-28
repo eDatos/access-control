@@ -8,7 +8,7 @@ import javax.persistence.UniqueConstraint;
  * Roles definitions
  */
 @Entity
-@Table(name = "TBL_ROLES", uniqueConstraints = {@UniqueConstraint(columnNames = {"CODE"})})
+@Table(name = "TB_ROLES", uniqueConstraints = {@UniqueConstraint(columnNames = {"CODE"})})
 public class Role extends RoleBase {
 
     private static final long serialVersionUID = 1L;

@@ -4,7 +4,7 @@
 	<!-- 							ROLES													  -->
 	<!-- ************************************************************************************ -->
 
-	<TBL_ROLES ID="1" 
+	<TB_ROLES ID="1" 
 				CODE="aDMINISTRADOR" 
 				UUID="R-1" 
 				TITLE="Administrador" 
@@ -17,7 +17,7 @@
 				LAST_UPDATED="2011-08-24 01:02:03"
 				LAST_UPDATED_TZ="Europe/London" />
 	
-	<TBL_ROLES ID="2" 
+	<TB_ROLES ID="2" 
 				CODE="TEC_PLANI" 
 				UUID="R-2" 
 				TITLE="Técnico de planificación" 
@@ -35,7 +35,7 @@
 	<!-- 							APPS													  -->
 	<!-- ************************************************************************************ -->
 	
-	<TBL_APPS ID="1" 
+	<TB_APPS ID="1" 
 				CODE="gOPESTAT" 
 				UUID="A-1" 
 				TITLE="Gestor de Operaciones" 
@@ -48,7 +48,7 @@
 				LAST_UPDATED="2011-08-24 01:02:03"
 				LAST_UPDATED_TZ="Europe/London" />
 	
-	<TBL_APPS ID="2" 
+	<TB_APPS ID="2" 
 				CODE="gPE" 
 				UUID="A-2" 
 				TITLE="Gestor de publicaciones estadísticas" 
@@ -66,7 +66,7 @@
 	<!-- 							USERS													  -->
 	<!-- ************************************************************************************ -->
 	
-	<TBL_USERS ID="1" 
+	<TB_USERS ID="1" 
 				USERNAME="arte"
 				NAME="Pruebas"
 				SURNAME="Arte Consultores"
@@ -80,7 +80,7 @@
 				LAST_UPDATED="2011-08-24 01:02:03"
 				LAST_UPDATED_TZ="Europe/London" />
 	
-	<TBL_USERS ID="2" 
+	<TB_USERS ID="2" 
 				USERNAME="prueba2"
 				NAME="Pruebas2"
 				SURNAME="Arte Consultores"
@@ -99,7 +99,7 @@
 	<!-- 							ACCESS													  -->
 	<!-- ************************************************************************************ -->
 	
-	<TBL_ACCESS ID="1"
+	<TB_ACCESS ID="1"
 				OPERATION_CODE_ID="OPERATION-TODO-01"
 				OPERATION_TYPE="STATISTICAL_OPERATION"
 				OPERATION_URI_INT="OPERATION:TODO:01"
@@ -117,7 +117,7 @@
 				LAST_UPDATED="2011-08-24 01:02:03"
 				LAST_UPDATED_TZ="Europe/London" />
 	
-	<TBL_ACCESS ID="2"
+	<TB_ACCESS ID="2"
 				OPERATION_CODE_ID="[null]"
 				OPERATION_TYPE="[null]"
 				OPERATION_URI_INT="[null]"
@@ -135,7 +135,7 @@
 				LAST_UPDATED="2011-08-24 01:02:03"
 				LAST_UPDATED_TZ="Europe/London" />
 	
-	<TBL_ACCESS ID="3"
+	<TB_ACCESS ID="3"
 				OPERATION_CODE_ID="OPERATION-TODO-01"
 				OPERATION_TYPE="STATISTICAL_OPERATION"
 				OPERATION_URI_INT="OPERATION:TODO:01"
