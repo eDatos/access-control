@@ -12,7 +12,7 @@ import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
  * Asserts to tests
  */
 public class AccessControlDoAsserts {
-    
+
     public static void assertEqualsRole(Role expected, Role actual) {
         assertEquals(expected.getUuid(), actual.getUuid());
         assertEquals(expected.getId(), actual.getId());
@@ -20,7 +20,7 @@ public class AccessControlDoAsserts {
         assertEquals(expected.getTitle(), actual.getTitle());
         assertEquals(expected.getDescription(), actual.getDescription());
     }
-    
+
     public static void assertEqualsApp(App expected, App actual) {
         assertEquals(expected.getUuid(), actual.getUuid());
         assertEquals(expected.getId(), actual.getId());
@@ -28,7 +28,7 @@ public class AccessControlDoAsserts {
         assertEquals(expected.getTitle(), actual.getTitle());
         assertEquals(expected.getDescription(), actual.getDescription());
     }
-    
+
     public static void assertEqualsUser(User expected, User actual) {
         assertEquals(expected.getUuid(), actual.getUuid());
         assertEquals(expected.getId(), actual.getId());
@@ -37,7 +37,7 @@ public class AccessControlDoAsserts {
         assertEquals(expected.getSurname(), actual.getSurname());
         assertEquals(expected.getMail(), actual.getMail());
     }
-    
+
     public static void assertEqualsAccess(Access expected, Access actual) {
         assertEquals(expected.getUuid(), actual.getUuid());
         assertEquals(expected.getId(), actual.getId());
@@ -47,11 +47,10 @@ public class AccessControlDoAsserts {
         assertEqualsExternalItemBt(expected.getOperation(), actual.getOperation());
     }
 
-    
     public static void assertEqualsExternalItemBt(ExternalItemBt expected, ExternalItemBt actual) {
         assertEquals(expected.getCodeId(), actual.getCodeId());
         assertEquals(expected.getType(), actual.getType());
         assertEquals(expected.getUriInt(), actual.getUriInt());
     }
-    
+
 }

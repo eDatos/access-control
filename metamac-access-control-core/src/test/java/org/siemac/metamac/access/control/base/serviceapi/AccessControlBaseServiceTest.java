@@ -317,7 +317,7 @@ public class AccessControlBaseServiceTest extends MetamacBaseTests implements Ac
 
         // Retrieve removed access
         Access removedAccess = accessControlBaseService.findAccessById(getServiceContext(), id);
-        
+
         // Validations
         assertNotNull(removedAccess.getRemovalDate());
         AccessControlDoAsserts.assertEqualsAccess(access, removedAccess);

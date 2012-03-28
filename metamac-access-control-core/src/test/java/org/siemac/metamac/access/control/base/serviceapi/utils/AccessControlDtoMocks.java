@@ -9,16 +9,15 @@ import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
  */
 public class AccessControlDtoMocks {
 
-
-    public static RoleDto mockRoleDto(){
+    public static RoleDto mockRoleDto() {
         RoleDto roleDto = new RoleDto();
         roleDto.setCode("TECNICO_PLANIFICACION");
         roleDto.setTitle("Técnico de Planifiación");
         roleDto.setDescription("Técnicos encargados de la planificación estadística del ISTAC");
         return roleDto;
     }
-    
-    public static AppDto mockAppDto(){
+
+    public static AppDto mockAppDto() {
         AppDto appDto = new AppDto();
         appDto.setCode("GESTOR_CONCEPTOS");
         appDto.setTitle("Gestor de conceptos");
@@ -34,6 +33,5 @@ public class AccessControlDtoMocks {
         userDto.setMail("rdiaada@arte-consultores.com");
         return userDto;
     }
-    
 
 }

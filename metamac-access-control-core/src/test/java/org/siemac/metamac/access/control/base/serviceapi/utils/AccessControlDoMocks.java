@@ -6,7 +6,6 @@ import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 
-
 /**
  * Mocks
  */
