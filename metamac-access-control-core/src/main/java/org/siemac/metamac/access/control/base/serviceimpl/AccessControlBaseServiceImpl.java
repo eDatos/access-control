@@ -317,7 +317,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         if (!StringUtils.isEmpty(operationCodeId)) {
             conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId(), operationCodeId));
         }
-        
+
         // Removal date conditions
         if (Boolean.FALSE.equals(removalAccess)) {
             conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
@@ -337,13 +337,13 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
 
         // Retrieve entity
         Access access = findAccessById(ctx, accessId);
-        
+
         // Validate if it's already removed
         validateRemovalDate(ctx, access, null);
-        
+
         // Set attributes
         access.setRemovalDate(new DateTime());
-        
+
         // Repository operation
         accessRepository.save(access);
 
@@ -441,7 +441,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         } else {
             conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId()));
         }
-        
+
         // Removal date
         conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
 
@@ -468,8 +468,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         }
 
     }
-    
-    
+
     private void validateRemovalDate(ServiceContext ctx, Access entity, Object object) throws MetamacException {
         if (entity.getRemovalDate() != null) {
             throw new MetamacException(ServiceExceptionType.ACCESS_REMOVED, entity.getId());

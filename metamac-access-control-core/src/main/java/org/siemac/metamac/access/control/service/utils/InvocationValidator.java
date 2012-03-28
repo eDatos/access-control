@@ -232,7 +232,7 @@ public class InvocationValidator {
     // ------------------------------------------------------------------------------------
     // ACCESS
     // ------------------------------------------------------------------------------------
-    
+
     public static void checkFindAccessById(Long id, List<MetamacExceptionItem> exceptions) throws MetamacException {
         if (exceptions == null) {
             exceptions = new ArrayList<MetamacExceptionItem>();
@@ -279,7 +279,7 @@ public class InvocationValidator {
         ExceptionUtils.throwIfException(exceptions);
 
     }
-    
+
     public static void checkRemoveAccess(Long accessId, List<MetamacExceptionItem> exceptions) throws MetamacException {
         if (exceptions == null) {
             exceptions = new ArrayList<MetamacExceptionItem>();

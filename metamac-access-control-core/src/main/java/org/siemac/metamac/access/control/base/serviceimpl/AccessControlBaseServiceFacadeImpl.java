@@ -76,7 +76,6 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
         return rolesDto;
     }
 
-
     public RoleDto findRoleById(ServiceContext ctx, Long id) throws MetamacException {
         // Service call
         Role role = getAccessControlBaseService().findRoleById(ctx, id);
@@ -129,7 +128,6 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
         return appsDto;
     }
-
 
     public AppDto findAppById(ServiceContext ctx, Long id) throws MetamacException {
         // Service call
@@ -229,10 +227,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
         // Service call
         getAccessControlBaseService().deleteAccess(ctx, accessId);
     }
-    
-    
+
     public void removeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
-     // Service call
+        // Service call
         getAccessControlBaseService().removeAccess(ctx, accessId);
     }
 
@@ -265,8 +262,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
 
         return accessDto;
     }
-    
-    
+
     // --------------------------------------------------------------------------------
     // TRANSFORM LISTS
     // --------------------------------------------------------------------------------

@@ -15,7 +15,7 @@ import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.dto.serviceapi.ExternalItemBtDto;
 import org.springframework.stereotype.Component;
 
-@Component 
+@Component
 public class Do2DtoMapperImpl implements Do2DtoMapper {
 
     @Override
@@ -25,16 +25,16 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setId(source.getId());
         target.setUuid(source.getUuid());
         target.setVersion(source.getVersion());
-        
+
         target.setCreatedDate(dateDoToDto(source.getCreatedDate()));
         target.setCreatedBy(source.getCreatedBy());
         target.setLastUpdated(dateDoToDto(source.getLastUpdated()));
         target.setLastUpdatedBy(source.getLastUpdatedBy());
-        
+
         target.setCode(source.getCode());
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
-        
+
         return target;
     }
 
@@ -45,16 +45,16 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setId(source.getId());
         target.setUuid(source.getUuid());
         target.setVersion(source.getVersion());
-        
+
         target.setCreatedDate(dateDoToDto(source.getCreatedDate()));
         target.setCreatedBy(source.getCreatedBy());
         target.setLastUpdated(dateDoToDto(source.getLastUpdated()));
         target.setLastUpdatedBy(source.getLastUpdatedBy());
-        
+
         target.setCode(source.getCode());
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
-        
+
         return target;
     }
 
@@ -65,17 +65,17 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setId(source.getId());
         target.setUuid(source.getUuid());
         target.setVersion(source.getVersion());
-        
+
         target.setCreatedDate(dateDoToDto(source.getCreatedDate()));
         target.setCreatedBy(source.getCreatedBy());
         target.setLastUpdated(dateDoToDto(source.getLastUpdated()));
         target.setLastUpdatedBy(source.getLastUpdatedBy());
-        
+
         target.setUsername(source.getUsername());
         target.setName(source.getName());
         target.setSurname(source.getSurname());
         target.setMail(source.getMail());
-        
+
         return target;
     }
 
@@ -86,23 +86,22 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setId(source.getId());
         target.setUuid(source.getUuid());
         target.setVersion(source.getVersion());
-        
+
         target.setCreatedDate(dateDoToDto(source.getCreatedDate()));
         target.setCreatedBy(source.getCreatedBy());
         target.setLastUpdated(dateDoToDto(source.getLastUpdated()));
         target.setLastUpdatedBy(source.getLastUpdatedBy());
-        
+
         target.setRemovalDate(dateDoToDto(source.getRemovalDate()));
-        
+
         target.setRole(roleDoToDto(source.getRole()));
         target.setApp(appDoToDto(source.getApp()));
         target.setUser(userDoToDto(source.getUser()));
         target.setOperation(externalItemBtToDto(source.getOperation()));
-        
+
         return target;
     }
-    
-    
+
     private ExternalItemBtDto externalItemBtToDto(ExternalItemBt source) {
         if (source == null) {
             return null;
@@ -112,8 +111,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
 
         return target;
     }
-    
-    
+
     private Date dateDoToDto(DateTime source) {
         if (source == null) {
             return null;

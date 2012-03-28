@@ -29,7 +29,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         if (source == null) {
             return null;
         }
-        
+
         Role target = new Role();
         if (source.getId() != null) {
             target = accessControlBaseService.findRoleById(ctx, source.getId());
@@ -44,7 +44,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         if (source == null) {
             return null;
         }
-        
+
         App target = new App();
         if (source.getId() != null) {
             target = accessControlBaseService.findAppById(ctx, source.getId());
@@ -59,7 +59,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         if (source == null) {
             return null;
         }
-        
+
         User target = new User();
         if (source.getId() != null) {
             target = accessControlBaseService.findUserById(ctx, source.getId());
@@ -73,7 +73,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         if (source == null) {
             return null;
         }
-        
+
         Access target = new Access();
         if (source.getId() != null) {
             target = accessControlBaseService.findAccessById(ctx, source.getId());
@@ -116,7 +116,6 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         return target;
     }
 
-    
     private User userDtoToDo(UserDto source, User target) throws MetamacException {
         if (target == null) {
             throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "USER");
@@ -130,7 +129,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
         return target;
     }
-    
+
     private Access accessDtoToDo(ServiceContext ctx, AccessDto source, Access target) throws MetamacException {
         if (target == null) {
             throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "ACCESS");
