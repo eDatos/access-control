@@ -4,12 +4,12 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getM
 
 import java.util.List;
 
-import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.RoleHistoryUiHandlers;
 import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessResult;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 

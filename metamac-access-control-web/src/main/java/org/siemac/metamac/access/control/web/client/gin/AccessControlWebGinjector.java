@@ -2,9 +2,9 @@ package org.siemac.metamac.access.control.web.client.gin;
 
 import org.siemac.metamac.access.control.web.client.AccessControlWebConstants;
 import org.siemac.metamac.access.control.web.client.AccessControlWebMessages;
+import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
-import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;

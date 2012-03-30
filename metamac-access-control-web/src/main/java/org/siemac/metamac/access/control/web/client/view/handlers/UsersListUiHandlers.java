@@ -2,8 +2,8 @@ package org.siemac.metamac.access.control.web.client.view.handlers;
 
 import java.util.List;
 
-import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
-import org.siemac.metamac.access.control.dto.serviceapi.UserDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.UserDto;
 
 import com.gwtplatform.mvp.client.UiHandlers;
 

@@ -4,12 +4,12 @@ import org.siemac.metamac.access.control.web.client.AccessControlPlaceManager;
 import org.siemac.metamac.access.control.web.client.AccessControlWebConstants;
 import org.siemac.metamac.access.control.web.client.AccessControlWebMessages;
 import org.siemac.metamac.access.control.web.client.NameTokens;
+import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
-import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
+import org.siemac.metamac.access.control.web.client.view.MainPageViewImpl;
 import org.siemac.metamac.access.control.web.client.view.RoleHistoryViewImpl;
 import org.siemac.metamac.access.control.web.client.view.UsersListViewImpl;
-import org.siemac.metamac.access.control.web.client.view.MainPageViewImpl;
 
 import com.google.inject.Singleton;
 import com.gwtplatform.mvp.client.gin.AbstractPresenterModule;

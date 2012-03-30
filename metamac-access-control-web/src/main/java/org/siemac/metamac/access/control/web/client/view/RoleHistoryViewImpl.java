@@ -4,12 +4,12 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getC
 
 import java.util.List;
 
-import org.siemac.metamac.access.control.dto.serviceapi.AccessDto;
 import org.siemac.metamac.access.control.web.client.model.ds.AccessDS;
 import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.RoleHistoryUiHandlers;
+import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
