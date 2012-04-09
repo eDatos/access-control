@@ -363,13 +363,13 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
                 if (roles.size() == 1) {
                     throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
                 } else if (roles.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code code " + code);
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code " + code);
                 }
             } else {
                 if (roles.size() == 2) {
                     throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
                 } else if (roles.size() > 2) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code code " + code);
+                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code " + code);
                 }
             }
         }
