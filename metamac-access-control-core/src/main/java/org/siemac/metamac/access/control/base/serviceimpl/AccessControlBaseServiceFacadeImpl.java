@@ -11,10 +11,10 @@ import org.siemac.metamac.access.control.base.domain.User;
 import org.siemac.metamac.access.control.service.dto.Do2DtoMapper;
 import org.siemac.metamac.access.control.service.dto.Dto2DoMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AppDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.RoleDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.UserDto;
+import org.siemac.metamac.domain.access.control.dto.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.AppDto;
+import org.siemac.metamac.domain.access.control.dto.RoleDto;
+import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
