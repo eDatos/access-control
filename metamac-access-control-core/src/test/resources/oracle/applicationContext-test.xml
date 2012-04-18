@@ -22,6 +22,9 @@
 	</bean>
 
 
+	<!-- metamac-core-common -->
+	<import resource="classpath:/spring/logging-beans-advice.xml"/>
+	
 	<import resource="classpath:/oracle/EntityManagerFactory-test.xml" />
 
 	<import resource="classpath:/Interceptor-test.xml" />
