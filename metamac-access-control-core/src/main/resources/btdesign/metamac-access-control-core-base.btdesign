@@ -22,7 +22,7 @@ Application Base {
        		"TITLE"
        		String title not nullable;
        		"DESCRIPTION"
-       		String description nullable;
+       		String description nullable length="4000";
 
 			- Bag<@Access> access inverse <-> role orderby="user asc";
 		
@@ -49,7 +49,7 @@ Application Base {
        		"TITLE"
        		String title not nullable;
        		"DESCRIPTION"
-       		String description nullable;
+       		String description nullable length="4000";
 
 			- Bag<@Access> access inverse <-> app orderby="user asc";
 		
