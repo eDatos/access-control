@@ -6,6 +6,7 @@ import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseService;
+import org.siemac.metamac.access.control.error.ServiceExceptionParameters;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
@@ -87,7 +88,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     private Role roleDtoToDo(RoleDto source, Role target) throws MetamacException {
         if (target == null) {
-            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "ROLE");
+            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.ROLE);
         }
 
         // Non modifiables after creation
@@ -102,7 +103,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     private App appDtoToDo(AppDto source, App target) throws MetamacException {
         if (target == null) {
-            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "APP");
+            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.APP);
         }
 
         // Non modifiables after creation
@@ -117,7 +118,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     private User userDtoToDo(UserDto source, User target) throws MetamacException {
         if (target == null) {
-            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "USER");
+            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.USER);
         }
 
         // Attributes modifiables
@@ -131,7 +132,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     private Access accessDtoToDo(ServiceContext ctx, AccessDto source, Access target) throws MetamacException {
         if (target == null) {
-            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, "ACCESS");
+            throw new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.ACCESS);
         }
 
         target.setRole(roleDtoToDo(ctx, source.getRole()));

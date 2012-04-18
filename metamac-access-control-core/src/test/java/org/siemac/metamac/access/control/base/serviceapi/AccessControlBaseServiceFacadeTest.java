@@ -97,7 +97,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ID", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -158,7 +158,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ROLE.CODE", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("role.code", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -176,7 +176,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ROLE.TITLE", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("role.title", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -379,7 +379,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("APP.CODE", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("app.code", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -397,7 +397,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("APP.TITLE", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("app.title", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -583,7 +583,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ID", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -620,7 +620,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ID", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -683,7 +683,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("USER.USERNAME", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("user.username", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -703,7 +703,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("USER.NAME", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("user.name", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -723,7 +723,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("USER.SURNAME", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("user.surname", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -743,7 +743,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("USER.MAIL", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("user.mail", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -1028,7 +1028,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ACCESS.ROLE", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("access.role", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -1051,7 +1051,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ACCESS.APP", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("access.app", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -1074,7 +1074,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ACCESS.USER", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("access.user", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 
@@ -1105,124 +1105,6 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals("OPERATION-TODO-01", e.getExceptionItems().get(0).getMessageParameters()[3]);
         }
     }
-
-    // @Test
-    // public void testUpdateAccess() throws Exception {
-    // Long id = ACCESS_1;
-    //
-    // // Retrieve new related entities
-    // RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-    // AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-    // UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
-    //
-    // AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
-    //
-    // accessDto.setRole(roleDto);
-    // accessDto.setApp(appDto);
-    // accessDto.setUser(userDto);
-    // accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
-    //
-    // // Update
-    // AccessDto accessDtoUpdated = accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
-    //
-    // // Validations
-    // AccessControlDtoAsserts.assertEqualsAccessDto(accessDto, accessDtoUpdated);
-    // assertTrue(accessDtoUpdated.getLastUpdated().after(accessDtoUpdated.getCreatedDate()));
-    // }
-
-    // @Test
-    // public void testUpdateAccessNotExists() throws Exception {
-    // AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), ACCESS_1);
-    //
-    // accessDto.setId(NOT_EXISTS);
-    //
-    // try {
-    // accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
-    // fail("access not exists");
-    // } catch (MetamacException e) {
-    // assertEquals(1, e.getExceptionItems().size());
-    // assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-    // assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-    // assertEquals(NOT_EXISTS, e.getExceptionItems().get(0).getMessageParameters()[0]);
-    // }
-    // }
-
-    // @Test
-    // public void testUpdateAccessRemoved() throws Exception {
-    // AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), ACCESS_3);
-    //
-    // accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:05", "OPERATION-TODO-05", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
-    //
-    // try {
-    // accessControlBaseServiceFacade.updateAccess(getServiceContext(), accessDto);
-    // fail("access removed");
-    // } catch (MetamacException e) {
-    // assertEquals(1, e.getExceptionItems().size());
-    // assertEquals(ServiceExceptionType.ACCESS_REMOVED.getCode(), e.getExceptionItems().get(0).getCode());
-    // assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-    // assertEquals(ACCESS_3, e.getExceptionItems().get(0).getMessageParameters()[0]);
-    // }
-    // }
-
-    // @Test
-    // public void testDeleteAccess() throws Exception {
-    // Long id = ACCESS_1;
-    //
-    // // Delete access
-    // accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
-    //
-    // // Validation
-    // try {
-    // accessControlBaseServiceFacade.findAccessById(serviceContext, id);
-    // fail("access deleted");
-    // } catch (MetamacException e) {
-    // assertEquals(1, e.getExceptionItems().size());
-    // assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-    // assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-    // assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-    //
-    // // Validate related entities
-    // RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-    // assertNotNull(roleDto);
-    // AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-    // assertNotNull(appDto);
-    // UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
-    // assertNotNull(userDto);
-    // }
-    //
-    // }
-
-    // @Test
-    // public void testDeleteAccessNotExists() throws Exception {
-    // Long id = NOT_EXISTS;
-    //
-    // // Delete access
-    // try {
-    // accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
-    // fail("access not exists");
-    // } catch (MetamacException e) {
-    // assertEquals(1, e.getExceptionItems().size());
-    // assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-    // assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-    // assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-    // }
-    // }
-
-    // @Test
-    // public void testDeleteAccessRemoved() throws Exception {
-    // Long id = ACCESS_3;
-    //
-    // // Delete access
-    // try {
-    // accessControlBaseServiceFacade.deleteAccess(getServiceContext(), id);
-    // fail("access removed");
-    // } catch (MetamacException e) {
-    // assertEquals(1, e.getExceptionItems().size());
-    // assertEquals(ServiceExceptionType.ACCESS_REMOVED.getCode(), e.getExceptionItems().get(0).getCode());
-    // assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-    // assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-    // }
-    // }
 
     @Test
     public void testRemoveAccess() throws Exception {
@@ -1389,7 +1271,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("ID", e.getExceptionItems().get(0).getMessageParameters()[0]);
+            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
 

@@ -8,6 +8,7 @@ import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
+import org.siemac.metamac.access.control.error.ServiceExceptionParameters;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.exception.MetamacExceptionItem;
 import org.siemac.metamac.core.common.exception.utils.ExceptionUtils;
@@ -23,7 +24,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(id, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
@@ -45,7 +46,7 @@ public class InvocationValidator {
         }
 
         checkRole(role, exceptions);
-        ValidationUtils.checkMetadataEmpty(role.getId(), "ROLE.ID", exceptions);
+        ValidationUtils.checkMetadataEmpty(role.getId(), ServiceExceptionParameters.ROLE_ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
@@ -56,8 +57,8 @@ public class InvocationValidator {
         }
 
         checkRole(role, exceptions);
-        ValidationUtils.checkMetadataRequired(role.getId(), "ROLE.ID", exceptions);
-        ValidationUtils.checkMetadataRequired(role.getUuid(), "ROLE.UUID", exceptions);
+        ValidationUtils.checkMetadataRequired(role.getId(), ServiceExceptionParameters.ROLE_ID, exceptions);
+        ValidationUtils.checkMetadataRequired(role.getUuid(), ServiceExceptionParameters.ROLE_UUID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
@@ -67,7 +68,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(id, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
@@ -92,7 +93,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(id, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -104,7 +105,7 @@ public class InvocationValidator {
         }
 
         checkApp(app, exceptions);
-        ValidationUtils.checkMetadataEmpty(app.getId(), "APP.ID", exceptions);
+        ValidationUtils.checkMetadataEmpty(app.getId(), ServiceExceptionParameters.APP_ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -116,8 +117,8 @@ public class InvocationValidator {
         }
 
         checkApp(app, exceptions);
-        ValidationUtils.checkMetadataRequired(app.getId(), "APP.ID", exceptions);
-        ValidationUtils.checkMetadataRequired(app.getUuid(), "APP.UUID", exceptions);
+        ValidationUtils.checkMetadataRequired(app.getId(), ServiceExceptionParameters.APP_ID, exceptions);
+        ValidationUtils.checkMetadataRequired(app.getUuid(), ServiceExceptionParameters.APP_UUID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -128,7 +129,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(appId, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(appId, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -165,7 +166,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(id, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -177,7 +178,7 @@ public class InvocationValidator {
         }
 
         checkUser(user, exceptions);
-        ValidationUtils.checkMetadataEmpty(user.getId(), "USER.ID", exceptions);
+        ValidationUtils.checkMetadataEmpty(user.getId(), ServiceExceptionParameters.USER_ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -189,8 +190,8 @@ public class InvocationValidator {
         }
 
         checkUser(user, exceptions);
-        ValidationUtils.checkMetadataRequired(user.getId(), "USER.ID", exceptions);
-        ValidationUtils.checkMetadataRequired(user.getUuid(), "USER.UUID", exceptions);
+        ValidationUtils.checkMetadataRequired(user.getId(), ServiceExceptionParameters.ID, exceptions);
+        ValidationUtils.checkMetadataRequired(user.getUuid(), ServiceExceptionParameters.USER_UUID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -201,7 +202,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(userId, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(userId, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -238,7 +239,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(id, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -250,7 +251,7 @@ public class InvocationValidator {
         }
 
         checkAccess(access, exceptions);
-        ValidationUtils.checkMetadataEmpty(access.getId(), "ACCESS.ID", exceptions);
+        ValidationUtils.checkMetadataEmpty(access.getId(), ServiceExceptionParameters.ACCESS_ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -262,8 +263,8 @@ public class InvocationValidator {
         }
 
         checkAccess(access, exceptions);
-        ValidationUtils.checkMetadataRequired(access.getId(), "ACCESS.ID", exceptions);
-        ValidationUtils.checkMetadataRequired(access.getUuid(), "ACCESS.UUID", exceptions);
+        ValidationUtils.checkMetadataRequired(access.getId(), ServiceExceptionParameters.ACCESS_ID, exceptions);
+        ValidationUtils.checkMetadataRequired(access.getUuid(), ServiceExceptionParameters.ACCESS_UUID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -274,7 +275,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(accessId, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(accessId, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
 
@@ -285,7 +286,7 @@ public class InvocationValidator {
             exceptions = new ArrayList<MetamacExceptionItem>();
         }
 
-        ValidationUtils.checkParameterRequired(accessId, "ID", exceptions);
+        ValidationUtils.checkParameterRequired(accessId, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
@@ -316,30 +317,30 @@ public class InvocationValidator {
     // PRIVATE METHODS
     // ------------------------------------------------------------------------------------
     private static void checkRole(Role role, List<MetamacExceptionItem> exceptions) {
-        ValidationUtils.checkParameterRequired(role, "ROLE", exceptions);
-        ValidationUtils.checkMetadataRequired(role.getCode(), "ROLE.CODE", exceptions);
-        ValidationUtils.checkMetadataRequired(role.getTitle(), "ROLE.TITLE", exceptions);
+        ValidationUtils.checkParameterRequired(role, ServiceExceptionParameters.ROLE, exceptions);
+        ValidationUtils.checkMetadataRequired(role.getCode(), ServiceExceptionParameters.ROLE_CODE, exceptions);
+        ValidationUtils.checkMetadataRequired(role.getTitle(), ServiceExceptionParameters.ROLE_TITLE, exceptions);
     }
 
     private static void checkApp(App app, List<MetamacExceptionItem> exceptions) {
-        ValidationUtils.checkParameterRequired(app, "APP", exceptions);
-        ValidationUtils.checkMetadataRequired(app.getCode(), "APP.CODE", exceptions);
-        ValidationUtils.checkMetadataRequired(app.getTitle(), "APP.TITLE", exceptions);
+        ValidationUtils.checkParameterRequired(app, ServiceExceptionParameters.APP, exceptions);
+        ValidationUtils.checkMetadataRequired(app.getCode(), ServiceExceptionParameters.APP_CODE, exceptions);
+        ValidationUtils.checkMetadataRequired(app.getTitle(), ServiceExceptionParameters.APP_TITLE, exceptions);
     }
 
     private static void checkUser(User user, List<MetamacExceptionItem> exceptions) {
-        ValidationUtils.checkParameterRequired(user, "USER", exceptions);
-        ValidationUtils.checkMetadataRequired(user.getUsername(), "USER.USERNAME", exceptions);
-        ValidationUtils.checkMetadataRequired(user.getName(), "USER.NAME", exceptions);
-        ValidationUtils.checkMetadataRequired(user.getSurname(), "USER.SURNAME", exceptions);
-        ValidationUtils.checkMetadataRequired(user.getMail(), "USER.MAIL", exceptions);
+        ValidationUtils.checkParameterRequired(user, ServiceExceptionParameters.USER, exceptions);
+        ValidationUtils.checkMetadataRequired(user.getUsername(), ServiceExceptionParameters.USER_USERNAME, exceptions);
+        ValidationUtils.checkMetadataRequired(user.getName(), ServiceExceptionParameters.USER_NAME, exceptions);
+        ValidationUtils.checkMetadataRequired(user.getSurname(), ServiceExceptionParameters.USER_SURNAME, exceptions);
+        ValidationUtils.checkMetadataRequired(user.getMail(), ServiceExceptionParameters.USER_MAIL, exceptions);
     }
 
     private static void checkAccess(Access access, List<MetamacExceptionItem> exceptions) {
-        ValidationUtils.checkParameterRequired(access, "ACCESS", exceptions);
-        ValidationUtils.checkMetadataRequired(access.getUser(), "ACCESS.USER", exceptions);
-        ValidationUtils.checkMetadataRequired(access.getRole(), "ACCESS.ROLE", exceptions);
-        ValidationUtils.checkMetadataRequired(access.getApp(), "ACCESS.APP", exceptions);
+        ValidationUtils.checkParameterRequired(access, ServiceExceptionParameters.ACCESS, exceptions);
+        ValidationUtils.checkMetadataRequired(access.getUser(), ServiceExceptionParameters.ACCESS_USER, exceptions);
+        ValidationUtils.checkMetadataRequired(access.getRole(), ServiceExceptionParameters.ACCESS_ROLE, exceptions);
+        ValidationUtils.checkMetadataRequired(access.getApp(), ServiceExceptionParameters.ACCESS_APP, exceptions);
     }
 
 }
