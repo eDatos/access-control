@@ -26,13 +26,13 @@ Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, C
 
 -- TB_APPS INITIAL IMPORT
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-(1,'GESTOR_ACCESOS','9a1c9e0d-4515-4792-b730-e200b090d90b','Gestor de control de accesos', 'Aplicativo encargado de gestionar los accesos a los diferentes aplicativos del proyecto Metamac', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'user', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+(1,'GESTOR_ACCESOS','9a1c9e0d-4515-4792-b730-e200b090d90b','Gestor de control de accesos', 'Aplicativo encargado de gestionar los accesos a los diferentes aplicativos del proyecto Metamac', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-(2,'GESTOR_INDICADORES','06986a76-ef9e-4f52-b017-1e3ffac7137a','Gestor de indicadores', 'Aplicativo encargado de gestionar sistemas de indicadores e indicadores', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'user', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+(2,'GESTOR_INDICADORES','06986a76-ef9e-4f52-b017-1e3ffac7137a','Gestor de indicadores', 'Aplicativo encargado de gestionar sistemas de indicadores e indicadores', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-(3,'GESTOR_OPERACIONES','21418d27-2edb-4216-9fb6-3c4d14548591','Gestor de operaciones estadísticas', 'Aplicativo encargado de gestionar familias, operaciones e instancias estadísticas', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'user', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+(3,'GESTOR_OPERACIONES','21418d27-2edb-4216-9fb6-3c4d14548591','Gestor de operaciones estadísticas', 'Aplicativo encargado de gestionar familias, operaciones e instancias estadísticas', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 
 
 
