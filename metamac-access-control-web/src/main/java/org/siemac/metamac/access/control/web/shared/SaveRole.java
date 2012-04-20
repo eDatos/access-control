@@ -1,6 +1,6 @@
 package org.siemac.metamac.access.control.web.shared;
 
-import org.siemac.metamac.domain.access.control.dto.serviceapi.RoleDto;
+import org.siemac.metamac.domain.access.control.dto.RoleDto;
 
 import com.gwtplatform.dispatch.annotation.GenDispatch;
 import com.gwtplatform.dispatch.annotation.In;

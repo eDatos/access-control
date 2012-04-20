@@ -5,7 +5,7 @@ import java.util.List;
 import org.siemac.metamac.access.control.web.server.ServiceContextHelper;
 import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsResult;
-import org.siemac.metamac.core.common.dto.serviceapi.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
 import org.siemac.metamac.core.common.serviceapi.MetamacCoreCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 

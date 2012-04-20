@@ -3,9 +3,9 @@ package org.siemac.metamac.access.control.web.client.utils;
 import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
 import org.siemac.metamac.access.control.web.client.model.record.AppRecord;
 import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AppDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.UserDto;
+import org.siemac.metamac.domain.access.control.dto.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.AppDto;
+import org.siemac.metamac.domain.access.control.dto.UserDto;
 
 public class RecordUtils {
 

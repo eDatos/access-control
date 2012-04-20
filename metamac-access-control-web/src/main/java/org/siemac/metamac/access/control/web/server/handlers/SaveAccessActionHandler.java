@@ -5,7 +5,7 @@ import org.siemac.metamac.access.control.web.server.ServiceContextHelper;
 import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 import org.springframework.beans.factory.annotation.Autowired;

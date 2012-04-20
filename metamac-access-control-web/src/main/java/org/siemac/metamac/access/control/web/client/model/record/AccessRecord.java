@@ -1,6 +1,6 @@
 package org.siemac.metamac.access.control.web.client.model.record;
 
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.AccessDto;
 
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 

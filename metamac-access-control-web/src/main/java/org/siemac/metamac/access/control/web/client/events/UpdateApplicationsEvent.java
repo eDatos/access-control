@@ -2,7 +2,7 @@ package org.siemac.metamac.access.control.web.client.events;
 
 import java.util.List;
 
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AppDto;
+import org.siemac.metamac.domain.access.control.dto.AppDto;
 
 import com.google.gwt.event.shared.EventHandler;
 import com.google.gwt.event.shared.GwtEvent;

@@ -15,11 +15,11 @@ import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
-import org.siemac.metamac.core.common.dto.serviceapi.ExternalItemBtDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AppDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.RoleDto;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.UserDto;
+import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.domain.access.control.dto.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.AppDto;
+import org.siemac.metamac.domain.access.control.dto.RoleDto;
+import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;

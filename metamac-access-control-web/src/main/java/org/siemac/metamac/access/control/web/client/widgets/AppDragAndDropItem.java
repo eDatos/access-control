@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.siemac.metamac.access.control.web.client.model.ds.AppDS;
 import org.siemac.metamac.access.control.web.client.model.record.AppRecord;
-import org.siemac.metamac.domain.access.control.dto.serviceapi.AppDto;
+import org.siemac.metamac.domain.access.control.dto.AppDto;
 import org.siemac.metamac.web.common.client.widgets.form.fields.DragAndDropItem;
 
 import com.smartgwt.client.widgets.grid.HoverCustomizer;
