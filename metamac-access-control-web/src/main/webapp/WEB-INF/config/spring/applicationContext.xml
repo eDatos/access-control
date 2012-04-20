@@ -45,7 +45,7 @@
 	</bean>
  
     <bean id="configurationService" class="org.siemac.metamac.core.common.conf.ConfigurationServiceImpl">
-        <property name="systemConfigurationFile"><value>classpath:indicators/environment.xml</value></property>
+        <property name="systemConfigurationFile"><value>classpath:metamac/environment.xml</value></property>
     </bean>
  
     <bean id="propertyPlaceholderConfigurer" class="org.siemac.metamac.core.common.conf.ConfigurationServicePropertyPlaceholderConfigurer">
