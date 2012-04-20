@@ -21,5 +21,5 @@
 	<import resource="classpath:/spring/core/oracle/applicationContext-datasource.xml" />
 	<import resource="classpath:/pub-sub.xml" />
 
-	<import resource="classpath:/oracle/more-test.xml" />
+	<import resource="classpath:/spring/core/more.xml" />
 </beans>
