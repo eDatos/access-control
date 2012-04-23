@@ -8,6 +8,7 @@ import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
 import org.siemac.metamac.access.control.base.domain.User;
+import org.siemac.metamac.access.control.security.SecurityUtils;
 import org.siemac.metamac.access.control.service.dto.Do2DtoMapper;
 import org.siemac.metamac.access.control.service.dto.Dto2DoMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -15,6 +16,7 @@ import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.domain.access.control.dto.AppDto;
 import org.siemac.metamac.domain.access.control.dto.RoleDto;
 import org.siemac.metamac.domain.access.control.dto.UserDto;
+import org.siemac.metamac.domain.access.control.enume.domain.AccessControlRoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public RoleDto createRole(ServiceContext ctx, RoleDto roleDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         Role role = dto2DoMapper.roleDtoToDo(ctx, roleDto);
 
@@ -48,6 +53,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public RoleDto updateRole(ServiceContext ctx, RoleDto roleDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         Role role = dto2DoMapper.roleDtoToDo(ctx, roleDto);
 
@@ -62,11 +70,17 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public void deleteRole(ServiceContext ctx, Long roleId) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Service call
         getAccessControlBaseService().deleteRole(ctx, roleId);
     }
 
     public List<RoleDto> findAllRoles(ServiceContext ctx) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         List<Role> roles = getAccessControlBaseService().findAllRoles(ctx);
 
@@ -77,6 +91,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public RoleDto findRoleById(ServiceContext ctx, Long id) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         Role role = getAccessControlBaseService().findRoleById(ctx, id);
 
@@ -87,6 +104,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public AppDto createApp(ServiceContext ctx, AppDto appDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         App app = dto2DoMapper.appDtoToDo(ctx, appDto);
 
@@ -101,6 +121,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public AppDto updateApp(ServiceContext ctx, AppDto appDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         App app = dto2DoMapper.appDtoToDo(ctx, appDto);
 
@@ -115,11 +138,17 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public void deleteApp(ServiceContext ctx, Long appId) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Service call
         getAccessControlBaseService().deleteApp(ctx, appId);
     }
 
     public List<AppDto> findAllApps(ServiceContext ctx) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         List<App> apps = getAccessControlBaseService().findAllApps(ctx);
 
@@ -130,6 +159,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public AppDto findAppById(ServiceContext ctx, Long id) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         App app = getAccessControlBaseService().findAppById(ctx, id);
 
@@ -141,6 +173,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public UserDto createUser(ServiceContext ctx, UserDto userDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         User user = dto2DoMapper.userDtoToDo(ctx, userDto);
 
@@ -155,6 +190,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public UserDto updateUser(ServiceContext ctx, UserDto userDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         User user = dto2DoMapper.userDtoToDo(ctx, userDto);
 
@@ -169,11 +207,17 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public void deleteUser(ServiceContext ctx, Long userId) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Service call
         getAccessControlBaseService().deleteUser(ctx, userId);
     }
 
     public List<UserDto> findAllUsers(ServiceContext ctx) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         List<User> users = getAccessControlBaseService().findAllUsers(ctx);
 
@@ -184,6 +228,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public UserDto findUserById(ServiceContext ctx, Long id) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         User user = getAccessControlBaseService().findUserById(ctx, id);
 
@@ -194,6 +241,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public AccessDto createAccess(ServiceContext ctx, AccessDto accessDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         Access access = dto2DoMapper.accessDtoToDo(ctx, accessDto);
 
@@ -209,6 +259,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public AccessDto updateAccess(ServiceContext ctx, AccessDto accessDto) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Transform to Entity
         Access access = dto2DoMapper.accessDtoToDo(ctx, accessDto);
 
@@ -224,16 +277,25 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public void deleteAccess(ServiceContext ctx, Long accessId) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Service call
         getAccessControlBaseService().deleteAccess(ctx, accessId);
     }
 
     public void removeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ADMINISTRADOR);
+
         // Service call
         getAccessControlBaseService().removeAccess(ctx, accessId);
     }
 
     public List<AccessDto> findAllAccess(ServiceContext ctx) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         List<Access> access = getAccessControlBaseService().findAllAccess(ctx);
 
@@ -244,6 +306,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public AccessDto findAccessById(ServiceContext ctx, Long id) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         Access access = getAccessControlBaseService().findAccessById(ctx, id);
 
@@ -254,6 +319,9 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
     }
 
     public List<AccessDto> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean removalAccess) throws MetamacException {
+        // Security
+        SecurityUtils.checkServiceOperationAllowed(ctx, AccessControlRoleEnum.ANY_ROLE_ALLOWED);
+
         // Service call
         List<Access> access = getAccessControlBaseService().findAccessByCondition(ctx, roleCode, appCode, username, operationCodeId, removalAccess);
 

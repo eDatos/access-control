@@ -5,18 +5,15 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.time.DateUtils;
-import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDtoAsserts;
 import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDtoMocks;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
-import org.siemac.metamac.common.test.MetamacBaseTests;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
 import org.siemac.metamac.common.test.utils.MetamacDtoAsserts;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
@@ -35,35 +32,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:oracle/applicationContext-test.xml"})
-public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests implements AccessControlBaseServiceFacadeTestBase {
+public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest implements AccessControlBaseServiceFacadeTestBase {
 
     @Autowired
     protected AccessControlBaseServiceFacade accessControlBaseServiceFacade;
 
-    private final ServiceContext             serviceContext = new ServiceContext("system", "123456", "junit");
-
-    private static Long                      NOT_EXISTS     = Long.valueOf(-1);
-
-    private static Long                      ROLE_1         = Long.valueOf(1);
-    private static Long                      ROLE_2         = Long.valueOf(2);
-
-    private static Long                      APP_1          = Long.valueOf(1);
-    private static Long                      APP_2          = Long.valueOf(2);
-
-    private static Long                      USER_1         = Long.valueOf(1);
-    private static Long                      USER_2         = Long.valueOf(2);
-
-    private static Long                      ACCESS_1       = Long.valueOf(1);
-    private static Long                      ACCESS_2       = Long.valueOf(2);
-    private static Long                      ACCESS_3       = Long.valueOf(3);
-
-    /**************************************************************************
-     * SERVICE CONTEXT
-     **************************************************************************/
-
-    protected ServiceContext getServiceContext() {
-        return serviceContext;
-    }
 
     /**************************************************************************
      * ROLES
@@ -72,7 +45,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     @Test
     public void testFindRoleById() throws Exception {
         Long id = ROLE_1;
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), id);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
         assertNotNull(roleDto);
         assertEquals(id, roleDto.getId());
         assertEquals("aDMINISTRADOR", roleDto.getCode());
@@ -91,7 +64,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = null;
 
         try {
-            accessControlBaseServiceFacade.findRoleById(getServiceContext(), id);
+            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
             fail("parameter required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -107,7 +80,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = NOT_EXISTS;
 
         try {
-            accessControlBaseServiceFacade.findRoleById(getServiceContext(), id);
+            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
             fail("Not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -122,7 +95,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         RoleDto roleDto = AccessControlDtoMocks.mockRoleDto();
 
         // Create
-        RoleDto roleDtoCreated = accessControlBaseServiceFacade.createRole(getServiceContext(), roleDto);
+        RoleDto roleDtoCreated = accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
 
         // Validate
         assertNotNull(roleDtoCreated);
@@ -137,10 +110,10 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertNotNull(roleDtoCreated.getCreatedDate());
         assertNotNull(roleDtoCreated.getLastUpdated());
         assertNotNull(roleDtoCreated.getLastUpdatedBy());
-        assertEquals(getServiceContext().getUserId(), roleDtoCreated.getCreatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), roleDtoCreated.getCreatedBy());
         assertTrue(DateUtils.isSameDay(new Date(), roleDtoCreated.getCreatedDate()));
         assertTrue(DateUtils.isSameDay(new Date(), roleDtoCreated.getLastUpdated()));
-        assertEquals(getServiceContext().getUserId(), roleDtoCreated.getLastUpdatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), roleDtoCreated.getLastUpdatedBy());
 
     }
 
@@ -152,7 +125,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         roleDto.setTitle("Title");
 
         try {
-            accessControlBaseServiceFacade.createRole(getServiceContext(), roleDto);
+            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
             fail("code required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -170,7 +143,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         roleDto.setTitle(null);
 
         try {
-            accessControlBaseServiceFacade.createRole(getServiceContext(), roleDto);
+            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
             fail("title required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -188,7 +161,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         roleDto.setTitle("Title");
 
         try {
-            accessControlBaseServiceFacade.createRole(getServiceContext(), roleDto);
+            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
             fail("code duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -206,7 +179,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         roleDto.setTitle("Title");
 
         try {
-            accessControlBaseServiceFacade.createRole(getServiceContext(), roleDto);
+            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
             fail("code duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -221,11 +194,11 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = ROLE_2;
 
         // Delete role
-        accessControlBaseServiceFacade.deleteRole(getServiceContext(), id);
+        accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
 
         // Validation
         try {
-            accessControlBaseServiceFacade.findRoleById(serviceContext, id);
+            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
             fail("role deleted");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -241,18 +214,18 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = ROLE_1;
 
         // Delete role
-        accessControlBaseServiceFacade.deleteRole(getServiceContext(), id);
+        accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
 
         // Validation
         try {
-            accessControlBaseServiceFacade.findRoleById(serviceContext, id);
+            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
             fail("role deleted");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.ROLE_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
             assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContext()).size());
+            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador()).size());
         }
 
     }
@@ -263,7 +236,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
         // Delete role
         try {
-            accessControlBaseServiceFacade.deleteRole(getServiceContext(), id);
+            accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
             fail("role not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -278,14 +251,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testUpdateRole() throws Exception {
         Long id = ROLE_1;
 
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), id);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
 
         roleDto.setCode("newCode");
         roleDto.setTitle("newTitle");
         roleDto.setDescription("newDescription");
 
         // Update
-        RoleDto roleDtoUpdated = accessControlBaseServiceFacade.updateRole(getServiceContext(), roleDto);
+        RoleDto roleDtoUpdated = accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
 
         // Validations
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDto, roleDtoUpdated);
@@ -294,12 +267,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
     @Test
     public void testUpdateRoleNotExists() throws Exception {
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
 
         roleDto.setId(NOT_EXISTS);
 
         try {
-            accessControlBaseServiceFacade.updateRole(getServiceContext(), roleDto);
+            accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
             fail("role not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -313,12 +286,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testUpdateRoleDuplicatedCode() throws Exception {
         Long id = ROLE_1;
 
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), id);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
 
         roleDto.setCode("TEC_PLANI");
 
         try {
-            accessControlBaseServiceFacade.updateRole(getServiceContext(), roleDto);
+            accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
             fail("code duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -330,7 +303,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
     @Test
     public void testFindAllRoles() throws Exception {
-        List<RoleDto> roles = accessControlBaseServiceFacade.findAllRoles(getServiceContext());
+        List<RoleDto> roles = accessControlBaseServiceFacade.findAllRoles(getServiceContextAdministrador());
         assertEquals(2, roles.size());
     }
 
@@ -343,7 +316,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         AppDto appDto = AccessControlDtoMocks.mockAppDto();
 
         // Create
-        AppDto appDtoCreated = accessControlBaseServiceFacade.createApp(getServiceContext(), appDto);
+        AppDto appDtoCreated = accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
 
         // Validate
         assertNotNull(appDtoCreated);
@@ -358,10 +331,10 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertNotNull(appDtoCreated.getCreatedDate());
         assertNotNull(appDtoCreated.getLastUpdated());
         assertNotNull(appDtoCreated.getLastUpdatedBy());
-        assertEquals(getServiceContext().getUserId(), appDtoCreated.getCreatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), appDtoCreated.getCreatedBy());
         assertTrue(DateUtils.isSameDay(new Date(), appDtoCreated.getCreatedDate()));
         assertTrue(DateUtils.isSameDay(new Date(), appDtoCreated.getLastUpdated()));
-        assertEquals(getServiceContext().getUserId(), appDtoCreated.getLastUpdatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), appDtoCreated.getLastUpdatedBy());
 
     }
 
@@ -373,7 +346,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appDto.setTitle("Title");
 
         try {
-            accessControlBaseServiceFacade.createApp(getServiceContext(), appDto);
+            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
             fail("code required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -391,7 +364,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appDto.setTitle(null);
 
         try {
-            accessControlBaseServiceFacade.createApp(getServiceContext(), appDto);
+            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
             fail("title required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -409,7 +382,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appDto.setTitle("Title");
 
         try {
-            accessControlBaseServiceFacade.createApp(getServiceContext(), appDto);
+            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
             fail("code duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -427,7 +400,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appDto.setTitle("Title");
 
         try {
-            accessControlBaseServiceFacade.createApp(getServiceContext(), appDto);
+            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
             fail("code duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -441,14 +414,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testUpdateApp() throws Exception {
         Long id = APP_1;
 
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), id);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
 
         appDto.setCode("newCode");
         appDto.setTitle("newTitle");
         appDto.setDescription("newDescription");
 
         // Update
-        AppDto appDtoUpdated = accessControlBaseServiceFacade.updateApp(getServiceContext(), appDto);
+        AppDto appDtoUpdated = accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
 
         // Validations
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, appDtoUpdated);
@@ -457,12 +430,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
     @Test
     public void testUpdateAppNotExists() throws Exception {
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
 
         appDto.setId(NOT_EXISTS);
 
         try {
-            accessControlBaseServiceFacade.updateApp(getServiceContext(), appDto);
+            accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
             fail("app not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -476,12 +449,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testUpdateAppDuplicatedCode() throws Exception {
         Long id = APP_1;
 
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), id);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
 
         appDto.setCode("gPE");
 
         try {
-            accessControlBaseServiceFacade.updateApp(getServiceContext(), appDto);
+            accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
             fail("code duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -496,11 +469,11 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = APP_2;
 
         // Delete app
-        accessControlBaseServiceFacade.deleteApp(getServiceContext(), id);
+        accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
 
         // Validation
         try {
-            accessControlBaseServiceFacade.findAppById(serviceContext, id);
+            accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
             fail("app deleted");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -516,18 +489,18 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = APP_1;
 
         // Delete app
-        accessControlBaseServiceFacade.deleteApp(getServiceContext(), id);
+        accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
 
         // Validation
         try {
-            accessControlBaseServiceFacade.findAppById(serviceContext, id);
+            accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
             fail("app deleted");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.APP_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
             assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContext()).size());
+            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador()).size());
         }
 
     }
@@ -538,7 +511,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
         // Delete app
         try {
-            accessControlBaseServiceFacade.deleteApp(getServiceContext(), id);
+            accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
             fail("app not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -551,14 +524,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
     @Test
     public void testFindAllApps() throws Exception {
-        List<AppDto> apps = accessControlBaseServiceFacade.findAllApps(getServiceContext());
+        List<AppDto> apps = accessControlBaseServiceFacade.findAllApps(getServiceContextAdministrador());
         assertEquals(2, apps.size());
     }
 
     @Test
     public void testFindAppById() throws Exception {
         Long id = APP_1;
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), id);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
         assertNotNull(appDto);
         assertEquals(id, appDto.getId());
         assertEquals("gOPESTAT", appDto.getCode());
@@ -577,7 +550,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = null;
 
         try {
-            accessControlBaseServiceFacade.findAppById(getServiceContext(), id);
+            accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
             fail("parameter required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -594,7 +567,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     @Test
     public void testFindUserById() throws Exception {
         Long id = USER_1;
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), id);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
         assertNotNull(userDto);
         assertEquals(id, userDto.getId());
         assertEquals("arte", userDto.getUsername());
@@ -614,7 +587,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = null;
 
         try {
-            accessControlBaseServiceFacade.findUserById(getServiceContext(), id);
+            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
             fail("parameter required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -630,7 +603,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = NOT_EXISTS;
 
         try {
-            accessControlBaseServiceFacade.findUserById(getServiceContext(), id);
+            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
             fail("Not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -645,7 +618,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         UserDto userDto = AccessControlDtoMocks.mockUserDto();
 
         // Create
-        UserDto userDtoCreated = accessControlBaseServiceFacade.createUser(getServiceContext(), userDto);
+        UserDto userDtoCreated = accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
 
         // Validate
         assertNotNull(userDtoCreated);
@@ -660,10 +633,10 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertNotNull(userDtoCreated.getCreatedDate());
         assertNotNull(userDtoCreated.getLastUpdated());
         assertNotNull(userDtoCreated.getLastUpdatedBy());
-        assertEquals(getServiceContext().getUserId(), userDtoCreated.getCreatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), userDtoCreated.getCreatedBy());
         assertTrue(DateUtils.isSameDay(new Date(), userDtoCreated.getCreatedDate()));
         assertTrue(DateUtils.isSameDay(new Date(), userDtoCreated.getLastUpdated()));
-        assertEquals(getServiceContext().getUserId(), userDtoCreated.getLastUpdatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), userDtoCreated.getLastUpdatedBy());
 
     }
 
@@ -677,7 +650,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         userDto.setMail("prueba@arte-consultores.com");
 
         try {
-            accessControlBaseServiceFacade.createUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
             fail("username required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -697,7 +670,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         userDto.setMail("prueba@arte-consultores.com");
 
         try {
-            accessControlBaseServiceFacade.createUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
             fail("name required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -717,7 +690,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         userDto.setMail("prueba@arte-consultores.com");
 
         try {
-            accessControlBaseServiceFacade.createUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
             fail("surname required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -737,7 +710,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         userDto.setMail(null);
 
         try {
-            accessControlBaseServiceFacade.createUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
             fail("mail required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -757,7 +730,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         userDto.setMail("prueba@arte-consultores.com");
 
         try {
-            accessControlBaseServiceFacade.createUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
             fail("username duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -777,7 +750,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         userDto.setMail("prueba@arte-consultores.com");
 
         try {
-            accessControlBaseServiceFacade.createUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
             fail("code duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -792,11 +765,11 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = USER_2;
 
         // Delete user
-        accessControlBaseServiceFacade.deleteUser(getServiceContext(), id);
+        accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
 
         // Validation
         try {
-            accessControlBaseServiceFacade.findUserById(serviceContext, id);
+            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
             fail("user deleted");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -812,18 +785,18 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = USER_1;
 
         // Delete user
-        accessControlBaseServiceFacade.deleteUser(getServiceContext(), id);
+        accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
 
         // Validation
         try {
-            accessControlBaseServiceFacade.findUserById(serviceContext, id);
+            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
             fail("user deleted");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
             assertEquals(ServiceExceptionType.USER_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
             assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContext()).size());
+            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador()).size());
         }
 
     }
@@ -834,7 +807,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
         // Delete user
         try {
-            accessControlBaseServiceFacade.deleteUser(getServiceContext(), id);
+            accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
             fail("user not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -849,7 +822,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testUpdateUser() throws Exception {
         Long id = USER_1;
 
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), id);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
 
         userDto.setUsername("newUsername");
         userDto.setName("newName");
@@ -857,7 +830,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         userDto.setMail("newmail@arte-consultores.com");
 
         // Update
-        UserDto userDtoUpdated = accessControlBaseServiceFacade.updateUser(getServiceContext(), userDto);
+        UserDto userDtoUpdated = accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
 
         // Validations
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, userDtoUpdated);
@@ -866,12 +839,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
     @Test
     public void testUpdateUserNotExists() throws Exception {
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         userDto.setId(NOT_EXISTS);
 
         try {
-            accessControlBaseServiceFacade.updateUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
             fail("user not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -885,12 +858,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testUpdateUserDuplicatedUsername() throws Exception {
         Long id = USER_1;
 
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), id);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
 
         userDto.setUsername("prueba2");
 
         try {
-            accessControlBaseServiceFacade.updateUser(getServiceContext(), userDto);
+            accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
             fail("username duplicated");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -902,7 +875,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
     @Test
     public void testFindAllUsers() throws Exception {
-        List<UserDto> users = accessControlBaseServiceFacade.findAllUsers(getServiceContext());
+        List<UserDto> users = accessControlBaseServiceFacade.findAllUsers(getServiceContextAdministrador());
         assertEquals(2, users.size());
     }
 
@@ -914,9 +887,9 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testCreateAccess() throws Exception {
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         AccessDto accessDto = new AccessDto();
         accessDto.setRole(roleDto);
@@ -925,7 +898,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         // Create
-        AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+        AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
 
         // Validate
         assertNotNull(accessDtoCreated);
@@ -940,10 +913,10 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertNotNull(accessDtoCreated.getCreatedDate());
         assertNotNull(accessDtoCreated.getLastUpdated());
         assertNotNull(accessDtoCreated.getLastUpdatedBy());
-        assertEquals(getServiceContext().getUserId(), accessDtoCreated.getCreatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), accessDtoCreated.getCreatedBy());
         assertTrue(DateUtils.isSameDay(new Date(), accessDtoCreated.getCreatedDate()));
         assertTrue(DateUtils.isSameDay(new Date(), accessDtoCreated.getLastUpdated()));
-        assertEquals(getServiceContext().getUserId(), accessDtoCreated.getLastUpdatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), accessDtoCreated.getLastUpdatedBy());
 
     }
 
@@ -951,9 +924,9 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testCreateAccessWithoutOperation() throws Exception {
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_2);
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_2);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         AccessDto accessDto = new AccessDto();
         accessDto.setRole(roleDto);
@@ -961,7 +934,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         accessDto.setUser(userDto);
 
         // Create
-        AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+        AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
 
         // Validate
         assertNotNull(accessDtoCreated);
@@ -976,10 +949,10 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         assertNotNull(accessDtoCreated.getCreatedDate());
         assertNotNull(accessDtoCreated.getLastUpdated());
         assertNotNull(accessDtoCreated.getLastUpdatedBy());
-        assertEquals(getServiceContext().getUserId(), accessDtoCreated.getCreatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), accessDtoCreated.getCreatedBy());
         assertTrue(DateUtils.isSameDay(new Date(), accessDtoCreated.getCreatedDate()));
         assertTrue(DateUtils.isSameDay(new Date(), accessDtoCreated.getLastUpdated()));
-        assertEquals(getServiceContext().getUserId(), accessDtoCreated.getLastUpdatedBy());
+        assertEquals(getServiceContextAdministrador().getUserId(), accessDtoCreated.getLastUpdatedBy());
 
     }
 
@@ -987,9 +960,9 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testCreateDuplicatedAccessWithoutOperation() throws Exception {
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         AccessDto accessDto = new AccessDto();
         accessDto.setRole(roleDto);
@@ -997,7 +970,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         accessDto.setUser(userDto);
 
         try {
-            accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
             fail("duplicated access");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -1013,8 +986,8 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testCreateAccessRoleRequired() throws Exception {
 
         // Retrieve related entities
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         AccessDto accessDto = new AccessDto();
         accessDto.setRole(null);
@@ -1022,7 +995,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         accessDto.setUser(userDto);
 
         try {
-            accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
             fail("role required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -1036,8 +1009,8 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testCreateAccessAppRequired() throws Exception {
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         AccessDto accessDto = new AccessDto();
         accessDto.setRole(roleDto);
@@ -1045,7 +1018,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         accessDto.setUser(userDto);
 
         try {
-            accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
             fail("app required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -1059,8 +1032,8 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testCreateAccessUserRequired() throws Exception {
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
 
         AccessDto accessDto = new AccessDto();
         accessDto.setRole(roleDto);
@@ -1068,7 +1041,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         accessDto.setUser(null);
 
         try {
-            accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
             fail("user required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -1082,9 +1055,9 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
     public void testCreateDuplicatedAccess() throws Exception {
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         AccessDto accessDto = new AccessDto();
         accessDto.setRole(roleDto);
@@ -1093,7 +1066,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         try {
-            accessControlBaseServiceFacade.createAccess(getServiceContext(), accessDto);
+            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
             fail("duplicated access");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -1111,13 +1084,13 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = ACCESS_1;
 
         // Access
-        AccessDto access = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
+        AccessDto access = accessControlBaseServiceFacade.findAccessById(getServiceContextAdministrador(), id);
 
         // Remove access
-        accessControlBaseServiceFacade.removeAccess(getServiceContext(), id);
+        accessControlBaseServiceFacade.removeAccess(getServiceContextAdministrador(), id);
 
         // Retrieve removed access
-        AccessDto removedAccess = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
+        AccessDto removedAccess = accessControlBaseServiceFacade.findAccessById(getServiceContextAdministrador(), id);
 
         // Validations
         assertNotNull(removedAccess.getRemovalDate());
@@ -1130,7 +1103,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
         // Delete access
         try {
-            accessControlBaseServiceFacade.removeAccess(getServiceContext(), id);
+            accessControlBaseServiceFacade.removeAccess(getServiceContextAdministrador(), id);
             fail("access not exists");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -1143,7 +1116,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
 
     @Test
     public void testFindAllAccess() throws Exception {
-        List<AccessDto> access = accessControlBaseServiceFacade.findAllAccess(getServiceContext());
+        List<AccessDto> access = accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador());
         assertEquals(3, access.size());
     }
 
@@ -1154,21 +1127,21 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         String appCode = "gOPESTAT";
         String username = "arte";
         String operationCodeId = "OPERATION-TODO-01";
-        List<AccessDto> access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        List<AccessDto> access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, true);
         assertEquals(1, access.size());
 
         roleCode = "aDMINISTRADOR";
         appCode = "gOPESTAT";
         username = "arte";
         operationCodeId = "OPERATION-TODO-01";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(1, access.size());
 
         roleCode = "aDMINISTRADOR";
         appCode = "gOPESTAT";
         username = "arte";
         operationCodeId = "OPERATION-TODO-01";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, null);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, null);
         assertEquals(2, access.size());
 
         // Without operation condition
@@ -1176,14 +1149,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "gOPESTAT";
         username = "arte";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, true);
         assertEquals(1, access.size());
 
         roleCode = "aDMINISTRADOR";
         appCode = "gOPESTAT";
         username = "arte";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(2, access.size());
 
         // Role condition
@@ -1191,14 +1164,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, true);
         assertEquals(0, access.size());
 
         roleCode = "TEC_PLANI";
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(0, access.size());
 
         // Role condition
@@ -1206,14 +1179,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, true);
         assertEquals(1, access.size());
 
         roleCode = "ADMINISTRADOR";
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(2, access.size());
 
         // Without conditions
@@ -1221,14 +1194,14 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, true);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, true);
         assertEquals(1, access.size());
 
         roleCode = "";
         appCode = "";
         username = "";
         operationCodeId = "";
-        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContext(), roleCode, appCode, username, operationCodeId, false);
+        access = accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, false);
         assertEquals(2, access.size());
     }
 
@@ -1237,12 +1210,12 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = APP_1;
 
         // Retrieve
-        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
+        AccessDto accessDto = accessControlBaseServiceFacade.findAccessById(getServiceContextAdministrador(), id);
 
         // Retrieve related entities
-        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContext(), ROLE_1);
-        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContext(), APP_1);
-        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContext(), USER_1);
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
 
         // Validations
         assertNotNull(accessDto);
@@ -1265,7 +1238,7 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
         Long id = null;
 
         try {
-            accessControlBaseServiceFacade.findAccessById(getServiceContext(), id);
+            accessControlBaseServiceFacade.findAccessById(getServiceContextAdministrador(), id);
             fail("parameter required");
         } catch (MetamacException e) {
             assertEquals(1, e.getExceptionItems().size());
@@ -1273,35 +1246,6 @@ public class AccessControlBaseServiceFacadeTest extends MetamacBaseTests impleme
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
             assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
-    }
-
-    /**************************************************************************
-     * DBUNIT CONFIGURATION
-     **************************************************************************/
-
-    @Override
-    protected String getDataSetFile() {
-        return "dbunit/AccessControlBaseServiceTest.xml";
-    }
-
-    @Override
-    protected List<String> getTablesToRemoveContent() {
-        List<String> tables = new ArrayList<String>();
-        tables.add("TB_ACCESS");
-        tables.add("TB_APPS");
-        tables.add("TB_ROLES");
-        tables.add("TB_USERS");
-        return tables;
-    }
-
-    @Override
-    protected List<String> getSequencesToRestart() {
-        List<String> sequences = new ArrayList<String>();
-        sequences.add("SEQ_ROLES");
-        sequences.add("SEQ_APPS");
-        sequences.add("SEQ_USERS");
-        sequences.add("SEQ_ACCESS");
-        return sequences;
     }
 
 }

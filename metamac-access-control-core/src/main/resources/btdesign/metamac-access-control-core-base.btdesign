@@ -200,6 +200,15 @@ Application Base {
 			List<@Access> findAccessByCondition(List<ConditionalCriteria> condition) throws MetamacException;
 			List<@Access> findAccessByCondition(String roleCode, String appCode, String username, String operationCodeId, Boolean removedAccess) throws MetamacException;
 	   }
-		
     }
+    
+    Module enume {
+		basePackage=org.siemac.metamac.domain.access.control.enume
+		
+		enum AccessControlRoleEnum {
+    		TECNICO_PLANIFICACION,
+    		ADMINISTRADOR,
+    		ANY_ROLE_ALLOWED
+    	}
+	}
 }
