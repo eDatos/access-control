@@ -52,7 +52,7 @@ public class StatisticalOperationsInternalWebServiceFacadeImpl implements Statis
             metamacCriteria.setRestriction(new MetamacCriteriaConjunctionRestriction());
             ((MetamacCriteriaConjunctionRestriction) metamacCriteria.getRestriction()).setRestrictions(new MetamacCriteriaRestrictionList());
 
-            metamacCriteria.setMaximumResultSize(BigInteger.valueOf(Long.MAX_VALUE));
+            metamacCriteria.setMaximumResultSize(BigInteger.valueOf(1000));
             
             FindOperationsResult findOperationsResult = webservicesLocator.getMetamacStatisticalOperationsInternalInterface().findOperations(metamacCriteria);
             return findOperationsResult.getOperations();
