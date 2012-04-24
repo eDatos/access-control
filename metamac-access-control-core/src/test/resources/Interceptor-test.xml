@@ -32,11 +32,11 @@
 	</tx:advice>
 	<aop:config>
 		<aop:pointcut id="serviceFacadePointCut"
-			expression="execution(public * org.siemac.metamac..serviceapi.*ServiceFacade.*(..))" />
+			expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..))" />
 		<!-- Repeating the expression, since I can't find a way to refer to the 
 			other pointcuts. -->
 		<aop:pointcut id="updatingServiceFacade"
-			expression="execution(public * org.siemac.metamac..serviceapi.*ServiceFacade.*(..)) and not (execution(public * org.siemac.metamac..serviceapi.*.get*(..)) or execution(public * org.siemac.metamac..serviceapi.*.find*(..)))" />
+			expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..)) and not (execution(public * org.siemac.metamac.access.control..serviceapi.*.get*(..)) or execution(public * org.siemac.metamac..serviceapi.*.find*(..)))" />
 
 		<aop:advisor pointcut-ref="serviceFacadePointCut"
 			advice-ref="txAdvice" order="1" />
