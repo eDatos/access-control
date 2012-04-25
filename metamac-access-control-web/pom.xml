@@ -15,7 +15,7 @@
 	<groupId>org.siemac.metamac.access.control</groupId>
 	<artifactId>metamac-access-control-web</artifactId>
 	<packaging>war</packaging>
-	<version>${metamac-access-control-web.version}</version>
+	<version>1.0-SNAPSHOT</version>
 	<name>METAMAC :: ACCESS :: CONTROL ::  :: WEB</name>
 	<description>METAMAC :: ACCESS :: CONTROL :: WEB</description>
 
@@ -131,7 +131,21 @@
 		<outputDirectory>${webappDirectory}/WEB-INF/classes</outputDirectory>
 
 		<plugins>
+  
+            <!-- Maven Compiler Plugin -->
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                  <source>1.6</source>
+                  <target>1.6</target>
+                  <generatedSourcesDirectory>${project.build.directory}/generated-sources/gwt</generatedSourcesDirectory>
+                </configuration>
+            </plugin>
+  
 			<!-- GWT Maven Plugin -->
+   
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
@@ -161,53 +175,12 @@
 					<compileSourcesArtifacts>
                         <artifact>org.siemac.metamac.access.control:metamac-access-control-core:jar:client</artifact>
 				    	<artifact>org.siemac.metamac:metamac-core-common:jar:client</artifact>
+                        <artifact>org.siemac.metamac:metamac-api-domain:jar:client</artifact>
 				    </compileSourcesArtifacts>
+                    <inplace>true</inplace>
 				</configuration>
 			</plugin>
  			
- 			<!-- Run annotation processors on src/main/java sources -->
-            <plugin>
-                <groupId>org.bsc.maven</groupId>
-                <artifactId>maven-processor-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>process</id>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <phase>generate-sources</phase>
-                        <configuration>
-                        	<outputDirectory>target/generated-sources/gwt</outputDirectory>
-                            <processors>
-                                <processor>com.gwtplatform.dispatch.annotation.processor.GenDispatchProcessor</processor>
-                            </processors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            
-			<!-- Copy static web files before executing gwt:run -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
-				
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>war</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-<!-- 					<warSourceDirectory>war</warSourceDirectory> -->
-          			<webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-					<webappDirectory>${webappDirectory}</webappDirectory>
-					
-				</configuration>
-			</plugin>
-
 		</plugins>
 	</build>
 
