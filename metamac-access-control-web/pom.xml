@@ -15,7 +15,7 @@
     <artifactId>metamac-access-control-web</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>METAMAC :: ACCESS :: CONTROL ::  :: WEB</name>
+    <name>METAMAC :: ACCESS :: CONTROL :: WEB</name>
     <description>METAMAC :: ACCESS :: CONTROL :: WEB</description>
 
     <properties>
