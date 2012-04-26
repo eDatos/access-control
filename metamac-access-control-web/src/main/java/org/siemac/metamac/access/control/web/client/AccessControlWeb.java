@@ -26,7 +26,7 @@ public class AccessControlWeb implements EntryPoint {
     private static AccessControlWebMessages       messages;
     private static AccessControlWebCoreMessages   coreMessages;
 
-    public static final AccessControlWebGinjector ginjector    = GWT.create(AccessControlWebGinjector.class);
+    public static final AccessControlWebGinjector ginjector = GWT.create(AccessControlWebGinjector.class);
 
     interface GlobalResources extends ClientBundle {
 
@@ -38,11 +38,11 @@ public class AccessControlWeb implements EntryPoint {
     public void onModuleLoad() {
         String ticket = Window.Location.getParameter("ticket");
         if (ticket != null) {
-            String url = Window.Location.createUrlBuilder().removeParameter("ticket").setHash(";ticket="+ticket).buildString();
+            String url = Window.Location.createUrlBuilder().removeParameter("ticket").setHash(";ticket=" + ticket).buildString();
             Window.Location.replace(url);
             return;
         }
-        
+
         ticket = Window.Location.getHash().replace("#;ticket=", "");
         if (ticket == null || ticket.length() == 0) {
             displayLoginView();
@@ -52,12 +52,12 @@ public class AccessControlWeb implements EntryPoint {
 
                 @Override
                 public void onFailure(Throwable arg0) {
-
+                    // TODO log
                 }
                 @Override
                 public void onSuccess(ValidateTicketResult result) {
                     AccessControlWeb.principal = result.getMetamacPrincipal();
-                    
+
                     String url = Window.Location.createUrlBuilder().setHash("").buildString();
                     Window.Location.assign(url);
 
@@ -83,11 +83,10 @@ public class AccessControlWeb implements EntryPoint {
             @Override
             public void onSuccess(GetLoginPageUrlResult result) {
                 Window.Location.replace(result.getLoginPageUrl());
-
             }
         });
     }
-    
+
     public static MetamacPrincipal getCurrentUser() {
         return AccessControlWeb.principal;
     }
