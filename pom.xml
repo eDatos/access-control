@@ -19,7 +19,7 @@
     <modules>
     	<module>metamac-access-control-parent</module>
         <module>metamac-access-control-core</module>
-<!--         <module>metamac-access-control-web</module> -->
+        <module>metamac-access-control-web</module>
     </modules>
 
     <build>
