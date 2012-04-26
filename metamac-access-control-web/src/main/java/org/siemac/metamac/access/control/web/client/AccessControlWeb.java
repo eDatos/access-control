@@ -1,12 +1,19 @@
 package org.siemac.metamac.access.control.web.client;
 
 import org.siemac.metamac.access.control.web.client.gin.AccessControlWebGinjector;
+import org.siemac.metamac.access.control.web.shared.GetLoginPageUrlAction;
+import org.siemac.metamac.access.control.web.shared.GetLoginPageUrlResult;
+import org.siemac.metamac.access.control.web.shared.ValidateTicketAction;
+import org.siemac.metamac.access.control.web.shared.ValidateTicketResult;
+import org.siemac.metamac.sso.client.MetamacPrincipal;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 
 /**
@@ -14,11 +21,12 @@ import com.gwtplatform.mvp.client.DelayedBindRegistry;
  */
 public class AccessControlWeb implements EntryPoint {
 
+    private static MetamacPrincipal               principal;
     private static AccessControlWebConstants      constants;
     private static AccessControlWebMessages       messages;
     private static AccessControlWebCoreMessages   coreMessages;
 
-    public static final AccessControlWebGinjector ginjector = GWT.create(AccessControlWebGinjector.class);
+    public static final AccessControlWebGinjector ginjector    = GWT.create(AccessControlWebGinjector.class);
 
     interface GlobalResources extends ClientBundle {
 
@@ -28,12 +36,60 @@ public class AccessControlWeb implements EntryPoint {
     }
 
     public void onModuleLoad() {
-        // This is required for GWT-Platform proxy's generator.
-        DelayedBindRegistry.bind(ginjector);
-        ginjector.getPlaceManager().revealCurrentPlace();
+        String ticket = Window.Location.getParameter("ticket");
+        if (ticket != null) {
+            String url = Window.Location.createUrlBuilder().removeParameter("ticket").setHash(";ticket="+ticket).buildString();
+            Window.Location.replace(url);
+            return;
+        }
+        
+        ticket = Window.Location.getHash().replace("#;ticket=", "");
+        if (ticket == null || ticket.length() == 0) {
+            displayLoginView();
+        } else {
+            String serviceUrl = Window.Location.createUrlBuilder().buildString();
+            ginjector.getDispatcher().execute(new ValidateTicketAction(ticket, serviceUrl), new AsyncCallback<ValidateTicketResult>() {
 
-        // Inject global styles
-        GWT.<GlobalResources> create(GlobalResources.class).css().ensureInjected();
+                @Override
+                public void onFailure(Throwable arg0) {
+
+                }
+                @Override
+                public void onSuccess(ValidateTicketResult result) {
+                    AccessControlWeb.principal = result.getMetamacPrincipal();
+                    
+                    String url = Window.Location.createUrlBuilder().setHash("").buildString();
+                    Window.Location.assign(url);
+
+                    // This is required for GWT-Platform proxy's generator.
+                    DelayedBindRegistry.bind(ginjector);
+                    ginjector.getPlaceManager().revealCurrentPlace();
+
+                    // Inject global styles
+                    GWT.<GlobalResources> create(GlobalResources.class).css().ensureInjected();
+                }
+            });
+        }
+    }
+
+    public void displayLoginView() {
+        String serviceUrl = Window.Location.createUrlBuilder().buildString();
+        ginjector.getDispatcher().execute(new GetLoginPageUrlAction(serviceUrl), new AsyncCallback<GetLoginPageUrlResult>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+
+            }
+            @Override
+            public void onSuccess(GetLoginPageUrlResult result) {
+                Window.Location.replace(result.getLoginPageUrl());
+
+            }
+        });
+    }
+    
+    public static MetamacPrincipal getCurrentUser() {
+        return AccessControlWeb.principal;
     }
 
     public static AccessControlWebConstants getConstants() {
