@@ -1,6 +1,6 @@
 -- TB_ROLES INITIAL IMPORT
 Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-(1,'ADMINISTRADOR','dfd78658-165a-4f15-9aff-a250f622c616','Administrador sistema', 'Persona que puede realizar cualquier acción en los aplicativos', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+(1,'ADMINISTRADOR','dfd78658-165a-4f15-9aff-a250f622c616','Administrador', 'Persona que puede realizar cualquier acción en los aplicativos', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 
 Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
 (2,'TECNICO_SISTEMA_INDICADORES','e76789b0-4e01-49fd-8c6e-de2c84d01de2','Técnico de sistema de indicadores', 'Persona responsable de la producción de sistemas de indicadores', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
