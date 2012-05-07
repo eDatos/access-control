@@ -1,6 +1,7 @@
 package org.siemac.metamac.access.control.service.dto;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
+import org.joda.time.DateTime;
 import org.siemac.metamac.access.control.base.domain.Access;
 import org.siemac.metamac.access.control.base.domain.App;
 import org.siemac.metamac.access.control.base.domain.Role;
@@ -11,6 +12,7 @@ import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.core.common.util.OptimisticLockingUtils;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.domain.access.control.dto.AppDto;
 import org.siemac.metamac.domain.access.control.dto.RoleDto;
@@ -30,9 +32,11 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
             return null;
         }
 
+        // If exists, retrieves existing entity. Otherwise, creates new entity
         Role target = new Role();
         if (source.getId() != null) {
             target = accessControlBaseService.findRoleById(ctx, source.getId());
+            OptimisticLockingUtils.checkVersion(target.getVersion(), source.getOptimisticLockingVersion());
         }
 
         roleDtoToDo(source, target);
@@ -45,9 +49,11 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
             return null;
         }
 
+        // If exists, retrieves existing entity. Otherwise, creates new entity
         App target = new App();
         if (source.getId() != null) {
             target = accessControlBaseService.findAppById(ctx, source.getId());
+            OptimisticLockingUtils.checkVersion(target.getVersion(), source.getOptimisticLockingVersion());
         }
 
         appDtoToDo(source, target);
@@ -60,9 +66,11 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
             return null;
         }
 
+        // If exists, retrieves existing entity. Otherwise, creates new entity
         User target = new User();
         if (source.getId() != null) {
             target = accessControlBaseService.findUserById(ctx, source.getId());
+            OptimisticLockingUtils.checkVersion(target.getVersion(), source.getOptimisticLockingVersion());
         }
         userDtoToDo(source, target);
         return target;
@@ -74,9 +82,11 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
             return null;
         }
 
+        // If exists, retrieves existing entity. Otherwise, creates new entity
         Access target = new Access();
         if (source.getId() != null) {
             target = accessControlBaseService.findAccessById(ctx, source.getId());
+            OptimisticLockingUtils.checkVersion(target.getVersion(), source.getOptimisticLockingVersion());
         }
         accessDtoToDo(ctx, source, target);
         return target;
@@ -98,6 +108,9 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
 
+        // Optimistic locking: Update "update date" attribute to force update of the root entity in order to increase attribute "version"
+        target.setUpdateDate(new DateTime());
+
         return target;
     }
 
@@ -112,6 +125,9 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         target.setCode(source.getCode());
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
+        
+        // Optimistic locking: Update "update date" attribute to force update of the root entity in order to increase attribute "version"
+        target.setUpdateDate(new DateTime());
 
         return target;
     }
@@ -126,6 +142,9 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         target.setName(source.getName());
         target.setSurname(source.getSurname());
         target.setMail(source.getMail());
+        
+        // Optimistic locking: Update "update date" attribute to force update of the root entity in order to increase attribute "version"
+        target.setUpdateDate(new DateTime());
 
         return target;
     }
@@ -140,6 +159,9 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         target.setUser(userDtoToDo(ctx, source.getUser()));
 
         target.setOperation(externalItemBtDtoToDo(source.getOperation()));
+        
+        // Optimistic locking: Update "update date" attribute to force update of the root entity in order to increase attribute "version"
+        target.setUpdateDate(new DateTime());
 
         return target;
     }

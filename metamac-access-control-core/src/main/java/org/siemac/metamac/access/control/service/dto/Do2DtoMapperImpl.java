@@ -34,6 +34,8 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setCode(source.getCode());
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
+        
+        target.setOptimisticLockingVersion(source.getVersion());
 
         return target;
     }
@@ -55,6 +57,8 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
 
+        target.setOptimisticLockingVersion(source.getVersion());
+        
         return target;
     }
 
@@ -76,6 +80,8 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setSurname(source.getSurname());
         target.setMail(source.getMail());
 
+        target.setOptimisticLockingVersion(source.getVersion());
+        
         return target;
     }
 
@@ -99,6 +105,8 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setUser(userDoToDto(source.getUser()));
         target.setOperation(externalItemBtToDto(source.getOperation()));
 
+        target.setOptimisticLockingVersion(source.getVersion());
+        
         return target;
     }
 

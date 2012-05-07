@@ -2,6 +2,7 @@ package org.siemac.metamac.access.control.base.serviceapi;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -300,6 +301,42 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals("TEC_PLANI", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
+    
+    @Test
+    public void testUpdateRoleOptimisticLockingError() throws Exception {
+        Long id = ROLE_1;
+        
+        // Retrieve role - session 1
+        RoleDto roleDtoSession1 = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
+        assertEquals(Long.valueOf(1), roleDtoSession1.getOptimisticLockingVersion());
+        roleDtoSession1.setTitle("newTitle");
+        
+        // Retrieve role - session 2
+        RoleDto roleDtoSession2 = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
+        assertEquals(Long.valueOf(1), roleDtoSession1.getOptimisticLockingVersion());
+        roleDtoSession2.setTitle("newTitle2");
+        
+        // Update role - session 1
+        RoleDto roleDtoSession1AfterUpdate = accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDtoSession1);
+        AccessControlDtoAsserts.assertEqualsRoleDto(roleDtoSession1, roleDtoSession1AfterUpdate);
+        assertEquals(Long.valueOf(2), roleDtoSession1AfterUpdate.getOptimisticLockingVersion());
+        
+        // Update role - session 2
+        try {
+            accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDtoSession2);
+            fail("Optimistic locking");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.OPTIMISTIC_LOCKING.getCode(), e.getExceptionItems().get(0).getCode());
+            assertNull(e.getExceptionItems().get(0).getMessageParameters());
+        }
+        
+        // Update role - session 1
+        roleDtoSession1AfterUpdate.setTitle("newTitle - secondUpdate");
+        RoleDto roleDtoSession1AfterUpdate2 = accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDtoSession1AfterUpdate);
+        AccessControlDtoAsserts.assertEqualsRoleDto(roleDtoSession1AfterUpdate, roleDtoSession1AfterUpdate2);
+        assertEquals(Long.valueOf(3), roleDtoSession1AfterUpdate2.getOptimisticLockingVersion());
+    }
 
     @Test
     public void testFindAllRoles() throws Exception {
@@ -462,6 +499,42 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
             assertEquals("gPE", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
+    }
+    
+    @Test
+    public void testUpdateAppOptimisticLockingError() throws Exception {
+        Long id = APP_1;
+        
+        // Retrieve app - session 1
+        AppDto appDtoSession1 = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
+        assertEquals(Long.valueOf(1), appDtoSession1.getOptimisticLockingVersion());
+        appDtoSession1.setTitle("newTitle");
+        
+        // Retrieve app - session 2
+        AppDto appDtoSession2 = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
+        assertEquals(Long.valueOf(1), appDtoSession1.getOptimisticLockingVersion());
+        appDtoSession2.setTitle("newTitle2");
+        
+        // Update app - session 1
+        AppDto appDtoSession1AfterUpdate = accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDtoSession1);
+        AccessControlDtoAsserts.assertEqualsAppDto(appDtoSession1, appDtoSession1AfterUpdate);
+        assertEquals(Long.valueOf(2), appDtoSession1AfterUpdate.getOptimisticLockingVersion());
+        
+        // Update app - session 2
+        try {
+            accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDtoSession2);
+            fail("Optimistic locking");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.OPTIMISTIC_LOCKING.getCode(), e.getExceptionItems().get(0).getCode());
+            assertNull(e.getExceptionItems().get(0).getMessageParameters());
+        }
+        
+        // Update app - session 1
+        appDtoSession1AfterUpdate.setTitle("newTitle - secondUpdate");
+        AppDto appDtoSession1AfterUpdate2 = accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDtoSession1AfterUpdate);
+        AccessControlDtoAsserts.assertEqualsAppDto(appDtoSession1AfterUpdate, appDtoSession1AfterUpdate2);
+        assertEquals(Long.valueOf(3), appDtoSession1AfterUpdate2.getOptimisticLockingVersion());
     }
 
     @Test
@@ -871,6 +944,42 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
             assertEquals("prueba2", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
+    }
+    
+    @Test
+    public void testUpdateUserOptimisticLockingError() throws Exception {
+        Long id = APP_1;
+        
+        // Retrieve user - session 1
+        UserDto userDtoSession1 = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
+        assertEquals(Long.valueOf(1), userDtoSession1.getOptimisticLockingVersion());
+        userDtoSession1.setName("newName");
+        
+        // Retrieve user - session 2
+        UserDto userDtoSession2 = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
+        assertEquals(Long.valueOf(1), userDtoSession1.getOptimisticLockingVersion());
+        userDtoSession2.setName("newName2");
+        
+        // Update user - session 1
+        UserDto userDtoSession1AfterUpdate = accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDtoSession1);
+        AccessControlDtoAsserts.assertEqualsUserDto(userDtoSession1, userDtoSession1AfterUpdate);
+        assertEquals(Long.valueOf(2), userDtoSession1AfterUpdate.getOptimisticLockingVersion());
+        
+        // Update user - session 2
+        try {
+            accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDtoSession2);
+            fail("Optimistic locking");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.OPTIMISTIC_LOCKING.getCode(), e.getExceptionItems().get(0).getCode());
+            assertNull(e.getExceptionItems().get(0).getMessageParameters());
+        }
+        
+        // Update user - session 1
+        userDtoSession1AfterUpdate.setName("newName - secondUpdate");
+        UserDto userDtoSession1AfterUpdate2 = accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDtoSession1AfterUpdate);
+        AccessControlDtoAsserts.assertEqualsUserDto(userDtoSession1AfterUpdate, userDtoSession1AfterUpdate2);
+        assertEquals(Long.valueOf(3), userDtoSession1AfterUpdate2.getOptimisticLockingVersion());
     }
 
     @Test
