@@ -36,10 +36,13 @@
 				rollback-for="org.fornax.cartridges.sculptor.framework.errorhandling.ApplicationException, org.siemac.metamac.core.common.exception.MetamacException" />
 		</tx:attributes>
 	</tx:advice>
+
 	<aop:config>
-	<aop:pointcut id="updateServicePointCut" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*Service.*update*(..))" />
+		<aop:pointcut id="updateServicePointCut"
+			expression="execution(public * org.siemac.metamac.access.control..serviceapi.*Service.*update*(..))" />
 		<aop:pointcut id="serviceFacadePointCut"
 			expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..))" />
+			
 		<!-- Repeating the expression, since I can't find a way to refer to the 
 			other pointcuts. -->
 		<aop:pointcut id="updatingServiceFacade"
