@@ -30,29 +30,28 @@ public class ValidateTicketActionHandler extends AbstractActionHandler<ValidateT
 
     @Autowired
     private ConfigurationService configurationService       = null;
-    
-    private ValidateTicket validateTicket = null;
+
+    private ValidateTicket       validateTicket             = null;
 
     public ValidateTicketActionHandler() {
         super(ValidateTicketAction.class);
     }
-    
+
     @PostConstruct
     public void initActionHandler() {
         String casServerUrlPrefix = configurationService.getConfig().getString(PROP_CAS_SERVER_URL_PREFIX);
         String tolerance = configurationService.getConfig().getString(PROP_TOLERANCE); // ms
-        
+
         validateTicket = new ValidateTicket(casServerUrlPrefix);
         validateTicket.setTolerance(Long.valueOf(tolerance));
     }
-    
 
     @Override
     public ValidateTicketResult execute(ValidateTicketAction action, ExecutionContext context) throws ActionException {
-        
+
         String ticket = action.getTicket();
         String service = action.getServiceUrl();
-        
+
         try {
             MetamacPrincipal metamacPrincipal = validateTicket.validateTicket(ticket, service);
             ServiceContext serviceContext = new ServiceContext(metamacPrincipal.getUserId(), ticket, AccessControlConstants.SECURITY_APPLICATION_ID);

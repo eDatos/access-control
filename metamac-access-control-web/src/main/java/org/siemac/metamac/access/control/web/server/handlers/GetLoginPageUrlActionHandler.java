@@ -18,7 +18,7 @@ public class GetLoginPageUrlActionHandler extends AbstractActionHandler<GetLogin
 
     @Autowired
     private ConfigurationService configurationService       = null;
-    
+
     public GetLoginPageUrlActionHandler() {
         super(GetLoginPageUrlAction.class);
     }
@@ -29,15 +29,15 @@ public class GetLoginPageUrlActionHandler extends AbstractActionHandler<GetLogin
         String serviceParameterName = "service";
         String serviceUrl = action.getServiceUrl();
         boolean renew = false;
-        boolean gateway  = false;
-        
+        boolean gateway = false;
+
         String url = CommonUtils.constructRedirectUrl(casServiceLoginUrl, serviceParameterName, serviceUrl, renew, gateway);
         return new GetLoginPageUrlResult(url);
     }
 
     @Override
     public void undo(GetLoginPageUrlAction action, GetLoginPageUrlResult result, ExecutionContext context) throws ActionException {
-        
+
     }
 
 }

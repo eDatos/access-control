@@ -48,7 +48,7 @@ public class ServerModule extends HandlerModule {
 
     public ServerModule() {
     }
-    
+
     protected void configureHandlers() {
         bindHandler(FindAllAccessAction.class, FindAllAccessActionHandler.class);
         bindHandler(FindAllAppsAction.class, FindAllAppsActionHandler.class);
