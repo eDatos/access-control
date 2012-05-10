@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:util="http://www.springframework.org/schema/util"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
@@ -60,8 +59,7 @@
 		<aop:pointcut id="updateServicePointCut" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*Service.*update*(..))" />
 		<aop:pointcut id="serviceFacadePointCut" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..))" />
 		<!-- Repeating the expression, since I can't find a way to refer to the other pointcuts. -->
-		<aop:pointcut id="updatingServiceFacade"
-			expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..)) and not (execution(public * org.siemac.metamac.access.control..serviceapi.*.get*(..)) or execution(public * org.siemac.metamac..serviceapi.*.find*(..)))" />
+		<aop:pointcut id="updatingServiceFacade" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..)) and not (execution(public * org.siemac.metamac.access.control..serviceapi.*.get*(..)) or execution(public * org.siemac.metamac..serviceapi.*.find*(..)))" />
 
 		<aop:advisor pointcut-ref="serviceFacadePointCut" advice-ref="txAdvice" order="1" />
 		<aop:advisor pointcut-ref="serviceFacadePointCut" advice-ref="serviceContextStoreAdvice" order="2" />
