@@ -7,7 +7,6 @@ import org.siemac.metamac.access.control.web.shared.SaveRoleResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.domain.access.control.dto.RoleDto;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
-import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +36,7 @@ public class SaveRoleActionHandler extends AbstractActionHandler<SaveRoleAction,
             }
             return new SaveRoleResult(roleDto);
         } catch (MetamacException e) {
-            throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
+            throw WebExceptionUtils.createMetamacWebException(e);
         }
     }
 

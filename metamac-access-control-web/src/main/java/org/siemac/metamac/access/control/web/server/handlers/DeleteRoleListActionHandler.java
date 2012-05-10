@@ -8,7 +8,6 @@ import org.siemac.metamac.access.control.web.shared.DeleteRoleListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteRoleListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
-import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +32,7 @@ public class DeleteRoleListActionHandler extends AbstractActionHandler<DeleteRol
             try {
                 accessControlBaseServiceFacade.deleteRole(ServiceContextHolder.getCurrentServiceContext(), id);
             } catch (MetamacException e) {
-                throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
+                throw WebExceptionUtils.createMetamacWebException(e);
             }
         }
         return new DeleteRoleListResult();

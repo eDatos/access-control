@@ -7,7 +7,6 @@ import org.siemac.metamac.access.control.web.shared.SaveAppResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.domain.access.control.dto.AppDto;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
-import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +36,7 @@ public class SaveAppActionHandler extends AbstractActionHandler<SaveAppAction, S
             }
             return new SaveAppResult(appDto);
         } catch (MetamacException e) {
-            throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
+            throw WebExceptionUtils.createMetamacWebException(e);
         }
     }
 

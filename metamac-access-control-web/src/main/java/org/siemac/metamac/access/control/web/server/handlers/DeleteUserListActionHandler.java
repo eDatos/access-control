@@ -8,7 +8,6 @@ import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteUserListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
-import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +32,7 @@ public class DeleteUserListActionHandler extends AbstractActionHandler<DeleteUse
             try {
                 accessControlBaseServiceFacade.deleteUser(ServiceContextHolder.getCurrentServiceContext(), id);
             } catch (MetamacException e) {
-                throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
+                throw WebExceptionUtils.createMetamacWebException(e);
             }
         }
         return new DeleteUserListResult();

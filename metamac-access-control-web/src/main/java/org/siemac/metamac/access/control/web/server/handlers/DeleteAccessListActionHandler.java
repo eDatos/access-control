@@ -8,7 +8,6 @@ import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
-import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +32,7 @@ public class DeleteAccessListActionHandler extends AbstractActionHandler<DeleteA
             try {
                 accessControlBaseServiceFacade.removeAccess(ServiceContextHolder.getCurrentServiceContext(), id);
             } catch (MetamacException e) {
-                throw new MetamacWebException(WebExceptionUtils.getMetamacWebExceptionItem(e.getExceptionItems()));
+                throw WebExceptionUtils.createMetamacWebException(e);
             }
         }
         return new DeleteAccessListResult();
