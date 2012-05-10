@@ -188,7 +188,7 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                    <generatedSourcesDirectory>${project.build.directory}/generated-sources/gwt</generatedSourcesDirectory>
+                    <compilerArgument>-proc:none</compilerArgument>
                 </configuration>
             </plugin>
             
@@ -210,14 +210,16 @@
                         <goals>
                             <goal>process</goal>
                         </goals>
-                        <phase>process-sources</phase>
+                        <phase>generate-sources</phase>
                     </execution>
                 </executions>
                 <configuration>
                     <defaultOutputDirectory>${project.build.directory}/generated-sources/gwt</defaultOutputDirectory>
+                    <processors>
+                        <processor>com.gwtplatform.dispatch.annotation.processor.GenDispatchProcessor</processor>
+                    </processors>
                 </configuration>
-            </plugin>
-            
+            </plugin>            
 
             <!-- GWT Maven Plugin -->
 
