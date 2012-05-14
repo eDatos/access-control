@@ -458,9 +458,7 @@
 								<delete file="${basedir}/src/test/resources/more-test.xml" />
 								<delete file="${basedir}/src/test/resources/spring-test.properties" />
 								
-<!-- 								<delete file="${basedir}/src/test/generated/resources/Interceptor.xml" /> -->
 								<delete file="${basedir}/src/test/generated/resources/Interceptor-test.xml" />
-<!-- 								<delete file="${basedir}/src/test/generated/resources/generated-spring.properties" /> -->
 								<delete file="${basedir}/src/test/generated/resources/applicationContext-test.xml" />
 								<delete file="${basedir}/src/test/generated/resources/EntityManagerFactory-test.xml" />
 							</target>
