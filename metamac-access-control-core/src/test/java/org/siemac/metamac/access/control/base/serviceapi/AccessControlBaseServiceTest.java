@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring/access-control-applicationContext-test.xml"})
+@ContextConfiguration(locations = {"classpath:spring/access-control/applicationContext-test.xml"})
 @TransactionConfiguration(transactionManager = "txManager", defaultRollback = false)
 @Transactional
 public class AccessControlBaseServiceTest extends AccessControlBaseTest implements AccessControlBaseServiceTestBase {

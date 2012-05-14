@@ -15,17 +15,20 @@
 	<bean id="springPropertyConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:/spring-test.properties</value>
+				<value>classpath:/spring/spring-test.properties</value>
 			</list>
 		</property>
 	</bean>
 
 	<!-- metamac-core-common -->
 	<import resource="classpath:/spring/logging-beans-advice.xml" />
+	<import resource="classpath:/spring/general-beans-advice.xml" />
 
-	<!-- metamac-access-control-core > test -->
-	<import resource="classpath:/spring/include/access-control-entity-manager-factory-test.xml" />
-	<import resource="classpath:/spring/include/access-control-interceptor-test.xml" />
-	<import resource="classpath:/spring/include/access-control-pub-sub-test.xml" />
-	<import resource="classpath:/spring/include/access-control-more-test.xml" />
+	<!-- metamac-access-control-core > src/main/resources -->
+	<import resource="classpath:/spring/access-control/include/interceptor.xml" />
+	
+
+	<!-- metamac-access-control-core > src/test/resources -->
+	<import resource="classpath:/spring/access-control/include/datasource-test.xml" />
+	<import resource="classpath:/spring/access-control/include/more-test.xml" />
 </beans>
