@@ -14,6 +14,9 @@
 	<!-- Flush interceptor -->
 	<bean id="flushingHandlingAdvice" class="org.siemac.metamac.access.control.aop.FlushingInterceptor" />
 
+	<!-- Disable flush interceptor -->
+	<bean id="disableFlushHandlingAdvice" class="org.siemac.metamac.access.control.aop.DisableFlushInterceptor" />
+
 
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
@@ -28,7 +31,8 @@
 	<aop:config>
 		<aop:pointcut id="updateServicePointCut" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*Service.*update*(..))" />
 		<aop:pointcut id="serviceFacadePointCut" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..))" />
-		
+		<aop:pointcut id="doMapperPointCut" expression="execution(public * org.siemac.metamac.access.control.service.dto.*2DoMapper.*(..))" />
+
 		<!-- Repeating the expression, since I can't find a way to refer to the other pointcuts. -->
 		<aop:pointcut id="updatingServiceFacade"
 			expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..)) and not (execution(public * org.siemac.metamac.access.control..serviceapi.*.get*(..)) or execution(public * org.siemac.metamac..serviceapi.*.find*(..)))" />
@@ -39,8 +43,14 @@
 		<aop:advisor pointcut-ref="serviceFacadePointCut" advice-ref="hibernateErrorHandlingAdvice" order="4" />
 		<aop:advisor pointcut-ref="updatingServiceFacade" advice-ref="jpaInterceptorFlushEager" order="5" />
 
+		<!-- Flushing interceptor -->
 		<aop:aspect id="flushing" ref="flushingHandlingAdvice">
-			<aop:after pointcut-ref="updateServicePointCut" method="forceFlushToOptimisticLocking" />
+			<aop:after-returning pointcut-ref="updateServicePointCut" method="forceFlushToOptimisticLocking" />
+		</aop:aspect>
+
+		<!-- Flush mode interceptor -->
+		<aop:aspect id="flushingMode" ref="disableFlushHandlingAdvice">
+			<aop:around method="manageFlushMode" pointcut-ref="doMapperPointCut" />
 		</aop:aspect>
 	</aop:config>
 </beans>
