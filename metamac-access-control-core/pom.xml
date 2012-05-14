@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -41,12 +40,8 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Add dependency to JMS when consumers are used, deployment.type=ear 
-			<dependency> <groupId>javax.jms</groupId> <artifactId>jms</artifactId> <version>1.1</version> 
-			<scope>provided</scope> </dependency> -->
-		<!-- Add dependency to EJB when deployment.type=ear <dependency> <groupId>javax.ejb</groupId> 
-			<artifactId>ejb-api</artifactId> <version>3.0</version> <scope>provided</scope> 
-			</dependency> -->
+		<!-- Add dependency to JMS when consumers are used, deployment.type=ear <dependency> <groupId>javax.jms</groupId> <artifactId>jms</artifactId> <version>1.1</version> <scope>provided</scope> </dependency> -->
+		<!-- Add dependency to EJB when deployment.type=ear <dependency> <groupId>javax.ejb</groupId> <artifactId>ejb-api</artifactId> <version>3.0</version> <scope>provided</scope> </dependency> -->
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
@@ -71,10 +66,10 @@
 					<groupId>javax.transaction</groupId>
 					<artifactId>jta</artifactId>
 				</exclusion>
-                <exclusion>
-                    <groupId>xml-apis</groupId>
-                    <artifactId>xml-apis</artifactId>
-                </exclusion>
+				<exclusion>
+					<groupId>xml-apis</groupId>
+					<artifactId>xml-apis</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -145,8 +140,7 @@
 			<!-- Add scope provided when deployed in jboss -->
 			<!-- <scope>provided</scope> -->
 		</dependency>
-		<!-- Remove dependency to javax.transaction when running in a transaction 
-			supporting container (jboss etc) -->
+		<!-- Remove dependency to javax.transaction when running in a transaction supporting container (jboss etc) -->
 		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
@@ -272,11 +266,9 @@
 			<version>${sculptor.version}</version>
 			<scope>provided</scope>
 			<exclusions>
-				<!-- La inclusion de esta libreria provoca un BUG en el plugin de eclipse 
-					de GWT cuando usamos GIN en un proyecto GWT, es demasiado antigua esta version. 
-					No importa que el scope sea PROVIDED, el plugin de GWT no es capaz de tragarselo. -->
-				<!-- POR TANTO CUANDO SE EJECUTE EL PLUGIN DE GWT DE ECLIPSE ES NECESARIO 
-					DESCOMENTAR ESTAS LINEAS -->
+				<!-- La inclusion de esta libreria provoca un BUG en el plugin de eclipse de GWT cuando usamos GIN en un proyecto GWT, es demasiado antigua esta version. No importa que el scope sea PROVIDED, el plugin de GWT 
+					no es capaz de tragarselo. -->
+				<!-- POR TANTO CUANDO SE EJECUTE EL PLUGIN DE GWT DE ECLIPSE ES NECESARIO DESCOMENTAR ESTAS LINEAS -->
 				<!-- <exclusion> -->
 				<!-- <groupId>p2.osgi.bundle</groupId> -->
 				<!-- <artifactId>com.google.inject</artifactId> -->
@@ -402,12 +394,10 @@
 						<phase>package</phase>
 						<configuration>
 							<classifier>client</classifier>
-							<includes>
-								<include>**/*.gwt.xml</include>
-								<include>**/*.class</include>
-								<include>**/i18n/*.properties</include>
-								<include>**/*.xml</include>
-							</includes>
+							<excludes>
+								<exclude>**/*.dot</exclude>
+								<exclude>**/generator/</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>
@@ -454,32 +444,25 @@
 						</goals>
 						<configuration>
 							<target>
-								<!-- Delete wrong configuration files -->
-
-								<!-- Runtime: Configuration files are manually configured -->
+								<!-- Delete spring configuration files -->
 								<delete file="${basedir}/src/main/resources/spring.properties" />
 								<delete file="${basedir}/src/main/resources/more.xml" />
-
-								<delete
-									file="${basedir}/src/generated/resources/applicationContext.xml" />
-								<delete
-									file="${basedir}/src/generated/resources/EntityManagerFactory.xml" />
-
-								<!-- Test: Configuration files are manually configured -->
+								
+								<delete file="${basedir}/src/generated/resources/applicationContext.xml" />
+								<delete file="${basedir}/src/generated/resources/pub-sub.xml" />
+								<delete file="${basedir}/src/generated/resources/EntityManagerFactory.xml" />
+								<delete file="${basedir}/src/generated/resources/Interceptor.xml" />
+								<delete file="${basedir}/src/generated/resources/beanRefContext.xml" />
+								<delete file="${basedir}/src/generated/resources/generated-spring.properties" />
+								
 								<delete file="${basedir}/src/test/resources/more-test.xml" />
-
-								<delete
-									file="${basedir}/src/test/generated/resources/Interceptor.xml" />
-								<delete
-									file="${basedir}/src/test/generated/resources/Interceptor-test.xml" />
-								<delete
-									file="${basedir}/src/test/generated/resources/generated-spring.properties" />
-
-								<!-- Test: The database to this library will be Oracle -->
-								<delete
-									file="${basedir}/src/test/generated/resources/applicationContext-test.xml" />
-								<delete
-									file="${basedir}/src/test/generated/resources/EntityManagerFactory-test.xml" />
+								<delete file="${basedir}/src/test/resources/spring-test.properties" />
+								
+<!-- 								<delete file="${basedir}/src/test/generated/resources/Interceptor.xml" /> -->
+								<delete file="${basedir}/src/test/generated/resources/Interceptor-test.xml" />
+<!-- 								<delete file="${basedir}/src/test/generated/resources/generated-spring.properties" /> -->
+								<delete file="${basedir}/src/test/generated/resources/applicationContext-test.xml" />
+								<delete file="${basedir}/src/test/generated/resources/EntityManagerFactory-test.xml" />
 							</target>
 						</configuration>
 					</execution>
