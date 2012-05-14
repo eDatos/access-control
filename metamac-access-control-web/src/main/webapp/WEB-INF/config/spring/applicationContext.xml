@@ -55,7 +55,7 @@
         </property>
     </bean>
 	
-	<import resource="classpath:/spring/core/oracle/applicationContext-oracle.xml" />
+	<import resource="classpath:/spring/access-control/applicationContext.xml" />
   
 </beans>
 
