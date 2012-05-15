@@ -24,7 +24,7 @@
 			<version>${metamac-sso-client.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.siemac.metamac.statistical.operations</groupId>
+			<groupId>org.siemac.metamac</groupId>
 			<artifactId>metamac-statistical-operations-ws-api</artifactId>
 			<version>${metamac-statistical-operations-ws-api.version}</version>
 		</dependency>
