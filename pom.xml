@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>    
-  
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.siemac.metamac</groupId>
         <artifactId>metamac-access-control-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath>metamac-access-control-parent/pom.xml</relativePath>
     </parent>
-  
-  	<groupId>org.siemac.metamac</groupId>
-  	<artifactId>metamac-access-control</artifactId>
-  	<version>1.0-SNAPSHOT</version>
-  	<packaging>pom</packaging>
-	<name>METAMAC :: ACCESS :: CONTROL</name>
-	<description>METAMAC :: ACCESS :: CONTROL</description>
+
+    <groupId>org.siemac.metamac</groupId>
+    <artifactId>metamac-access-control</artifactId>
+    <packaging>pom</packaging>
+    <name>METAMAC :: ACCESS :: CONTROL</name>
+    <description>METAMAC :: ACCESS :: CONTROL</description>
+
+    <scm>
+        <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-access-control/trunk/</connection>
+        <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-access-control/trunk/</developerConnection>
+        <url>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-access-control/trunk/</url>
+    </scm>
 
     <modules>
-    	<module>metamac-access-control-parent</module>
+        <module>metamac-access-control-parent</module>
         <module>metamac-access-control-core</module>
         <module>metamac-access-control-web</module>
     </modules>

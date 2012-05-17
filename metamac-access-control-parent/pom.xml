@@ -6,12 +6,12 @@
     <parent>
 		<groupId>org.siemac.metamac</groupId>
 		<artifactId>metamac-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.0</version>
     </parent>
   
 	<groupId>org.siemac.metamac</groupId>
 	<artifactId>metamac-access-control-parent</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>METAMAC :: ACCESS :: CONTROL :: PARENT</name>
     <description>METAMAC :: ACCESS :: CONTROL :: PARENT</description>
@@ -28,4 +28,13 @@
             <url>http://www.smartclient.com/maven2</url>
         </repository>
     </repositories>
+    
+    <properties>
+        <metamac-sso.version>1.0.0</metamac-sso.version>
+        <metamac-statistical-operations.version>1.0.0</metamac-statistical-operations.version>
+        <metamac-api-domain.version>1.0.0</metamac-api-domain.version>
+        <metamac-common-test.version>1.0.0</metamac-common-test.version>
+        <metamac-web-common.version>1.0.0</metamac-web-common.version>
+    </properties>
+    
 </project>
