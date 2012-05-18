@@ -11,7 +11,7 @@
   
 	<groupId>org.siemac.metamac</groupId>
 	<artifactId>metamac-access-control-parent</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>METAMAC :: ACCESS :: CONTROL :: PARENT</name>
     <description>METAMAC :: ACCESS :: CONTROL :: PARENT</description>
@@ -36,11 +36,4 @@
         <metamac-common-test.version>1.0.0</metamac-common-test.version>
         <metamac-web-common.version>1.0.0</metamac-web-common.version>
     </properties>
-    
-
-  <scm>
-    <connection>scm:svn:svn://svn.arte-consultores.com/istac/metamac/metamac-parent/tags/20120518-0848-v1.0.0/metamac-access-control-parent</connection>
-    <developerConnection>scm:svn:svn://svn.arte-consultores.com/istac/metamac/metamac-parent/tags/20120518-0848-v1.0.0/metamac-access-control-parent</developerConnection>
-    <url>scm:svn:svn://svn.arte-consultores.com/istac/metamac/metamac-parent/tags/20120518-0848-v1.0.0/metamac-access-control-parent</url>
-  </scm>
 </project>
