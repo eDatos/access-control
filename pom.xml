@@ -3,13 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.siemac.metamac</groupId>
+        <groupId>org.siemac.metamac.metamac-access-control</groupId>
         <artifactId>metamac-access-control-parent</artifactId>
         <version>1.0.1-SNAPSHOT</version>
         <relativePath>metamac-access-control-parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>org.siemac.metamac</groupId>
     <artifactId>metamac-access-control</artifactId>
     <packaging>pom</packaging>
     <name>METAMAC :: ACCESS :: CONTROL</name>
