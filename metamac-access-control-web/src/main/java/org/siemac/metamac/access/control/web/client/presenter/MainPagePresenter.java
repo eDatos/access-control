@@ -23,10 +23,10 @@ import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent.SetTitleHandler;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent.ShowMessageHandler;
+import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -157,42 +157,42 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
     }
 
     private void loadRoles() {
-        dispatcher.execute(new FindAllRolesAction(), new AsyncCallback<FindAllRolesResult>() {
+        dispatcher.execute(new FindAllRolesAction(), new WaitingAsyncCallback<FindAllRolesResult>() {
 
             @Override
-            public void onFailure(Throwable caught) {
+            public void onWaitFailure(Throwable caught) {
                 ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingRoles()), MessageTypeEnum.ERROR);
             }
             @Override
-            public void onSuccess(FindAllRolesResult result) {
+            public void onWaitSuccess(FindAllRolesResult result) {
                 UpdateRolesEvent.fire(MainPagePresenter.this, result.getRoles());
             }
         });
     }
 
     private void loadOperations() {
-        dispatcher.execute(new FindAllStatisticalOperationsAction(), new AsyncCallback<FindAllStatisticalOperationsResult>() {
+        dispatcher.execute(new FindAllStatisticalOperationsAction(), new WaitingAsyncCallback<FindAllStatisticalOperationsResult>() {
 
             @Override
-            public void onFailure(Throwable caught) {
+            public void onWaitFailure(Throwable caught) {
                 ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingOperations()), MessageTypeEnum.ERROR);
             }
             @Override
-            public void onSuccess(FindAllStatisticalOperationsResult result) {
+            public void onWaitSuccess(FindAllStatisticalOperationsResult result) {
                 UpdateOperationsEvent.fire(MainPagePresenter.this, result.getOperations());
             }
         });
     }
 
     private void loadApplications() {
-        dispatcher.execute(new FindAllAppsAction(), new AsyncCallback<FindAllAppsResult>() {
+        dispatcher.execute(new FindAllAppsAction(), new WaitingAsyncCallback<FindAllAppsResult>() {
 
             @Override
-            public void onFailure(Throwable caught) {
+            public void onWaitFailure(Throwable caught) {
                 ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingApplications()), MessageTypeEnum.ERROR);
             }
             @Override
-            public void onSuccess(FindAllAppsResult result) {
+            public void onWaitSuccess(FindAllAppsResult result) {
                 UpdateApplicationsEvent.fire(MainPagePresenter.this, result.getApps());
             }
         });

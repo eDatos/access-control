@@ -6,6 +6,7 @@ import org.siemac.metamac.access.control.web.shared.GetLoginPageUrlResult;
 import org.siemac.metamac.access.control.web.shared.ValidateTicketAction;
 import org.siemac.metamac.access.control.web.shared.ValidateTicketResult;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
+import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -13,7 +14,6 @@ import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.gwtplatform.mvp.client.DelayedBindRegistry;
 
 /**
@@ -48,14 +48,14 @@ public class AccessControlWeb implements EntryPoint {
             displayLoginView();
         } else {
             String serviceUrl = Window.Location.createUrlBuilder().buildString();
-            ginjector.getDispatcher().execute(new ValidateTicketAction(ticket, serviceUrl), new AsyncCallback<ValidateTicketResult>() {
+            ginjector.getDispatcher().execute(new ValidateTicketAction(ticket, serviceUrl), new WaitingAsyncCallback<ValidateTicketResult>() {
 
                 @Override
-                public void onFailure(Throwable arg0) {
+                public void onWaitFailure(Throwable arg0) {
                     // TODO log
                 }
                 @Override
-                public void onSuccess(ValidateTicketResult result) {
+                public void onWaitSuccess(ValidateTicketResult result) {
                     AccessControlWeb.principal = result.getMetamacPrincipal();
 
                     String url = Window.Location.createUrlBuilder().setHash("").buildString();
@@ -74,14 +74,14 @@ public class AccessControlWeb implements EntryPoint {
 
     public void displayLoginView() {
         String serviceUrl = Window.Location.createUrlBuilder().buildString();
-        ginjector.getDispatcher().execute(new GetLoginPageUrlAction(serviceUrl), new AsyncCallback<GetLoginPageUrlResult>() {
+        ginjector.getDispatcher().execute(new GetLoginPageUrlAction(serviceUrl), new WaitingAsyncCallback<GetLoginPageUrlResult>() {
 
             @Override
-            public void onFailure(Throwable caught) {
+            public void onWaitFailure(Throwable caught) {
 
             }
             @Override
-            public void onSuccess(GetLoginPageUrlResult result) {
+            public void onWaitSuccess(GetLoginPageUrlResult result) {
                 Window.Location.replace(result.getLoginPageUrl());
             }
         });

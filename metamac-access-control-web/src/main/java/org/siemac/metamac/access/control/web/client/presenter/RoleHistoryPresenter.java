@@ -12,9 +12,9 @@ import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessResult;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
+import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
 
 import com.google.gwt.event.shared.EventBus;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -61,14 +61,14 @@ public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHis
     }
 
     private void retrieveDischargedAccess() {
-        dispatcher.execute(new FindAllRemovedAccessAction(), new AsyncCallback<FindAllRemovedAccessResult>() {
+        dispatcher.execute(new FindAllRemovedAccessAction(), new WaitingAsyncCallback<FindAllRemovedAccessResult>() {
 
             @Override
-            public void onFailure(Throwable caught) {
+            public void onWaitFailure(Throwable caught) {
                 ShowMessageEvent.fire(RoleHistoryPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingDischargedAccess()), MessageTypeEnum.ERROR);
             }
             @Override
-            public void onSuccess(FindAllRemovedAccessResult result) {
+            public void onWaitSuccess(FindAllRemovedAccessResult result) {
                 getView().setRemovedAccess(result.getAccessDtos());
             }
         });
