@@ -44,6 +44,11 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+    
+    <!-- Configure externalized logging configuration file -->
+    <bean id="loggingSetup" class="org.siemac.metamac.web.common.server.logging.LoggingSetup">
+        <property name="logConfigurationFile" value="${environment.metamac.data}/conf/dynamic/logback-access-control-web.xml"/>
+    </bean>
  
     <bean id="configurationService" class="org.siemac.metamac.core.common.conf.ConfigurationServiceImpl">
         <property name="systemConfigurationFile"><value>classpath:metamac/environment.xml</value></property>
