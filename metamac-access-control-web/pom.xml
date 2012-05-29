@@ -191,7 +191,7 @@
                 </configuration>
             </plugin>
 
-            <!-- WORKAROUND: El plugin de maven-compiler-plugin tiene un problema a la hora de crear clases usando anotaciones. Por ello se pasa en el compilar el argumento "-proc:none" y se añade el plugin: maven-processor-plugin: 
+            <!-- WORKAROUND: El plugin de maven-compiler-plugin tiene un problema a la hora de crear clases usando anotaciones. Por ello se pasa en el compilar el argumento "-proc:none" y se añade el plugin: maven-processor-plugin:
                 Véase: http://docs.jboss.org/hibernate/validator/4.2/reference/en-US/html/validator-annotation-processor.html#d0e3740 y http://jira.codehaus.org/browse/MCOMPILER-157 -->
             <plugin>
                 <groupId>org.bsc.maven</groupId>
@@ -241,6 +241,9 @@
                 <configuration>
                     <runTarget>AccessControlWeb.html</runTarget>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
+                    <noServer>true</noServer>
+                    <runTarget>http://localhost:8080/metamac-access-control-web/AccessControlWeb.html</runTarget>
+                    <debugPort>9997</debugPort>
                     <compileSourcesArtifacts>
                         <artifact>org.siemac.metamac.metamac-access-control:metamac-access-control-core:jar:client</artifact>
                         <artifact>org.siemac.metamac:metamac-core-common:jar:client</artifact>
