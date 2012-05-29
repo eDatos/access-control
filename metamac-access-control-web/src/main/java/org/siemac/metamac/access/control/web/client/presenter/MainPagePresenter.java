@@ -10,6 +10,8 @@ import org.siemac.metamac.access.control.web.client.events.UpdateOperationsEvent
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent;
 import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
+import org.siemac.metamac.access.control.web.shared.CloseSessionAction;
+import org.siemac.metamac.access.control.web.shared.CloseSessionResult;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsResult;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
@@ -27,6 +29,8 @@ import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
@@ -194,6 +198,21 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
             @Override
             public void onWaitSuccess(FindAllAppsResult result) {
                 UpdateApplicationsEvent.fire(MainPagePresenter.this, result.getApps());
+            }
+        });
+    }
+
+    @Override
+    public void closeSession() {
+        dispatcher.execute(new CloseSessionAction(), new AsyncCallback<CloseSessionResult>() {
+
+            @Override
+            public void onFailure(Throwable caught) {
+                // TODO
+            }
+            @Override
+            public void onSuccess(CloseSessionResult result) {
+                Window.Location.assign(result.getLogoutPageUrl());
             }
         });
     }

@@ -18,6 +18,8 @@ import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.AnimationEffect;
+import com.smartgwt.client.widgets.events.ClickEvent;
+import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.HasClickHandlers;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -28,6 +30,8 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
 
     private static final int          NORTH_HEIGHT   = 85;
     private static final String       DEFAULT_MARGIN = "0px";
+
+    private MainPageUiHandlers        uiHandlers;
 
     private final MasterHead          masterHead;
 
@@ -95,6 +99,15 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         footerLayout.setBorder("1px solid #A7ABB4");
         footerLayout.addMember(this.successMessagePanel);
         footerLayout.addMember(this.errorMessagePanel);
+
+        // Add handlers to logout button
+        masterHead.getLogoutLink().addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+                uiHandlers.closeSession();
+            }
+        });
 
         // Add the North and South layout containers to the main layout
         // container
@@ -176,6 +189,11 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
     @Override
     public HasClickHandlers goToRoleHistoryPage() {
         return roleHistoryButton;
+    }
+
+    @Override
+    public void setUiHandlers(MainPageUiHandlers uiHandlers) {
+        this.uiHandlers = uiHandlers;
     }
 
 }

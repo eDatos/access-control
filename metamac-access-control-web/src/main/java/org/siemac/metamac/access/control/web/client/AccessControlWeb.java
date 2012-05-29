@@ -10,6 +10,7 @@ import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.resources.client.CssResource.NotStrict;
@@ -36,19 +37,28 @@ public class AccessControlWeb implements EntryPoint {
     }
 
     public void onModuleLoad() {
-        String ticket = Window.Location.getParameter("ticket");
-        if (ticket != null) {
-            String url = Window.Location.createUrlBuilder().removeParameter("ticket").setHash(";ticket=" + ticket).buildString();
+        String ticketParam = Window.Location.getParameter("ticket");
+        if (ticketParam != null) {
+            UrlBuilder urlBuilder = Window.Location.createUrlBuilder();
+            urlBuilder.removeParameter("ticket");
+            urlBuilder.setHash(Window.Location.getHash() + ";ticket=" + ticketParam);
+            String url = urlBuilder.buildString();
             Window.Location.replace(url);
             return;
         }
 
-        ticket = Window.Location.getHash().replace("#;ticket=", "");
-        if (ticket == null || ticket.length() == 0) {
+        String hash = Window.Location.getHash();
+        
+        String ticketHash = null;
+        if (hash.contains(";ticket=")) {
+            ticketHash = hash.substring(hash.indexOf(";ticket=") + ";ticket=".length(), hash.length());
+        }
+        
+        if (ticketHash == null || ticketHash.length() == 0) {
             displayLoginView();
         } else {
             String serviceUrl = Window.Location.createUrlBuilder().buildString();
-            ginjector.getDispatcher().execute(new ValidateTicketAction(ticket, serviceUrl), new WaitingAsyncCallback<ValidateTicketResult>() {
+            ginjector.getDispatcher().execute(new ValidateTicketAction(ticketHash, serviceUrl), new WaitingAsyncCallback<ValidateTicketResult>() {
 
                 @Override
                 public void onWaitFailure(Throwable arg0) {
@@ -78,7 +88,7 @@ public class AccessControlWeb implements EntryPoint {
 
             @Override
             public void onWaitFailure(Throwable caught) {
-
+                // TODO log
             }
             @Override
             public void onWaitSuccess(GetLoginPageUrlResult result) {

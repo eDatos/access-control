@@ -1,10 +1,12 @@
 package org.siemac.metamac.access.control.web.server.handlers;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.constants.AccessControlConstants;
 import org.siemac.metamac.access.control.web.server.ServiceContextHolder;
+import org.siemac.metamac.access.control.web.server.session.SingleSignOutFilter;
 import org.siemac.metamac.access.control.web.shared.ValidateTicketAction;
 import org.siemac.metamac.access.control.web.shared.ValidateTicketResult;
 import org.siemac.metamac.core.common.conf.ConfigurationService;
@@ -49,14 +51,29 @@ public class ValidateTicketActionHandler extends AbstractActionHandler<ValidateT
     @Override
     public ValidateTicketResult execute(ValidateTicketAction action, ExecutionContext context) throws ActionException {
 
-        String ticket = action.getTicket();
-        String service = action.getServiceUrl();
+        final String ticket = action.getTicket();
+        final String service = action.getServiceUrl();
 
         try {
             MetamacPrincipal metamacPrincipal = validateTicket.validateTicket(ticket, service);
             ServiceContext serviceContext = new ServiceContext(metamacPrincipal.getUserId(), ticket, AccessControlConstants.SECURITY_APPLICATION_ID);
             serviceContext.setProperty(SsoClientConstants.PRINCIPAL_ATTRIBUTE, metamacPrincipal);
             ServiceContextHolder.putCurrentServiceContext(serviceContext);
+            
+            HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(ServiceContextHolder.getCurrentRequest()) {
+                public String getParameter(String name) {
+                    if ("ticket".equals(name)) {
+                        return ticket;
+                    }
+                    return super.getParameter(name);
+                }
+                @Override
+                public String getQueryString() {
+                    return super.getQueryString() + "&ticket=" + ticket;
+                }
+            };
+            SingleSignOutFilter.getSingleSignOutHandler().recordSession(requestWrapper);
+            
             return new ValidateTicketResult(metamacPrincipal);
         } catch (final org.siemac.metamac.sso.exception.TicketValidationException e) {
             throw new ActionException(e);

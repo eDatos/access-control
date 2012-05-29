@@ -1,5 +1,6 @@
 package org.siemac.metamac.access.control.web.server;
 
+import org.siemac.metamac.access.control.web.server.handlers.CloseSessionActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteAccessListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteAppListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteRoleListActionHandler;
@@ -18,6 +19,7 @@ import org.siemac.metamac.access.control.web.server.handlers.SaveAppActionHandle
 import org.siemac.metamac.access.control.web.server.handlers.SaveRoleActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveUserActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.ValidateTicketActionHandler;
+import org.siemac.metamac.access.control.web.shared.CloseSessionAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAppListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteRoleListAction;
@@ -68,6 +70,7 @@ public class ServerModule extends HandlerModule {
         bindHandler(SaveAccessListAction.class, SaveAccessListActionHandler.class);
         bindHandler(ValidateTicketAction.class, ValidateTicketActionHandler.class);
         bindHandler(GetLoginPageUrlAction.class, GetLoginPageUrlActionHandler.class);
+        bindHandler(CloseSessionAction.class, CloseSessionActionHandler.class);
     }
 
 }
