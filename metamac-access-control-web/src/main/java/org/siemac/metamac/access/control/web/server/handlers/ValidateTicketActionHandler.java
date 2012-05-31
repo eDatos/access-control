@@ -34,14 +34,14 @@ public class ValidateTicketActionHandler extends ValidateTicketAbstractActionHan
             HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(ServiceContextHolder.getCurrentRequest()) {
 
                 public String getParameter(String name) {
-                    if ("ticket".equals(name)) {
+                    if (TICKET_PARAMETER.equals(name)) {
                         return ticket;
                     }
                     return super.getParameter(name);
                 }
                 @Override
                 public String getQueryString() {
-                    return super.getQueryString() + "&ticket=" + ticket;
+                    return super.getQueryString() + TICKET_QUERY_STRING + ticket;
                 }
             };
             SingleSignOutFilter.getSingleSignOutHandler().recordSession(requestWrapper);
