@@ -3,6 +3,8 @@ package org.siemac.metamac.access.control.web.client.presenter;
 import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getMessages;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent;
@@ -10,8 +12,6 @@ import org.siemac.metamac.access.control.web.client.events.UpdateOperationsEvent
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent;
 import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
-import org.siemac.metamac.access.control.web.shared.CloseSessionAction;
-import org.siemac.metamac.access.control.web.shared.CloseSessionResult;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsResult;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
@@ -26,6 +26,8 @@ import org.siemac.metamac.web.common.client.events.SetTitleEvent.SetTitleHandler
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent.ShowMessageHandler;
 import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
+import org.siemac.metamac.web.common.shared.CloseSessionAction;
+import org.siemac.metamac.web.common.shared.CloseSessionResult;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
@@ -57,6 +59,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
             HideMessageHandler,
             SetTitleHandler {
 
+    private static Logger logger = Logger.getLogger(MainPagePresenter.class.getName());
+    
     private final PlaceManager  placeManager;
     private final DispatchAsync dispatcher;
 
@@ -208,7 +212,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
             @Override
             public void onFailure(Throwable caught) {
-                // TODO
+                logger.log(Level.SEVERE, "Error closing session");
             }
             @Override
             public void onSuccess(CloseSessionResult result) {

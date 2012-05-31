@@ -3,10 +3,10 @@ package org.siemac.metamac.access.control.web.server.handlers;
 import java.util.List;
 
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
-import org.siemac.metamac.access.control.web.server.ServiceContextHolder;
 import org.siemac.metamac.access.control.web.shared.DeleteUserListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteUserListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.web.common.server.ServiceContextHolder;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

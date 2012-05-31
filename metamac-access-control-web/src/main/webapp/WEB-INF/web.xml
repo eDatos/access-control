@@ -23,7 +23,7 @@
 
     <!-- SSO -->
     <listener>
-        <listener-class>org.siemac.metamac.access.control.web.server.session.SingleSignOutHttpSessionListener</listener-class>
+        <listener-class>org.siemac.metamac.web.common.server.session.SingleSignOutHttpSessionListener</listener-class>
     </listener>
 
     <servlet>
@@ -49,7 +49,7 @@
     <!-- Logout filter -->
     <filter>
         <filter-name>logoutFilter</filter-name>
-        <filter-class>org.siemac.metamac.access.control.web.server.session.SingleSignOutFilter</filter-class>
+        <filter-class>org.siemac.metamac.web.common.server.session.SingleSignOutFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>logoutFilter</filter-name>

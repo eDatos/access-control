@@ -1,6 +1,5 @@
 package org.siemac.metamac.access.control.web.server;
 
-import org.siemac.metamac.access.control.web.server.handlers.CloseSessionActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteAccessListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteAppListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.DeleteRoleListActionHandler;
@@ -12,14 +11,12 @@ import org.siemac.metamac.access.control.web.server.handlers.FindAllRemovedAcces
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRolesActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllStatisticalOperationsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllUsersActionHandler;
-import org.siemac.metamac.access.control.web.server.handlers.GetLoginPageUrlActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAccessListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAppActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveRoleActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveUserActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.ValidateTicketActionHandler;
-import org.siemac.metamac.access.control.web.shared.CloseSessionAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAppListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteRoleListAction;
@@ -31,13 +28,16 @@ import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
 import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
-import org.siemac.metamac.access.control.web.shared.GetLoginPageUrlAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
 import org.siemac.metamac.access.control.web.shared.SaveAppAction;
 import org.siemac.metamac.access.control.web.shared.SaveRoleAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
-import org.siemac.metamac.access.control.web.shared.ValidateTicketAction;
+import org.siemac.metamac.web.common.server.handlers.CloseSessionActionHandler;
+import org.siemac.metamac.web.common.server.handlers.GetLoginPageUrlActionHandler;
+import org.siemac.metamac.web.common.shared.CloseSessionAction;
+import org.siemac.metamac.web.common.shared.GetLoginPageUrlAction;
+import org.siemac.metamac.web.common.shared.ValidateTicketAction;
 import org.springframework.stereotype.Component;
 
 import com.gwtplatform.dispatch.server.spring.HandlerModule;

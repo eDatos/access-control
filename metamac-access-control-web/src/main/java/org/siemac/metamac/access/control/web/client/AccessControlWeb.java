@@ -1,14 +1,17 @@
 package org.siemac.metamac.access.control.web.client;
 
-import org.siemac.metamac.access.control.web.client.gin.AccessControlWebGinjector;
-import org.siemac.metamac.access.control.web.shared.GetLoginPageUrlAction;
-import org.siemac.metamac.access.control.web.shared.GetLoginPageUrlResult;
-import org.siemac.metamac.access.control.web.shared.ValidateTicketAction;
-import org.siemac.metamac.access.control.web.shared.ValidateTicketResult;
-import org.siemac.metamac.sso.client.MetamacPrincipal;
-import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import com.google.gwt.core.client.EntryPoint;
+import org.siemac.metamac.access.control.web.client.gin.AccessControlWebGinjector;
+import org.siemac.metamac.sso.client.MetamacPrincipal;
+import org.siemac.metamac.web.common.client.MetamacEntryPoint;
+import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
+import org.siemac.metamac.web.common.shared.GetLoginPageUrlAction;
+import org.siemac.metamac.web.common.shared.GetLoginPageUrlResult;
+import org.siemac.metamac.web.common.shared.ValidateTicketAction;
+import org.siemac.metamac.web.common.shared.ValidateTicketResult;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.resources.client.ClientBundle;
@@ -20,7 +23,9 @@ import com.gwtplatform.mvp.client.DelayedBindRegistry;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class AccessControlWeb implements EntryPoint {
+public class AccessControlWeb extends MetamacEntryPoint {
+
+    private static Logger                         logger    = Logger.getLogger(AccessControlWeb.class.getName());
 
     private static MetamacPrincipal               principal;
     private static AccessControlWebConstants      constants;
@@ -37,23 +42,23 @@ public class AccessControlWeb implements EntryPoint {
     }
 
     public void onModuleLoad() {
-        String ticketParam = Window.Location.getParameter("ticket");
+        String ticketParam = Window.Location.getParameter(TICKET);
         if (ticketParam != null) {
             UrlBuilder urlBuilder = Window.Location.createUrlBuilder();
-            urlBuilder.removeParameter("ticket");
-            urlBuilder.setHash(Window.Location.getHash() + ";ticket=" + ticketParam);
+            urlBuilder.removeParameter(TICKET);
+            urlBuilder.setHash(Window.Location.getHash() + TICKET_HASH + ticketParam);
             String url = urlBuilder.buildString();
             Window.Location.replace(url);
             return;
         }
 
         String hash = Window.Location.getHash();
-        
+
         String ticketHash = null;
-        if (hash.contains(";ticket=")) {
-            ticketHash = hash.substring(hash.indexOf(";ticket=") + ";ticket=".length(), hash.length());
+        if (hash.contains(TICKET_HASH)) {
+            ticketHash = hash.substring(hash.indexOf(TICKET_HASH) + TICKET_HASH.length(), hash.length());
         }
-        
+
         if (ticketHash == null || ticketHash.length() == 0) {
             displayLoginView();
         } else {
@@ -62,7 +67,7 @@ public class AccessControlWeb implements EntryPoint {
 
                 @Override
                 public void onWaitFailure(Throwable arg0) {
-                    // TODO log
+                    logger.log(Level.SEVERE, "Error validating ticket");
                 }
                 @Override
                 public void onWaitSuccess(ValidateTicketResult result) {
@@ -88,7 +93,7 @@ public class AccessControlWeb implements EntryPoint {
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                // TODO log
+                logger.log(Level.SEVERE, "Error getting login page URL");
             }
             @Override
             public void onWaitSuccess(GetLoginPageUrlResult result) {

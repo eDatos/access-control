@@ -3,11 +3,11 @@ package org.siemac.metamac.access.control.web.server.handlers;
 import java.util.List;
 
 import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
-import org.siemac.metamac.access.control.web.server.ServiceContextHolder;
 import org.siemac.metamac.access.control.web.shared.FindAccessByUserAction;
 import org.siemac.metamac.access.control.web.shared.FindAccessByUserResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
+import org.siemac.metamac.web.common.server.ServiceContextHolder;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

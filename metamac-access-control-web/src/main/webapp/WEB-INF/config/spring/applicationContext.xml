@@ -57,6 +57,10 @@
         </property>
     </bean>
 
+    <!-- ActionHandler beans -->
+    <bean class="org.siemac.metamac.web.common.server.handlers.CloseSessionActionHandler" />
+    <bean class="org.siemac.metamac.web.common.server.handlers.GetLoginPageUrlActionHandler" />
+
     <import resource="classpath:/spring/access-control/applicationContext.xml" />
 
 </beans>
