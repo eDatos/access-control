@@ -8,6 +8,9 @@ import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
+import org.siemac.metamac.domain.access.control.dto.AppDto;
+import org.siemac.metamac.domain.access.control.dto.RoleDto;
+import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.siemac.metamac.web.common.server.ServiceContextHolder;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,16 @@ public class SaveAccessListActionHandler extends AbstractActionHandler<SaveAcces
             try {
                 AccessDto accessDto = null;
                 if (accessToSave.getId() == null) {
+                    // Avoid optimisticLockException
+                    UserDto userDto = accessControlBaseServiceFacade.findUserById(ServiceContextHolder.getCurrentServiceContext(), accessToSave.getUser().getId());
+                    accessToSave.setUser(userDto);
+
+                    AppDto appDto = accessControlBaseServiceFacade.findAppById(ServiceContextHolder.getCurrentServiceContext(), accessToSave.getApp().getId());
+                    accessToSave.setApp(appDto);
+
+                    RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(ServiceContextHolder.getCurrentServiceContext(), accessToSave.getRole().getId());
+                    accessToSave.setRole(roleDto);
+
                     accessDto = accessControlBaseServiceFacade.createAccess(ServiceContextHolder.getCurrentServiceContext(), accessToSave);
                     accessSaved.add(accessDto);
                 } else {

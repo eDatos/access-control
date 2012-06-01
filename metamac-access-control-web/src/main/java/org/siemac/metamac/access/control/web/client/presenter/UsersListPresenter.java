@@ -215,6 +215,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
             @Override
             public void onWaitSuccess(SaveAccessListResult result) {
                 retrieveUserAccess(accessDtos.get(0).getUser().getUsername());
+                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().accessSaved()), MessageTypeEnum.SUCCESS);
             }
         });
     }
