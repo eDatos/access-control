@@ -6,6 +6,7 @@ import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.domain.access.control.dto.AppDto;
 import org.siemac.metamac.domain.access.control.dto.UserDto;
+import org.siemac.metamac.web.common.client.utils.DateUtils;
 
 public class RecordUtils {
 
@@ -19,10 +20,9 @@ public class RecordUtils {
         AccessRecord record = new AccessRecord(accessDto.getId(), accessDto.getUser() != null ? accessDto.getUser().getUsername() : null, accessDto.getRole() != null
                 ? accessDto.getRole().getTitle()
                 : null, accessDto.getApp() != null ? accessDto.getApp().getTitle() : null, accessDto.getOperation() != null ? accessDto.getOperation().getCodeId() : null,
-                accessDto.getRemovalDate() != null ? accessDto.getRemovalDate().toString() : null, accessDto);
+                DateUtils.getFormattedDate(accessDto.getRemovalDate()), accessDto);
         return record;
     }
-
     /**
      * Returns a {@link UserRecord} from {@link UserDto}
      * 
