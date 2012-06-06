@@ -12,6 +12,7 @@ import org.siemac.metamac.access.control.web.client.model.ds.UserDS;
 import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
 import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
+import org.siemac.metamac.access.control.web.client.utils.ClientSecurityUtils;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
@@ -109,6 +110,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 selectUser(new UserDto());
             }
         });
+        userToolStrip.getNewButton().setVisibility(ClientSecurityUtils.canCreateUser() ? Visibility.VISIBLE : Visibility.HIDDEN);
+
         userToolStrip.getDeleteConfirmationWindow().getYesButton().addClickHandler(new ClickHandler() {
 
             @Override
@@ -150,7 +153,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     deselectUser();
                     if (usersListGrid.getSelectedRecords().length > 1) {
                         // Delete more than one User with one click
-                        userToolStrip.getDeleteButton().show();
+                        showUserDeleteButton();
                     }
                 }
             }
@@ -165,7 +168,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
         // User Details
 
-        userMainFormLayout = new MainFormLayout();
+        userMainFormLayout = new MainFormLayout(ClientSecurityUtils.canUpdateUser());
         userMainFormLayout.getSave().addClickHandler(new ClickHandler() {
 
             @Override
@@ -202,6 +205,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 selectAccess(new AccessDto());
             }
         });
+        accessToolStrip.getNewButton().setVisibility(ClientSecurityUtils.canCreateAccess() ? Visibility.VISIBLE : Visibility.HIDDEN);
+
         accessToolStrip.getDeleteConfirmationWindow().getYesButton().addClickHandler(new ClickHandler() {
 
             @Override
@@ -242,7 +247,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     deselectAccess();
                     if (accessListGrid.getSelectedRecords().length > 1) {
                         // Delete more than one Access with one click
-                        accessToolStrip.getDeleteButton().show();
+                        showAccessDeleteButton();
                     }
                 }
             }
@@ -352,7 +357,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             usersListGrid.deselectAllRecords();
             userMainFormLayout.setEditionMode();
         } else {
-            userToolStrip.getDeleteButton().show();
+            showUserDeleteButton();
             userMainFormLayout.setViewMode();
             getUiHandlers().retrieveUserAccess(userDto.getUsername());
         }
@@ -456,7 +461,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             appItem.resetValues();
             operationItem.resetValues();
         } else {
-            accessToolStrip.getDeleteButton().show();
+            showAccessDeleteButton();
             accessMainFormLayout.hide();
         }
         setAccess(accessDto);
@@ -556,6 +561,18 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         accessListGrid.setData(records);
         if (savedRecord != null) {
             accessListGrid.selectRecord(savedRecord);
+        }
+    }
+
+    private void showUserDeleteButton() {
+        if (ClientSecurityUtils.canDeleteUser()) {
+            userToolStrip.getDeleteButton().show();
+        }
+    }
+
+    private void showAccessDeleteButton() {
+        if (ClientSecurityUtils.canDeleteAccess()) {
+            accessToolStrip.getDeleteButton().show();
         }
     }
 

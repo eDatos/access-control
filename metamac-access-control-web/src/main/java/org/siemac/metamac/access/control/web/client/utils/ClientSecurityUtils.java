@@ -7,6 +7,58 @@ import org.siemac.metamac.sso.client.MetamacPrincipal;
 
 public class ClientSecurityUtils {
 
+    // USERS
+
+    public static boolean canCreateUser() {
+        AccessControlRoleEnum[] roles = {};
+        if (isRoleAllowed(roles)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean canUpdateUser() {
+        AccessControlRoleEnum[] roles = {};
+        if (isRoleAllowed(roles)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean canDeleteUser() {
+        AccessControlRoleEnum[] roles = {};
+        if (isRoleAllowed(roles)) {
+            return true;
+        }
+        return false;
+    }
+
+    // ACCESS
+
+    public static boolean canCreateAccess() {
+        AccessControlRoleEnum[] roles = {};
+        if (isRoleAllowed(roles)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean canUpdateAccess() {
+        AccessControlRoleEnum[] roles = {};
+        if (isRoleAllowed(roles)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean canDeleteAccess() {
+        AccessControlRoleEnum[] roles = {};
+        if (isRoleAllowed(roles)) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Checks if logged user has one of the allowed roles
      * 
