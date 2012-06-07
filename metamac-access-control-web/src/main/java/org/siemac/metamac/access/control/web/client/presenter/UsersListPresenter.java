@@ -4,6 +4,7 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getM
 
 import java.util.List;
 
+import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent.UpdateApplicationsHandler;
@@ -46,6 +47,7 @@ import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.Place;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
@@ -64,6 +66,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @ProxyCodeSplit
     @NameToken(NameTokens.usersListPage)
+    @UseGatekeeper(LoggedInGatekeeper.class)
     public interface UsersListProxy extends Proxy<UsersListPresenter>, Place {
     }
 

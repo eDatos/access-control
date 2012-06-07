@@ -2,6 +2,8 @@ package org.siemac.metamac.access.control.web.client.gin;
 
 import org.siemac.metamac.access.control.web.client.AccessControlWebConstants;
 import org.siemac.metamac.access.control.web.client.AccessControlWebMessages;
+import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
+import org.siemac.metamac.access.control.web.client.presenter.ErrorPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
@@ -22,7 +24,11 @@ public interface AccessControlWebGinjector extends Ginjector {
     EventBus getEventBus();
     DispatchAsync getDispatcher();
 
+    LoggedInGatekeeper getLoggedInGatekeeper();
+
     Provider<MainPagePresenter> getMainPagePresenter();
+    AsyncProvider<ErrorPagePresenter> getErrorPagePresenter();
+
     AsyncProvider<UsersListPresenter> getUsersListPresenter();
     AsyncProvider<RoleHistoryPresenter> getRoleHistoryPresenter();
 

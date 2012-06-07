@@ -4,6 +4,7 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getM
 
 import java.util.List;
 
+import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.RoleHistoryUiHandlers;
@@ -22,6 +23,7 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
+import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.Place;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
@@ -33,6 +35,7 @@ public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHis
 
     @ProxyCodeSplit
     @NameToken(NameTokens.roleHistoryPage)
+    @UseGatekeeper(LoggedInGatekeeper.class)
     public interface RoleHistoryProxy extends Proxy<RoleHistoryPresenter>, Place {
 
     }
