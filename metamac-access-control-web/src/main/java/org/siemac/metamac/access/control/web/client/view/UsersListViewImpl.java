@@ -65,6 +65,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private static final String     USER_LAYOUT_ID   = "userlayout";
 
     private VLayout                 panel;
+    private VLayout                 subPanel;
     private ListGridToolStrip       userToolStrip;
     private CustomListGrid          usersListGrid;
 
@@ -94,7 +95,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     public UsersListViewImpl() {
         super();
         panel = new VLayout();
-        panel.setOverflow(Overflow.SCROLL);
 
         title = new Label(getConstants().users());
         title.setStyleName("usersSectionTitle");
@@ -283,7 +283,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     @Override
                     public void execute() {
                         // Scroll to bottom
-                        panel.scrollTo(0, panel.getMember(USER_LAYOUT_ID).getBottom());
+                        subPanel.scrollTo(0, subPanel.getMember(USER_LAYOUT_ID).getBottom());
                     }
                 });
             }
@@ -310,8 +310,12 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
         userLayout.addMember(accessLayout);
 
-        panel.addMember(listGridLayout);
-        panel.addMember(userLayout);
+        subPanel = new VLayout();
+        subPanel.setOverflow(Overflow.SCROLL);
+        subPanel.addMember(listGridLayout);
+        subPanel.addMember(userLayout);
+
+        panel.addMember(subPanel);
     }
 
     @Override
