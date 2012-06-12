@@ -39,11 +39,13 @@ import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
 
 import com.google.gwt.event.shared.EventBus;
+import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
+import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
 import com.gwtplatform.mvp.client.annotations.ProxyCodeSplit;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
@@ -52,6 +54,7 @@ import com.gwtplatform.mvp.client.proxy.Place;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
+import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListView, UsersListPresenter.UsersListProxy>
         implements
@@ -62,7 +65,9 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     // private static Logger logger = Logger.getLogger(UsersListPresenter.class.getName());
 
-    private final DispatchAsync dispatcher;
+    private final DispatchAsync      dispatcher;
+
+    private ToolStripPresenterWidget toolStripPresenterWidget;
 
     @ProxyCodeSplit
     @NameToken(NameTokens.usersListPage)
@@ -84,11 +89,15 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     }
 
     @Inject
-    public UsersListPresenter(EventBus eventBus, UsersListView view, UsersListProxy proxy, DispatchAsync dispatcher) {
+    public UsersListPresenter(EventBus eventBus, UsersListView view, UsersListProxy proxy, DispatchAsync dispatcher, ToolStripPresenterWidget toolStripPresenterWidget) {
         super(eventBus, view, proxy);
         this.dispatcher = dispatcher;
         getView().setUiHandlers(this);
+        this.toolStripPresenterWidget = toolStripPresenterWidget;
     }
+
+    @ContentSlot
+    public static final Type<RevealContentHandler<?>> TYPE_SetContextAreaContentToolBar = new Type<RevealContentHandler<?>>();
 
     @Override
     protected void revealInParent() {
@@ -105,6 +114,12 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     protected void onReset() {
         super.onReset();
         SetTitleEvent.fire(UsersListPresenter.this, getMessages().metamacAccessControl());
+    }
+
+    @Override
+    protected void onReveal() {
+        super.onReveal();
+        setInSlot(TYPE_SetContextAreaContentToolBar, toolStripPresenterWidget);
     }
 
     private void retrieveUsersList() {

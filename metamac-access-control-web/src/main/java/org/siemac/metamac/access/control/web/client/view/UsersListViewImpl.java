@@ -320,6 +320,19 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
 
     @Override
+    public void setInSlot(Object slot, Widget content) {
+        if (slot == UsersListPresenter.TYPE_SetContextAreaContentToolBar) {
+            if (content != null) {
+                panel.addMember(content, 0);
+            }
+        } else {
+            // To support inheritance in your views it is good practice to call super.setInSlot when you can't handle the call.
+            // Who knows, maybe the parent class knows what to do with this slot.
+            super.setInSlot(slot, content);
+        }
+    }
+
+    @Override
     public void setUsersList(List<UserDto> usersDtos) {
         UserRecord[] records = new UserRecord[usersDtos.size()];
         for (int i = 0; i < usersDtos.size(); i++) {
