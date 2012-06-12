@@ -6,6 +6,7 @@ import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.presenter.ErrorPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
+import org.siemac.metamac.access.control.web.client.presenter.UnauthorizedPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
 
 import com.google.gwt.event.shared.EventBus;
@@ -27,10 +28,12 @@ public interface AccessControlWebGinjector extends Ginjector {
     LoggedInGatekeeper getLoggedInGatekeeper();
 
     Provider<MainPagePresenter> getMainPagePresenter();
-    AsyncProvider<ErrorPagePresenter> getErrorPagePresenter();
 
     AsyncProvider<UsersListPresenter> getUsersListPresenter();
     AsyncProvider<RoleHistoryPresenter> getRoleHistoryPresenter();
+
+    AsyncProvider<ErrorPagePresenter> getErrorPagePresenter();
+    AsyncProvider<UnauthorizedPagePresenter> getUnauthorizedPagePresenter();
 
     public AccessControlWebConstants getAccessControlWebConstants();
     public AccessControlWebMessages getAccessControlWebMessages();

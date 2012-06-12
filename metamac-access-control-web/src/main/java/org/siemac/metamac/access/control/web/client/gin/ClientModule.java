@@ -8,10 +8,14 @@ import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.presenter.ErrorPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
+import org.siemac.metamac.access.control.web.client.presenter.ToolStripPresenterWidget;
+import org.siemac.metamac.access.control.web.client.presenter.UnauthorizedPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
 import org.siemac.metamac.access.control.web.client.view.ErrorPageViewImpl;
 import org.siemac.metamac.access.control.web.client.view.MainPageViewImpl;
 import org.siemac.metamac.access.control.web.client.view.RoleHistoryViewImpl;
+import org.siemac.metamac.access.control.web.client.view.ToolStripViewImpl;
+import org.siemac.metamac.access.control.web.client.view.UnauthorizedPageViewImpl;
 import org.siemac.metamac.access.control.web.client.view.UsersListViewImpl;
 
 import com.google.inject.Singleton;
@@ -38,9 +42,15 @@ public class ClientModule extends AbstractPresenterModule {
 
         // Presenters
         bindPresenter(MainPagePresenter.class, MainPagePresenter.MainPageView.class, MainPageViewImpl.class, MainPagePresenter.MainPageProxy.class);
-        bindPresenter(ErrorPagePresenter.class, ErrorPagePresenter.ErrorPageView.class, ErrorPageViewImpl.class, ErrorPagePresenter.ErrorPageProxy.class);
         bindPresenter(UsersListPresenter.class, UsersListPresenter.UsersListView.class, UsersListViewImpl.class, UsersListPresenter.UsersListProxy.class);
         bindPresenter(RoleHistoryPresenter.class, RoleHistoryPresenter.RoleHistoryView.class, RoleHistoryViewImpl.class, RoleHistoryPresenter.RoleHistoryProxy.class);
+
+        // PresenterWidgets
+        bindSingletonPresenterWidget(ToolStripPresenterWidget.class, ToolStripPresenterWidget.ToolStripView.class, ToolStripViewImpl.class);
+
+        // Error pages
+        bindPresenter(ErrorPagePresenter.class, ErrorPagePresenter.ErrorPageView.class, ErrorPageViewImpl.class, ErrorPagePresenter.ErrorPageProxy.class);
+        bindPresenter(UnauthorizedPagePresenter.class, UnauthorizedPagePresenter.UnauthorizedPageView.class, UnauthorizedPageViewImpl.class, UnauthorizedPagePresenter.UnauthorizedPageProxy.class);
 
         bind(AccessControlWebConstants.class).in(Singleton.class);
         bind(AccessControlWebMessages.class).in(Singleton.class);

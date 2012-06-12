@@ -1,7 +1,5 @@
 package org.siemac.metamac.access.control.web.client.view;
 
-import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getConstants;
-
 import java.util.List;
 
 import org.siemac.metamac.access.control.web.client.AccessControlWeb;
@@ -22,11 +20,8 @@ import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.events.HasClickHandlers;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.smartgwt.client.widgets.toolbar.ToolStrip;
-import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
 public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> implements MainPagePresenter.MainPageView {
 
@@ -45,9 +40,6 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
     private HLayout                   headerLayout;
     private HLayout                   southLayout;
     private HLayout                   footerLayout;
-
-    private ToolStripButton           usersButton;
-    private ToolStripButton           roleHistoryButton;
 
     @Inject
     public MainPageViewImpl(MasterHead masterHead, SuccessMessagePanel successMessagePanel, ErrorMessagePanel errorMessagePanel) {
@@ -78,20 +70,8 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         headerLayout.addMember(vLayout);
         headerLayout.setHeight(80);
 
-        ToolStrip toolStrip = new ToolStrip();
-        toolStrip.setWidth100();
-        toolStrip.setAlign(Alignment.LEFT);
-
-        usersButton = new ToolStripButton(getConstants().users());
-        usersButton.setAutoFit(true);
-        toolStrip.addButton(usersButton);
-        roleHistoryButton = new ToolStripButton(getConstants().roleHistory());
-        roleHistoryButton.setAutoFit(true);
-        toolStrip.addButton(roleHistoryButton);
-
         northLayout = new VLayout();
         northLayout.addMember(headerLayout);
-        northLayout.addMember(toolStrip);
 
         // Initialize the South layout container
         southLayout = new HLayout();
@@ -183,16 +163,6 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
     @Override
     public void setTitle(String title) {
         masterHead.setTitleLabel(title);
-    }
-
-    @Override
-    public HasClickHandlers goToUsersListPage() {
-        return usersButton;
-    }
-
-    @Override
-    public HasClickHandlers goToRoleHistoryPage() {
-        return roleHistoryButton;
     }
 
     @Override
