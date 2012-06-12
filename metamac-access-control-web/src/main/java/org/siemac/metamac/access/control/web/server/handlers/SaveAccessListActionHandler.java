@@ -12,16 +12,16 @@ import org.siemac.metamac.domain.access.control.dto.AppDto;
 import org.siemac.metamac.domain.access.control.dto.RoleDto;
 import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.siemac.metamac.web.common.server.ServiceContextHolder;
+import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 @Component
-public class SaveAccessListActionHandler extends AbstractActionHandler<SaveAccessListAction, SaveAccessListResult> {
+public class SaveAccessListActionHandler extends SecurityActionHandler<SaveAccessListAction, SaveAccessListResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
@@ -31,7 +31,7 @@ public class SaveAccessListActionHandler extends AbstractActionHandler<SaveAcces
     }
 
     @Override
-    public SaveAccessListResult execute(SaveAccessListAction action, ExecutionContext context) throws ActionException {
+    public SaveAccessListResult executeSecurityAction(SaveAccessListAction action) throws ActionException {
         List<AccessDto> accessSaved = new ArrayList<AccessDto>();
         List<AccessDto> accessDtos = action.getAccessToSave();
         for (AccessDto accessToSave : accessDtos) {

@@ -7,16 +7,16 @@ import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.web.common.server.ServiceContextHolder;
+import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 @Component
-public class DeleteAccessListActionHandler extends AbstractActionHandler<DeleteAccessListAction, DeleteAccessListResult> {
+public class DeleteAccessListActionHandler extends SecurityActionHandler<DeleteAccessListAction, DeleteAccessListResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
@@ -26,7 +26,7 @@ public class DeleteAccessListActionHandler extends AbstractActionHandler<DeleteA
     }
 
     @Override
-    public DeleteAccessListResult execute(DeleteAccessListAction action, ExecutionContext context) throws ActionException {
+    public DeleteAccessListResult executeSecurityAction(DeleteAccessListAction action) throws ActionException {
         List<Long> ids = action.getAccessIds();
         for (Long id : ids) {
             try {

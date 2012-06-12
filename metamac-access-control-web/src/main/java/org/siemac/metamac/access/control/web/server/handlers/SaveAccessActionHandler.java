@@ -6,16 +6,16 @@ import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.web.common.server.ServiceContextHolder;
+import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 @Component
-public class SaveAccessActionHandler extends AbstractActionHandler<SaveAccessAction, SaveAccessResult> {
+public class SaveAccessActionHandler extends SecurityActionHandler<SaveAccessAction, SaveAccessResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
@@ -25,7 +25,7 @@ public class SaveAccessActionHandler extends AbstractActionHandler<SaveAccessAct
     }
 
     @Override
-    public SaveAccessResult execute(SaveAccessAction action, ExecutionContext context) throws ActionException {
+    public SaveAccessResult executeSecurityAction(SaveAccessAction action) throws ActionException {
         AccessDto accessToSave = action.getAccessToSave();
         try {
             AccessDto accessDto = null;

@@ -8,16 +8,16 @@ import org.siemac.metamac.access.control.web.shared.FindAllAccessResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.web.common.server.ServiceContextHolder;
+import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gwtplatform.dispatch.server.ExecutionContext;
-import com.gwtplatform.dispatch.server.actionhandler.AbstractActionHandler;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 @Component
-public class FindAllAccessActionHandler extends AbstractActionHandler<FindAllAccessAction, FindAllAccessResult> {
+public class FindAllAccessActionHandler extends SecurityActionHandler<FindAllAccessAction, FindAllAccessResult> {
 
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
@@ -27,7 +27,7 @@ public class FindAllAccessActionHandler extends AbstractActionHandler<FindAllAcc
     }
 
     @Override
-    public FindAllAccessResult execute(FindAllAccessAction action, ExecutionContext context) throws ActionException {
+    public FindAllAccessResult executeSecurityAction(FindAllAccessAction action) throws ActionException {
         try {
             List<AccessDto> accessDtos = accessControlBaseServiceFacade.findAccessByCondition(ServiceContextHolder.getCurrentServiceContext(), null, null, null, null, Boolean.valueOf(false));
             return new FindAllAccessResult(accessDtos);
