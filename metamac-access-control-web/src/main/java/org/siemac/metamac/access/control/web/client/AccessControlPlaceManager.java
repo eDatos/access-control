@@ -28,7 +28,7 @@ public class AccessControlPlaceManager extends PlaceManagerImpl {
 
     @Override
     public void revealUnauthorizedPlace(String unauthorizedHistoryToken) {
-        PlaceRequest placeRequest = new PlaceRequest(NameTokens.errorPage);
+        PlaceRequest placeRequest = new PlaceRequest(NameTokens.unauthorizedAccessPage);
         placeRequest = placeRequest.with("redirect", unauthorizedHistoryToken);
         revealPlace(placeRequest);
     }
