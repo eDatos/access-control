@@ -261,6 +261,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp.version}</version>
+            <!-- Add scope test when running with a persistent database (mysql etc) -->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.fornax.cartridges</groupId>
             <artifactId>fornax-cartridges-sculptor-generator</artifactId>
             <version>${sculptor.version}</version>
