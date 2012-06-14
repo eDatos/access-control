@@ -16,7 +16,6 @@ import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDtoA
 import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDtoMocks;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
-import org.siemac.metamac.common.test.utils.MetamacDtoAsserts;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -1332,7 +1331,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDto, accessDto.getRole());
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, accessDto.getApp());
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, accessDto.getUser());
-        MetamacDtoAsserts.assertEqualsExternalItemBtDto(new ExternalItemBtDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION), accessDto.getOperation());
+        MetamacAsserts.assertEqualsExternalItemBtDto(new ExternalItemBtDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION), accessDto.getOperation());
 
         assertEquals("A-1", accessDto.getUuid());
         assertEquals(Long.valueOf(1), accessDto.getVersion());

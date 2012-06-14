@@ -2,7 +2,7 @@ package org.siemac.metamac.access.control.base.serviceapi.utils;
 
 import static org.junit.Assert.assertEquals;
 
-import org.siemac.metamac.common.test.utils.MetamacDtoAsserts;
+import org.siemac.metamac.common.test.utils.MetamacAsserts;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.domain.access.control.dto.AppDto;
 import org.siemac.metamac.domain.access.control.dto.RoleDto;
@@ -44,7 +44,7 @@ public class AccessControlDtoAsserts {
         assertEqualsRoleDto(expected.getRole(), actual.getRole());
         assertEqualsAppDto(expected.getApp(), actual.getApp());
         assertEqualsUserDto(expected.getUser(), actual.getUser());
-        MetamacDtoAsserts.assertEqualsExternalItemBtDto(expected.getOperation(), actual.getOperation());
+        MetamacAsserts.assertEqualsExternalItemBtDto(expected.getOperation(), actual.getOperation());
     }
 
     public static void assertEqualsCreatedRoleDto(RoleDto expected, RoleDto actual) {
@@ -70,7 +70,7 @@ public class AccessControlDtoAsserts {
         assertEqualsRoleDto(expected.getRole(), actual.getRole());
         assertEqualsAppDto(expected.getApp(), actual.getApp());
         assertEqualsUserDto(expected.getUser(), actual.getUser());
-        MetamacDtoAsserts.assertEqualsExternalItemBtDto(expected.getOperation(), actual.getOperation());
+        MetamacAsserts.assertEqualsExternalItemBtDto(expected.getOperation(), actual.getOperation());
     }
 
 }
