@@ -9,5 +9,5 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({AccessControlBaseServiceFacadeTest.class, AccessControlBaseServiceTest.class, SecurityAccessControlBaseServiceFacadeTest.class})
-public class AccessControlSuiteTest {
+public class AccessControlSuite {
 }
