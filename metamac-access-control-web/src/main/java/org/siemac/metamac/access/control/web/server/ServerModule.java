@@ -9,8 +9,8 @@ import org.siemac.metamac.access.control.web.server.handlers.FindAllAccessAction
 import org.siemac.metamac.access.control.web.server.handlers.FindAllAppsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRemovedAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRolesActionHandler;
-import org.siemac.metamac.access.control.web.server.handlers.FindAllStatisticalOperationsActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllUsersActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.GetOperationPaginatedListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAccessActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAccessListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAppActionHandler;
@@ -26,8 +26,8 @@ import org.siemac.metamac.access.control.web.shared.FindAllAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
-import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
+import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
 import org.siemac.metamac.access.control.web.shared.SaveAppAction;
@@ -67,7 +67,7 @@ public class ServerModule extends HandlerModule {
         bindHandler(SaveRoleAction.class, SaveRoleActionHandler.class);
         bindHandler(SaveAppAction.class, SaveAppActionHandler.class);
         bindHandler(FindAccessByUserAction.class, FindAccessByUserActionHandler.class);
-        bindHandler(FindAllStatisticalOperationsAction.class, FindAllStatisticalOperationsActionHandler.class);
+        bindHandler(GetOperationPaginatedListAction.class, GetOperationPaginatedListActionHandler.class);
         bindHandler(FindAllRemovedAccessAction.class, FindAllRemovedAccessActionHandler.class);
         bindHandler(SaveAccessListAction.class, SaveAccessListActionHandler.class);
         bindHandler(ValidateTicketAction.class, ValidateTicketActionHandler.class);
