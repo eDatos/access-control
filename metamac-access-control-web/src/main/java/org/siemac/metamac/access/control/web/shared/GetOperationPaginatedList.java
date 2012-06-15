@@ -12,14 +12,18 @@ import com.gwtplatform.dispatch.annotation.Out;
 public class GetOperationPaginatedList {
 
     @In(1)
-    int                     maxResults;
-    @In(2)
     int                     firstResult;
+
+    @In(2)
+    int                     maxResults;
 
     @Out(1)
     List<ExternalItemBtDto> operations;
 
     @Out(2)
+    int                     firstResultOut;
+    
+    @Out(3)
     int                     totalResults;
 
 }

@@ -8,8 +8,6 @@ import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent.UpdateApplicationsHandler;
-import org.siemac.metamac.access.control.web.client.events.UpdateOperationsEvent;
-import org.siemac.metamac.access.control.web.client.events.UpdateOperationsEvent.UpdateOperationsHandler;
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent;
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent.UpdateRolesHandler;
 import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
@@ -22,6 +20,8 @@ import org.siemac.metamac.access.control.web.shared.FindAccessByUserAction;
 import org.siemac.metamac.access.control.web.shared.FindAccessByUserResult;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersResult;
+import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
+import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListResult;
 import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListResult;
@@ -56,14 +56,7 @@ import com.gwtplatform.mvp.client.proxy.Proxy;
 import com.gwtplatform.mvp.client.proxy.RevealContentEvent;
 import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
-public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListView, UsersListPresenter.UsersListProxy>
-        implements
-            UsersListUiHandlers,
-            UpdateRolesHandler,
-            UpdateApplicationsHandler,
-            UpdateOperationsHandler {
-
-    // private static Logger logger = Logger.getLogger(UsersListPresenter.class.getName());
+public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListView, UsersListPresenter.UsersListProxy> implements UsersListUiHandlers, UpdateRolesHandler, UpdateApplicationsHandler {
 
     private final DispatchAsync      dispatcher;
 
@@ -85,7 +78,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
         void setRoleList(List<RoleDto> roles);
         void setApplicationList(List<AppDto> apps);
-        void setOperationList(List<ExternalItemBtDto> operations);
+        void setOperations(List<ExternalItemBtDto> operations, int firstResult, int totalResults);
     }
 
     @Inject
@@ -256,12 +249,6 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @ProxyEvent
     @Override
-    public void onUpdateOperations(UpdateOperationsEvent event) {
-        getView().setOperationList(event.getOperations());
-    }
-
-    @ProxyEvent
-    @Override
     public void onUpdateApplications(UpdateApplicationsEvent event) {
         getView().setApplicationList(event.getApplications());
     }
@@ -270,6 +257,22 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     @Override
     public void onUpdateRoles(UpdateRolesEvent event) {
         getView().setRoleList(event.getRoles());
+    }
+
+    @Override
+    public void retrievePaginatedOperations(int firstResult, int maxResults) {
+        dispatcher.execute(new GetOperationPaginatedListAction(firstResult, maxResults), new WaitingAsyncCallback<GetOperationPaginatedListResult>() {
+
+            @Override
+            public void onWaitFailure(Throwable caught) {
+                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingOperations()), MessageTypeEnum.ERROR);
+            }
+
+            @Override
+            public void onWaitSuccess(GetOperationPaginatedListResult result) {
+                getView().setOperations(result.getOperations(), result.getFirstResultOut(), result.getTotalResults());
+            }
+        });
     }
 
 }

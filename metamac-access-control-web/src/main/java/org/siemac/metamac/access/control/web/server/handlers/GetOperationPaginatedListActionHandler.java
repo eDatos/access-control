@@ -32,17 +32,19 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
     @Override
     public GetOperationPaginatedListResult executeSecurityAction(GetOperationPaginatedListAction action) throws ActionException {
         try {
+            int firstResult = 0;
             int totalResults = 0;
             List<ExternalItemBtDto> externalItemBtDtos = new ArrayList<ExternalItemBtDto>();
             FindOperationsResult findOperationsResult = statisticalOperationsInternalWebServiceFacade.findOperations(action.getFirstResult(), action.getMaxResults());
             OperationBaseList operationBaseList = findOperationsResult.getOperations();
             if (operationBaseList != null && operationBaseList.getOperation() != null) {
+                firstResult = findOperationsResult.getFirstResult().intValue();
                 totalResults = findOperationsResult.getTotalResults().intValue();
                 for (OperationBase operationBase : operationBaseList.getOperation()) {
                     externalItemBtDtos.add(new ExternalItemBtDto("http://statisticalOperations/" + operationBase.getCode(), operationBase.getCode(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
                 }
             }
-            return new GetOperationPaginatedListResult(externalItemBtDtos, totalResults);
+            return new GetOperationPaginatedListResult(externalItemBtDtos, firstResult, totalResults);
         } catch (MetamacException e) {
             throw WebExceptionUtils.createMetamacWebException(e);
         }

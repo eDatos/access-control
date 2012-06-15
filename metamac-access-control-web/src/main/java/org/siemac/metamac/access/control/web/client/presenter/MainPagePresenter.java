@@ -6,10 +6,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent;
-import org.siemac.metamac.access.control.web.client.events.UpdateOperationsEvent;
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent;
 import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
@@ -17,8 +15,6 @@ import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsResult;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesResult;
-import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsAction;
-import org.siemac.metamac.access.control.web.shared.FindAllStatisticalOperationsResult;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.HideMessageEvent;
 import org.siemac.metamac.web.common.client.events.HideMessageEvent.HideMessageHandler;
@@ -41,9 +37,9 @@ import com.gwtplatform.mvp.client.Presenter;
 import com.gwtplatform.mvp.client.View;
 import com.gwtplatform.mvp.client.annotations.ContentSlot;
 import com.gwtplatform.mvp.client.annotations.NameToken;
+import com.gwtplatform.mvp.client.annotations.NoGatekeeper;
 import com.gwtplatform.mvp.client.annotations.ProxyEvent;
 import com.gwtplatform.mvp.client.annotations.ProxyStandard;
-import com.gwtplatform.mvp.client.annotations.UseGatekeeper;
 import com.gwtplatform.mvp.client.proxy.Place;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
 import com.gwtplatform.mvp.client.proxy.Proxy;
@@ -63,7 +59,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
     @ProxyStandard
     @NameToken(NameTokens.mainPage)
-    @UseGatekeeper(LoggedInGatekeeper.class)
+    @NoGatekeeper
     public interface MainPageProxy extends Proxy<MainPagePresenter>, Place {
 
     }
@@ -96,7 +92,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
         // TODO Is this the proper place to load value lists?
         loadRoles();
-        loadOperations();
         loadApplications();
     }
 
@@ -152,20 +147,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
             @Override
             public void onWaitSuccess(FindAllRolesResult result) {
                 UpdateRolesEvent.fire(MainPagePresenter.this, result.getRoles());
-            }
-        });
-    }
-
-    private void loadOperations() {
-        dispatcher.execute(new FindAllStatisticalOperationsAction(), new WaitingAsyncCallback<FindAllStatisticalOperationsResult>() {
-
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingOperations()), MessageTypeEnum.ERROR);
-            }
-            @Override
-            public void onWaitSuccess(FindAllStatisticalOperationsResult result) {
-                UpdateOperationsEvent.fire(MainPagePresenter.this, result.getOperations());
             }
         });
     }

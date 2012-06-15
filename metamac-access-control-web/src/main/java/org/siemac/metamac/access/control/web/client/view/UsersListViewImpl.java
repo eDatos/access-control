@@ -16,6 +16,7 @@ import org.siemac.metamac.access.control.web.client.utils.ClientSecurityUtils;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
+import org.siemac.metamac.access.control.web.client.widgets.ExternalPaginatedDragAndDropItem;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
 import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.domain.access.control.dto.AppDto;
@@ -23,11 +24,11 @@ import org.siemac.metamac.domain.access.control.dto.RoleDto;
 import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
+import org.siemac.metamac.web.common.client.widgets.PaginatedAction;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
 import org.siemac.metamac.web.common.client.widgets.form.GroupDynamicForm;
 import org.siemac.metamac.web.common.client.widgets.form.MainFormLayout;
 import org.siemac.metamac.web.common.client.widgets.form.fields.EmailItem;
-import org.siemac.metamac.web.common.client.widgets.form.fields.ExternalDragAndDropItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredSelectItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredTextItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.ViewTextItem;
@@ -53,44 +54,48 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> implements UsersListPresenter.UsersListView {
 
-    private static final String     USER_USERNAME    = "username";
-    private static final String     USER_NAME        = "name";
-    private static final String     USER_SURNAME     = "surname";
-    private static final String     USER_MAIL        = "mail";
+    private static final String              USER_USERNAME              = "username";
+    private static final String              USER_NAME                  = "name";
+    private static final String              USER_SURNAME               = "surname";
+    private static final String              USER_MAIL                  = "mail";
 
-    private static final String     ACCESS_ROLE      = "role";
-    private static final String     ACCESS_APP       = "app";
-    private static final String     ACCESS_OPERATION = "operation";
+    private static final String              ACCESS_ROLE                = "role";
+    private static final String              ACCESS_APP                 = "app";
+    private static final String              ACCESS_OPERATION           = "operation";
 
-    private static final String     USER_LAYOUT_ID   = "userlayout";
+    private static final String              USER_LAYOUT_ID             = "userlayout";
 
-    private VLayout                 panel;
-    private VLayout                 subPanel;
-    private ListGridToolStrip       userToolStrip;
-    private CustomListGrid          usersListGrid;
+    private static final int                 OPERATION_LIST_MAX_RESULTS = 5;
 
-    private Label                   title;
+    private VLayout                          panel;
+    private VLayout                          subPanel;
+    private ListGridToolStrip                userToolStrip;
+    private CustomListGrid                   usersListGrid;
 
-    private VLayout                 userLayout;
-    private MainFormLayout          userMainFormLayout;
-    private GroupDynamicForm        viewUserForm;
-    private GroupDynamicForm        editionUserForm;
+    private Label                            title;
 
-    private ListGridToolStrip       accessToolStrip;
-    private CustomListGrid          accessListGrid;
+    private VLayout                          userLayout;
+    private MainFormLayout                   userMainFormLayout;
+    private GroupDynamicForm                 viewUserForm;
+    private GroupDynamicForm                 editionUserForm;
 
-    private MainFormLayout          accessMainFormLayout;
+    private ListGridToolStrip                accessToolStrip;
+    private CustomListGrid                   accessListGrid;
 
-    private GroupDynamicForm        editionAccessForm;
+    private MainFormLayout                   accessMainFormLayout;
 
-    private ExternalDragAndDropItem operationItem;
-    private AppDragAndDropItem      appItem;
+    private GroupDynamicForm                 editionAccessForm;
 
-    private VLayout                 accessLayout;
+    private ExternalPaginatedDragAndDropItem operationItem;
+    private AppDragAndDropItem               appItem;
 
-    private UserDto                 userDto;
+    private VLayout                          accessLayout;
 
-    private List<RoleDto>           roleDtos;
+    private UserDto                          userDto;
+
+    private List<RoleDto>                    roleDtos;
+
+    private UsersListUiHandlers              uiHandlers;
 
     public UsersListViewImpl() {
         super();
@@ -116,7 +121,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             @Override
             public void onClick(ClickEvent event) {
-                getUiHandlers().deleteUsers(getSelectedUsers());
+                uiHandlers.deleteUsers(getSelectedUsers());
             }
         });
 
@@ -174,7 +179,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             @Override
             public void onClick(ClickEvent event) {
                 if (editionUserForm.validate()) {
-                    getUiHandlers().saveUser(getUser());
+                    uiHandlers.saveUser(getUser());
                 }
             }
         });
@@ -211,7 +216,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             @Override
             public void onClick(ClickEvent event) {
-                getUiHandlers().deleteAccess(getSelectedAccess(), userDto.getUsername());
+                uiHandlers.deleteAccess(getSelectedAccess(), userDto.getUsername());
             }
         });
 
@@ -260,7 +265,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             @Override
             public void onClick(ClickEvent event) {
                 if (editionAccessForm.getItem(ACCESS_ROLE).validate() && appItem.validate()) {
-                    getUiHandlers().saveAccess(getAccessList());
+                    uiHandlers.saveAccess(getAccessList());
                 }
             }
         });
@@ -324,6 +329,11 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
 
     @Override
+    public void setUiHandlers(UsersListUiHandlers uiHandlers) {
+        this.uiHandlers = uiHandlers;
+    }
+
+    @Override
     public void setInSlot(Object slot, Widget content) {
         if (slot == UsersListPresenter.TYPE_SetContextAreaContentToolBar) {
             if (content != null) {
@@ -376,7 +386,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         } else {
             showUserDeleteButton();
             userMainFormLayout.setViewMode();
-            getUiHandlers().retrieveUserAccess(userDto.getUsername());
+            uiHandlers.retrieveUserAccess(userDto.getUsername());
         }
         userLayout.show();
         if (userDto.getId() == null) {
@@ -477,6 +487,9 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             // Reset dragAndDrop items
             appItem.resetValues();
             operationItem.resetValues();
+            
+            // Load statistical operations
+            uiHandlers.retrievePaginatedOperations(1, OPERATION_LIST_MAX_RESULTS);
         } else {
             showAccessDeleteButton();
             accessMainFormLayout.hide();
@@ -495,7 +508,13 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         appItem = new AppDragAndDropItem(ACCESS_APP, getConstants().app(), ACCESS_APP);
         appItem.setRequired(true);
         appItem.setStartRow(true);
-        operationItem = new ExternalDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), ACCESS_OPERATION);
+        operationItem = new ExternalPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), ACCESS_OPERATION, OPERATION_LIST_MAX_RESULTS, new PaginatedAction() {
+
+            @Override
+            public void retrieveResultSet(int firstResult, int maxResults) {
+                uiHandlers.retrievePaginatedOperations(firstResult, maxResults);
+            }
+        });
         editionAccessForm.setFields(role, appItem, operationItem);
         accessMainFormLayout.addEditionCanvas(editionAccessForm);
     }
@@ -551,8 +570,9 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
 
     @Override
-    public void setOperationList(List<ExternalItemBtDto> operations) {
+    public void setOperations(List<ExternalItemBtDto> operations, int firstResult, int totalResults) {
         operationItem.setSourceExternalItems(operations);
+        operationItem.refreshSorucePaginationInfo(firstResult, operations.size(), totalResults);
     }
 
     private RoleDto getRoleDtoById(String id) {
