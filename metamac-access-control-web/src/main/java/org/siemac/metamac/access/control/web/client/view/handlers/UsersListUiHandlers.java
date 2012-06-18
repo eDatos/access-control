@@ -17,6 +17,6 @@ public interface UsersListUiHandlers extends UiHandlers {
     void saveAccess(List<AccessDto> accessDto);
     void deleteAccess(List<Long> selectedAccess, String username);
 
-    void retrievePaginatedOperations(int firstResult, int maxResults);
+    void retrievePaginatedOperations(int firstResult, int maxResults, String operationCode);
 
 }

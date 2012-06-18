@@ -260,8 +260,8 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     }
 
     @Override
-    public void retrievePaginatedOperations(int firstResult, int maxResults) {
-        dispatcher.execute(new GetOperationPaginatedListAction(firstResult, maxResults), new WaitingAsyncCallback<GetOperationPaginatedListResult>() {
+    public void retrievePaginatedOperations(int firstResult, int maxResults, String operationCode) {
+        dispatcher.execute(new GetOperationPaginatedListAction(firstResult, maxResults, operationCode), new WaitingAsyncCallback<GetOperationPaginatedListResult>() {
 
             @Override
             public void onWaitFailure(Throwable caught) {

@@ -35,7 +35,7 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
             int firstResult = 0;
             int totalResults = 0;
             List<ExternalItemBtDto> externalItemBtDtos = new ArrayList<ExternalItemBtDto>();
-            FindOperationsResult findOperationsResult = statisticalOperationsInternalWebServiceFacade.findOperations(action.getFirstResult(), action.getMaxResults());
+            FindOperationsResult findOperationsResult = statisticalOperationsInternalWebServiceFacade.findOperations(action.getFirstResult(), action.getMaxResults(), action.getOperationCode());
             OperationBaseList operationBaseList = findOperationsResult.getOperations();
             if (operationBaseList != null && operationBaseList.getOperation() != null) {
                 firstResult = findOperationsResult.getFirstResult().intValue();

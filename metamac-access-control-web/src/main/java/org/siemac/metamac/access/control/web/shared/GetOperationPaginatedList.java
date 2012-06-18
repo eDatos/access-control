@@ -17,12 +17,15 @@ public class GetOperationPaginatedList {
     @In(2)
     int                     maxResults;
 
+    @In(3)
+    String                  operationCode;
+
     @Out(1)
     List<ExternalItemBtDto> operations;
 
     @Out(2)
     int                     firstResultOut;
-    
+
     @Out(3)
     int                     totalResults;
 
