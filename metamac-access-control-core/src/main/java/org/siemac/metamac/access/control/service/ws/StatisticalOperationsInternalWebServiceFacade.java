@@ -5,6 +5,6 @@ import org.siemac.metamac.statistical.operations.internal.ws.v1_0.domain.FindOpe
 
 public interface StatisticalOperationsInternalWebServiceFacade {
 
-    public FindOperationsResult findOperations(int firstResult, int maxResult) throws MetamacException;
+    public FindOperationsResult findOperations(int firstResult, int maxResult, String operationCode) throws MetamacException;
 
 }
