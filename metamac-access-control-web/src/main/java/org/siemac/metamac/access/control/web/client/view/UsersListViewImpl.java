@@ -66,7 +66,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     private static final String                    USER_LAYOUT_ID             = "userlayout";
 
-    private static final int                       OPERATION_LIST_MAX_RESULTS = 5;
+    private static final int                       OPERATION_LIST_MAX_RESULTS = 17;
 
     private VLayout                                panel;
     private VLayout                                subPanel;
@@ -490,7 +490,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             operationItem.resetValues();
 
             // Load statistical operations
-            uiHandlers.retrievePaginatedOperations(1, OPERATION_LIST_MAX_RESULTS, null);
+            uiHandlers.retrievePaginatedOperations(0, OPERATION_LIST_MAX_RESULTS, null);
         } else {
             showAccessDeleteButton();
             accessMainFormLayout.hide();
