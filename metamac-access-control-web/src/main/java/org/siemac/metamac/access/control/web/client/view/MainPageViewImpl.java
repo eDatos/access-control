@@ -41,7 +41,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
     private VLayout                   northLayout;
     private HLayout                   headerLayout;
     private HLayout                   southLayout;
-    private HLayout                   footerLayout;
+    private VLayout                   footerLayout;
 
     @Inject
     public MainPageViewImpl(MasterHead masterHead, SuccessMessagePanel successMessagePanel, ErrorMessagePanel errorMessagePanel) {
@@ -79,7 +79,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         southLayout = new HLayout();
         southLayout.setHeight100();
 
-        footerLayout = new HLayout();
+        footerLayout = new VLayout();
         footerLayout.setBorder("1px solid #A7ABB4");
         footerLayout.addMember(this.successMessagePanel);
         footerLayout.addMember(this.errorMessagePanel);
