@@ -11,6 +11,7 @@ import org.siemac.metamac.web.common.client.widgets.ErrorMessagePanel;
 import org.siemac.metamac.web.common.client.widgets.IstacNavBar;
 import org.siemac.metamac.web.common.client.widgets.MasterHead;
 import org.siemac.metamac.web.common.client.widgets.SuccessMessagePanel;
+import org.siemac.metamac.web.common.client.widgets.VersionFooter;
 
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
@@ -82,6 +83,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         footerLayout.setBorder("1px solid #A7ABB4");
         footerLayout.addMember(this.successMessagePanel);
         footerLayout.addMember(this.errorMessagePanel);
+        footerLayout.addMember(new VersionFooter(AccessControlWeb.getConstants().appVersion()));
 
         // Set user name
         masterHead.getUserNameLabel().setContents(getUserName());
