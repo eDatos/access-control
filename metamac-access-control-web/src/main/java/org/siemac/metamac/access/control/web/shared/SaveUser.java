@@ -1,6 +1,7 @@
 package org.siemac.metamac.access.control.web.shared;
 
-import org.siemac.metamac.domain.access.control.dto.UserDto;
+
+import org.siemac.metamac.access.control.core.dto.UserDto;
 
 import com.gwtplatform.dispatch.annotation.GenDispatch;
 import com.gwtplatform.dispatch.annotation.In;

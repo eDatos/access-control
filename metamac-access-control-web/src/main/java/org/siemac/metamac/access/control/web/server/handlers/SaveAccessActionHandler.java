@@ -1,10 +1,10 @@
 package org.siemac.metamac.access.control.web.server.handlers;
 
-import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
+import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.access.control.core.serviceapi.AccessControlBaseServiceFacade;
 import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.domain.access.control.dto.AccessDto;
 import org.siemac.metamac.web.common.server.ServiceContextHolder;
 import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;

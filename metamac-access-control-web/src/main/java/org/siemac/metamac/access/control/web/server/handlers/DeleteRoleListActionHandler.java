@@ -2,7 +2,7 @@ package org.siemac.metamac.access.control.web.server.handlers;
 
 import java.util.List;
 
-import org.siemac.metamac.access.control.base.serviceapi.AccessControlBaseServiceFacade;
+import org.siemac.metamac.access.control.core.serviceapi.AccessControlBaseServiceFacade;
 import org.siemac.metamac.access.control.web.shared.DeleteRoleListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteRoleListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;

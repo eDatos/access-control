@@ -1,8 +1,8 @@
 package org.siemac.metamac.access.control.web.client.utils;
 
+import org.siemac.metamac.access.control.core.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.access.control.security.shared.SharedSecurityUtils;
 import org.siemac.metamac.access.control.web.client.AccessControlWeb;
-import org.siemac.metamac.domain.access.control.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
 
 public class ClientSecurityUtils {

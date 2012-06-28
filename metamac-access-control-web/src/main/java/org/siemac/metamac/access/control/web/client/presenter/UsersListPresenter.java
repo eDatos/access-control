@@ -4,6 +4,10 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getM
 
 import java.util.List;
 
+import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.access.control.core.dto.AppDto;
+import org.siemac.metamac.access.control.core.dto.RoleDto;
+import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent;
@@ -29,10 +33,6 @@ import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserResult;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
-import org.siemac.metamac.domain.access.control.dto.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.AppDto;
-import org.siemac.metamac.domain.access.control.dto.RoleDto;
-import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;

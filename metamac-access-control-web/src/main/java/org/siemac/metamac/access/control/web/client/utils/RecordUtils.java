@@ -1,11 +1,11 @@
 package org.siemac.metamac.access.control.web.client.utils;
 
+import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.access.control.core.dto.AppDto;
+import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
 import org.siemac.metamac.access.control.web.client.model.record.AppRecord;
 import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
-import org.siemac.metamac.domain.access.control.dto.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.AppDto;
-import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.siemac.metamac.web.common.client.utils.DateUtils;
 
 public class RecordUtils {
