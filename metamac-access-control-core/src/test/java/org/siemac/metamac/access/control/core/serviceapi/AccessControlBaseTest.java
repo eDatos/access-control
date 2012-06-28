@@ -1,12 +1,12 @@
-package org.siemac.metamac.access.control.base.serviceapi;
+package org.siemac.metamac.access.control.core.serviceapi;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.constants.AccessControlConstants;
+import org.siemac.metamac.access.control.core.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.common.test.MetamacBaseTests;
-import org.siemac.metamac.domain.access.control.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
 import org.siemac.metamac.sso.client.MetamacPrincipalAccess;
 import org.siemac.metamac.sso.client.SsoClientConstants;

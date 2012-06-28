@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
-import org.siemac.metamac.access.control.base.domain.Access;
-import org.siemac.metamac.access.control.base.domain.App;
-import org.siemac.metamac.access.control.base.domain.Role;
-import org.siemac.metamac.access.control.base.domain.User;
+import org.siemac.metamac.access.control.core.domain.Access;
+import org.siemac.metamac.access.control.core.domain.App;
+import org.siemac.metamac.access.control.core.domain.Role;
+import org.siemac.metamac.access.control.core.domain.User;
 import org.siemac.metamac.access.control.error.ServiceExceptionParameters;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.exception.MetamacExceptionItem;

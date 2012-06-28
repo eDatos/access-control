@@ -1,4 +1,4 @@
-package org.siemac.metamac.access.control.base.serviceapi;
+package org.siemac.metamac.access.control.core.serviceapi;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

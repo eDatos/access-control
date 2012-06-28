@@ -1,4 +1,4 @@
-package org.siemac.metamac.access.control.base.serviceimpl;
+package org.siemac.metamac.access.control.core.serviceimpl;
 
 import static org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder.criteriaFor;
 
@@ -10,18 +10,18 @@ import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.joda.time.DateTime;
-import org.siemac.metamac.access.control.base.domain.Access;
-import org.siemac.metamac.access.control.base.domain.AccessRepository;
-import org.siemac.metamac.access.control.base.domain.App;
-import org.siemac.metamac.access.control.base.domain.AppRepository;
-import org.siemac.metamac.access.control.base.domain.Role;
-import org.siemac.metamac.access.control.base.domain.RoleRepository;
-import org.siemac.metamac.access.control.base.domain.User;
-import org.siemac.metamac.access.control.base.domain.UserRepository;
-import org.siemac.metamac.access.control.base.exception.AccessNotFoundException;
-import org.siemac.metamac.access.control.base.exception.AppNotFoundException;
-import org.siemac.metamac.access.control.base.exception.RoleNotFoundException;
-import org.siemac.metamac.access.control.base.exception.UserNotFoundException;
+import org.siemac.metamac.access.control.core.domain.Access;
+import org.siemac.metamac.access.control.core.domain.AccessRepository;
+import org.siemac.metamac.access.control.core.domain.App;
+import org.siemac.metamac.access.control.core.domain.AppRepository;
+import org.siemac.metamac.access.control.core.domain.Role;
+import org.siemac.metamac.access.control.core.domain.RoleRepository;
+import org.siemac.metamac.access.control.core.domain.User;
+import org.siemac.metamac.access.control.core.domain.UserRepository;
+import org.siemac.metamac.access.control.core.exception.AccessNotFoundException;
+import org.siemac.metamac.access.control.core.exception.AppNotFoundException;
+import org.siemac.metamac.access.control.core.exception.RoleNotFoundException;
+import org.siemac.metamac.access.control.core.exception.UserNotFoundException;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.access.control.service.utils.InvocationValidator;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -300,29 +300,29 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
 
         // Role condition
         if (!StringUtils.isEmpty(roleCode)) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.role().code(), roleCode));
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.role().code(), roleCode));
         }
 
         // App condition
         if (!StringUtils.isEmpty(appCode)) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.app().code(), appCode));
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.app().code(), appCode));
         }
 
         // User condition
         if (!StringUtils.isEmpty(username)) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.user().username(), username));
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.user().username(), username));
         }
 
         // Operation condition
         if (!StringUtils.isEmpty(operationCodeId)) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId(), operationCodeId));
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().codeId(), operationCodeId));
         }
 
         // Removal date conditions
         if (Boolean.FALSE.equals(removalAccess)) {
-            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
+            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.removalDate()));
         } else if (Boolean.TRUE.equals(removalAccess)) {
-            conditions.add(ConditionalCriteria.isNotNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
+            conditions.add(ConditionalCriteria.isNotNull(org.siemac.metamac.access.control.core.domain.AccessProperties.removalDate()));
         }
 
         List<Access> access = findAccessByCondition(ctx, conditions);
@@ -354,7 +354,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     // ----------------------------------------------------------------------
 
     private void validateRoleCodeUnique(ServiceContext ctx, String code, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.base.domain.RoleProperties.code()).ignoreCaseEq(code).build();
+        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.core.domain.RoleProperties.code()).ignoreCaseEq(code).build();
 
         List<Role> roles = findRoleByCondition(ctx, condition);
 
@@ -376,7 +376,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     }
 
     private void validateAppCodeUnique(ServiceContext ctx, String code, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.base.domain.AppProperties.code()).ignoreCaseEq(code).build();
+        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.core.domain.AppProperties.code()).ignoreCaseEq(code).build();
         List<App> apps = findAppByCondition(ctx, condition);
 
         if (apps != null) {
@@ -398,7 +398,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     }
 
     private void validateUserUsernameUnique(ServiceContext ctx, String username, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.base.domain.UserProperties.username()).ignoreCaseEq(username).build();
+        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.core.domain.UserProperties.username()).ignoreCaseEq(username).build();
         List<User> users = findUserByCondition(ctx, condition);
 
         if (users != null) {
@@ -427,23 +427,23 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         }
 
         // Role condition
-        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.role().code(), entity.getRole().getCode()));
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.role().code(), entity.getRole().getCode()));
 
         // App condition
-        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.app().code(), entity.getApp().getCode()));
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.app().code(), entity.getApp().getCode()));
 
         // User condition
-        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.user().username(), entity.getUser().getUsername()));
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.user().username(), entity.getUser().getUsername()));
 
         // Operation condition
         if (operationCodeId != null) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId(), operationCodeId));
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().codeId(), operationCodeId));
         } else {
-            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.operation().codeId()));
+            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().codeId()));
         }
 
         // Removal date
-        conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.base.domain.AccessProperties.removalDate()));
+        conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.removalDate()));
 
         List<Access> access = findAccessByCondition(ctx, conditions);
 

@@ -1,9 +1,9 @@
-package org.siemac.metamac.access.control.base.serviceapi.utils;
+package org.siemac.metamac.access.control.core.serviceapi.utils;
 
-import org.siemac.metamac.access.control.base.domain.Access;
-import org.siemac.metamac.access.control.base.domain.App;
-import org.siemac.metamac.access.control.base.domain.Role;
-import org.siemac.metamac.access.control.base.domain.User;
+import org.siemac.metamac.access.control.core.domain.Access;
+import org.siemac.metamac.access.control.core.domain.App;
+import org.siemac.metamac.access.control.core.domain.Role;
+import org.siemac.metamac.access.control.core.domain.User;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 
 /**

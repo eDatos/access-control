@@ -1,12 +1,13 @@
-package org.siemac.metamac.access.control.base.serviceapi.utils;
+package org.siemac.metamac.access.control.core.serviceapi.utils;
 
 import static org.junit.Assert.assertEquals;
 
+import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.access.control.core.dto.AppDto;
+import org.siemac.metamac.access.control.core.dto.RoleDto;
+import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
-import org.siemac.metamac.domain.access.control.dto.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.AppDto;
-import org.siemac.metamac.domain.access.control.dto.RoleDto;
-import org.siemac.metamac.domain.access.control.dto.UserDto;
+
 
 /**
  * Asserts to tests

@@ -1,0 +1,52 @@
+import "classpath:/btdesign/metamac-core-common-dtos.btdesign"
+
+Application AccessControlDto {
+    basePackage=org.siemac.metamac.access.control.core
+
+    Module dtos {
+    	basePackage=org.siemac.metamac.access.control.core.dto
+    	
+    	"Dto for RoleDto"
+       	DataTransferObject RoleDto extends @AuditableDto  {
+			String code required;	
+			String title required;
+       		String description nullable;
+       		
+			Long optimisticLockingVersion;	
+       	}
+       	
+       	
+       	"Dto for AppDto"
+       	DataTransferObject AppDto extends @AuditableDto  {
+			String code required;	
+			String title required;
+       		String description nullable;
+       		
+       		Long optimisticLockingVersion;
+       	}
+       	
+       	
+       	"Dto for UserDto"
+       	DataTransferObject UserDto extends @AuditableDto  {
+			String username required;	
+			String name required;
+       		String surname required;
+       		String mail required;
+       		
+       		Long optimisticLockingVersion;
+       	}
+       	
+       	
+       	"Dto for AccessDto"
+       	DataTransferObject AccessDto extends @AuditableDto  {
+			- @RoleDto role required;	
+			- @AppDto app required;
+       		- @UserDto user required;
+       		- @ExternalItemBtDto operation nullable;
+       		JAVADATE removalDate nullable;
+       		
+       		Long optimisticLockingVersion;
+       	}
+       	
+    }
+}

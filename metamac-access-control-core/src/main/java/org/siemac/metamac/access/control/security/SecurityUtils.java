@@ -1,10 +1,10 @@
 package org.siemac.metamac.access.control.security;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
+import org.siemac.metamac.access.control.core.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.access.control.security.shared.SharedSecurityUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.domain.access.control.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
 import org.siemac.metamac.sso.client.SsoClientConstants;
 

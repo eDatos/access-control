@@ -1,4 +1,4 @@
-package org.siemac.metamac.access.control.base.serviceapi;
+package org.siemac.metamac.access.control.core.serviceapi;
 
 import static org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder.criteriaFor;
 import static org.junit.Assert.assertEquals;
@@ -11,12 +11,12 @@ import java.util.List;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.siemac.metamac.access.control.base.domain.Access;
-import org.siemac.metamac.access.control.base.domain.App;
-import org.siemac.metamac.access.control.base.domain.Role;
-import org.siemac.metamac.access.control.base.domain.User;
-import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDoAsserts;
-import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDoMocks;
+import org.siemac.metamac.access.control.core.domain.Access;
+import org.siemac.metamac.access.control.core.domain.App;
+import org.siemac.metamac.access.control.core.domain.Role;
+import org.siemac.metamac.access.control.core.domain.User;
+import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDoAsserts;
+import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDoMocks;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -93,7 +93,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
     @Test
     public void testFindRoleByCondition() throws Exception {
         String code = "Admin";
-        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.base.domain.RoleProperties.code()).ignoreCaseLike("%" + code + "%").build();
+        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.core.domain.RoleProperties.code()).ignoreCaseLike("%" + code + "%").build();
 
         List<Role> roles = accessControlBaseService.findRoleByCondition(getServiceContextAdministrador(), condition);
 
@@ -153,7 +153,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
     @Test
     public void testFindAppByCondition() throws Exception {
         String code = "Gpe";
-        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.base.domain.AppProperties.code()).ignoreCaseLike("%" + code + "%").build();
+        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.core.domain.AppProperties.code()).ignoreCaseLike("%" + code + "%").build();
 
         List<App> apps = accessControlBaseService.findAppByCondition(getServiceContextAdministrador(), condition);
 
@@ -214,7 +214,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
     @Test
     public void testFindUserByCondition() throws Exception {
         String username = "ARTE";
-        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.base.domain.UserProperties.username()).ignoreCaseLike("%" + username + "%")
+        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.core.domain.UserProperties.username()).ignoreCaseLike("%" + username + "%")
                 .build();
 
         List<User> users = accessControlBaseService.findUserByCondition(getServiceContextAdministrador(), condition);
@@ -306,7 +306,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
     @Test
     public void testFindAccessByCondition() throws Exception {
         String username = "ARTE";
-        List<ConditionalCriteria> condition = criteriaFor(Access.class).withProperty(org.siemac.metamac.access.control.base.domain.AccessProperties.user().username())
+        List<ConditionalCriteria> condition = criteriaFor(Access.class).withProperty(org.siemac.metamac.access.control.core.domain.AccessProperties.user().username())
                 .ignoreCaseLike("%" + username + "%").build();
 
         List<Access> access = accessControlBaseService.findAccessByCondition(getServiceContextAdministrador(), condition);
@@ -317,7 +317,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
     @Test
     public void testFindAccessByConditionWithoutResults() throws Exception {
         String username = "prueba";
-        List<ConditionalCriteria> condition = criteriaFor(Access.class).withProperty(org.siemac.metamac.access.control.base.domain.AccessProperties.user().username())
+        List<ConditionalCriteria> condition = criteriaFor(Access.class).withProperty(org.siemac.metamac.access.control.core.domain.AccessProperties.user().username())
                 .ignoreCaseLike("%" + username + "%").build();
 
         List<Access> access = accessControlBaseService.findAccessByCondition(getServiceContextAdministrador(), condition);

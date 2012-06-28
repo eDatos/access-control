@@ -1,4 +1,4 @@
-package org.siemac.metamac.access.control.base.domain;
+package org.siemac.metamac.access.control.core.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

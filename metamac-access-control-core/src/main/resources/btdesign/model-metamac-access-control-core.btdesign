@@ -1,6 +1,6 @@
-import "classpath:/btdesign/metamac-access-control-core-base.btdesign"
+import "classpath:/btdesign/metamac-access-control-core-domain.btdesign"
 
 Application AccessControl {
-    basePackage=org.siemac.metamac
+    basePackage=org.siemac.metamac.access.control
 
 }

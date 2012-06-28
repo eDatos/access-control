@@ -1,18 +1,18 @@
-package org.siemac.metamac.access.control.base.serviceapi;
+package org.siemac.metamac.access.control.core.serviceapi;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.siemac.metamac.access.control.base.serviceapi.utils.AccessControlDtoMocks;
+import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.access.control.core.dto.AppDto;
+import org.siemac.metamac.access.control.core.dto.RoleDto;
+import org.siemac.metamac.access.control.core.dto.UserDto;
+import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoMocks;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.domain.access.control.dto.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.AppDto;
-import org.siemac.metamac.domain.access.control.dto.RoleDto;
-import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;

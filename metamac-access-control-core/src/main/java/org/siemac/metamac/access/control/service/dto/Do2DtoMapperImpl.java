@@ -3,16 +3,16 @@ package org.siemac.metamac.access.control.service.dto;
 import java.util.Date;
 
 import org.joda.time.DateTime;
-import org.siemac.metamac.access.control.base.domain.Access;
-import org.siemac.metamac.access.control.base.domain.App;
-import org.siemac.metamac.access.control.base.domain.Role;
-import org.siemac.metamac.access.control.base.domain.User;
+import org.siemac.metamac.access.control.core.domain.Access;
+import org.siemac.metamac.access.control.core.domain.App;
+import org.siemac.metamac.access.control.core.domain.Role;
+import org.siemac.metamac.access.control.core.domain.User;
+import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.access.control.core.dto.AppDto;
+import org.siemac.metamac.access.control.core.dto.RoleDto;
+import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
 import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
-import org.siemac.metamac.domain.access.control.dto.AccessDto;
-import org.siemac.metamac.domain.access.control.dto.AppDto;
-import org.siemac.metamac.domain.access.control.dto.RoleDto;
-import org.siemac.metamac.domain.access.control.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 @Component
