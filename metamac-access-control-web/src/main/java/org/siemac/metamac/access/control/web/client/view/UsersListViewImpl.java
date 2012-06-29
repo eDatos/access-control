@@ -509,7 +509,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         appItem = new AppDragAndDropItem(ACCESS_APP, getConstants().app(), ACCESS_APP);
         appItem.setRequired(true);
         appItem.setStartRow(true);
-        operationItem = new SearchExternalPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), ACCESS_OPERATION, OPERATION_LIST_MAX_RESULTS, new PaginatedAction() {
+        operationItem = new SearchExternalPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), ACCESS_OPERATION, OPERATION_LIST_MAX_RESULTS, 300, new PaginatedAction() {
 
             @Override
             public void retrieveResultSet(int firstResult, int maxResults) {
