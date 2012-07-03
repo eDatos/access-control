@@ -82,4 +82,9 @@ public class AppDragAndDropItem extends DragAndDropItem {
         setSourceAppDtos(appDtos);
     }
 
+    @Override
+    public Boolean validate() {
+        return super.validate();
+    }
+
 }
