@@ -580,7 +580,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     @Override
     public void setOperations(List<ExternalItemBtDto> operations, int firstResult, int totalResults) {
         operationItem.setSourceExternalItems(operations);
-        operationItem.refreshSorucePaginationInfo(firstResult, operations.size(), totalResults);
+        operationItem.refreshSourcePaginationInfo(firstResult, operations.size(), totalResults);
     }
 
     private RoleDto getRoleDtoById(String id) {
