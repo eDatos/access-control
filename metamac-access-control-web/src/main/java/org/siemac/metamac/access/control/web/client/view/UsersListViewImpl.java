@@ -487,7 +487,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             accessMainFormLayout.focus();
             // Reset dragAndDrop items
             appItem.resetValues();
-            operationItem.resetValues();
+            operationItem.clearValue();
 
             // Load statistical operations
             uiHandlers.retrievePaginatedOperations(0, OPERATION_LIST_MAX_RESULTS, null);
