@@ -4,7 +4,7 @@ import org.siemac.metamac.access.control.core.domain.Access;
 import org.siemac.metamac.access.control.core.domain.App;
 import org.siemac.metamac.access.control.core.domain.Role;
 import org.siemac.metamac.access.control.core.domain.User;
-import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
+import org.siemac.metamac.core.common.ent.domain.ExternalItem;
 
 /**
  * Mocks
@@ -36,7 +36,7 @@ public class AccessControlDoMocks {
         return user;
     }
 
-    public static Access createAccess(App app, Role role, User user, ExternalItemBt operation) {
+    public static Access createAccess(App app, Role role, User user, ExternalItem operation) {
         Access access = new Access();
         access.setApp(app);
         access.setUser(user);

@@ -1,7 +1,5 @@
 import "classpath:/btdesign/metamac-access-control-core-dtos.btdesign"
 
-import "classpath:/btdesign/export/metamac-core-common-basictype.btdesign" 
-import "classpath:/btdesign/export/metamac-core-common-vo.btdesign" 
 import "classpath:/btdesign/export/metamac-core-common-entity.btdesign" 
  
 Application Base {
@@ -115,7 +113,7 @@ Application Base {
 			"USER"
 			- @User user not nullable cascade="none" databaseColumn="USER_FK" <-> access;
 			"OPERATION"
-       		- @ExternalItemBt operation nullable;
+       		- @ExternalItem operation cascade="all" databaseColumn="OPERATION_FK" nullable;
 			
 			"REMOVAL DATE"
 			DateTimeTZ removalDate nullable;
@@ -164,7 +162,7 @@ Application Base {
        		@AccessDto createAccess(@AccessDto accessDto) throws MetamacException;
        		removeAccess(Long accessId) throws MetamacException;
        		List<@AccessDto> findAllAccess throws MetamacException;
-       		List<@AccessDto> findAccessByCondition(String roleCode, String appCode, String username, String operationCodeId, Boolean removedAccess) throws MetamacException;
+       		List<@AccessDto> findAccessByCondition(String roleCode, String appCode, String username, String operationUrn, Boolean removedAccess) throws MetamacException;
        		@AccessDto findAccessById (Long id) throws MetamacException;
        	}
 		
@@ -208,7 +206,7 @@ Application Base {
 			deleteAccess(Long accessId) throws MetamacException;
 			List<@Access> findAllAccess throws MetamacException;
 			List<@Access> findAccessByCondition(List<ConditionalCriteria> condition) throws MetamacException;
-			List<@Access> findAccessByCondition(String roleCode, String appCode, String username, String operationCodeId, Boolean removedAccess) throws MetamacException;
+			List<@Access> findAccessByCondition(String roleCode, String appCode, String username, String operationUrn, Boolean removedAccess) throws MetamacException;
 	   }
     }
     

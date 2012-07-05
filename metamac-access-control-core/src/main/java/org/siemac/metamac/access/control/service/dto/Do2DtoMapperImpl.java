@@ -1,6 +1,8 @@
 package org.siemac.metamac.access.control.service.dto;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.siemac.metamac.access.control.core.domain.Access;
@@ -11,8 +13,12 @@ import org.siemac.metamac.access.control.core.dto.AccessDto;
 import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
-import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
-import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.core.common.dto.InternationalStringDto;
+import org.siemac.metamac.core.common.dto.LocalisedStringDto;
+import org.siemac.metamac.core.common.ent.domain.ExternalItem;
+import org.siemac.metamac.core.common.ent.domain.InternationalString;
+import org.siemac.metamac.core.common.ent.domain.LocalisedString;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -103,19 +109,19 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setRole(roleDoToDto(source.getRole()));
         target.setApp(appDoToDto(source.getApp()));
         target.setUser(userDoToDto(source.getUser()));
-        target.setOperation(externalItemBtToDto(source.getOperation()));
+        target.setOperation(externalItemToDto(source.getOperation()));
 
         target.setOptimisticLockingVersion(source.getVersion());
         
         return target;
     }
 
-    private ExternalItemBtDto externalItemBtToDto(ExternalItemBt source) {
+    private ExternalItemDto externalItemToDto(ExternalItem source) {
         if (source == null) {
             return null;
         }
 
-        ExternalItemBtDto target = new ExternalItemBtDto(source.getUriInt(), source.getCodeId(), source.getType());
+        ExternalItemDto target = new ExternalItemDto(source.getUri(), source.getUrn(), source.getType(), internationalStringToDto(source.getTitle()), source.getManagementAppUrl());
 
         return target;
     }
@@ -125,5 +131,25 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
             return null;
         }
         return source.toDate();
+    }
+    
+    private InternationalStringDto internationalStringToDto(InternationalString source) {
+        if (source == null) {
+            return null;
+        }
+        InternationalStringDto target = new InternationalStringDto();
+        target.getTexts().addAll(localisedStringDoToDto(source.getTexts()));
+        return target;
+    }
+
+    private Set<LocalisedStringDto> localisedStringDoToDto(Set<LocalisedString> sources) {
+        Set<LocalisedStringDto> targets = new HashSet<LocalisedStringDto>();
+        for (LocalisedString source : sources) {
+            LocalisedStringDto target = new LocalisedStringDto();
+            target.setLabel(source.getLabel());
+            target.setLocale(source.getLocale());
+            targets.add(target);
+        }
+        return targets;
     }
 }

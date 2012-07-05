@@ -17,7 +17,7 @@ import org.siemac.metamac.access.control.core.domain.Role;
 import org.siemac.metamac.access.control.core.domain.User;
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDoAsserts;
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDoMocks;
-import org.siemac.metamac.core.common.bt.domain.ExternalItemBt;
+import org.siemac.metamac.core.common.ent.domain.ExternalItem;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -238,7 +238,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_1);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_1);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
-        ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = new ExternalItem("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation));
         assertNotNull(access);
@@ -254,7 +254,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_2);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_2);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_2);
-        ExternalItemBt operation = new ExternalItemBt("urn:app:gopestat:StatisticalOperation=MNP2", "MNP2", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = new ExternalItem("urn:app:gopestat:StatisticalOperation=MNP2", "MNP2", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         access.setApp(app);
         access.setRole(role);

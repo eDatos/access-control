@@ -45,7 +45,7 @@ public class AccessControlDtoAsserts {
         assertEqualsRoleDto(expected.getRole(), actual.getRole());
         assertEqualsAppDto(expected.getApp(), actual.getApp());
         assertEqualsUserDto(expected.getUser(), actual.getUser());
-        MetamacAsserts.assertEqualsExternalItemBtDto(expected.getOperation(), actual.getOperation());
+        MetamacAsserts.assertEqualsExternalItemDto(expected.getOperation(), actual.getOperation());
     }
 
     public static void assertEqualsCreatedRoleDto(RoleDto expected, RoleDto actual) {
@@ -71,7 +71,7 @@ public class AccessControlDtoAsserts {
         assertEqualsRoleDto(expected.getRole(), actual.getRole());
         assertEqualsAppDto(expected.getApp(), actual.getApp());
         assertEqualsUserDto(expected.getUser(), actual.getUser());
-        MetamacAsserts.assertEqualsExternalItemBtDto(expected.getOperation(), actual.getOperation());
+        MetamacAsserts.assertEqualsExternalItemDto(expected.getOperation(), actual.getOperation());
     }
 
 }

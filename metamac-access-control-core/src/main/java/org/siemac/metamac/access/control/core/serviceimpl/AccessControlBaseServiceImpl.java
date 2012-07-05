@@ -295,7 +295,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         return accessRepository.findByCondition(conditions);
     }
 
-    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationCodeId, Boolean removalAccess) throws MetamacException {
+    public List<Access> findAccessByCondition(ServiceContext ctx, String roleCode, String appCode, String username, String operationUrn, Boolean removalAccess) throws MetamacException {
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
         // Role condition
@@ -314,8 +314,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         }
 
         // Operation condition
-        if (!StringUtils.isEmpty(operationCodeId)) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().codeId(), operationCodeId));
+        if (!StringUtils.isEmpty(operationUrn)) {
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().urn(), operationUrn));
         }
 
         // Removal date conditions
@@ -421,9 +421,9 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     private void validateAccessUnique(ServiceContext ctx, Access entity, Object object) throws MetamacException {
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
-        String operationCodeId = null;
+        String operationUrn = null;
         if (entity.getOperation() != null) {
-            operationCodeId = entity.getOperation().getCodeId();
+            operationUrn = entity.getOperation().getUrn();
         }
 
         // Role condition
@@ -436,10 +436,10 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.user().username(), entity.getUser().getUsername()));
 
         // Operation condition
-        if (operationCodeId != null) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().codeId(), operationCodeId));
+        if (operationUrn != null) {
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().urn(), operationUrn));
         } else {
-            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().codeId()));
+            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().urn()));
         }
 
         // Removal date
@@ -451,18 +451,18 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
             if (entity.getId() == null) {
                 if (access.size() == 1) {
                     throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(),
-                            operationCodeId);
+                            operationUrn);
                 } else if (access.size() > 1) {
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: "
-                            + entity.getUser().getUsername() + " Operation: " + operationCodeId);
+                            + entity.getUser().getUsername() + " Operation: " + operationUrn);
                 }
             } else {
                 if (access.size() == 2) {
                     throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(),
-                            operationCodeId);
+                            operationUrn);
                 } else if (access.size() > 2) {
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: "
-                            + entity.getUser().getUsername() + " Operation: " + operationCodeId);
+                            + entity.getUser().getUsername() + " Operation: " + operationUrn);
                 }
             }
         }

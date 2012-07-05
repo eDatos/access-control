@@ -31,5 +31,6 @@ public class ServiceExceptionParameters {
     public static final String ACCESS_USER   = "access.user";
     public static final String ACCESS_ROLE   = "access.role";
     public static final String ACCESS_APP    = "access.app";
+    public static final String ACCESS_OPERATION    = "access.operation";
 
 }

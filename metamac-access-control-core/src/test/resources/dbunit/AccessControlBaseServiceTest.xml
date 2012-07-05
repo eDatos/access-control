@@ -100,9 +100,7 @@
 	<!-- ************************************************************************************ -->
 	
 	<TB_ACCESS ID="1"
-				OPERATION_CODE_ID="OPERATION-TODO-01"
-				OPERATION_TYPE="STATISTICAL_OPERATION"
-				OPERATION_URI_INT="OPERATION:TODO:01"
+				OPERATION_FK="1"
 				APP_FK="1"
 				ROLE_FK="1"
 				USER_FK="1"
@@ -118,9 +116,7 @@
 				LAST_UPDATED_TZ="Europe/London" />
 	
 	<TB_ACCESS ID="2"
-				OPERATION_CODE_ID="[null]"
-				OPERATION_TYPE="[null]"
-				OPERATION_URI_INT="[null]"
+                OPERATION_FK="[null]"
 				APP_FK="1"
 				ROLE_FK="1"
 				USER_FK="1"
@@ -136,9 +132,7 @@
 				LAST_UPDATED_TZ="Europe/London" />
 	
 	<TB_ACCESS ID="3"
-				OPERATION_CODE_ID="OPERATION-TODO-01"
-				OPERATION_TYPE="STATISTICAL_OPERATION"
-				OPERATION_URI_INT="OPERATION:TODO:01"
+                OPERATION_FK="2"
 				APP_FK="1"
 				ROLE_FK="1"
 				USER_FK="1"
@@ -152,5 +146,27 @@
 				LAST_UPDATED_BY="user2" 
 				LAST_UPDATED="2011-08-24 01:02:03"
 				LAST_UPDATED_TZ="Europe/London" />
-	
+     
+     
+    <!-- ************************************************************************************ -->
+    <!--                              EXTERNAL_ITEMS                                          -->
+    <!-- ************************************************************************************ -->
+                
+     <TB_EXTERNAL_ITEMS ID="1"
+                URI="OPERATION:TODO:01"
+                URN="OPERATION-TODO-01"
+                MANAGEMENT_APP_URL="[null]"
+                VERSION="1"
+                TITLE_FK="[null]"
+                TYPE="STATISTICAL_OPERATION"
+                />
+     
+     <TB_EXTERNAL_ITEMS ID="2"
+                URI="OPERATION:TODO:01"
+                URN="OPERATION-TODO-01"
+                MANAGEMENT_APP_URL="[null]"
+                VERSION="1"
+                TITLE_FK="[null]"
+                TYPE="STATISTICAL_OPERATION"
+                />
 </dataset>

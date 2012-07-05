@@ -10,7 +10,7 @@ import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoMocks;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
-import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,7 +204,7 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
         try {

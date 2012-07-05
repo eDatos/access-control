@@ -20,7 +20,7 @@ import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoA
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoMocks;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
-import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -1007,7 +1007,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         // Create
         AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -1175,7 +1175,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemBtDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         try {
             accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -1335,7 +1335,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDto, accessDto.getRole());
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, accessDto.getApp());
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, accessDto.getUser());
-        MetamacAsserts.assertEqualsExternalItemBtDto(new ExternalItemBtDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION), accessDto.getOperation());
+        MetamacAsserts.assertEqualsExternalItemDto(new ExternalItemDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION), accessDto.getOperation());
 
         assertEquals("A-1", accessDto.getUuid());
         assertEquals(Long.valueOf(1), accessDto.getVersion());

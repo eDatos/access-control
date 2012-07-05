@@ -65,6 +65,9 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
     protected List<String> getTablesToRemoveContent() {
         List<String> tables = new ArrayList<String>();
         tables.add("TB_ACCESS");
+        tables.add("TB_LOCALISED_STRINGS");
+        tables.add("TB_EXTERNAL_ITEMS");
+        tables.add("TB_INTERNATIONAL_STRINGS");
         tables.add("TB_APPS");
         tables.add("TB_ROLES");
         tables.add("TB_USERS");
@@ -78,6 +81,9 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
         sequences.add("SEQ_APPS");
         sequences.add("SEQ_USERS");
         sequences.add("SEQ_ACCESS");
+        sequences.add("SEQ_EXTERNAL_ITEMS");
+        sequences.add("SEQ_L10NSTRS");
+        sequences.add("SEQ_I18NSTRS");
         return sequences;
     }
 

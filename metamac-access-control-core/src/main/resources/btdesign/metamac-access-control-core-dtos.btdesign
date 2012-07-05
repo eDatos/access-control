@@ -42,7 +42,7 @@ Application AccessControlDto {
 			- @RoleDto role required;	
 			- @AppDto app required;
        		- @UserDto user required;
-       		- @ExternalItemBtDto operation nullable;
+       		- @ExternalItemDto operation nullable;
        		JAVADATE removalDate nullable;
        		
        		Long optimisticLockingVersion;
