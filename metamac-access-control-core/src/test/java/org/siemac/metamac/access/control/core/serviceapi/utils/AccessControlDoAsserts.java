@@ -50,7 +50,14 @@ public class AccessControlDoAsserts {
         assertEqualsExternalItem(expected.getOperation(), actual.getOperation());
     }
 
-    public static void assertEqualsExternalItem(ExternalItem expected, ExternalItem actual) {
+   public static void assertEqualsExternalItem(ExternalItem expected, ExternalItem actual) {
+        
+        if (actual == null && expected == null) {
+            return;
+        } else if ((actual != null && expected == null) || (actual == null && expected != null)) {
+            fail();
+        }
+        
         assertEquals(expected.getUri(), actual.getUri());
         assertEquals(expected.getUrn(), actual.getUrn());
         assertEquals(expected.getType(), actual.getType());
