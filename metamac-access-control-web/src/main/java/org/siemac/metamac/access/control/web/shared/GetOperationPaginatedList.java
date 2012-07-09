@@ -2,7 +2,7 @@ package org.siemac.metamac.access.control.web.shared;
 
 import java.util.List;
 
-import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
 
 import com.gwtplatform.dispatch.annotation.GenDispatch;
 import com.gwtplatform.dispatch.annotation.In;
@@ -12,21 +12,21 @@ import com.gwtplatform.dispatch.annotation.Out;
 public class GetOperationPaginatedList {
 
     @In(1)
-    int                     firstResult;
+    int                   firstResult;
 
     @In(2)
-    int                     maxResults;
+    int                   maxResults;
 
     @In(3)
-    String                  operationCode;
+    String                operationCode;
 
     @Out(1)
-    List<ExternalItemBtDto> operations;
+    List<ExternalItemDto> operations;
 
     @Out(2)
-    int                     firstResultOut;
+    int                   firstResultOut;
 
     @Out(3)
-    int                     totalResults;
+    int                   totalResults;
 
 }

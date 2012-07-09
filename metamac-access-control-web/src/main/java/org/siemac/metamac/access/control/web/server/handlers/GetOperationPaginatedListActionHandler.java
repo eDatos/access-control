@@ -6,7 +6,7 @@ import java.util.List;
 import org.siemac.metamac.access.control.service.ws.StatisticalOperationsInternalWebServiceFacade;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListResult;
-import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.statistical.operations.internal.ws.v1_0.domain.FindOperationsResult;
@@ -34,17 +34,17 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
         try {
             int firstResult = 0;
             int totalResults = 0;
-            List<ExternalItemBtDto> externalItemBtDtos = new ArrayList<ExternalItemBtDto>();
+            List<ExternalItemDto> ExternalItemDtos = new ArrayList<ExternalItemDto>();
             FindOperationsResult findOperationsResult = statisticalOperationsInternalWebServiceFacade.findOperations(action.getFirstResult(), action.getMaxResults(), action.getOperationCode());
             OperationBaseList operationBaseList = findOperationsResult.getOperations();
             if (operationBaseList != null && operationBaseList.getOperation() != null) {
                 firstResult = findOperationsResult.getFirstResult().intValue();
                 totalResults = findOperationsResult.getTotalResults().intValue();
                 for (OperationBase operationBase : operationBaseList.getOperation()) {
-                    externalItemBtDtos.add(new ExternalItemBtDto("http://statisticalOperations/" + operationBase.getCode(), operationBase.getCode(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+                    ExternalItemDtos.add(new ExternalItemDto("http://statisticalOperations/" + operationBase.getCode(), operationBase.getCode(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
                 }
             }
-            return new GetOperationPaginatedListResult(externalItemBtDtos, firstResult, totalResults);
+            return new GetOperationPaginatedListResult(ExternalItemDtos, firstResult, totalResults);
         } catch (MetamacException e) {
             throw WebExceptionUtils.createMetamacWebException(e);
         }

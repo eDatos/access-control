@@ -20,7 +20,7 @@ import org.siemac.metamac.access.control.web.client.utils.ClientSecurityUtils;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
-import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
@@ -538,7 +538,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private List<AccessDto> getAccessList() {
         List<AccessDto> accessList = new ArrayList<AccessDto>();
         List<AppDto> applications = appItem.getSelectedAppDtos();
-        List<ExternalItemBtDto> operations = operationItem.getSelectedExternalItems();
+        List<ExternalItemDto> operations = operationItem.getSelectedExternalItems();
         if (operations.isEmpty()) {
             for (AppDto app : applications) {
                 AccessDto accessDto = new AccessDto();
@@ -549,7 +549,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             }
         } else {
             for (AppDto app : applications) {
-                for (ExternalItemBtDto op : operations) {
+                for (ExternalItemDto op : operations) {
                     AccessDto accessDto = new AccessDto();
                     accessDto.setUser(userDto);
                     accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
@@ -578,7 +578,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     }
 
     @Override
-    public void setOperations(List<ExternalItemBtDto> operations, int firstResult, int totalResults) {
+    public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
         operationItem.setSourceExternalItems(operations);
         operationItem.refreshSourcePaginationInfo(firstResult, operations.size(), totalResults);
     }

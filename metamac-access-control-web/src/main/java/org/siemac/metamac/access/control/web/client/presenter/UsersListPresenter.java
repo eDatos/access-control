@@ -32,7 +32,7 @@ import org.siemac.metamac.access.control.web.shared.SaveAccessListResult;
 import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserResult;
-import org.siemac.metamac.core.common.dto.ExternalItemBtDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
@@ -78,7 +78,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
         void setRoleList(List<RoleDto> roles);
         void setApplicationList(List<AppDto> apps);
-        void setOperations(List<ExternalItemBtDto> operations, int firstResult, int totalResults);
+        void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults);
     }
 
     @Inject
