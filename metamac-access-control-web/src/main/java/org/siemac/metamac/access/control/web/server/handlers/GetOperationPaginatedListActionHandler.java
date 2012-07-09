@@ -7,6 +7,8 @@ import org.siemac.metamac.access.control.service.ws.StatisticalOperationsInterna
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListResult;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.core.common.dto.InternationalStringDto;
+import org.siemac.metamac.core.common.dto.LocalisedStringDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.statistical.operations.internal.ws.v1_0.domain.FindOperationsResult;
@@ -41,7 +43,13 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
                 firstResult = findOperationsResult.getFirstResult().intValue();
                 totalResults = findOperationsResult.getTotalResults().intValue();
                 for (OperationBase operationBase : operationBaseList.getOperation()) {
-                    ExternalItemDtos.add(new ExternalItemDto("http://statisticalOperations/" + operationBase.getCode(), operationBase.getCode(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+                    InternationalStringDto internationalStringDto = new InternationalStringDto();
+                    LocalisedStringDto localisedStringDto = new LocalisedStringDto();
+                    localisedStringDto.setLocale("es");
+                    localisedStringDto.setLabel("TODO: title");
+                    internationalStringDto.getTexts().add(localisedStringDto);
+                    ExternalItemDto externalItemDto = new ExternalItemDto("TODO: URI", "TODO: URN", TypeExternalArtefactsEnum.STATISTICAL_OPERATION, internationalStringDto, "");
+                    ExternalItemDtos.add(externalItemDto);
                 }
             }
             return new GetOperationPaginatedListResult(ExternalItemDtos, firstResult, totalResults);
