@@ -23,11 +23,6 @@
             <version>${metamac-sso.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.siemac.metamac.metamac-statistical-operations</groupId>
-            <artifactId>metamac-statistical-operations-ws-int-api</artifactId>
-            <version>${metamac-statistical-operations.version}</version>
-        </dependency>
-        <dependency>
             <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-core-common</artifactId>
             <version>${metamac-core-common.version}</version>

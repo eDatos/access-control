@@ -3,19 +3,15 @@ package org.siemac.metamac.access.control.web.server.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.siemac.metamac.access.control.service.ws.StatisticalOperationsInternalWebServiceFacade;
+import org.siemac.metamac.access.control.web.server.rest.StatisticalOperationsRestInternalFacade;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListResult;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
-import org.siemac.metamac.core.common.dto.InternationalStringDto;
-import org.siemac.metamac.core.common.dto.LocalisedStringDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
-import org.siemac.metamac.core.common.exception.MetamacException;
-import org.siemac.metamac.statistical.operations.internal.ws.v1_0.domain.FindOperationsResult;
-import org.siemac.metamac.statistical.operations.internal.ws.v1_0.domain.OperationBase;
-import org.siemac.metamac.statistical.operations.internal.ws.v1_0.domain.OperationBaseList;
+import org.siemac.metamac.rest.common.v1_0.domain.Resource;
+import org.siemac.metamac.rest.common.v1_0.domain.ResourcesPagedResult;
 import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
-import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
+import org.siemac.metamac.web.common.server.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +21,7 @@ import com.gwtplatform.dispatch.shared.ActionException;
 public class GetOperationPaginatedListActionHandler extends SecurityActionHandler<GetOperationPaginatedListAction, GetOperationPaginatedListResult> {
 
     @Autowired
-    private StatisticalOperationsInternalWebServiceFacade statisticalOperationsInternalWebServiceFacade;
+    private StatisticalOperationsRestInternalFacade statisticalOperationsRestInternalFacade;
 
     public GetOperationPaginatedListActionHandler() {
         super(GetOperationPaginatedListAction.class);
@@ -33,29 +29,22 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
 
     @Override
     public GetOperationPaginatedListResult executeSecurityAction(GetOperationPaginatedListAction action) throws ActionException {
-        try {
-            int firstResult = 0;
-            int totalResults = 0;
-            List<ExternalItemDto> ExternalItemDtos = new ArrayList<ExternalItemDto>();
-            FindOperationsResult findOperationsResult = statisticalOperationsInternalWebServiceFacade.findOperations(action.getFirstResult(), action.getMaxResults(), action.getOperationCode());
-            OperationBaseList operationBaseList = findOperationsResult.getOperations();
-            if (operationBaseList != null && operationBaseList.getOperation() != null) {
-                firstResult = findOperationsResult.getFirstResult().intValue();
-                totalResults = findOperationsResult.getTotalResults().intValue();
-                for (OperationBase operationBase : operationBaseList.getOperation()) {
-                    InternationalStringDto internationalStringDto = new InternationalStringDto();
-                    LocalisedStringDto localisedStringDto = new LocalisedStringDto();
-                    localisedStringDto.setLocale("es");
-                    localisedStringDto.setLabel("TODO: title");
-                    internationalStringDto.getTexts().add(localisedStringDto);
-                    ExternalItemDto externalItemDto = new ExternalItemDto("TODO: URI", "TODO: URN", TypeExternalArtefactsEnum.STATISTICAL_OPERATION, internationalStringDto, "");
-                    ExternalItemDtos.add(externalItemDto);
-                }
+        int firstResult = 0;
+        int totalResults = 0;
+        List<ExternalItemDto> externalItemDtos = new ArrayList<ExternalItemDto>();
+        ResourcesPagedResult result = statisticalOperationsRestInternalFacade.findOperations(action.getFirstResult(), action.getMaxResults(), action.getOperation());
+        if (result != null && result.getItems() != null) {
+            firstResult = result.getOffset().intValue();
+            totalResults = result.getTotal().intValue();
+            for (Resource resource : result.getItems()) {
+                // TODO Add URN to Operation to fill External Item URN
+                ExternalItemDto externalItemDto = new ExternalItemDto(resource.getSelfLink(), "TODO : URN", TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
+                        DtoUtils.getInternationalStringDtoFromInternationalString(resource.getTitle()));
+                externalItemDtos.add(externalItemDto);
+
             }
-            return new GetOperationPaginatedListResult(ExternalItemDtos, firstResult, totalResults);
-        } catch (MetamacException e) {
-            throw WebExceptionUtils.createMetamacWebException(e);
         }
+        return new GetOperationPaginatedListResult(externalItemDtos, firstResult, totalResults);
     }
 
 }
