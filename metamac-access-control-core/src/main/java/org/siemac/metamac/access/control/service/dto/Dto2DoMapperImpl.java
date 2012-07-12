@@ -34,13 +34,13 @@ import org.springframework.stereotype.Component;
 public class Dto2DoMapperImpl implements Dto2DoMapper {
 
     @Autowired
-    private AccessControlBaseService accessControlBaseService;
-    
+    private AccessControlBaseService      accessControlBaseService;
+
     @Autowired
     private InternationalStringRepository internationalStringRepository;
-    
+
     @Autowired
-    private ExternalItemRepository externalItemRepository;
+    private ExternalItemRepository        externalItemRepository;
 
     @Override
     public Role roleDtoToDo(ServiceContext ctx, RoleDto source) throws MetamacException {
@@ -141,7 +141,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         target.setCode(source.getCode());
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
-        
+
         // Optimistic locking: Update "update date" attribute to force update of the root entity in order to increase attribute "version"
         target.setUpdateDate(new DateTime());
 
@@ -158,7 +158,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         target.setName(source.getName());
         target.setSurname(source.getSurname());
         target.setMail(source.getMail());
-        
+
         // Optimistic locking: Update "update date" attribute to force update of the root entity in order to increase attribute "version"
         target.setUpdateDate(new DateTime());
 
@@ -175,7 +175,7 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
         target.setUser(userDtoToDo(ctx, source.getUser()));
 
         target.setOperation(externalItemDtoToDo(source.getOperation(), target.getOperation(), ServiceExceptionParameters.ACCESS_OPERATION));
-        
+
         // Optimistic locking: Update "update date" attribute to force update of the root entity in order to increase attribute "version"
         target.setUpdateDate(new DateTime());
 
@@ -190,9 +190,10 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
             }
             return null;
         }
-        
+
         if (target == null) {
-            target = new ExternalItem(source.getUri(), source.getUrn(), source.getType(), internationalStringToDo(source.getTitle(), null, metadataName), source.getManagementAppUrl());
+            target = new ExternalItem(source.getCode(), source.getUri(), source.getUrn(), source.getType(), internationalStringToDo(source.getTitle(), null, metadataName),
+                    source.getManagementAppUrl());
         } else {
             target.setUri(source.getUri());
             target.setUrn(source.getUrn());
@@ -200,11 +201,11 @@ public class Dto2DoMapperImpl implements Dto2DoMapper {
             target.setManagementAppUrl(source.getManagementAppUrl());
             target.setTitle(internationalStringToDo(source.getTitle(), target.getTitle(), metadataName));
         }
-        
+
         return target;
-         
+
     }
-    
+
     private InternationalString internationalStringToDo(InternationalStringDto source, InternationalString target, String metadataName) throws MetamacException {
         if (source == null) {
             if (target != null) {

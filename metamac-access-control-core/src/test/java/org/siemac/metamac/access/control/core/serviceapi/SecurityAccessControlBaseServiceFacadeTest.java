@@ -204,7 +204,7 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("TODO-02", "OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
         try {
@@ -212,7 +212,6 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         } catch (MetamacException e) {
             assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
         }
-        
 
     }
 
@@ -242,7 +241,7 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         String appCode = "gOPESTAT";
         String username = "arte";
         String operationCodeId = "OPERATION-TODO-01";
-        
+
         accessControlBaseServiceFacade.findAccessByCondition(getServiceContextAdministrador(), roleCode, appCode, username, operationCodeId, true);
         accessControlBaseServiceFacade.findAccessByCondition(getServiceContextTecnicoPlanificacion(), roleCode, appCode, username, operationCodeId, true);
 

@@ -34,13 +34,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/access-control/applicationContext-test.xml"})
-@TransactionConfiguration(transactionManager="txManager", defaultRollback=true)
+@TransactionConfiguration(transactionManager = "txManager", defaultRollback = true)
 @Transactional
 public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest implements AccessControlBaseServiceFacadeTestBase {
 
     @Autowired
     protected AccessControlBaseServiceFacade accessControlBaseServiceFacade;
-
 
     /**************************************************************************
      * ROLES
@@ -304,26 +303,26 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals("TEC_PLANI", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
-    
+
     @Test
     public void testUpdateRoleOptimisticLockingError() throws Exception {
         Long id = ROLE_1;
-        
+
         // Retrieve role - session 1
         RoleDto roleDtoSession1 = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
         assertEquals(Long.valueOf(1), roleDtoSession1.getOptimisticLockingVersion());
         roleDtoSession1.setTitle("newTitle");
-        
+
         // Retrieve role - session 2
         RoleDto roleDtoSession2 = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
         assertEquals(Long.valueOf(1), roleDtoSession1.getOptimisticLockingVersion());
         roleDtoSession2.setTitle("newTitle2");
-        
+
         // Update role - session 1
         RoleDto roleDtoSession1AfterUpdate = accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDtoSession1);
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDtoSession1, roleDtoSession1AfterUpdate);
         assertEquals(Long.valueOf(2), roleDtoSession1AfterUpdate.getOptimisticLockingVersion());
-        
+
         // Update role - session 2
         try {
             accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDtoSession2);
@@ -333,7 +332,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals(ServiceExceptionType.OPTIMISTIC_LOCKING.getCode(), e.getExceptionItems().get(0).getCode());
             assertNull(e.getExceptionItems().get(0).getMessageParameters());
         }
-        
+
         // Update role - session 1
         roleDtoSession1AfterUpdate.setTitle("newTitle - secondUpdate");
         RoleDto roleDtoSession1AfterUpdate2 = accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDtoSession1AfterUpdate);
@@ -503,26 +502,26 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals("gPE", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
-    
+
     @Test
     public void testUpdateAppOptimisticLockingError() throws Exception {
         Long id = APP_1;
-        
+
         // Retrieve app - session 1
         AppDto appDtoSession1 = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
         assertEquals(Long.valueOf(1), appDtoSession1.getOptimisticLockingVersion());
         appDtoSession1.setTitle("newTitle");
-        
+
         // Retrieve app - session 2
         AppDto appDtoSession2 = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
         assertEquals(Long.valueOf(1), appDtoSession1.getOptimisticLockingVersion());
         appDtoSession2.setTitle("newTitle2");
-        
+
         // Update app - session 1
         AppDto appDtoSession1AfterUpdate = accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDtoSession1);
         AccessControlDtoAsserts.assertEqualsAppDto(appDtoSession1, appDtoSession1AfterUpdate);
         assertEquals(Long.valueOf(2), appDtoSession1AfterUpdate.getOptimisticLockingVersion());
-        
+
         // Update app - session 2
         try {
             accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDtoSession2);
@@ -532,7 +531,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals(ServiceExceptionType.OPTIMISTIC_LOCKING.getCode(), e.getExceptionItems().get(0).getCode());
             assertNull(e.getExceptionItems().get(0).getMessageParameters());
         }
-        
+
         // Update app - session 1
         appDtoSession1AfterUpdate.setTitle("newTitle - secondUpdate");
         AppDto appDtoSession1AfterUpdate2 = accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDtoSession1AfterUpdate);
@@ -948,26 +947,26 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals("prueba2", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
-    
+
     @Test
     public void testUpdateUserOptimisticLockingError() throws Exception {
         Long id = APP_1;
-        
+
         // Retrieve user - session 1
         UserDto userDtoSession1 = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
         assertEquals(Long.valueOf(1), userDtoSession1.getOptimisticLockingVersion());
         userDtoSession1.setName("newName");
-        
+
         // Retrieve user - session 2
         UserDto userDtoSession2 = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
         assertEquals(Long.valueOf(1), userDtoSession1.getOptimisticLockingVersion());
         userDtoSession2.setName("newName2");
-        
+
         // Update user - session 1
         UserDto userDtoSession1AfterUpdate = accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDtoSession1);
         AccessControlDtoAsserts.assertEqualsUserDto(userDtoSession1, userDtoSession1AfterUpdate);
         assertEquals(Long.valueOf(2), userDtoSession1AfterUpdate.getOptimisticLockingVersion());
-        
+
         // Update user - session 2
         try {
             accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDtoSession2);
@@ -977,7 +976,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals(ServiceExceptionType.OPTIMISTIC_LOCKING.getCode(), e.getExceptionItems().get(0).getCode());
             assertNull(e.getExceptionItems().get(0).getMessageParameters());
         }
-        
+
         // Update user - session 1
         userDtoSession1AfterUpdate.setName("newName - secondUpdate");
         UserDto userDtoSession1AfterUpdate2 = accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDtoSession1AfterUpdate);
@@ -1007,7 +1006,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("TODO-02", "OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         // Create
         AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -1175,7 +1174,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         try {
             accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -1335,7 +1334,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDto, accessDto.getRole());
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, accessDto.getApp());
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, accessDto.getUser());
-        MetamacAsserts.assertEqualsExternalItemDto(new ExternalItemDto("OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION), accessDto.getOperation());
+        MetamacAsserts.assertEqualsExternalItemDto(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION), accessDto.getOperation());
 
         assertEquals("A-1", accessDto.getUuid());
         assertEquals(Long.valueOf(1), accessDto.getVersion());

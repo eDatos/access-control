@@ -39,7 +39,6 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
     @Autowired
     protected AccessControlBaseService accessControlBaseService;
 
-
     /**************************************************************************
      * ROLES
      **************************************************************************/
@@ -238,7 +237,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_1);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_1);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
-        ExternalItem operation = new ExternalItem("urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = new ExternalItem("MNP", "urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation));
         assertNotNull(access);
@@ -254,7 +253,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_2);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_2);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_2);
-        ExternalItem operation = new ExternalItem("urn:app:gopestat:StatisticalOperation=MNP2", "MNP2", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = new ExternalItem("MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", "MNP2", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         access.setApp(app);
         access.setRole(role);
@@ -324,6 +323,5 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
 
         assertEquals(0, access.size());
     }
-
 
 }

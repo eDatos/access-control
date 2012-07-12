@@ -40,7 +40,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setCode(source.getCode());
         target.setTitle(source.getTitle());
         target.setDescription(source.getDescription());
-        
+
         target.setOptimisticLockingVersion(source.getVersion());
 
         return target;
@@ -64,7 +64,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setDescription(source.getDescription());
 
         target.setOptimisticLockingVersion(source.getVersion());
-        
+
         return target;
     }
 
@@ -87,7 +87,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setMail(source.getMail());
 
         target.setOptimisticLockingVersion(source.getVersion());
-        
+
         return target;
     }
 
@@ -112,7 +112,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         target.setOperation(externalItemToDto(source.getOperation()));
 
         target.setOptimisticLockingVersion(source.getVersion());
-        
+
         return target;
     }
 
@@ -121,7 +121,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
             return null;
         }
 
-        ExternalItemDto target = new ExternalItemDto(source.getUri(), source.getUrn(), source.getType(), internationalStringToDto(source.getTitle()), source.getManagementAppUrl());
+        ExternalItemDto target = new ExternalItemDto(source.getCode(), source.getUri(), source.getUrn(), source.getType(), internationalStringToDto(source.getTitle()), source.getManagementAppUrl());
 
         return target;
     }
@@ -132,7 +132,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         }
         return source.toDate();
     }
-    
+
     private InternationalStringDto internationalStringToDto(InternationalString source) {
         if (source == null) {
             return null;
