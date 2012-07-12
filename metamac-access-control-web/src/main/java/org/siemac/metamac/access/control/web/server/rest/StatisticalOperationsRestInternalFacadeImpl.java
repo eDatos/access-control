@@ -32,7 +32,7 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
             String query = null;
             if (!StringUtils.isBlank(operation)) {
                 // TODO Build query to find operations by URN and title
-                query = OperationCriteriaPropertyRestriction.TITLE + OperationType.ILIKE.name() + " \"" + operation + "\"";
+                query = OperationCriteriaPropertyRestriction.TITLE + " " + OperationType.ILIKE.name() + " \"" + operation + "\"";
             }
 
             // Pagination
