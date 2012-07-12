@@ -18,7 +18,7 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
     @Override
     public Operation retrieveOperation(String operationCode) throws MetamacWebException {
         try {
-            return restApiLocator.getStatisticalOperationsRestFacadeV10().retrieveOperationByCode(operationCode);
+            return restApiLocator.getStatisticalOperationsRestFacadeV10().retrieveOperationById(operationCode); // OPERATION ID in the rest API is what we call CODE
         } catch (Exception e) {
             // TODO throw exception
             return null;

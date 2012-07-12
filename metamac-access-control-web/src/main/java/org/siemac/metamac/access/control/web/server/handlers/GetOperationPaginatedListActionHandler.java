@@ -37,8 +37,7 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
             firstResult = result.getOffset().intValue();
             totalResults = result.getTotal().intValue();
             for (Resource resource : result.getItems()) {
-                // TODO Add URN to Operation to fill External Item URN
-                ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), resource.getSelfLink(), "TODO : URN", TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
+                ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), resource.getSelfLink(), resource.getUrn(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
                         DtoUtils.getInternationalStringDtoFromInternationalString(resource.getTitle()));
                 externalItemDtos.add(externalItemDto);
 
