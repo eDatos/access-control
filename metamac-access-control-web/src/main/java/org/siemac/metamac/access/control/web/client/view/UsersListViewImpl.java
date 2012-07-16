@@ -4,7 +4,6 @@ import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getC
 import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getMessages;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.siemac.metamac.access.control.core.dto.AccessDto;
@@ -17,6 +16,7 @@ import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
 import org.siemac.metamac.access.control.web.client.model.record.UserRecord;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
 import org.siemac.metamac.access.control.web.client.utils.ClientSecurityUtils;
+import org.siemac.metamac.access.control.web.client.utils.CommonUtils;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
@@ -565,11 +565,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     @Override
     public void setRoleList(List<RoleDto> roles) {
         this.roleDtos = roles;
-        LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-        for (RoleDto role : roles) {
-            map.put(role.getId().toString(), role.getTitle());
-        }
-        editionAccessForm.getItem(ACCESS_ROLE).setValueMap(map);
+        editionAccessForm.getItem(ACCESS_ROLE).setValueMap(CommonUtils.getRolesHashMap(roles));
     }
 
     @Override
