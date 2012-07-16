@@ -25,9 +25,12 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
     public Operation retrieveOperation(String operationCode) throws MetamacWebException {
         try {
             return restApiLocator.getStatisticalOperationsRestFacadeV10().retrieveOperationById(operationCode); // OPERATION ID in the rest API is what we call CODE
+        } catch (ServerWebApplicationException e) {
+            org.siemac.metamac.rest.common.v1_0.domain.Error error = e.toErrorObject(WebClient.client(restApiLocator.getStatisticalOperationsRestFacadeV10()),
+                    org.siemac.metamac.rest.common.v1_0.domain.Error.class);
+            throw WebExceptionUtils.createMetamacWebException(error);
         } catch (Exception e) {
-            // TODO throw exception
-            return null;
+            throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, AccessControlWeb.getCoreMessages().exception_common_unknown());
         }
     }
 
