@@ -1,7 +1,8 @@
 package org.siemac.metamac.access.control.web.server.rest;
 
 import org.apache.commons.lang.StringUtils;
-import org.siemac.metamac.core.common.criteria.MetamacCriteriaPropertyRestriction.OperationType;
+import org.siemac.metamac.rest.common.v1_0.domain.ComparisonOperator;
+import org.siemac.metamac.rest.common.v1_0.domain.LogicalOperator;
 import org.siemac.metamac.rest.common.v1_0.domain.ResourcesPagedResult;
 import org.siemac.metamac.statistical.operations.rest.internal.v1_0.domain.Operation;
 import org.siemac.metamac.statistical.operations.rest.internal.v1_0.domain.OperationCriteriaPropertyRestriction;
@@ -28,11 +29,10 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
     @Override
     public ResourcesPagedResult findOperations(int firstResult, int maxResult, String operation) throws MetamacWebException {
         try {
-
             String query = null;
             if (!StringUtils.isBlank(operation)) {
-                // TODO Build query to find operations by URN and title
-                query = OperationCriteriaPropertyRestriction.TITLE + " " + OperationType.ILIKE.name() + " \"" + operation + "\"";
+                query = OperationCriteriaPropertyRestriction.TITLE + " " + ComparisonOperator.ILIKE.name() + " \"" + operation + "\"";
+                query += " " + LogicalOperator.OR.name() + " " + OperationCriteriaPropertyRestriction.ID + " " + ComparisonOperator.ILIKE.name() + " \"" + operation + "\"";
             }
 
             // Pagination
