@@ -57,4 +57,5 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
             throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, AccessControlWeb.getCoreMessages().exception_common_unknown());
         }
     }
+
 }
