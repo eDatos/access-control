@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
+import java.util.Map;
 
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.junit.Test;
@@ -322,6 +323,11 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         List<Access> access = accessControlBaseService.findAccessByCondition(getServiceContextAdministrador(), condition);
 
         assertEquals(0, access.size());
+    }
+
+    @Override
+    protected Map<String, String> getTablePrimaryKeys() {
+        return null;
     }
 
 }
