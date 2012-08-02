@@ -19,7 +19,7 @@ public class RecordUtils {
     public static AccessRecord getAccessRecord(AccessDto accessDto) {
         AccessRecord record = new AccessRecord(accessDto.getId(), accessDto.getUser() != null ? accessDto.getUser().getUsername() : null, accessDto.getRole() != null
                 ? accessDto.getRole().getTitle()
-                : null, accessDto.getApp() != null ? accessDto.getApp().getTitle() : null, accessDto.getOperation() != null ? accessDto.getOperation().getUrn() : null,
+                : null, accessDto.getApp() != null ? accessDto.getApp().getTitle() : null, accessDto.getOperation() != null ? accessDto.getOperation().getCode() : null,
                 DateUtils.getFormattedDate(accessDto.getRemovalDate()), accessDto);
         return record;
     }

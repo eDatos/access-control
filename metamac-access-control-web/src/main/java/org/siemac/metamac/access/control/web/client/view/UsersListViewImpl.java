@@ -539,6 +539,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         List<AccessDto> accessList = new ArrayList<AccessDto>();
         List<AppDto> applications = appItem.getSelectedAppDtos();
         List<ExternalItemDto> operations = operationItem.getSelectedExternalItems();
+        // REMOVE TITLE: operation title can not be stored because can be modified
+        operations = removeTitle(operations);
         if (operations.isEmpty()) {
             for (AppDto app : applications) {
                 AccessDto accessDto = new AccessDto();
@@ -615,6 +617,13 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         if (ClientSecurityUtils.canDeleteAccess()) {
             accessToolStrip.getDeleteButton().show();
         }
+    }
+
+    private List<ExternalItemDto> removeTitle(List<ExternalItemDto> operations) {
+        for (ExternalItemDto externalItemDto : operations) {
+            externalItemDto.setTitle(null);
+        }
+        return operations;
     }
 
 }
