@@ -253,6 +253,7 @@
                         <artifact>org.siemac.metamac.metamac-access-control:metamac-access-control-core:jar:client</artifact>
                         <artifact>org.siemac.metamac:metamac-core-common:jar:client</artifact>
                         <artifact>org.siemac.metamac.metamac-sso:metamac-sso-client:jar</artifact>
+                        <artifact>org.siemac.metamac:metamac-web-common:jar</artifact>
                     </compileSourcesArtifacts>
                     <inplace>true</inplace>
                 </configuration>
