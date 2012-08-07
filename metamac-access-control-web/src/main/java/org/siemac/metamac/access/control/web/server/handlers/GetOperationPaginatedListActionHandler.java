@@ -9,7 +9,7 @@ import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListRes
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.rest.common.v1_0.domain.Resource;
-import org.siemac.metamac.rest.common.v1_0.domain.ResourcesPagedResult;
+import org.siemac.metamac.statistical_operations.rest.internal.v1_0.domain.Operations;
 import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,11 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
         int firstResult = 0;
         int totalResults = 0;
         List<ExternalItemDto> externalItemDtos = new ArrayList<ExternalItemDto>();
-        ResourcesPagedResult result = statisticalOperationsRestInternalFacade.findOperations(action.getFirstResult(), action.getMaxResults(), action.getOperation());
-        if (result != null && result.getItems() != null) {
+        Operations result = statisticalOperationsRestInternalFacade.findOperations(action.getFirstResult(), action.getMaxResults(), action.getOperation());
+        if (result != null && result.getOperations() != null) {
             firstResult = result.getOffset().intValue();
             totalResults = result.getTotal().intValue();
-            for (Resource resource : result.getItems()) {
+            for (Resource resource : result.getOperations()) {
                 ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), resource.getSelfLink(), resource.getUrn(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
                         DtoUtils.getInternationalStringDtoFromInternationalString(resource.getTitle()));
                 externalItemDtos.add(externalItemDto);
@@ -45,5 +45,4 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
         }
         return new GetOperationPaginatedListResult(externalItemDtos, firstResult, totalResults);
     }
-
 }
