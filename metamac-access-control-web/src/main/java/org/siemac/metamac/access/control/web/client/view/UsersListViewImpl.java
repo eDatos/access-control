@@ -21,6 +21,7 @@ import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
@@ -540,7 +541,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         List<AppDto> applications = appItem.getSelectedAppDtos();
         List<ExternalItemDto> operations = operationItem.getSelectedExternalItems();
         // REMOVE TITLE: operation title can not be stored because can be modified
-        operations = removeTitle(operations);
+        operations = ExternalItemUtils.removeTitle(operations);
         if (operations.isEmpty()) {
             for (AppDto app : applications) {
                 AccessDto accessDto = new AccessDto();
@@ -617,13 +618,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         if (ClientSecurityUtils.canDeleteAccess()) {
             accessToolStrip.getDeleteButton().show();
         }
-    }
-
-    private List<ExternalItemDto> removeTitle(List<ExternalItemDto> operations) {
-        for (ExternalItemDto externalItemDto : operations) {
-            externalItemDto.setTitle(null);
-        }
-        return operations;
     }
 
 }
