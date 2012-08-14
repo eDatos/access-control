@@ -9,7 +9,7 @@ import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListRes
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.rest.common.v1_0.domain.Resource;
-import org.siemac.metamac.statistical_operations.rest.internal.v1_0.domain.Operations;
+import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Operations;
 import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.DtoUtils;
 import org.springframework.beans.factory.annotation.Autowired;
