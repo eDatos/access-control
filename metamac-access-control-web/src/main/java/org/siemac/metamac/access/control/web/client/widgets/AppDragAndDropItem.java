@@ -17,7 +17,7 @@ public class AppDragAndDropItem extends DragAndDropItem {
     private List<AppDto> appDtos;
 
     public AppDragAndDropItem(String name, String title, String dragDropType) {
-        super(name, title, dragDropType);
+        super(name, title);
 
         // ListGridField codeField = new ListGridField(AppRecord.CODE);
         // codeField.setWidth("20%");
