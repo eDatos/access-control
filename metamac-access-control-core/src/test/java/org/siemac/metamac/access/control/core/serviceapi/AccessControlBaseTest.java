@@ -12,21 +12,21 @@ import org.siemac.metamac.sso.client.MetamacPrincipalAccess;
 import org.siemac.metamac.sso.client.SsoClientConstants;
 
 public abstract class AccessControlBaseTest extends MetamacBaseTests {
-    
-    protected static Long                      NOT_EXISTS     = Long.valueOf(-1);
 
-    protected static Long                      ROLE_1         = Long.valueOf(1);
-    protected static Long                      ROLE_2         = Long.valueOf(2);
+    protected static Long NOT_EXISTS = Long.valueOf(-1);
 
-    protected static Long                      APP_1          = Long.valueOf(1);
-    protected static Long                      APP_2          = Long.valueOf(2);
+    protected static Long ROLE_1     = Long.valueOf(1);
+    protected static Long ROLE_2     = Long.valueOf(2);
 
-    protected static Long                      USER_1         = Long.valueOf(1);
-    protected static Long                      USER_2         = Long.valueOf(2);
+    protected static Long APP_1      = Long.valueOf(1);
+    protected static Long APP_2      = Long.valueOf(2);
 
-    protected static Long                      ACCESS_1       = Long.valueOf(1);
-    protected static Long                      ACCESS_2       = Long.valueOf(2);
-    protected static Long                      ACCESS_3       = Long.valueOf(3);
+    protected static Long USER_1     = Long.valueOf(1);
+    protected static Long USER_2     = Long.valueOf(2);
+
+    protected static Long ACCESS_1   = Long.valueOf(1);
+    protected static Long ACCESS_2   = Long.valueOf(2);
+    protected static Long ACCESS_3   = Long.valueOf(3);
 
     // --------------------------------------------------------------------------------------------------------------
     // SERVICE CONTEXT
@@ -62,15 +62,15 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
     }
 
     @Override
-    protected List<String> getTablesToRemoveContent() {
+    protected List<String> getTableNamesOrderedByFKDependency() {
         List<String> tables = new ArrayList<String>();
-        tables.add("TB_ACCESS");
-        tables.add("TB_LOCALISED_STRINGS");
-        tables.add("TB_EXTERNAL_ITEMS");
-        tables.add("TB_INTERNATIONAL_STRINGS");
-        tables.add("TB_APPS");
-        tables.add("TB_ROLES");
         tables.add("TB_USERS");
+        tables.add("TB_ROLES");
+        tables.add("TB_APPS");
+        tables.add("TB_INTERNATIONAL_STRINGS");
+        tables.add("TB_EXTERNAL_ITEMS");
+        tables.add("TB_LOCALISED_STRINGS");
+        tables.add("TB_ACCESS");
         return tables;
     }
 
