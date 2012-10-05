@@ -50,21 +50,21 @@ public class AccessControlDoAsserts {
         assertEqualsExternalItem(expected.getOperation(), actual.getOperation());
     }
 
-   public static void assertEqualsExternalItem(ExternalItem expected, ExternalItem actual) {
-        
+    public static void assertEqualsExternalItem(ExternalItem expected, ExternalItem actual) {
+
         if (actual == null && expected == null) {
             return;
         } else if ((actual != null && expected == null) || (actual == null && expected != null)) {
             fail();
         }
-        
+
         assertEquals(expected.getUri(), actual.getUri());
         assertEquals(expected.getUrn(), actual.getUrn());
         assertEquals(expected.getType(), actual.getType());
         assertEqualsInternationalString(expected.getTitle(), actual.getTitle());
         assertEquals(expected.getManagementAppUrl(), actual.getManagementAppUrl());
     }
-    
+
     public static void assertEqualsInternationalString(InternationalString expected, InternationalString actual) {
         if (actual == null && expected == null) {
             return;
@@ -76,6 +76,5 @@ public class AccessControlDoAsserts {
             assertEquals(localisedStringExpected.getLabel(), actual.getLocalisedLabel(localisedStringExpected.getLocale()));
         }
     }
-    
 
 }

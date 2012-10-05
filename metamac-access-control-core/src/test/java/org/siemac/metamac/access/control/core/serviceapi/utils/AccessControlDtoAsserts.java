@@ -8,7 +8,6 @@ import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
 
-
 /**
  * Asserts to tests
  */

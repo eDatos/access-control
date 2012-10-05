@@ -9,6 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TB_INTERNATIONAL_STRINGS")
 public class InternationalString extends InternationalStringBase {
+
     private static final long serialVersionUID = 1L;
 
     public InternationalString() {

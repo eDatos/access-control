@@ -4,7 +4,6 @@ import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
 
-
 /**
  * Mocks
  */
