@@ -7,5 +7,4 @@
   <entry key="metamac.access.control.db.driverName">oracle.jdbc.OracleDriver</entry>
   <entry key="metamac.access.control.db.username">RELLENAR_USUARIO</entry>
   <entry key="metamac.access.control.db.password">RELLENAR_PASSWORD</entry>
-
 </properties>
