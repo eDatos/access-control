@@ -31,6 +31,7 @@
 	
 
 	<!-- metamac-access-control-core > src/test/resources -->
+    <import resource="classpath:/spring/access-control/include/interceptor-test.xml" />
 	<import resource="classpath:/spring/access-control/include/datasource-test.xml" />
 	<import resource="classpath:/spring/access-control/include/more-test.xml" />
 </beans>
