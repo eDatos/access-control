@@ -36,7 +36,7 @@ import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.web.common.server.handlers.CloseSessionActionHandler;
 import org.siemac.metamac.web.common.server.handlers.GetLoginPageUrlActionHandler;
 import org.siemac.metamac.web.common.server.handlers.GetNavigationBarUrlActionHandler;
-import org.siemac.metamac.web.common.server.handlers.LoadConfigurationPropertiesActionActionHandler;
+import org.siemac.metamac.web.common.server.handlers.LoadConfigurationPropertiesActionHandler;
 import org.siemac.metamac.web.common.server.handlers.MockCASUserActionHandler;
 import org.siemac.metamac.web.common.shared.CloseSessionAction;
 import org.siemac.metamac.web.common.shared.GetLoginPageUrlAction;
@@ -80,7 +80,7 @@ public class ServerModule extends HandlerModule {
         bindHandler(CloseSessionAction.class, CloseSessionActionHandler.class);
         bindHandler(GetNavigationBarUrlAction.class, GetNavigationBarUrlActionHandler.class);
 
-        bindHandler(LoadConfigurationPropertiesAction.class, LoadConfigurationPropertiesActionActionHandler.class);
+        bindHandler(LoadConfigurationPropertiesAction.class, LoadConfigurationPropertiesActionHandler.class);
 
         // This action should be removed to use CAS authentication
         bindHandler(MockCASUserAction.class, MockCASUserActionHandler.class);
