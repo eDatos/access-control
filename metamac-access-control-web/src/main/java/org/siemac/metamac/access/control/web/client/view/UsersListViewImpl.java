@@ -32,7 +32,6 @@ import org.siemac.metamac.web.common.client.widgets.form.MainFormLayout;
 import org.siemac.metamac.web.common.client.widgets.form.fields.EmailItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredSelectItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredTextItem;
-import org.siemac.metamac.web.common.client.widgets.form.fields.SearchExternalPaginatedDragAndDropItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.ViewTextItem;
 
 import com.google.gwt.core.client.Scheduler;
@@ -56,48 +55,48 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> implements UsersListPresenter.UsersListView {
 
-    private static final String                    USER_USERNAME              = "username";
-    private static final String                    USER_NAME                  = "name";
-    private static final String                    USER_SURNAME               = "surname";
-    private static final String                    USER_MAIL                  = "mail";
+    private static final String                      USER_USERNAME              = "username";
+    private static final String                      USER_NAME                  = "name";
+    private static final String                      USER_SURNAME               = "surname";
+    private static final String                      USER_MAIL                  = "mail";
 
-    private static final String                    ACCESS_ROLE                = "role";
-    private static final String                    ACCESS_APP                 = "app";
-    private static final String                    ACCESS_OPERATION           = "operation";
+    private static final String                      ACCESS_ROLE                = "role";
+    private static final String                      ACCESS_APP                 = "app";
+    private static final String                      ACCESS_OPERATION           = "operation";
 
-    private static final String                    USER_LAYOUT_ID             = "userlayout";
+    private static final String                      USER_LAYOUT_ID             = "userlayout";
 
-    private static final int                       OPERATION_LIST_MAX_RESULTS = 17;
+    private static final int                         OPERATION_LIST_MAX_RESULTS = 17;
 
-    private VLayout                                panel;
-    private VLayout                                subPanel;
-    private ListGridToolStrip                      userToolStrip;
-    private CustomListGrid                         usersListGrid;
+    private VLayout                                  panel;
+    private VLayout                                  subPanel;
+    private ListGridToolStrip                        userToolStrip;
+    private CustomListGrid                           usersListGrid;
 
-    private Label                                  title;
+    private Label                                    title;
 
-    private VLayout                                userLayout;
-    private MainFormLayout                         userMainFormLayout;
-    private GroupDynamicForm                       viewUserForm;
-    private GroupDynamicForm                       editionUserForm;
+    private VLayout                                  userLayout;
+    private MainFormLayout                           userMainFormLayout;
+    private GroupDynamicForm                         viewUserForm;
+    private GroupDynamicForm                         editionUserForm;
 
-    private ListGridToolStrip                      accessToolStrip;
-    private CustomListGrid                         accessListGrid;
+    private ListGridToolStrip                        accessToolStrip;
+    private CustomListGrid                           accessListGrid;
 
-    private MainFormLayout                         accessMainFormLayout;
+    private MainFormLayout                           accessMainFormLayout;
 
-    private GroupDynamicForm                       editionAccessForm;
+    private GroupDynamicForm                         editionAccessForm;
 
-    private SearchExternalPaginatedDragAndDropItem operationItem;
-    private AppDragAndDropItem                     appItem;
+    private SearchOperationsPaginatedDragAndDropItem operationItem;
+    private AppDragAndDropItem                       appItem;
 
-    private VLayout                                accessLayout;
+    private VLayout                                  accessLayout;
 
-    private UserDto                                userDto;
+    private UserDto                                  userDto;
 
-    private List<RoleDto>                          roleDtos;
+    private List<RoleDto>                            roleDtos;
 
-    private UsersListUiHandlers                    uiHandlers;
+    private UsersListUiHandlers                      uiHandlers;
 
     public UsersListViewImpl() {
         super();
@@ -510,7 +509,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         appItem = new AppDragAndDropItem(ACCESS_APP, getConstants().app(), ACCESS_APP);
         appItem.setRequired(true);
         appItem.setStartRow(true);
-        operationItem = new SearchExternalPaginatedDragAndDropItem(getConstants().statisticalOperation(), ACCESS_OPERATION, OPERATION_LIST_MAX_RESULTS, 300, new PaginatedAction() {
+        operationItem = new SearchOperationsPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), OPERATION_LIST_MAX_RESULTS, 300, new PaginatedAction() {
 
             @Override
             public void retrieveResultSet(int firstResult, int maxResults) {
