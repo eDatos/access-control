@@ -2,8 +2,6 @@ package org.siemac.metamac.access.control.core.serviceapi;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.siemac.metamac.access.control.core.dto.AccessDto;
@@ -257,10 +255,4 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         accessControlBaseServiceFacade.findAccessById(getServiceContextTecnicoPlanificacion(), id);
 
     }
-
-    @Override
-    protected Map<String, String> getTablePrimaryKeys() {
-        return null;
-    }
-
 }

@@ -8,7 +8,6 @@ import static org.junit.Assert.fail;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
@@ -1359,10 +1358,4 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
             assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
         }
     }
-
-    @Override
-    protected Map<String, String> getTablePrimaryKeys() {
-        return null;
-    }
-
 }

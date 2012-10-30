@@ -2,6 +2,7 @@ package org.siemac.metamac.access.control.core.serviceapi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.constants.AccessControlConstants;
@@ -10,6 +11,7 @@ import org.siemac.metamac.common.test.MetamacBaseTests;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
 import org.siemac.metamac.sso.client.MetamacPrincipalAccess;
 import org.siemac.metamac.sso.client.SsoClientConstants;
+import org.springframework.beans.factory.annotation.Value;
 
 public abstract class AccessControlBaseTest extends MetamacBaseTests {
 
@@ -27,6 +29,9 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
     protected static Long ACCESS_1   = Long.valueOf(1);
     protected static Long ACCESS_2   = Long.valueOf(2);
     protected static Long ACCESS_3   = Long.valueOf(3);
+
+    @Value("${datasource.db.provider}")
+    private String        databaseProvider;
 
     // --------------------------------------------------------------------------------------------------------------
     // SERVICE CONTEXT
@@ -87,4 +92,13 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
         return sequences;
     }
 
+    @Override
+    protected Map<String, List<String>> getTablePrimaryKeys() {
+        return null;
+    }
+
+    @Override
+    protected DataBaseProvider getDatabaseProvider() {
+        return DataBaseProvider.valueOf(databaseProvider);
+    }
 }
