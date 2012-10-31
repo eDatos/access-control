@@ -30,7 +30,7 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
     protected static Long ACCESS_2   = Long.valueOf(2);
     protected static Long ACCESS_3   = Long.valueOf(3);
 
-    @Value("${datasource.db.provider}")
+    @Value("${metamac.access.control.db.provider}")
     private String        databaseProvider;
 
     // --------------------------------------------------------------------------------------------------------------
