@@ -5,6 +5,7 @@ import static org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCrit
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder;
@@ -366,9 +367,9 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code " + code);
                 }
             } else {
-                if (roles.size() == 2) {
+                if (roles.size() == 1 && !ObjectUtils.equals(roles.get(0).getId(), actualId)) {
                     throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
-                } else if (roles.size() > 2) {
+                } else if (roles.size() > 1) {
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code " + code);
                 }
             }
@@ -387,9 +388,9 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one app with code code " + code);
                 }
             } else {
-                if (apps.size() == 2) {
+                if (apps.size() == 1 && !ObjectUtils.equals(apps.get(0).getId(), actualId)) {
                     throw new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, code);
-                } else if (apps.size() > 2) {
+                } else if (apps.size() > 1) {
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one app with code code " + code);
                 }
             }
@@ -409,9 +410,9 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one user with username code " + username);
                 }
             } else {
-                if (users.size() == 2) {
+                if (users.size() == 1 && !ObjectUtils.equals(users.get(0).getId(), actualId)) {
                     throw new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, username);
-                } else if (users.size() > 2) {
+                } else if (users.size() > 1) {
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one user with username code " + username);
                 }
             }

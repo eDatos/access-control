@@ -15,6 +15,6 @@
     <!-- <entry key="metamac.access.control.db.driverName">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry> -->
     <!-- <entry key="metamac.access.control.db.username">metamac_access_control</entry> -->
     <!-- <entry key="metamac.access.control.db.password">metamac_access_control</entry> -->
-    <!-- <entry key="metamac.access.control.db.dialect">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry> -->
+    <!-- <entry key="metamac.access.control.db.dialect">org.hibernate.dialect.SQLServerDialect</entry> -->
 
 </properties>

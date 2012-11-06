@@ -11,7 +11,7 @@
 
 -- Ejemplo de creación de un usuario:
 Insert into TB_USERS (USERNAME, UUID, NAME, SURNAME, MAIL, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-('METAMAC_ADMIN','94e714ea-d168-4d32-b3f4-f4097029a400','Administrador METAMAC', 'Administrador METAMAC', 'administrador-metamac@gobiernodecanarias.org', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
+(1, 'METAMAC_ADMIN','94e714ea-d168-4d32-b3f4-f4097029a400','Administrador METAMAC', 'Administrador METAMAC', 'administrador-metamac@gobiernodecanarias.org', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
 
 
 -- ------------------------
@@ -28,7 +28,7 @@ Insert into TB_USERS (USERNAME, UUID, NAME, SURNAME, MAIL, VERSION, CREATED_BY, 
 
 -- Ejemplo de creación de un acceso:
 Insert into TB_ACCESS (UUID, ROLE_FK, APP_FK, USER_FK, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-('1fa6695a-0fb0-40c6-bf77-b3198ca60a5f','1', '1', IDENT_CURRENT('TB_USERS'), 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
+(1, '1fa6695a-0fb0-40c6-bf77-b3198ca60a5f','1', '1', 1, 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
 
 -- ------------------------
 -- NOTA IMPORTANTE: 

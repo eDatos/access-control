@@ -290,7 +290,6 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         Long id = ROLE_1;
 
         RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
-
         roleDto.setCode("TEC_PLANI");
 
         try {

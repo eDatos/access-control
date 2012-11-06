@@ -1,5 +1,12 @@
 <dataset>
 
+    <!-- Initialize sequences -->
+    <TB_SEQUENCES SEQUENCE_NAME="ROLES" SEQUENCE_NEXT_VALUE="100000" />
+    <TB_SEQUENCES SEQUENCE_NAME="APPS" SEQUENCE_NEXT_VALUE="100000" />
+    <TB_SEQUENCES SEQUENCE_NAME="USERS" SEQUENCE_NEXT_VALUE="100000" />
+    <TB_SEQUENCES SEQUENCE_NAME="EXTERNAL_ITEMS" SEQUENCE_NEXT_VALUE="100000" />
+    <TB_SEQUENCES SEQUENCE_NAME="ACCESS" SEQUENCE_NEXT_VALUE="100000" />
+    
 	<!-- ************************************************************************************ -->
 	<!-- 							ROLES													  -->
 	<!-- ************************************************************************************ -->

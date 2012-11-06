@@ -1,6 +1,8 @@
 package org.siemac.metamac.access.control.core.serviceapi;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +71,7 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
     @Override
     protected List<String> getTableNamesOrderedByFKDependency() {
         List<String> tables = new ArrayList<String>();
+        tables.add("TB_SEQUENCES");
         tables.add("TB_USERS");
         tables.add("TB_ROLES");
         tables.add("TB_APPS");
@@ -80,25 +83,15 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
     }
 
     @Override
-    protected List<String> getSequencesToRestart() {
-        List<String> sequences = new ArrayList<String>();
-        sequences.add("SEQ_ROLES");
-        sequences.add("SEQ_APPS");
-        sequences.add("SEQ_USERS");
-        sequences.add("SEQ_ACCESS");
-        sequences.add("SEQ_EXTERNAL_ITEMS");
-        sequences.add("SEQ_L10NSTRS");
-        sequences.add("SEQ_I18NSTRS");
-        return sequences;
-    }
-
-    @Override
     protected Map<String, List<String>> getTablePrimaryKeys() {
-        return null;
+        Map<String, List<String>> primaryKeys = new HashMap<String, List<String>>();
+        primaryKeys.put("TB_SEQUENCES", Arrays.asList("SEQUENCE_NAME"));
+        return primaryKeys;
     }
 
     @Override
     protected DataBaseProvider getDatabaseProvider() {
         return DataBaseProvider.valueOf(databaseProvider);
     }
+
 }
