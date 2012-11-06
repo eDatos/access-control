@@ -4,17 +4,17 @@
     <comment>Data sources configuration</comment>
 
     <!-- ORACLE -->
-    <entry key="metamac.access.control.db.url">jdbc:oracle:thin:@laguna:1521:XE</entry>
+    <entry key="metamac.access.control.db.url">jdbc:oracle:thin:@FILL_HOST:FILL_PORT:XE</entry>
     <entry key="metamac.access.control.db.driverName">oracle.jdbc.OracleDriver</entry>
-    <entry key="metamac.access.control.db.username">lgutmed_access_control</entry>
-    <entry key="metamac.access.control.db.password">lgutmed_access_control</entry>
+    <entry key="metamac.access.control.db.username">FILL_USERNAME</entry>
+    <entry key="metamac.access.control.db.password">FILL_PASSWORD</entry>
     <entry key="metamac.access.control.db.dialect">org.siemac.metamac.hibernate.dialect.Oracle10gDialectMetamac</entry>
 
     <!-- MSSQL -->
-    <!-- <entry key="metamac.access.control.db.url">jdbc:sqlserver://localhost:50937;databaseName=LOCAL</entry> -->
+    <!-- <entry key="metamac.access.control.db.url">jdbc:sqlserver://FILL_HOST:FILL_PORT;databaseName=FILL_DATABASE_NAME</entry> -->
     <!-- <entry key="metamac.access.control.db.driverName">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry> -->
-    <!-- <entry key="metamac.access.control.db.username">metamac_access_control</entry> -->
-    <!-- <entry key="metamac.access.control.db.password">metamac_access_control</entry> -->
+    <!-- <entry key="metamac.access.control.db.username">FILL_USERNAME</entry> -->
+    <!-- <entry key="metamac.access.control.db.password">FILL_USERNAME</entry> -->
     <!-- <entry key="metamac.access.control.db.dialect">org.hibernate.dialect.SQLServerDialect</entry> -->
 
 </properties>
