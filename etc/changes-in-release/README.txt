@@ -11,4 +11,10 @@ Cuando se cree la RELEASE, añadir estos pasos al manual de instalación:
 	- Añadido fichero [DATA]/access-control/docs/Gestor_accesos-Manual_usuario.pdf
 	- Añadido fichero [DATA]/access-control/conf/static/resources.xml con la propiedad "metamac.access.control.user.guide.file.name"
 
+4. Añadido soporte para SQL Server:
+	- Se ha creado una nueva tabla que almacena las secuencias (TB_SEQUENCES). Si al realizar la instalación ya existen datos en la base de datos,
+	  es necesario rellenar esa tabla con las secuencias correspondientes (para ello, hay que utilizar el script 
+	  /etc/db/03-updates-in-release/01-create-sequences-table.sql para crear la tabla, y el script /etc/db/03-updates-in-release/02-fill-sequences-table.sql
+	  para rellenar los valores de las secuencias).
+
 99. Reiniciar Tomcat
