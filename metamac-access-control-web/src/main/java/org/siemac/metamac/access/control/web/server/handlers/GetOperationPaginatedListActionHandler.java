@@ -37,10 +37,10 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
             firstResult = result.getOffset().intValue();
             totalResults = result.getTotal().intValue();
             for (Resource resource : result.getOperations()) {
+                // TODO NO GUARDAR EL ENDPOINT DE LA API
                 ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), resource.getSelfLink(), resource.getUrn(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
                         DtoUtils.getInternationalStringDtoFromInternationalString(resource.getTitle()));
                 externalItemDtos.add(externalItemDto);
-
             }
         }
         return new GetOperationPaginatedListResult(externalItemDtos, firstResult, totalResults);
