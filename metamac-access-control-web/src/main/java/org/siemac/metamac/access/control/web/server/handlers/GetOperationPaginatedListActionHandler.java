@@ -3,9 +3,12 @@ package org.siemac.metamac.access.control.web.server.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+import org.siemac.metamac.access.control.web.server.rest.RestApiConstants;
 import org.siemac.metamac.access.control.web.server.rest.StatisticalOperationsRestInternalFacade;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListResult;
+import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.rest.common.v1_0.domain.Resource;
@@ -23,12 +26,18 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
     @Autowired
     private StatisticalOperationsRestInternalFacade statisticalOperationsRestInternalFacade;
 
+    @Autowired
+    private ConfigurationService                    configurationService;
+
     public GetOperationPaginatedListActionHandler() {
         super(GetOperationPaginatedListAction.class);
     }
 
     @Override
     public GetOperationPaginatedListResult executeSecurityAction(GetOperationPaginatedListAction action) throws ActionException {
+
+        String operationtsApiEndpoint = configurationService.getProperty(RestApiConstants.STATISTICAL_OPERATIONS_REST_INTERNAL);
+
         int firstResult = 0;
         int totalResults = 0;
         List<ExternalItemDto> externalItemDtos = new ArrayList<ExternalItemDto>();
@@ -37,8 +46,10 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
             firstResult = result.getOffset().intValue();
             totalResults = result.getTotal().intValue();
             for (Resource resource : result.getOperations()) {
-                // TODO NO GUARDAR EL ENDPOINT DE LA API
-                ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), resource.getSelfLink(), resource.getUrn(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
+                // Do not store rest api endpoint
+                String uri = StringUtils.removeStart(resource.getSelfLink().getHref(), operationtsApiEndpoint);
+
+                ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), uri, resource.getUrn(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
                         DtoUtils.getInternationalStringDtoFromInternationalString(resource.getTitle()));
                 externalItemDtos.add(externalItemDto);
             }
