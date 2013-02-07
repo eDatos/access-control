@@ -9,13 +9,13 @@ import java.util.Map;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.constants.AccessControlConstants;
 import org.siemac.metamac.access.control.core.enume.domain.AccessControlRoleEnum;
-import org.siemac.metamac.common.test.MetamacBaseTests;
+import org.siemac.metamac.common.test.dbunit.MetamacDBUnitBaseTests;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
 import org.siemac.metamac.sso.client.MetamacPrincipalAccess;
 import org.siemac.metamac.sso.client.SsoClientConstants;
 import org.springframework.beans.factory.annotation.Value;
 
-public abstract class AccessControlBaseTest extends MetamacBaseTests {
+public abstract class AccessControlBaseTest extends MetamacDBUnitBaseTests {
 
     protected static Long NOT_EXISTS = Long.valueOf(-1);
 
@@ -39,15 +39,14 @@ public abstract class AccessControlBaseTest extends MetamacBaseTests {
     // SERVICE CONTEXT
     // --------------------------------------------------------------------------------------------------------------
 
-    @Override
     protected ServiceContext getServiceContextAdministrador() {
-        ServiceContext serviceContext = super.getServiceContextWithoutPrincipal();
+        ServiceContext serviceContext = super.mockServiceContextWithoutPrincipal();
         putMetamacPrincipalInServiceContext(serviceContext, AccessControlRoleEnum.ADMINISTRADOR);
         return serviceContext;
     }
 
     protected ServiceContext getServiceContextTecnicoPlanificacion() {
-        ServiceContext serviceContext = super.getServiceContextWithoutPrincipal();
+        ServiceContext serviceContext = super.mockServiceContextWithoutPrincipal();
         putMetamacPrincipalInServiceContext(serviceContext, AccessControlRoleEnum.TECNICO_PLANIFICACION);
         return serviceContext;
     }
