@@ -49,6 +49,7 @@ public class AccessControlWeb extends MetamacEntryPoint {
         CssResource css();
     }
 
+    @Override
     public void onModuleLoad() {
         ginjector.getDispatcher().execute(new GetNavigationBarUrlAction(), new WaitingAsyncCallback<GetNavigationBarUrlResult>() {
 
@@ -57,6 +58,7 @@ public class AccessControlWeb extends MetamacEntryPoint {
                 logger.log(Level.SEVERE, "Error loading toolbar");
                 loadSecuredApplication();
             }
+            @Override
             public void onWaitSuccess(GetNavigationBarUrlResult result) {
                 // Load scripts for navigation bar
                 MetamacNavBar.loadScripts(result.getNavigationBarUrl());
@@ -157,6 +159,7 @@ public class AccessControlWeb extends MetamacEntryPoint {
     }
 
     private void loadApplication() {
+        setUncaughtExceptionHandler();
         LoginAuthenticatedEvent.fire(ginjector.getEventBus(), AccessControlWeb.principal);
         // This is required for GWT-Platform proxy's generator.
         DelayedBindRegistry.bind(ginjector);
