@@ -29,7 +29,10 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut id="servicePointCut" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*Service.*(..))" />
+        <aop:pointcut id="updateServicePointCut"
+            expression="(execution(public * org.siemac.metamac.access.control..serviceapi.*Service.*(..)) and not 
+                                                                (execution(public * org.siemac.metamac.access.control..serviceapi.*Service.retrieve*(..)) or 
+                                                                 execution(public * org.siemac.metamac.access.control..serviceapi.*Service.find*(..))))" />
         <aop:pointcut id="serviceFacadePointCut" expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..))" />
         <aop:pointcut id="doMapperPointCut" expression="execution(public * org.siemac.metamac.access.control.service.dto.*2DoMapper.*(..))" />
 
