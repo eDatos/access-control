@@ -22,6 +22,7 @@ import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHan
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
+import org.siemac.metamac.web.common.client.utils.FormItemUtils;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
@@ -509,13 +510,14 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         appItem = new AppDragAndDropItem(ACCESS_APP, getConstants().app(), ACCESS_APP);
         appItem.setRequired(true);
         appItem.setStartRow(true);
-        operationItem = new SearchOperationsPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), OPERATION_LIST_MAX_RESULTS, 300, new PaginatedAction() {
+        operationItem = new SearchOperationsPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), OPERATION_LIST_MAX_RESULTS, FormItemUtils.FORM_ITEM_WIDTH,
+                new PaginatedAction() {
 
-            @Override
-            public void retrieveResultSet(int firstResult, int maxResults) {
-                uiHandlers.retrievePaginatedOperations(firstResult, maxResults, null);
-            }
-        });
+                    @Override
+                    public void retrieveResultSet(int firstResult, int maxResults) {
+                        uiHandlers.retrievePaginatedOperations(firstResult, maxResults, null);
+                    }
+                });
         operationItem.setSearchAction(new SearchPaginatedAction() {
 
             @Override

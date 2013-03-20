@@ -5,9 +5,8 @@ import org.siemac.metamac.web.common.client.widgets.form.fields.SearchExternalPa
 
 public class SearchOperationsPaginatedDragAndDropItem extends SearchExternalPaginatedDragAndDropItem {
 
-    public SearchOperationsPaginatedDragAndDropItem(String name, String title, int maxResults, int formItemWidth, PaginatedAction action) {
+    public SearchOperationsPaginatedDragAndDropItem(String name, String title, int maxResults, String formItemWidth, PaginatedAction action) {
         super(name, title, maxResults, formItemWidth, action);
         targetList.setHeight(400);
     }
-
 }
