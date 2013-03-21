@@ -5,7 +5,6 @@ import static org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCrit
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteriaBuilder;
@@ -355,66 +354,56 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     // ----------------------------------------------------------------------
 
     private void validateRoleCodeUnique(ServiceContext ctx, String code, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.core.domain.RoleProperties.code()).ignoreCaseEq(code).build();
+        List<ConditionalCriteria> conditions = criteriaFor(Role.class).withProperty(org.siemac.metamac.access.control.core.domain.RoleProperties.code()).ignoreCaseEq(code).build();
 
-        List<Role> roles = findRoleByCondition(ctx, condition);
+        if (actualId != null) {
+            conditions.add(ConditionalCriteria.not(ConditionalCriteria.equal(org.siemac.metamac.access.control.core.domain.RoleProperties.id(), actualId)));
+        }
+
+        List<Role> roles = findRoleByCondition(ctx, conditions);
 
         if (roles != null) {
-            if (actualId == null) {
-                if (roles.size() == 1) {
-                    throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
-                } else if (roles.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code " + code);
-                }
-            } else {
-                if (roles.size() == 1 && !ObjectUtils.equals(roles.get(0).getId(), actualId)) {
-                    throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
-                } else if (roles.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code " + code);
-                }
+            if (roles.size() == 1) {
+                throw new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, code);
+            } else if (roles.size() > 1) {
+                throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one role with code " + code);
             }
         }
     }
 
     private void validateAppCodeUnique(ServiceContext ctx, String code, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.core.domain.AppProperties.code()).ignoreCaseEq(code).build();
-        List<App> apps = findAppByCondition(ctx, condition);
+        List<ConditionalCriteria> conditions = criteriaFor(App.class).withProperty(org.siemac.metamac.access.control.core.domain.AppProperties.code()).ignoreCaseEq(code).build();
+
+        if (actualId != null) {
+            conditions.add(ConditionalCriteria.not(ConditionalCriteria.equal(org.siemac.metamac.access.control.core.domain.AppProperties.id(), actualId)));
+        }
+
+        List<App> apps = findAppByCondition(ctx, conditions);
 
         if (apps != null) {
-            if (actualId == null) {
-                if (apps.size() == 1) {
-                    throw new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, code);
-                } else if (apps.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one app with code code " + code);
-                }
-            } else {
-                if (apps.size() == 1 && !ObjectUtils.equals(apps.get(0).getId(), actualId)) {
-                    throw new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, code);
-                } else if (apps.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one app with code code " + code);
-                }
+            if (apps.size() == 1) {
+                throw new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, code);
+            } else if (apps.size() > 1) {
+                throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one app with code code " + code);
             }
         }
 
     }
 
     private void validateUserUsernameUnique(ServiceContext ctx, String username, Long actualId) throws MetamacException {
-        List<ConditionalCriteria> condition = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.core.domain.UserProperties.username()).ignoreCaseEq(username).build();
-        List<User> users = findUserByCondition(ctx, condition);
+        List<ConditionalCriteria> conditions = criteriaFor(User.class).withProperty(org.siemac.metamac.access.control.core.domain.UserProperties.username()).ignoreCaseEq(username).build();
+
+        if (actualId != null) {
+            conditions.add(ConditionalCriteria.not(ConditionalCriteria.equal(org.siemac.metamac.access.control.core.domain.UserProperties.id(), actualId)));
+        }
+
+        List<User> users = findUserByCondition(ctx, conditions);
 
         if (users != null) {
-            if (actualId == null) {
-                if (users.size() == 1) {
-                    throw new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, username);
-                } else if (users.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one user with username code " + username);
-                }
-            } else {
-                if (users.size() == 1 && !ObjectUtils.equals(users.get(0).getId(), actualId)) {
-                    throw new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, username);
-                } else if (users.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one user with username code " + username);
-                }
+            if (users.size() == 1) {
+                throw new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, username);
+            } else if (users.size() > 1) {
+                throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one user with username code " + username);
             }
         }
     }

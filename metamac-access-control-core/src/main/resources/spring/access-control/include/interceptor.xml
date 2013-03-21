@@ -38,7 +38,9 @@
 
         <!-- Repeating the expression, since I can't find a way to refer to the other pointcuts. -->
         <aop:pointcut id="updatingServiceFacade"
-            expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..)) and not (execution(public * org.siemac.metamac.access.control..serviceapi.*.retrieve*(..)) or execution(public * org.siemac.metamac..serviceapi.*.find*(..)))" />
+            expression="execution(public * org.siemac.metamac.access.control..serviceapi.*ServiceFacade.*(..)) and not 
+                                                                (execution(public * org.siemac.metamac.access.control..serviceapi.*.retrieve*(..)) or 
+                                                                 execution(public * org.siemac.metamac..serviceapi.*.find*(..)))" />
 
         <aop:advisor pointcut-ref="serviceFacadePointCut" advice-ref="txAdvice" order="1" />
         <aop:advisor pointcut-ref="serviceFacadePointCut" advice-ref="serviceContextStoreAdvice" order="2" />
@@ -48,13 +50,12 @@
 
         <!-- Flushing interceptor -->
         <aop:aspect id="flushing" ref="flushingHandlingAdvice">
-            <aop:after-returning pointcut-ref="servicePointCut" method="forceFlushToOptimisticLocking" />
+            <aop:after-returning pointcut-ref="updateServicePointCut" method="forceFlushToOptimisticLocking" />
         </aop:aspect>
 
         <!-- Flush mode interceptor -->
         <aop:aspect id="flushingMode" ref="disableFlushHandlingAdvice">
             <aop:around method="manageFlushMode" pointcut-ref="doMapperPointCut" />
-            <aop:around method="manageFlushMode" pointcut-ref="servicePointCut" />
         </aop:aspect>
     </aop:config>
 </beans>

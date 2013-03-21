@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import org.siemac.metamac.access.control.core.domain.Role;
 import org.siemac.metamac.access.control.core.domain.User;
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDoAsserts;
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDoMocks;
+import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.core.common.ent.domain.ExternalItem;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
@@ -75,6 +77,24 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertNotNull(roleUpdated);
         AccessControlDoAsserts.assertEqualsRole(role, roleUpdated);
         assertTrue(roleUpdated.getLastUpdated().isAfter(roleUpdated.getCreatedDate()));
+    }
+    
+    @Test
+    public void testUpdateRoleDuplicatedCode() throws Exception {
+        Long id = ROLE_1;
+
+        Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), id);
+        role.setCode("TEC_PLANI");
+
+        try {
+            accessControlBaseService.updateRole(getServiceContextAdministrador(), role);
+            fail("code duplicated");
+        } catch (MetamacException e) {
+            assertEquals(1, e.getExceptionItems().size());
+            assertEquals(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
+            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
+            assertEquals("TEC_PLANI", e.getExceptionItems().get(0).getMessageParameters()[0]);
+        }
     }
 
     @Test
