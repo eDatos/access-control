@@ -166,7 +166,7 @@
                 MANAGEMENT_APP_URL="[null]"
                 VERSION="1"
                 TITLE_FK="[null]"
-                TYPE="STATISTICAL_OPERATION"
+                TYPE="statisticalOperations#operation"
                 />
      
      <TB_EXTERNAL_ITEMS ID="2"
@@ -176,6 +176,6 @@
                 MANAGEMENT_APP_URL="[null]"
                 VERSION="1"
                 TITLE_FK="[null]"
-                TYPE="STATISTICAL_OPERATION"
+                TYPE="statisticalOperations#operation"
                 />
 </dataset>
