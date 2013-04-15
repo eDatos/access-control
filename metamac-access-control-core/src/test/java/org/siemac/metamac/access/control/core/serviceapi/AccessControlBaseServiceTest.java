@@ -78,7 +78,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         AccessControlDoAsserts.assertEqualsRole(role, roleUpdated);
         assertTrue(roleUpdated.getLastUpdated().isAfter(roleUpdated.getCreatedDate()));
     }
-    
+
     @Test
     public void testUpdateRoleDuplicatedCode() throws Exception {
         Long id = ROLE_1;
