@@ -2,6 +2,5 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 	<comment>Configurations</comment>
-	<entry key="metamac.access.control.clients.statistical.operations.rest.internal">${metamac.endpoints.statistical.operations.rest.internal}</entry>
     <entry key="metamac.access.control.user.guide.file.name">Gestor_accesos-Manual_usuario.pdf</entry>
 </properties>
