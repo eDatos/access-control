@@ -21,6 +21,7 @@ import org.siemac.metamac.web.common.shared.ValidateTicketAction;
 import org.siemac.metamac.web.common.shared.ValidateTicketResult;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
@@ -170,6 +171,7 @@ public class AccessControlWeb extends MetamacEntryPoint {
         ginjector.getPlaceManager().revealCurrentPlace();
         // Inject global styles
         GWT.<GlobalResources> create(GlobalResources.class).css().ensureInjected();
+        Document.get().setTitle(getConstants().appTitle());
     }
 
     public void displayLoginView() {
