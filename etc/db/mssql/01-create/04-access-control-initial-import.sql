@@ -65,3 +65,4 @@ Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CR
 (FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('APPS'), 'GESTOR_RECURSOS_ESTRUCTURALES','6eb8c7c5-d839-40e2-bd89-a4863e402fd0','Gestor de recursos estructurales', 'Aplicativo encargado de gestionar los recursos estructurales', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
 
+commit;
