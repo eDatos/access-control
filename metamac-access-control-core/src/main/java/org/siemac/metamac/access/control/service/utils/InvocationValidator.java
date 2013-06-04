@@ -341,6 +341,9 @@ public class InvocationValidator {
         ValidationUtils.checkMetadataRequired(access.getUser(), ServiceExceptionParameters.ACCESS_USER, exceptions);
         ValidationUtils.checkMetadataRequired(access.getRole(), ServiceExceptionParameters.ACCESS_ROLE, exceptions);
         ValidationUtils.checkMetadataRequired(access.getApp(), ServiceExceptionParameters.ACCESS_APP, exceptions);
+        if (access.getOperation() != null) {
+            ValidationUtils.checkMetadataRequired(access.getOperation().getUrn(), ServiceExceptionParameters.ACCESS_OPERATION_URN, exceptions);
+        }
     }
 
 }
