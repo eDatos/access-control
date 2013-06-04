@@ -161,9 +161,9 @@
                 
      <TB_EXTERNAL_ITEMS ID="1"
                 CODE="TODO-01"
-                URI="OPERATION:TODO:01"
+                URI="/OPERATION:TODO:01"
                 URN="OPERATION-TODO-01"
-                MANAGEMENT_APP_URL="[null]"
+                MANAGEMENT_APP_URL="/OPERATION:TODO:01"
                 VERSION="1"
                 TITLE_FK="[null]"
                 TYPE="statisticalOperations#operation"

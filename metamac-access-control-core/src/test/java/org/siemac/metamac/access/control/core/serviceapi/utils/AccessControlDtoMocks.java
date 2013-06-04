@@ -3,11 +3,12 @@ package org.siemac.metamac.access.control.core.serviceapi.utils;
 import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
+import org.siemac.metamac.common.test.utils.MetamacMocks;
 
 /**
  * Mocks
  */
-public class AccessControlDtoMocks {
+public class AccessControlDtoMocks extends MetamacMocks {
 
     public static RoleDto mockRoleDto() {
         RoleDto roleDto = new RoleDto();

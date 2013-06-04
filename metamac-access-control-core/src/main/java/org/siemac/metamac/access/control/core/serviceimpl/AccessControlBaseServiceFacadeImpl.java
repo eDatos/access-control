@@ -14,8 +14,8 @@ import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.access.control.core.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.access.control.security.SecurityUtils;
-import org.siemac.metamac.access.control.service.dto.Do2DtoMapper;
-import org.siemac.metamac.access.control.service.dto.Dto2DoMapper;
+import org.siemac.metamac.access.control.service.mapper.Do2DtoMapper;
+import org.siemac.metamac.access.control.service.mapper.Dto2DoMapper;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -359,7 +359,7 @@ public class AccessControlBaseServiceFacadeImpl extends AccessControlBaseService
         return usersDto;
     }
 
-    private List<AccessDto> accessListDo2Dto(List<Access> accessList) {
+    private List<AccessDto> accessListDo2Dto(List<Access> accessList) throws MetamacException {
         List<AccessDto> accessDto = new ArrayList<AccessDto>();
         for (Access access : accessList) {
             accessDto.add(do2DtoMapper.accessDoToDto(access));

@@ -1,20 +1,16 @@
 package org.siemac.metamac.access.control.core.serviceapi.utils;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import org.siemac.metamac.access.control.core.domain.Access;
 import org.siemac.metamac.access.control.core.domain.App;
 import org.siemac.metamac.access.control.core.domain.Role;
 import org.siemac.metamac.access.control.core.domain.User;
-import org.siemac.metamac.core.common.ent.domain.ExternalItem;
-import org.siemac.metamac.core.common.ent.domain.InternationalString;
-import org.siemac.metamac.core.common.ent.domain.LocalisedString;
 
 /**
  * Asserts to tests
  */
-public class AccessControlDoAsserts {
+public class AccessControlDoAsserts extends AccessControlBaseAsserts {
 
     public static void assertEqualsRole(Role expected, Role actual) {
         assertEquals(expected.getUuid(), actual.getUuid());
@@ -49,32 +45,4 @@ public class AccessControlDoAsserts {
         assertEqualsUser(expected.getUser(), actual.getUser());
         assertEqualsExternalItem(expected.getOperation(), actual.getOperation());
     }
-
-    public static void assertEqualsExternalItem(ExternalItem expected, ExternalItem actual) {
-
-        if (actual == null && expected == null) {
-            return;
-        } else if ((actual != null && expected == null) || (actual == null && expected != null)) {
-            fail();
-        }
-
-        assertEquals(expected.getUri(), actual.getUri());
-        assertEquals(expected.getUrn(), actual.getUrn());
-        assertEquals(expected.getType(), actual.getType());
-        assertEqualsInternationalString(expected.getTitle(), actual.getTitle());
-        assertEquals(expected.getManagementAppUrl(), actual.getManagementAppUrl());
-    }
-
-    public static void assertEqualsInternationalString(InternationalString expected, InternationalString actual) {
-        if (actual == null && expected == null) {
-            return;
-        } else if ((actual != null && expected == null) || (actual == null && expected != null)) {
-            fail();
-        }
-        assertEquals(expected.getTexts().size(), actual.getTexts().size());
-        for (LocalisedString localisedStringExpected : expected.getTexts()) {
-            assertEquals(localisedStringExpected.getLabel(), actual.getLocalisedLabel(localisedStringExpected.getLocale()));
-        }
-    }
-
 }

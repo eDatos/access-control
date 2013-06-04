@@ -1,4 +1,4 @@
-package org.siemac.metamac.access.control.service.dto;
+package org.siemac.metamac.access.control.service.mapper;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.core.domain.Access;
@@ -10,8 +10,9 @@ import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.core.common.mapper.BaseDto2DoMapper;
 
-public interface Dto2DoMapper {
+public interface Dto2DoMapper extends BaseDto2DoMapper {
 
     public Role roleDtoToDo(ServiceContext ctx, RoleDto source) throws MetamacException;
 

@@ -1,4 +1,4 @@
-package org.siemac.metamac.access.control.service.dto;
+package org.siemac.metamac.access.control.service.mapper;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -13,16 +13,20 @@ import org.siemac.metamac.access.control.core.dto.AccessDto;
 import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
+import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.dto.InternationalStringDto;
 import org.siemac.metamac.core.common.dto.LocalisedStringDto;
 import org.siemac.metamac.core.common.ent.domain.ExternalItem;
 import org.siemac.metamac.core.common.ent.domain.InternationalString;
 import org.siemac.metamac.core.common.ent.domain.LocalisedString;
+import org.siemac.metamac.core.common.enume.utils.TypeExternalArtefactsEnumUtils;
+import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.core.common.mapper.BaseDo2DtoMapperImpl;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Do2DtoMapperImpl implements Do2DtoMapper {
+public class Do2DtoMapperImpl  extends BaseDo2DtoMapperImpl implements Do2DtoMapper {
 
     @Override
     public RoleDto roleDoToDto(Role source) {
@@ -92,7 +96,7 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
     }
 
     @Override
-    public AccessDto accessDoToDto(Access source) {
+    public AccessDto accessDoToDto(Access source) throws MetamacException {
         AccessDto target = new AccessDto();
 
         target.setId(source.getId());
@@ -116,7 +120,24 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         return target;
     }
 
-    private ExternalItemDto externalItemToDto(ExternalItem source) {
+    private ExternalItemDto externalItemToDto(ExternalItem source) throws MetamacException {
+        ExternalItemDto target = externalItemWithoutUrlsToDto(source);
+        if (target != null) {
+            if (TypeExternalArtefactsEnumUtils.isExternalItemOfCommonMetadataApp(source.getType())) {
+                target = commonMetadataExternalItemDoToDto(source, target);
+            } else if (TypeExternalArtefactsEnumUtils.isExternalItemOfSrmApp(source.getType())) {
+                target = srmExternalItemDoToDto(source, target);
+            } else if (TypeExternalArtefactsEnumUtils.isExternalItemOfStatisticalOperationsApp(source.getType())) {
+                target = statisticalOperationsExternalItemDoToDto(source, target);
+            } else {
+                throw new MetamacException(ServiceExceptionType.UNKNOWN, "Type of externalItem not defined for externalItemDoToDto: " + source.getType());
+            }
+        }
+
+        return target;
+    }
+    
+    private ExternalItemDto externalItemWithoutUrlsToDto(ExternalItem source) {
         if (source == null) {
             return null;
         }
@@ -126,6 +147,24 @@ public class Do2DtoMapperImpl implements Do2DtoMapper {
         return target;
     }
 
+    private ExternalItemDto commonMetadataExternalItemDoToDto(ExternalItem source, ExternalItemDto target) throws MetamacException {
+        target.setUri(commonMetadataExternalApiUrlDoToDto(source.getUri()));
+        target.setManagementAppUrl(commonMetadataInternalWebAppUrlDoToDto(source.getManagementAppUrl()));
+        return target;
+    }
+
+    private ExternalItemDto srmExternalItemDoToDto(ExternalItem source, ExternalItemDto target) throws MetamacException {
+        target.setUri(srmInternalApiUrlDoToDto(source.getUri()));
+        target.setManagementAppUrl(srmInternalWebAppUrlDoToDto(source.getManagementAppUrl()));
+        return target;
+    }
+    
+    private ExternalItemDto statisticalOperationsExternalItemDoToDto(ExternalItem source, ExternalItemDto target) throws MetamacException {
+        target.setUri(statisticalOperationsInternalApiUrlDoToDto(source.getUri()));
+        target.setManagementAppUrl(statisticalOperationsInternalWebAppUrlDoToDto(source.getManagementAppUrl()));
+        return target;
+    }
+    
     private Date dateDoToDto(DateTime source) {
         if (source == null) {
             return null;
