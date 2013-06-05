@@ -1,10 +1,10 @@
 package org.siemac.metamac.access.control.web.client.model.record;
 
 import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.web.common.client.widgets.NavigableListGridRecord;
 
-import com.smartgwt.client.widgets.grid.ListGridRecord;
-
-public class AccessRecord extends ListGridRecord {
+public class AccessRecord extends NavigableListGridRecord {
 
     public static final String ID           = "id";
     public static final String USER         = "user";
@@ -17,7 +17,7 @@ public class AccessRecord extends ListGridRecord {
     public AccessRecord() {
     }
 
-    public AccessRecord(Long id, String user, String role, String app, String operation, String dischargedDate, AccessDto accessDto) {
+    public AccessRecord(Long id, String user, String role, String app, ExternalItemDto operation, String dischargedDate, AccessDto accessDto) {
         setId(id);
         setUser(user);
         setRole(role);
@@ -59,12 +59,8 @@ public class AccessRecord extends ListGridRecord {
         return getAttributeAsString(APP);
     }
 
-    public void setOperation(String value) {
-        setAttribute(OPERATION, value);
-    }
-
-    public String getOperation() {
-        return getAttributeAsString(OPERATION);
+    public void setOperation(ExternalItemDto operation) {
+        setExternalItem(OPERATION, operation);
     }
 
     public void setAccessDto(AccessDto accessDto) {

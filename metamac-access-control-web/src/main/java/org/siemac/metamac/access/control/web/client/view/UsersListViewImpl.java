@@ -20,10 +20,14 @@ import org.siemac.metamac.access.control.web.client.utils.CommonUtils;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
+import org.siemac.metamac.access.control.web.client.widgets.NavigableListGrid;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
 import org.siemac.metamac.web.common.client.utils.FormItemUtils;
+import org.siemac.metamac.web.common.client.utils.ListGridUtils;
+import org.siemac.metamac.web.common.client.widgets.CustomLinkListGridField;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
+import org.siemac.metamac.web.common.client.widgets.CustomListGridField;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
 import org.siemac.metamac.web.common.client.widgets.actions.PaginatedAction;
@@ -82,7 +86,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private GroupDynamicForm                         editionUserForm;
 
     private ListGridToolStrip                        accessToolStrip;
-    private CustomListGrid                           accessListGrid;
+    private NavigableListGrid                        accessListGrid;
 
     private MainFormLayout                           accessMainFormLayout;
 
@@ -129,18 +133,12 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
         usersListGrid = new CustomListGrid();
         usersListGrid.setHeight(200);
-        ListGridField idField = new ListGridField(UserRecord.ID, getConstants().identifier());
-        idField.setShowIfCondition(new ListGridFieldIfFunction() {
-
-            @Override
-            public boolean execute(ListGrid grid, ListGridField field, int fieldNum) {
-                return false;
-            }
-        });
-        ListGridField usernameField = new ListGridField(UserRecord.USERNAME, getConstants().userUsername());
-        ListGridField nameField = new ListGridField(UserRecord.NAME, getConstants().userName());
-        ListGridField surnameField = new ListGridField(UserRecord.SURNAME, getConstants().userSurname());
-        ListGridField mailField = new ListGridField(UserRecord.MAIL, getConstants().userMail());
+        CustomListGridField idField = new CustomListGridField(UserRecord.ID, getConstants().identifier());
+        idField.setShowIfCondition(ListGridUtils.getFalseListGridFieldIfFunction());
+        CustomListGridField usernameField = new CustomListGridField(UserRecord.USERNAME, getConstants().userUsername());
+        CustomListGridField nameField = new CustomListGridField(UserRecord.NAME, getConstants().userName());
+        CustomListGridField surnameField = new CustomListGridField(UserRecord.SURNAME, getConstants().userSurname());
+        CustomListGridField mailField = new CustomListGridField(UserRecord.MAIL, getConstants().userMail());
 
         UserDS userDS = new UserDS();
         usersListGrid.setDataSource(userDS);
@@ -222,9 +220,9 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             }
         });
 
-        accessListGrid = new CustomListGrid();
+        accessListGrid = new NavigableListGrid();
         accessListGrid.setHeight(300);
-        ListGridField accessIdField = new ListGridField(AccessRecord.ID, getConstants().identifier());
+        CustomListGridField accessIdField = new CustomListGridField(AccessRecord.ID, getConstants().identifier());
         accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
 
             @Override
@@ -232,9 +230,9 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 return false;
             }
         });
-        ListGridField roleField = new ListGridField(AccessRecord.ROLE, getConstants().role());
-        ListGridField appField = new ListGridField(AccessRecord.APP, getConstants().app());
-        ListGridField opField = new ListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
+        CustomListGridField roleField = new CustomListGridField(AccessRecord.ROLE, getConstants().role());
+        CustomListGridField appField = new CustomListGridField(AccessRecord.APP, getConstants().app());
+        CustomLinkListGridField opField = new CustomLinkListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
 
         accessListGrid.setDataSource(new AccessDS());
         accessListGrid.setUseAllDataSourceFields(false);
