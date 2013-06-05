@@ -8,5 +8,7 @@ public class SearchOperationsPaginatedDragAndDropItem extends SearchExternalPagi
     public SearchOperationsPaginatedDragAndDropItem(String name, String title, int maxResults, String formItemWidth, PaginatedAction action) {
         super(name, title, maxResults, formItemWidth, action);
         targetList.setHeight(400);
+        form.setColWidths("47%");
+        form.markForRedraw();
     }
 }
