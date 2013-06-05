@@ -29,6 +29,10 @@ public class AccessControlApplicationStartupListener extends ApplicationStartupL
         checkNavBarUrlProperty();
         checkOrganisationProperty();
 
+        // WEB APPLICATIONS
+
+        checkRequiredProperty(ConfigurationConstants.WEB_APPLICATION_STATISTICAL_OPERATIONS_INTERNAL_WEB);
+
         // API
 
         checkRequiredProperty(ConfigurationConstants.ENDPOINT_STATISTICAL_OPERATIONS_INTERNAL_API);
