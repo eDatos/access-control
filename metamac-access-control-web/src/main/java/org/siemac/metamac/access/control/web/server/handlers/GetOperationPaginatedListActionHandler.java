@@ -49,7 +49,7 @@ public class GetOperationPaginatedListActionHandler extends SecurityActionHandle
                 // Do not store rest api endpoint
                 String uri = StringUtils.removeStart(resource.getSelfLink().getHref(), operationtsApiEndpoint);
 
-                ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), uri, resource.getUrn(), TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
+                ExternalItemDto externalItemDto = new ExternalItemDto(resource.getId(), uri, resource.getUrn(), null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
                         DtoUtils.getInternationalStringDtoFromInternationalString(resource.getTitle()));
                 externalItemDtos.add(externalItemDto);
             }
