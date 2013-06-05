@@ -48,6 +48,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
      * ROLES
      **************************************************************************/
 
+    @Override
     @Test
     public void testFindRoleById() throws Exception {
         Long id = ROLE_1;
@@ -96,6 +97,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         }
     }
 
+    @Override
     @Test
     public void testCreateRole() throws Exception {
         RoleDto roleDto = AccessControlDtoMocks.mockRoleDto();
@@ -195,6 +197,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         }
     }
 
+    @Override
     @Test
     public void testDeleteRole() throws Exception {
         Long id = ROLE_2;
@@ -253,6 +256,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     }
 
+    @Override
     @Test
     public void testUpdateRole() throws Exception {
         Long id = ROLE_1;
@@ -342,6 +346,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         assertEquals(Long.valueOf(3), roleDtoSession1AfterUpdate2.getOptimisticLockingVersion());
     }
 
+    @Override
     @Test
     public void testFindAllRoles() throws Exception {
         List<RoleDto> roles = accessControlBaseServiceFacade.findAllRoles(getServiceContextAdministrador());
@@ -352,6 +357,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
      * APPS
      **************************************************************************/
 
+    @Override
     @Test
     public void testCreateApp() throws Exception {
         AppDto appDto = AccessControlDtoMocks.mockAppDto();
@@ -451,6 +457,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         }
     }
 
+    @Override
     @Test
     public void testUpdateApp() throws Exception {
         Long id = APP_1;
@@ -541,6 +548,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         assertEquals(Long.valueOf(3), appDtoSession1AfterUpdate2.getOptimisticLockingVersion());
     }
 
+    @Override
     @Test
     public void testDeleteApp() throws Exception {
         Long id = APP_2;
@@ -599,12 +607,14 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     }
 
+    @Override
     @Test
     public void testFindAllApps() throws Exception {
         List<AppDto> apps = accessControlBaseServiceFacade.findAllApps(getServiceContextAdministrador());
         assertEquals(2, apps.size());
     }
 
+    @Override
     @Test
     public void testFindAppById() throws Exception {
         Long id = APP_1;
@@ -641,6 +651,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
      * USERS
      **************************************************************************/
 
+    @Override
     @Test
     public void testFindUserById() throws Exception {
         Long id = USER_1;
@@ -690,6 +701,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         }
     }
 
+    @Override
     @Test
     public void testCreateUser() throws Exception {
         UserDto userDto = AccessControlDtoMocks.mockUserDto();
@@ -837,6 +849,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         }
     }
 
+    @Override
     @Test
     public void testDeleteUser() throws Exception {
         Long id = USER_2;
@@ -895,6 +908,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     }
 
+    @Override
     @Test
     public void testUpdateUser() throws Exception {
         Long id = USER_1;
@@ -986,6 +1000,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         assertEquals(Long.valueOf(3), userDtoSession1AfterUpdate2.getOptimisticLockingVersion());
     }
 
+    @Override
     @Test
     public void testFindAllUsers() throws Exception {
         List<UserDto> users = accessControlBaseServiceFacade.findAllUsers(getServiceContextAdministrador());
@@ -996,6 +1011,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
      * ACCESS
      **************************************************************************/
 
+    @Override
     @Test
     public void testCreateAccess() throws Exception {
 
@@ -1008,7 +1024,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("TODO-02", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("TODO-02", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", "OPERATION-TODO-02-Internal",
+                TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         // Create
         AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -1176,7 +1193,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", "OPERATION-TODO-01-Internal", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         try {
             accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -1192,6 +1209,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         }
     }
 
+    @Override
     @Test
     public void testRemoveAccess() throws Exception {
         Long id = ACCESS_1;
@@ -1227,12 +1245,14 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     }
 
+    @Override
     @Test
     public void testFindAllAccess() throws Exception {
         List<AccessDto> access = accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador());
         assertEquals(3, access.size());
     }
 
+    @Override
     @Test
     public void testFindAccessByCondition() throws Exception {
         // All conditions
@@ -1318,6 +1338,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         assertEquals(2, access.size());
     }
 
+    @Override
     @Test
     public void testFindAccessById() throws Exception {
         Long id = APP_1;
@@ -1336,8 +1357,9 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDto, accessDto.getRole());
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, accessDto.getApp());
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, accessDto.getUser());
-        MetamacAsserts.assertEqualsExternalItemDto(new ExternalItemDto("TODO-01", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:01", "OPERATION-TODO-01", TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null, "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto.getOperation());
-        
+        MetamacAsserts.assertEqualsExternalItemDto(new ExternalItemDto("TODO-01", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:01", "OPERATION-TODO-01",
+                "OPERATION-TODO-01-Internal", TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null, "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto
+                .getOperation());
 
         assertEquals("A-1", accessDto.getUuid());
         assertEquals(Long.valueOf(1), accessDto.getVersion());

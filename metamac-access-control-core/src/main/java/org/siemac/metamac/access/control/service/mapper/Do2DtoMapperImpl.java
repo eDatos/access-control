@@ -26,7 +26,7 @@ import org.siemac.metamac.core.common.mapper.BaseDo2DtoMapperImpl;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Do2DtoMapperImpl  extends BaseDo2DtoMapperImpl implements Do2DtoMapper {
+public class Do2DtoMapperImpl extends BaseDo2DtoMapperImpl implements Do2DtoMapper {
 
     @Override
     public RoleDto roleDoToDto(Role source) {
@@ -136,13 +136,14 @@ public class Do2DtoMapperImpl  extends BaseDo2DtoMapperImpl implements Do2DtoMap
 
         return target;
     }
-    
+
     private ExternalItemDto externalItemWithoutUrlsToDto(ExternalItem source) {
         if (source == null) {
             return null;
         }
 
-        ExternalItemDto target = new ExternalItemDto(source.getCode(), source.getUri(), source.getUrn(), source.getType(), internationalStringToDto(source.getTitle()), source.getManagementAppUrl());
+        ExternalItemDto target = new ExternalItemDto(source.getCode(), source.getUri(), source.getUrn(), source.getUrnInternal(), source.getType(), internationalStringToDto(source.getTitle()),
+                source.getManagementAppUrl());
 
         return target;
     }
@@ -158,13 +159,13 @@ public class Do2DtoMapperImpl  extends BaseDo2DtoMapperImpl implements Do2DtoMap
         target.setManagementAppUrl(srmInternalWebAppUrlDoToDto(source.getManagementAppUrl()));
         return target;
     }
-    
+
     private ExternalItemDto statisticalOperationsExternalItemDoToDto(ExternalItem source, ExternalItemDto target) throws MetamacException {
         target.setUri(statisticalOperationsInternalApiUrlDoToDto(source.getUri()));
         target.setManagementAppUrl(statisticalOperationsInternalWebAppUrlDoToDto(source.getManagementAppUrl()));
         return target;
     }
-    
+
     private Date dateDoToDto(DateTime source) {
         if (source == null) {
             return null;

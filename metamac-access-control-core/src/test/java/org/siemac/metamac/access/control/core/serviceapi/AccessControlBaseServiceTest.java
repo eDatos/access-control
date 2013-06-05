@@ -48,18 +48,21 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
      * ROLES
      **************************************************************************/
 
+    @Override
     @Test
     public void testFindRoleById() throws Exception {
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_1);
         assertNotNull(role);
     }
 
+    @Override
     @Test
     public void testCreateRole() throws Exception {
         Role role = accessControlBaseService.createRole(getServiceContextAdministrador(), AccessControlDoMocks.createRole());
         assertNotNull(role);
     }
 
+    @Override
     @Test
     public void testUpdateRole() throws Exception {
         Long id = ROLE_1;
@@ -97,6 +100,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         }
     }
 
+    @Override
     @Test
     public void testFindAllRoles() throws Exception {
         List<Role> roles = accessControlBaseService.findAllRoles(getServiceContextAdministrador());
@@ -104,6 +108,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertEquals(2, roles.size());
     }
 
+    @Override
     @Test(expected = MetamacException.class)
     public void testDeleteRole() throws Exception {
         accessControlBaseService.deleteRole(getServiceContextAdministrador(), ROLE_2);
@@ -112,6 +117,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertNull(role);
     }
 
+    @Override
     @Test
     public void testFindRoleByCondition() throws Exception {
         String code = "Admin";
@@ -126,18 +132,21 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
      * APPS
      **************************************************************************/
 
+    @Override
     @Test
     public void testFindAppById() throws Exception {
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_1);
         assertNotNull(app);
     }
 
+    @Override
     @Test
     public void testCreateApp() throws Exception {
         App app = accessControlBaseService.createApp(getServiceContextAdministrador(), AccessControlDoMocks.createApp());
         assertNotNull(app);
     }
 
+    @Override
     @Test
     public void testUpdateApp() throws Exception {
         Long id = APP_1;
@@ -157,6 +166,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertTrue(appUpdated.getLastUpdated().isAfter(appUpdated.getCreatedDate()));
     }
 
+    @Override
     @Test
     public void testFindAllApps() throws Exception {
         List<App> apps = accessControlBaseService.findAllApps(getServiceContextAdministrador());
@@ -164,6 +174,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertEquals(2, apps.size());
     }
 
+    @Override
     @Test(expected = MetamacException.class)
     public void testDeleteApp() throws Exception {
         accessControlBaseService.deleteApp(getServiceContextAdministrador(), APP_2);
@@ -172,6 +183,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertNull(app);
     }
 
+    @Override
     @Test
     public void testFindAppByCondition() throws Exception {
         String code = "Gpe";
@@ -186,18 +198,21 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
      * USERS
      **************************************************************************/
 
+    @Override
     @Test
     public void testFindUserById() throws Exception {
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
         assertNotNull(user);
     }
 
+    @Override
     @Test
     public void testCreateUser() throws Exception {
         User user = accessControlBaseService.createUser(getServiceContextAdministrador(), AccessControlDoMocks.createUser());
         assertNotNull(user);
     }
 
+    @Override
     @Test
     public void testUpdateUser() throws Exception {
         Long id = USER_1;
@@ -218,6 +233,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertTrue(userUpdated.getLastUpdated().isAfter(userUpdated.getCreatedDate()));
     }
 
+    @Override
     @Test
     public void testFindAllUsers() throws Exception {
         List<User> users = accessControlBaseService.findAllUsers(getServiceContextAdministrador());
@@ -225,6 +241,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertEquals(2, users.size());
     }
 
+    @Override
     @Test(expected = MetamacException.class)
     public void testDeleteUser() throws Exception {
         accessControlBaseService.deleteUser(getServiceContextAdministrador(), USER_2);
@@ -233,6 +250,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertNull(user);
     }
 
+    @Override
     @Test
     public void testFindUserByCondition() throws Exception {
         String username = "ARTE";
@@ -248,24 +266,28 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
      * ACCESS
      **************************************************************************/
 
+    @Override
     @Test
     public void testFindAccessById() throws Exception {
         Access access = accessControlBaseService.findAccessById(getServiceContextAdministrador(), ACCESS_1);
         assertNotNull(access);
     }
 
+    @Override
     @Test
     public void testCreateAccess() throws Exception {
         // Create access
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_1);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_1);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
-        ExternalItem operation = new ExternalItem("MNP", "urn:app:gopestat:StatisticalOperation=MNP", "MNP", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = new ExternalItem("MNP", "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", "urn:app:gopestat:StatisticalOperation=MNPInternal",
+                TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation));
         assertNotNull(access);
     }
 
+    @Override
     @Test
     public void testUpdateAccess() throws Exception {
         Long id = ACCESS_1;
@@ -276,7 +298,8 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_2);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_2);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_2);
-        ExternalItem operation = new ExternalItem("MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", "MNP2", TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = new ExternalItem("MNP2", "uri/MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", "urn:app:gopestat:StatisticalOperation=MNP2Internal",
+                TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         access.setApp(app);
         access.setRole(role);
@@ -292,6 +315,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertTrue(accessUpdated.getLastUpdated().isAfter(accessUpdated.getCreatedDate()));
     }
 
+    @Override
     @Test
     public void testFindAllAccess() throws Exception {
         List<Access> access = accessControlBaseService.findAllAccess(getServiceContextAdministrador());
@@ -299,6 +323,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertEquals(3, access.size());
     }
 
+    @Override
     @Test(expected = MetamacException.class)
     public void testDeleteAccess() throws Exception {
         accessControlBaseService.deleteAccess(getServiceContextAdministrador(), ACCESS_2);
@@ -307,6 +332,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertNull(access);
     }
 
+    @Override
     @Test
     public void testRemoveAccess() throws Exception {
         Long id = ACCESS_1;
@@ -325,6 +351,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         AccessControlDoAsserts.assertEqualsAccess(access, removedAccess);
     }
 
+    @Override
     @Test
     public void testFindAccessByCondition() throws Exception {
         String username = "ARTE";
