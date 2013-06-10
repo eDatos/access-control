@@ -17,6 +17,8 @@ import org.siemac.metamac.web.common.shared.GetNavigationBarUrlAction;
 import org.siemac.metamac.web.common.shared.GetNavigationBarUrlResult;
 import org.siemac.metamac.web.common.shared.LoadConfigurationPropertiesAction;
 import org.siemac.metamac.web.common.shared.LoadConfigurationPropertiesResult;
+import org.siemac.metamac.web.common.shared.MockCASUserAction;
+import org.siemac.metamac.web.common.shared.MockCASUserResult;
 import org.siemac.metamac.web.common.shared.ValidateTicketAction;
 import org.siemac.metamac.web.common.shared.ValidateTicketResult;
 
@@ -34,14 +36,16 @@ import com.gwtplatform.mvp.client.DelayedBindRegistry;
  */
 public class AccessControlWeb extends MetamacEntryPoint {
 
-    private static Logger                         logger    = Logger.getLogger(AccessControlWeb.class.getName());
+    private static final Boolean                  SECURITY_ENABLED = true;
+
+    private static Logger                         logger           = Logger.getLogger(AccessControlWeb.class.getName());
 
     private static MetamacPrincipal               principal;
     private static AccessControlWebConstants      constants;
     private static AccessControlWebMessages       messages;
     private static AccessControlWebCoreMessages   coreMessages;
 
-    public static final AccessControlWebGinjector ginjector = GWT.create(AccessControlWebGinjector.class);
+    public static final AccessControlWebGinjector ginjector        = GWT.create(AccessControlWebGinjector.class);
 
     interface GlobalResources extends ClientBundle {
 
@@ -58,7 +62,7 @@ public class AccessControlWeb extends MetamacEntryPoint {
             @Override
             public void onWaitFailure(Throwable caught) {
                 logger.log(Level.SEVERE, "Error loading toolbar");
-                loadSecuredApplication();
+                init();
             }
             @Override
             public void onWaitSuccess(GetNavigationBarUrlResult result) {
@@ -68,43 +72,50 @@ public class AccessControlWeb extends MetamacEntryPoint {
                 } else {
                     logger.log(Level.SEVERE, "Error loading toolbar");
                 }
-                loadSecuredApplication();
+                init();
             };
         });
     }
 
-    // TODO This method should be removed to use CAS authentication
+    private void init() {
+        if (SECURITY_ENABLED) {
+            loadSecuredApplication();
+        } else {
+            loadNonSecuredApplication();
+        }
+    }
+
     // Application id should be the same than the one defined in org.siemac.metamac.access.control.constants.AccessControlConstants.SECURITY_APPLICATION_ID
-    // private void loadNonSecuredApplication() {
-    // ginjector.getDispatcher().execute(new MockCASUserAction("GESTOR_ACCESOS"), new WaitingAsyncCallback<MockCASUserResult>() {
-    //
-    // @Override
-    // public void onWaitFailure(Throwable caught) {
-    // logger.log(Level.SEVERE, "Error mocking CAS user");
-    // }
-    // @Override
-    // public void onWaitSuccess(MockCASUserResult result) {
-    // AccessControlWeb.principal = result.getMetamacPrincipal();
-    // // Load edition languages
-    // ginjector.getDispatcher().execute(new LoadConfigurationPropertiesAction(), new WaitingAsyncCallback<LoadConfigurationPropertiesResult>() {
-    //
-    // @Override
-    // public void onWaitFailure(Throwable caught) {
-    // logger.log(Level.SEVERE, "Error loading edition languages");
-    // // If an error occurs while loading edition languages, enable SPANISH, ENGLISH and PORTUGUESE by default
-    // ApplicationEditionLanguages.setEditionLanguages(new String[]{ApplicationEditionLanguages.SPANISH, ApplicationEditionLanguages.ENGLISH, ApplicationEditionLanguages.PORTUGUESE});
-    // loadApplication();
-    // }
-    // @Override
-    // public void onWaitSuccess(LoadConfigurationPropertiesResult result) {
-    // ApplicationEditionLanguages.setEditionLanguages(result.getLanguages());
-    // ApplicationOrganisation.setCurrentOrganisation(result.getOrganisation());
-    // loadApplication();
-    // }
-    // });
-    // }
-    // });
-    // }
+    private void loadNonSecuredApplication() {
+        ginjector.getDispatcher().execute(new MockCASUserAction("GESTOR_ACCESOS"), new WaitingAsyncCallback<MockCASUserResult>() {
+
+            @Override
+            public void onWaitFailure(Throwable caught) {
+                logger.log(Level.SEVERE, "Error mocking CAS user");
+            }
+            @Override
+            public void onWaitSuccess(MockCASUserResult result) {
+                AccessControlWeb.principal = result.getMetamacPrincipal();
+                // Load edition languages
+                ginjector.getDispatcher().execute(new LoadConfigurationPropertiesAction(), new WaitingAsyncCallback<LoadConfigurationPropertiesResult>() {
+
+                    @Override
+                    public void onWaitFailure(Throwable caught) {
+                        logger.log(Level.SEVERE, "Error loading edition languages");
+                        // If an error occurs while loading edition languages, enable SPANISH, ENGLISH and PORTUGUESE by default
+                        ApplicationEditionLanguages.setEditionLanguages(new String[]{ApplicationEditionLanguages.SPANISH, ApplicationEditionLanguages.ENGLISH, ApplicationEditionLanguages.PORTUGUESE});
+                        loadApplication();
+                    }
+                    @Override
+                    public void onWaitSuccess(LoadConfigurationPropertiesResult result) {
+                        ApplicationEditionLanguages.setEditionLanguages(result.getLanguages());
+                        ApplicationOrganisation.setCurrentOrganisation(result.getOrganisation());
+                        loadApplication();
+                    }
+                });
+            }
+        });
+    }
 
     private void loadSecuredApplication() {
         String ticketParam = Window.Location.getParameter(TICKET);
