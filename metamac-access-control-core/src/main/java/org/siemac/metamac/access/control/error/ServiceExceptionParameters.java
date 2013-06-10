@@ -1,37 +1,37 @@
 package org.siemac.metamac.access.control.error;
 
-public class ServiceExceptionParameters {
+import org.siemac.metamac.core.common.exception.CommonServiceExceptionParameters;
 
-    public static final String ROLE                 = "role";
-    public static final String USER                 = "user";
-    public static final String APP                  = "app";
-    public static final String ACCESS               = "access";
+public class ServiceExceptionParameters extends CommonServiceExceptionParameters {
 
-    public static final String ID                   = "id";
+    public static final String ROLE                 = "parameter.acl.role";
+    public static final String USER                 = "parameter.acl.user";
+    public static final String APP                  = "parameter.acl.app";
+    public static final String ACCESS               = "parameter.acl.access";
 
-    public static final String ROLE_ID              = "role.id";
-    public static final String ROLE_UUID            = "role.uuid";
-    public static final String ROLE_CODE            = "role.code";
-    public static final String ROLE_TITLE           = "role.title";
+    public static final String ROLE_ID              = "parameter.acl.role.id";
+    public static final String ROLE_UUID            = "parameter.acl.role.uuid";
+    public static final String ROLE_CODE            = "parameter.acl.role.code";
+    public static final String ROLE_TITLE           = "parameter.acl.role.title";
 
-    public static final String USER_ID              = "user.id";
-    public static final String USER_UUID            = "user.uuid";
-    public static final String USER_USERNAME        = "user.username";
-    public static final String USER_NAME            = "user.name";
-    public static final String USER_SURNAME         = "user.surname";
-    public static final String USER_MAIL            = "user.mail";
+    public static final String USER_ID              = "parameter.acl.user.id";
+    public static final String USER_UUID            = "parameter.acl.user.uuid";
+    public static final String USER_USERNAME        = "parameter.acl.user.username";
+    public static final String USER_NAME            = "parameter.acl.user.name";
+    public static final String USER_SURNAME         = "parameter.acl.user.surname";
+    public static final String USER_MAIL            = "parameter.acl.user.mail";
 
-    public static final String APP_ID               = "app.id";
-    public static final String APP_UUID             = "app.uuid";
-    public static final String APP_CODE             = "app.code";
-    public static final String APP_TITLE            = "app.title";
+    public static final String APP_ID               = "parameter.acl.app.id";
+    public static final String APP_UUID             = "parameter.acl.app.uuid";
+    public static final String APP_CODE             = "parameter.acl.app.code";
+    public static final String APP_TITLE            = "parameter.acl.app.title";
 
-    public static final String ACCESS_ID            = "access.id";
-    public static final String ACCESS_UUID          = "access.uuid";
-    public static final String ACCESS_USER          = "access.user";
-    public static final String ACCESS_ROLE          = "access.role";
-    public static final String ACCESS_APP           = "access.app";
-    public static final String ACCESS_OPERATION     = "access.operation";
-    public static final String ACCESS_OPERATION_URN = ACCESS_OPERATION + ".urn";
+    public static final String ACCESS_ID            = "parameter.acl.access.id";
+    public static final String ACCESS_UUID          = "parameter.acl.access.uuid";
+    public static final String ACCESS_USER          = "parameter.acl.access.user";
+    public static final String ACCESS_ROLE          = "parameter.acl.access.role";
+    public static final String ACCESS_APP           = "parameter.acl.access.app";
+    public static final String ACCESS_OPERATION     = "parameter.acl.access.operation";
+    public static final String ACCESS_OPERATION_URN = "parameter.acl.access.operation.urn";
 
 }
