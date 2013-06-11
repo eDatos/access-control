@@ -18,6 +18,7 @@ import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoAsserts;
 import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoMocks;
+import org.siemac.metamac.access.control.error.ServiceExceptionParameters;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
@@ -68,33 +69,16 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     @Test
     public void testFindRoleByIdErrorParameterRequired() throws Exception {
-        Long id = null;
-
-        try {
-            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
-            fail("parameter required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.ID));
+        accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), null);
     }
 
     @Test
     public void testRetrieveRoleErrorNotExists() throws Exception {
-
         Long id = NOT_EXISTS;
 
-        try {
-            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
-            fail("Not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND, id));
+        accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
     }
 
     @Override
@@ -127,38 +111,22 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     @Test
     public void testCreateRoleCodeRequired() throws Exception {
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ROLE_CODE));
 
         RoleDto roleDto = new RoleDto();
         roleDto.setCode(null);
         roleDto.setTitle("Title");
-
-        try {
-            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
-            fail("code required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("role.code", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
     }
 
     @Test
     public void testCreateRoleTitleRequired() throws Exception {
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ROLE_TITLE));
 
         RoleDto roleDto = new RoleDto();
         roleDto.setCode("CODE");
         roleDto.setTitle(null);
-
-        try {
-            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
-            fail("title required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("role.title", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
     }
 
     @Test
@@ -168,15 +136,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         roleDto.setCode("aDMINISTRADOR");
         roleDto.setTitle("Title");
 
-        try {
-            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(roleDto.getCode(), e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, roleDto.getCode()));
+        accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
     }
 
     @Test
@@ -186,74 +147,41 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         roleDto.setCode("AdMiNISTrADOR");
         roleDto.setTitle("Title");
 
-        try {
-            accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(roleDto.getCode(), e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, roleDto.getCode()));
+        accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), roleDto);
     }
 
     @Override
     @Test
     public void testDeleteRole() throws Exception {
         Long id = ROLE_2;
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND, id));
 
         // Delete role
         accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
 
         // Validation
-        try {
-            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
-            fail("role deleted");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-
+        accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
     }
 
     @Test
     public void testDeleteRoleWithAccess() throws Exception {
         Long id = ROLE_1;
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND, id));
 
         // Delete role
         accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
 
         // Validation
-        try {
-            accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
-            fail("role deleted");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador()).size());
-        }
-
+        accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
     }
 
     @Test
     public void testDeleteRoleNotExists() throws Exception {
         Long id = NOT_EXISTS;
 
-        // Delete role
-        try {
-            accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
-            fail("role not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND, id));
+        accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
     }
 
     @Override
@@ -278,36 +206,20 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
     @Test
     public void testUpdateRoleNotExists() throws Exception {
         RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
-
         roleDto.setId(NOT_EXISTS);
 
-        try {
-            accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
-            fail("role not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(NOT_EXISTS, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND, roleDto.getId()));
+        accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
     }
 
     @Test
     public void testUpdateRoleDuplicatedCode() throws Exception {
         Long id = ROLE_1;
-
         RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), id);
         roleDto.setCode("TEC_PLANI");
 
-        try {
-            accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("TEC_PLANI", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, roleDto.getCode()));
+        accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
     }
 
     @Test
@@ -387,74 +299,42 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     @Test
     public void testCreateAppCodeRequired() throws Exception {
-
         AppDto appDto = new AppDto();
         appDto.setCode(null);
         appDto.setTitle("Title");
 
-        try {
-            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
-            fail("code required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("app.code", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.APP_CODE));
+        accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
     }
 
     @Test
     public void testCreateAppTitleRequired() throws Exception {
-
         AppDto appDto = new AppDto();
         appDto.setCode("CODE");
         appDto.setTitle(null);
 
-        try {
-            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
-            fail("title required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("app.title", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.APP_TITLE));
+        accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
     }
 
     @Test
     public void testCreateAppCodeDuplicated() throws Exception {
-
         AppDto appDto = new AppDto();
         appDto.setCode("gOPESTAT");
         appDto.setTitle("Title");
 
-        try {
-            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(appDto.getCode(), e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, appDto.getCode()));
+        accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
     }
 
     @Test
     public void testCreateAppCodeDuplicatedInsensitive() throws Exception {
-
         AppDto appDto = new AppDto();
         appDto.setCode("GoPeStat");
         appDto.setTitle("Title");
 
-        try {
-            accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(appDto.getCode(), e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, appDto.getCode()));
+        accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), appDto);
     }
 
     @Override
@@ -479,37 +359,20 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
     @Test
     public void testUpdateAppNotExists() throws Exception {
         AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
-
         appDto.setId(NOT_EXISTS);
 
-        try {
-            accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
-            fail("app not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.APP_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(NOT_EXISTS, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.APP_NOT_FOUND, appDto.getId()));
+        accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
     }
 
     @Test
     public void testUpdateAppDuplicatedCode() throws Exception {
         Long id = APP_1;
-
         AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
-
         appDto.setCode("gPE");
 
-        try {
-            accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("gPE", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.APP_ALREADY_EXIST_CODE_DUPLICATED, appDto.getCode()));
+        accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
     }
 
     @Test
@@ -553,58 +416,34 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
     public void testDeleteApp() throws Exception {
         Long id = APP_2;
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.APP_NOT_FOUND, id));
+
         // Delete app
         accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
 
         // Validation
-        try {
-            accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
-            fail("app deleted");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.APP_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-
+        accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
     }
 
     @Test
     public void testDeleteAppWithAccess() throws Exception {
         Long id = APP_1;
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.APP_NOT_FOUND, id));
+
         // Delete app
         accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
 
         // Validation
-        try {
-            accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
-            fail("app deleted");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.APP_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador()).size());
-        }
-
+        accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
     }
 
     @Test
     public void testDeleteAppNotExists() throws Exception {
         Long id = NOT_EXISTS;
 
-        // Delete app
-        try {
-            accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
-            fail("app not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.APP_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-
+        expectedMetamacException(new MetamacException(ServiceExceptionType.APP_NOT_FOUND, id));
+        accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
     }
 
     @Override
@@ -634,17 +473,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     @Test
     public void testFindAppByIdErrorParameterRequired() throws Exception {
-        Long id = null;
-
-        try {
-            accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), id);
-            fail("parameter required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.ID));
+        accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), null);
     }
 
     /**************************************************************************
@@ -672,33 +502,16 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     @Test
     public void testFindUserByIdErrorParameterRequired() throws Exception {
-        Long id = null;
-
-        try {
-            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
-            fail("parameter required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.ID));
+        accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), null);
     }
 
     @Test
     public void testRetrieveUserErrorNotExists() throws Exception {
-
         Long id = NOT_EXISTS;
 
-        try {
-            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
-            fail("Not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_NOT_FOUND, id));
+        accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
     }
 
     @Override
@@ -731,181 +544,107 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     @Test
     public void testCreateUserUsernameRequired() throws Exception {
-
         UserDto userDto = new UserDto();
         userDto.setUsername(null);
         userDto.setName("Name");
         userDto.setSurname("surname");
         userDto.setMail("prueba@arte-consultores.com");
 
-        try {
-            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
-            fail("username required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("user.username", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.USER_USERNAME));
+        accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
     }
 
     @Test
     public void testCreateUserNameRequired() throws Exception {
-
         UserDto userDto = new UserDto();
         userDto.setUsername("username");
         userDto.setName(null);
         userDto.setSurname("surname");
         userDto.setMail("prueba@arte-consultores.com");
 
-        try {
-            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
-            fail("name required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("user.name", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.USER_NAME));
+        accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
     }
 
     @Test
     public void testCreateUserSurnameRequired() throws Exception {
-
         UserDto userDto = new UserDto();
         userDto.setUsername("username");
         userDto.setName("name");
         userDto.setSurname(null);
         userDto.setMail("prueba@arte-consultores.com");
 
-        try {
-            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
-            fail("surname required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("user.surname", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.USER_SURNAME));
+        accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
     }
 
     @Test
     public void testCreateUserMailRequired() throws Exception {
-
         UserDto userDto = new UserDto();
         userDto.setUsername("username");
         userDto.setName("name");
         userDto.setSurname("surname");
         userDto.setMail(null);
 
-        try {
-            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
-            fail("mail required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("user.mail", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.USER_MAIL));
+        accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
     }
 
     @Test
     public void testCreateUserCodeDuplicated() throws Exception {
-
         UserDto userDto = new UserDto();
         userDto.setUsername("arte");
         userDto.setName("name");
         userDto.setSurname("surname");
         userDto.setMail("prueba@arte-consultores.com");
 
-        try {
-            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
-            fail("username duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(userDto.getUsername(), e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, userDto.getUsername()));
+        accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
     }
 
     @Test
     public void testCreateUserCodeDuplicatedInsensitive() throws Exception {
-
         UserDto userDto = new UserDto();
         userDto.setUsername("ARTe");
         userDto.setName("name");
         userDto.setSurname("surname");
         userDto.setMail("prueba@arte-consultores.com");
 
-        try {
-            accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(userDto.getUsername(), e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, userDto.getUsername()));
+        accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
     }
 
     @Override
     @Test
     public void testDeleteUser() throws Exception {
         Long id = USER_2;
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_NOT_FOUND, id));
 
         // Delete user
         accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
 
         // Validation
-        try {
-            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
-            fail("user deleted");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-
+        accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
     }
 
     @Test
     public void testDeleteUserWithAccess() throws Exception {
         Long id = USER_1;
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_NOT_FOUND, id));
 
         // Delete user
         accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
 
         // Validation
-        try {
-            accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
-            fail("user deleted");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals(0, accessControlBaseServiceFacade.findAllAccess(getServiceContextAdministrador()).size());
-        }
-
+        accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
     }
 
     @Test
     public void testDeleteUserNotExists() throws Exception {
         Long id = NOT_EXISTS;
 
-        // Delete user
-        try {
-            accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
-            fail("user not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_NOT_FOUND, id));
+        accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
     }
 
     @Override
@@ -931,37 +670,20 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
     @Test
     public void testUpdateUserNotExists() throws Exception {
         UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
-
         userDto.setId(NOT_EXISTS);
 
-        try {
-            accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
-            fail("user not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(NOT_EXISTS, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_NOT_FOUND, userDto.getId()));
+        accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
     }
 
     @Test
     public void testUpdateUserDuplicatedUsername() throws Exception {
         Long id = USER_1;
-
         UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), id);
-
         userDto.setUsername("prueba2");
 
-        try {
-            accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
-            fail("username duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("prueba2", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, userDto.getUsername()));
+        accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
     }
 
     @Test
@@ -1088,7 +810,6 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
 
     @Test
     public void testCreateDuplicatedAccessWithoutOperation() throws Exception {
-
         // Retrieve related entities
         RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
         AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
@@ -1099,22 +820,13 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
 
-        try {
-            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
-            fail("duplicated access");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(4, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("aDMINISTRADOR", e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals("gOPESTAT", e.getExceptionItems().get(0).getMessageParameters()[1]);
-            assertEquals("arte", e.getExceptionItems().get(0).getMessageParameters()[2]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
+                .getUsername(), null));
+        accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
     @Test
     public void testCreateAccessRoleRequired() throws Exception {
-
         // Retrieve related entities
         AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
         UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
@@ -1124,20 +836,12 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
 
-        try {
-            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
-            fail("role required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("access.role", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ACCESS_ROLE));
+        accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
     @Test
     public void testCreateAccessAppRequired() throws Exception {
-
         // Retrieve related entities
         RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
         UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
@@ -1147,20 +851,12 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setApp(null);
         accessDto.setUser(userDto);
 
-        try {
-            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
-            fail("app required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("access.app", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ACCESS_APP));
+        accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
     @Test
     public void testCreateAccessUserRequired() throws Exception {
-
         // Retrieve related entities
         RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
         AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
@@ -1170,15 +866,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setApp(appDto);
         accessDto.setUser(null);
 
-        try {
-            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
-            fail("user required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.METADATA_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("access.user", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ACCESS_USER));
+        accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
     @Test
@@ -1195,18 +884,9 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setUser(userDto);
         accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", "OPERATION-TODO-01-Internal", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
-        try {
-            accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
-            fail("duplicated access");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(4, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("aDMINISTRADOR", e.getExceptionItems().get(0).getMessageParameters()[0]);
-            assertEquals("gOPESTAT", e.getExceptionItems().get(0).getMessageParameters()[1]);
-            assertEquals("arte", e.getExceptionItems().get(0).getMessageParameters()[2]);
-            assertEquals("OPERATION-TODO-01", e.getExceptionItems().get(0).getMessageParameters()[3]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
+                .getUsername(), accessDto.getOperation().getUrn()));
+        accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
     @Override
@@ -1232,17 +912,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
     public void testRemoveAccessNotExists() throws Exception {
         Long id = NOT_EXISTS;
 
-        // Delete access
-        try {
-            accessControlBaseServiceFacade.removeAccess(getServiceContextAdministrador(), id);
-            fail("access not exists");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ACCESS_NOT_FOUND.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals(id, e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
-
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_NOT_FOUND, id));
+        accessControlBaseServiceFacade.removeAccess(getServiceContextAdministrador(), id);
     }
 
     @Override
@@ -1373,14 +1044,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
     public void testFindAccessByIdErrorParameterRequired() throws Exception {
         Long id = null;
 
-        try {
-            accessControlBaseServiceFacade.findAccessById(getServiceContextAdministrador(), id);
-            fail("parameter required");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.PARAMETER_REQUIRED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("id", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.PARAMETER_REQUIRED, ServiceExceptionParameters.ID));
+        accessControlBaseServiceFacade.findAccessById(getServiceContextAdministrador(), id);
     }
 }

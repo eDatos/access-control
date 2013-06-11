@@ -1,7 +1,5 @@
 package org.siemac.metamac.access.control.core.serviceapi;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.siemac.metamac.access.control.core.dto.AccessDto;
@@ -39,11 +37,9 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
     @Test
     public void testCreateRole() throws Exception {
         accessControlBaseServiceFacade.createRole(getServiceContextAdministrador(), AccessControlDtoMocks.mockRoleDto());
-        try {
-            accessControlBaseServiceFacade.createRole(getServiceContextTecnicoPlanificacion(), AccessControlDtoMocks.mockRoleDto());
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
+
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.createRole(getServiceContextTecnicoPlanificacion(), AccessControlDtoMocks.mockRoleDto());
     }
 
     @Override
@@ -54,25 +50,19 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         roleDto.setCode("newCode");
 
         accessControlBaseServiceFacade.updateRole(getServiceContextAdministrador(), roleDto);
-        try {
-            accessControlBaseServiceFacade.updateRole(getServiceContextTecnicoPlanificacion(), roleDto);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.updateRole(getServiceContextTecnicoPlanificacion(), roleDto);
     }
 
     @Override
     @Test
     public void testDeleteRole() throws Exception {
         Long id = ROLE_2;
-
         accessControlBaseServiceFacade.deleteRole(getServiceContextAdministrador(), id);
-        try {
-            accessControlBaseServiceFacade.deleteRole(getServiceContextTecnicoPlanificacion(), id);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
+
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.deleteRole(getServiceContextTecnicoPlanificacion(), id);
     }
 
     @Override
@@ -97,12 +87,9 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
     @Test
     public void testCreateApp() throws Exception {
         accessControlBaseServiceFacade.createApp(getServiceContextAdministrador(), AccessControlDtoMocks.mockAppDto());
-        try {
-            accessControlBaseServiceFacade.createApp(getServiceContextTecnicoPlanificacion(), AccessControlDtoMocks.mockAppDto());
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.createApp(getServiceContextTecnicoPlanificacion(), AccessControlDtoMocks.mockAppDto());
     }
 
     @Override
@@ -113,25 +100,19 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         appDto.setCode("newCode");
 
         accessControlBaseServiceFacade.updateApp(getServiceContextAdministrador(), appDto);
-        try {
-            accessControlBaseServiceFacade.updateApp(getServiceContextTecnicoPlanificacion(), appDto);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
+
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.updateApp(getServiceContextTecnicoPlanificacion(), appDto);
     }
 
     @Override
     @Test
     public void testDeleteApp() throws Exception {
         Long id = APP_2;
-
         accessControlBaseServiceFacade.deleteApp(getServiceContextAdministrador(), id);
-        try {
-            accessControlBaseServiceFacade.deleteApp(getServiceContextTecnicoPlanificacion(), id);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.deleteApp(getServiceContextTecnicoPlanificacion(), id);
     }
 
     @Override
@@ -155,12 +136,9 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
     @Test
     public void testCreateUser() throws Exception {
         accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), AccessControlDtoMocks.mockUserDto());
-        try {
-            accessControlBaseServiceFacade.createUser(getServiceContextTecnicoPlanificacion(), AccessControlDtoMocks.mockUserDto());
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.createUser(getServiceContextTecnicoPlanificacion(), AccessControlDtoMocks.mockUserDto());
     }
 
     @Override
@@ -171,26 +149,19 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         userDto.setUsername("newUsername");
 
         accessControlBaseServiceFacade.updateUser(getServiceContextAdministrador(), userDto);
-        try {
-            accessControlBaseServiceFacade.updateUser(getServiceContextTecnicoPlanificacion(), userDto);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.updateUser(getServiceContextTecnicoPlanificacion(), userDto);
     }
 
     @Override
     @Test
     public void testDeleteUser() throws Exception {
         Long id = USER_2;
-
         accessControlBaseServiceFacade.deleteUser(getServiceContextAdministrador(), id);
-        try {
-            accessControlBaseServiceFacade.deleteUser(getServiceContextTecnicoPlanificacion(), id);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.deleteUser(getServiceContextTecnicoPlanificacion(), id);
     }
 
     @Override
@@ -226,26 +197,19 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         accessDto.setOperation(new ExternalItemDto("TODO-02", "OPERATION:TODO:02", "OPERATION-TODO-02", "OPERATION-TODO-02-Internal", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
-        try {
-            accessControlBaseServiceFacade.createAccess(getServiceContextTecnicoPlanificacion(), accessDto);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.createAccess(getServiceContextTecnicoPlanificacion(), accessDto);
     }
 
     @Override
     @Test
     public void testRemoveAccess() throws Exception {
         Long id = ACCESS_2;
-
         accessControlBaseServiceFacade.removeAccess(getServiceContextAdministrador(), id);
-        try {
-            accessControlBaseServiceFacade.removeAccess(getServiceContextTecnicoPlanificacion(), id);
-        } catch (MetamacException e) {
-            assertEquals(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED.getCode(), e.getExceptionItems().get(0).getCode());
-        }
 
+        expectedMetamacException(new MetamacException(ServiceExceptionType.SECURITY_OPERATION_NOT_ALLOWED, getServiceContextTecnicoPlanificacion().getUserId()));
+        accessControlBaseServiceFacade.removeAccess(getServiceContextTecnicoPlanificacion(), id);
     }
 
     @Override

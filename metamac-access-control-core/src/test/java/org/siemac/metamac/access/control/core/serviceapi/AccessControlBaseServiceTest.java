@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -85,19 +84,11 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
     @Test
     public void testUpdateRoleDuplicatedCode() throws Exception {
         Long id = ROLE_1;
-
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), id);
         role.setCode("TEC_PLANI");
 
-        try {
-            accessControlBaseService.updateRole(getServiceContextAdministrador(), role);
-            fail("code duplicated");
-        } catch (MetamacException e) {
-            assertEquals(1, e.getExceptionItems().size());
-            assertEquals(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED.getCode(), e.getExceptionItems().get(0).getCode());
-            assertEquals(1, e.getExceptionItems().get(0).getMessageParameters().length);
-            assertEquals("TEC_PLANI", e.getExceptionItems().get(0).getMessageParameters()[0]);
-        }
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ROLE_ALREADY_EXIST_CODE_DUPLICATED, role.getCode()));
+        accessControlBaseService.updateRole(getServiceContextAdministrador(), role);
     }
 
     @Override
