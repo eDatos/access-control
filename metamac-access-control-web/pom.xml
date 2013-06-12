@@ -242,7 +242,6 @@
                             <servicePattern>**/client/service/**/*Service.java</servicePattern>
                             <i18nConstantsBundle>org.siemac.metamac.access.control.web.client.AccessControlWebConstants</i18nConstantsBundle>
                             <i18nMessagesBundle>org.siemac.metamac.access.control.web.client.AccessControlWebMessages</i18nMessagesBundle>
-                            <i18nConstantsWithLookupBundle>org.siemac.metamac.access.control.web.client.AccessControlWebCoreMessages</i18nConstantsWithLookupBundle>
                         </configuration>
                         <goals>
                             <goal>resources</goal>
