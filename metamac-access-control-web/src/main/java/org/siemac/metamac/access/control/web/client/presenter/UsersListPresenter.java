@@ -14,7 +14,6 @@ import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEve
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent.UpdateApplicationsHandler;
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent;
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent.UpdateRolesHandler;
-import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListResult;
@@ -33,7 +32,6 @@ import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserResult;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
-import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
@@ -120,7 +118,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUsers()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(FindAllUsersResult result) {
@@ -135,12 +133,11 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorDeletingUser()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(DeleteUserListResult result) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(selectedUsers.size() > 1 ? getMessages().usersDeleted() : getMessages().userDeleted()),
-                        MessageTypeEnum.SUCCESS);
+                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, selectedUsers.size() > 1 ? getMessages().usersDeleted() : getMessages().userDeleted());
                 retrieveUsersList();
             }
         });
@@ -152,17 +149,17 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingUser()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(SaveUserResult result) {
                 final UserDto userSaved = result.getUserDto();
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().userSaved()), MessageTypeEnum.SUCCESS);
+                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().userSaved());
                 dispatcher.execute(new FindAllUsersAction(), new WaitingAsyncCallback<FindAllUsersResult>() {
 
                     @Override
                     public void onWaitFailure(Throwable caught) {
-                        ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUsers()), MessageTypeEnum.ERROR);
+                        ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
                     }
                     @Override
                     public void onWaitSuccess(FindAllUsersResult result) {
@@ -179,7 +176,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUserAccess()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(FindAccessByUserResult result) {
@@ -194,17 +191,17 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingRole()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(SaveAccessResult result) {
                 final AccessDto accessSaved = result.getAccess();
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().accessSaved()), MessageTypeEnum.SUCCESS);
+                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessSaved());
                 dispatcher.execute(new FindAccessByUserAction(accessDto.getUser().getUsername()), new WaitingAsyncCallback<FindAccessByUserResult>() {
 
                     @Override
                     public void onWaitFailure(Throwable caught) {
-                        ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUserAccess()), MessageTypeEnum.ERROR);
+                        ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
                     }
                     @Override
                     public void onWaitSuccess(FindAccessByUserResult result) {
@@ -221,12 +218,12 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorSavingRole()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(SaveAccessListResult result) {
                 retrieveUserAccess(accessDtos.get(0).getUser().getUsername());
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().accessSaved()), MessageTypeEnum.SUCCESS);
+                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessSaved());
             }
         });
     }
@@ -237,12 +234,12 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingUserAccess()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(DeleteAccessListResult result) {
                 retrieveUserAccess(username);
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getMessageList(getMessages().accessDeleted()), MessageTypeEnum.SUCCESS);
+                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessDeleted());
             }
         });
     }
@@ -265,7 +262,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(UsersListPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingOperations()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
             }
 
             @Override
@@ -274,5 +271,4 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
             }
         });
     }
-
 }

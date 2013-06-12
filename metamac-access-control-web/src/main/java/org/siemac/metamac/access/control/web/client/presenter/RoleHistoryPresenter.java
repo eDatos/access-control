@@ -1,17 +1,13 @@
 package org.siemac.metamac.access.control.web.client.presenter;
 
-import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getMessages;
-
 import java.util.List;
 
 import org.siemac.metamac.access.control.core.dto.AccessDto;
 import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.NameTokens;
-import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.RoleHistoryUiHandlers;
 import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessResult;
-import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
 
@@ -83,7 +79,7 @@ public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHis
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(RoleHistoryPresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingDischargedAccess()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(RoleHistoryPresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(FindAllRemovedAccessResult result) {

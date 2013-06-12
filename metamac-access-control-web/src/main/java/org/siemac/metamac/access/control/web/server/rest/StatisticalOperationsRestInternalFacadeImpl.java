@@ -3,7 +3,6 @@ package org.siemac.metamac.access.control.web.server.rest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.siemac.metamac.access.control.web.client.AccessControlWeb;
 import org.siemac.metamac.rest.common.v1_0.domain.ComparisonOperator;
 import org.siemac.metamac.rest.common.v1_0.domain.LogicalOperator;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Operation;
@@ -30,7 +29,7 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
                     org.siemac.metamac.rest.common.v1_0.domain.Exception.class);
             throw WebExceptionUtils.createMetamacWebException(exception);
         } catch (Exception e) {
-            throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, AccessControlWeb.getCoreMessages().exception_common_unknown());
+            throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, e.getMessage());
         }
     }
 
@@ -54,8 +53,7 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
                     org.siemac.metamac.rest.common.v1_0.domain.Exception.class);
             throw WebExceptionUtils.createMetamacWebException(exception);
         } catch (Exception e) {
-            throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, AccessControlWeb.getCoreMessages().exception_common_unknown());
+            throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, e.getMessage());
         }
     }
-
 }

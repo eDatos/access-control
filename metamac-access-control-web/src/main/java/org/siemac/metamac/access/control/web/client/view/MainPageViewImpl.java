@@ -1,7 +1,5 @@
 package org.siemac.metamac.access.control.web.client.view;
 
-import java.util.List;
-
 import org.siemac.metamac.access.control.web.client.AccessControlWeb;
 import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
@@ -153,11 +151,11 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
      ***************************************************/
 
     @Override
-    public void showMessage(List<String> messages, MessageTypeEnum type) {
+    public void showMessage(Throwable throwable, String message, MessageTypeEnum type) {
         // Hide messages before showing the new ones
         hideMessages();
         if (MessageTypeEnum.SUCCESS.equals(type)) {
-            successMessagePanel.showMessage(messages);
+            successMessagePanel.showMessage(message);
             Timer timer = new Timer() {
 
                 @Override
@@ -167,7 +165,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
             };
             timer.schedule(6000);
         } else if (MessageTypeEnum.ERROR.equals(type)) {
-            errorMessagePanel.showMessage(messages);
+            errorMessagePanel.showMessage(throwable);
         }
     }
 

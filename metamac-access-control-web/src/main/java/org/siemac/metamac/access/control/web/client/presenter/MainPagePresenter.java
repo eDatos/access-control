@@ -1,15 +1,11 @@
 package org.siemac.metamac.access.control.web.client.presenter;
 
-import static org.siemac.metamac.access.control.web.client.AccessControlWeb.getMessages;
-
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent;
 import org.siemac.metamac.access.control.web.client.events.UpdateRolesEvent;
-import org.siemac.metamac.access.control.web.client.utils.ErrorUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsAction;
 import org.siemac.metamac.access.control.web.shared.FindAllAppsResult;
@@ -17,7 +13,6 @@ import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesResult;
 import org.siemac.metamac.access.control.web.shared.GetUserGuideUrlAction;
 import org.siemac.metamac.access.control.web.shared.GetUserGuideUrlResult;
-import org.siemac.metamac.web.common.client.MetamacWebCommon;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
 import org.siemac.metamac.web.common.client.events.HideMessageEvent;
 import org.siemac.metamac.web.common.client.events.HideMessageEvent.HideMessageHandler;
@@ -71,7 +66,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
     public interface MainPageView extends View, HasUiHandlers<MainPageUiHandlers> {
 
-        void showMessage(List<String> messages, MessageTypeEnum type);
+        void showMessage(Throwable throwable, String message, MessageTypeEnum type);
         void hideMessages();
         void setTitle(String title);
     }
@@ -123,7 +118,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
     @ProxyEvent
     @Override
     public void onShowMessage(ShowMessageEvent event) {
-        getView().showMessage(event.getMessages(), event.getMessageType());
+        getView().showMessage(event.getThrowable(), event.getMessage(), event.getMessageType());
     }
 
     @ProxyEvent
@@ -147,7 +142,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingRoles()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(MainPagePresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(FindAllRolesResult result) {
@@ -161,7 +156,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, getMessages().errorRetrievingApplications()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(MainPagePresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(FindAllAppsResult result) {
@@ -191,7 +186,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
             @Override
             public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fire(MainPagePresenter.this, ErrorUtils.getErrorMessages(caught, MetamacWebCommon.getMessages().errorDownloadingUserGuide()), MessageTypeEnum.ERROR);
+                ShowMessageEvent.fireErrorMessage(MainPagePresenter.this, caught);
             }
             @Override
             public void onWaitSuccess(GetUserGuideUrlResult result) {
@@ -199,5 +194,4 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
             }
         });
     }
-
 }

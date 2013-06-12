@@ -43,7 +43,6 @@ public class AccessControlWeb extends MetamacEntryPoint {
     private static MetamacPrincipal               principal;
     private static AccessControlWebConstants      constants;
     private static AccessControlWebMessages       messages;
-    private static AccessControlWebCoreMessages   coreMessages;
 
     public static final AccessControlWebGinjector ginjector        = GWT.create(AccessControlWebGinjector.class);
 
@@ -218,15 +217,7 @@ public class AccessControlWeb extends MetamacEntryPoint {
         return messages;
     }
 
-    public static AccessControlWebCoreMessages getCoreMessages() {
-        if (coreMessages == null) {
-            coreMessages = (AccessControlWebCoreMessages) GWT.create(AccessControlWebCoreMessages.class);
-        }
-        return coreMessages;
-    }
-
     public static AccessControlWebGinjector getAccessControlWebGinjector() {
         return ginjector;
     }
-
 }
