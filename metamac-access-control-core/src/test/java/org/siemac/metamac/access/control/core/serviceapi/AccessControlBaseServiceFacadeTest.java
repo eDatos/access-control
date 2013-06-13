@@ -746,7 +746,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("TODO-02", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", "OPERATION-TODO-02-Internal",
+        accessDto.setOperation(new ExternalItemDto("TODO-02", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", null,
                 TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         // Create
@@ -882,7 +882,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", "OPERATION-TODO-01-Internal", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
                 .getUsername(), accessDto.getOperation().getUrn()));
@@ -1029,7 +1029,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, accessDto.getApp());
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, accessDto.getUser());
         MetamacAsserts.assertEqualsExternalItemDto(new ExternalItemDto("TODO-01", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:01", "OPERATION-TODO-01",
-                "OPERATION-TODO-01-Internal", TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null, "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto
+                null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null, "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto
                 .getOperation());
 
         assertEquals("A-1", accessDto.getUuid());

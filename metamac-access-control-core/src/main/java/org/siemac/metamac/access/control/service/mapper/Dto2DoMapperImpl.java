@@ -16,6 +16,7 @@ import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.access.control.core.serviceapi.AccessControlBaseService;
 import org.siemac.metamac.access.control.error.ServiceExceptionParameters;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
+import org.siemac.metamac.access.control.service.utils.AccessControlValidationUtils;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.dto.InternationalStringDto;
 import org.siemac.metamac.core.common.dto.LocalisedStringDto;
@@ -27,7 +28,6 @@ import org.siemac.metamac.core.common.ent.domain.LocalisedString;
 import org.siemac.metamac.core.common.enume.utils.TypeExternalArtefactsEnumUtils;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.mapper.BaseDto2DoMapperImpl;
-import org.siemac.metamac.core.common.serviceimpl.utils.ValidationUtils;
 import org.siemac.metamac.core.common.util.OptimisticLockingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -260,7 +260,7 @@ public class Dto2DoMapperImpl extends BaseDto2DoMapperImpl implements Dto2DoMapp
             target = new InternationalString();
         }
 
-        if (ValidationUtils.isEmpty(source)) {
+        if (AccessControlValidationUtils.isEmpty(source)) {
             throw new MetamacException(ServiceExceptionType.METADATA_REQUIRED, metadataName);
         }
 

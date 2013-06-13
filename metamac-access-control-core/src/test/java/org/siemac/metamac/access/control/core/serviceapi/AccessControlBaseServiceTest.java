@@ -271,7 +271,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_1);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_1);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
-        ExternalItem operation = new ExternalItem("MNP", "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", "urn:app:gopestat:StatisticalOperation=MNPInternal",
+        ExternalItem operation = new ExternalItem("MNP", "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", null,
                 TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation));
@@ -289,7 +289,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_2);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_2);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_2);
-        ExternalItem operation = new ExternalItem("MNP2", "uri/MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", "urn:app:gopestat:StatisticalOperation=MNP2Internal",
+        ExternalItem operation = new ExternalItem("MNP2", "uri/MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", null,
                 TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         access.setApp(app);

@@ -194,7 +194,7 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("TODO-02", "OPERATION:TODO:02", "OPERATION-TODO-02", "OPERATION-TODO-02-Internal", TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(new ExternalItemDto("TODO-02", "OPERATION:TODO:02", "OPERATION-TODO-02", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
 
