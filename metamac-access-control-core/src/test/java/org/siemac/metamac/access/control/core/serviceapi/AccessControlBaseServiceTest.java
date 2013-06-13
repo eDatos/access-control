@@ -203,6 +203,15 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertNotNull(user);
     }
 
+    @Test
+    public void testCreateUserCodeDuplicatedInsensitive() throws Exception {
+        User user = AccessControlDoMocks.createUser();
+        user.setUsername("ARTe");
+
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, user.getUsername()));
+        accessControlBaseService.createUser(getServiceContextAdministrador(), user);
+    }
+    
     @Override
     @Test
     public void testUpdateUser() throws Exception {
