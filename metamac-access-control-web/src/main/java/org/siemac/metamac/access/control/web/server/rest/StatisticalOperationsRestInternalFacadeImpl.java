@@ -40,6 +40,7 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
             throwMetamacWebExceptionFromServerWebApplicationException(serviceContext, e);
             return null;
         } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
             throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, e.getMessage());
         }
     }
@@ -63,16 +64,18 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
             throwMetamacWebExceptionFromServerWebApplicationException(serviceContext, e);
             return null;
         } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
             throw new MetamacWebException(CommonSharedConstants.EXCEPTION_UNKNOWN, e.getMessage());
         }
     }
 
     private void throwMetamacWebExceptionFromServerWebApplicationException(ServiceContext serviceContext, ServerWebApplicationException e) throws MetamacWebException {
+        logger.log(Level.SEVERE, e.getMessage());
+
         org.siemac.metamac.rest.common.v1_0.domain.Exception exception = e.toErrorObject(WebClient.client(restApiLocator.getStatisticalOperationsRestFacadeV10()),
                 org.siemac.metamac.rest.common.v1_0.domain.Exception.class);
 
         if (exception == null) {
-            logger.log(Level.SEVERE, e.getMessage());
             if (e.getResponse().getStatus() == 404) {
                 throwMetamacWebException(serviceContext, WebMessageExceptionsConstants.REST_API_STATISTICAL_OPERATIONS_INVOCATION_ERROR_404);
             } else {
