@@ -820,8 +820,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
 
-        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
-                .getUsername(), null));
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITHOUT_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
+                .getUsername()));
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
@@ -884,7 +884,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setUser(userDto);
         accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
 
-        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
                 .getUsername(), accessDto.getOperation().getUrn()));
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }

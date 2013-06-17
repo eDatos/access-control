@@ -24,6 +24,7 @@ import org.siemac.metamac.access.control.core.exception.RoleNotFoundException;
 import org.siemac.metamac.access.control.core.exception.UserNotFoundException;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.access.control.service.utils.InvocationValidator;
+import org.siemac.metamac.core.common.exception.CommonServiceExceptionType;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -412,6 +413,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
         String operationUrn = null;
+        
         if (entity.getOperation() != null) {
             operationUrn = entity.getOperation().getUrn();
         }
@@ -440,16 +442,14 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         if (access != null) {
             if (entity.getId() == null) {
                 if (access.size() == 1) {
-                    throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(),
-                            operationUrn);
+                    throwExceptionForDuplicatedAccess(entity, operationUrn);
                 } else if (access.size() > 1) {
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: "
                             + entity.getUser().getUsername() + " Operation: " + operationUrn);
                 }
             } else {
                 if (access.size() == 2) {
-                    throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_CODE_DUPLICATED, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(),
-                            operationUrn);
+                    throwExceptionForDuplicatedAccess(entity, operationUrn);
                 } else if (access.size() > 2) {
                     throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: "
                             + entity.getUser().getUsername() + " Operation: " + operationUrn);
@@ -457,6 +457,15 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
             }
         }
 
+    }
+
+    private void throwExceptionForDuplicatedAccess(Access entity, String operationUrn) throws MetamacException {
+        if (StringUtils.isEmpty(operationUrn)) {
+            throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITHOUT_OPERATION, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername());
+        } else {
+            throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(),
+                    operationUrn);
+        }
     }
 
     private void validateRemovalDate(ServiceContext ctx, Access entity, Object object) throws MetamacException {
