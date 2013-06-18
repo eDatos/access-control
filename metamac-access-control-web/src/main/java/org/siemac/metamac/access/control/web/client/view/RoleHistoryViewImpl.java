@@ -40,6 +40,7 @@ public class RoleHistoryViewImpl extends ViewWithUiHandlers<RoleHistoryUiHandler
 
         accessListGrid = new ListGrid();
         accessListGrid.setLeaveScrollbarGap(false);
+        accessListGrid.setCanFocus(false); // To avoid scrolling when a record is clicked
         ListGridField accessIdField = new ListGridField(AccessRecord.ID, getConstants().identifier());
         accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
 
