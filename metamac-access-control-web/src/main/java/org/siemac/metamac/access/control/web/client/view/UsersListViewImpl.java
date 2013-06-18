@@ -259,7 +259,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         });
 
         accessMainFormLayout = new MainFormLayout();
-        accessMainFormLayout.setVisibility(Visibility.HIDDEN);
+        accessMainFormLayout.setVisible(false);
         accessMainFormLayout.getSave().addClickHandler(new ClickHandler() {
 
             @Override
@@ -282,13 +282,13 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         accessMainFormLayout.addVisibilityChangedHandler(new VisibilityChangedHandler() {
 
             @Override
-            public void onVisibilityChanged(VisibilityChangedEvent event) {
+            public void onVisibilityChanged(final VisibilityChangedEvent event) {
                 Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 
                     @Override
                     public void execute() {
                         // Scroll to bottom
-                        subPanel.scrollTo(0, subPanel.getMember(USER_LAYOUT_ID).getBottom());
+                        subPanel.scrollToBottom();
                     }
                 });
             }
@@ -490,6 +490,13 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             // Load statistical operations
             uiHandlers.retrievePaginatedOperations(0, OPERATION_LIST_MAX_RESULTS, null);
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
+                @Override
+                public void execute() {
+                    subPanel.scrollToBottom();
+                }
+            });
         } else {
             showAccessDeleteButton();
             accessMainFormLayout.hide();
