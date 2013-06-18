@@ -248,6 +248,10 @@ public class Dto2DoMapperImpl extends BaseDto2DoMapperImpl implements Dto2DoMapp
     // ------------------------------------------------------------
 
     private InternationalString internationalStringToDo(InternationalStringDto source, InternationalString target, String metadataName) throws MetamacException {
+        // Check it is valid
+        checkInternationalStringDtoValid(source, metadataName);
+
+        // Transform
         if (source == null) {
             if (target != null) {
                 // delete previous entity
@@ -256,12 +260,12 @@ public class Dto2DoMapperImpl extends BaseDto2DoMapperImpl implements Dto2DoMapp
             return null;
         }
 
-        if (target == null) {
-            target = new InternationalString();
-        }
-
         if (AccessControlValidationUtils.isEmpty(source)) {
             throw new MetamacException(ServiceExceptionType.METADATA_REQUIRED, metadataName);
+        }
+
+        if (target == null) {
+            target = new InternationalString();
         }
 
         Set<LocalisedString> localisedStringEntities = localisedStringDtoToDo(source.getTexts(), target.getTexts());
