@@ -45,13 +45,6 @@ public class AccessControlWeb extends MetamacSecurityEntryPoint {
 
     public static final AccessControlWebGinjector ginjector        = GWT.create(AccessControlWebGinjector.class);
 
-    interface GlobalResources extends ClientBundle {
-
-        @NotStrict
-        @Source("AccessControlWebStyles.css")
-        CssResource css();
-    }
-
     @Override
     public void onModuleLoad() {
         setUncaughtExceptionHandler();
