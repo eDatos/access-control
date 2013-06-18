@@ -32,7 +32,7 @@ public class AccessControlDtoAsserts {
     public static void assertEqualsUserDto(UserDto expected, UserDto actual) {
         assertEquals(expected.getUuid(), actual.getUuid());
         assertEquals(expected.getId(), actual.getId());
-        assertEquals(expected.getUsername(), actual.getUsername());
+        assertEquals(expected.getUsername().toLowerCase(), actual.getUsername());
         assertEquals(expected.getName(), actual.getName());
         assertEquals(expected.getSurname(), actual.getSurname());
         assertEquals(expected.getMail(), actual.getMail());

@@ -202,13 +202,22 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         User user = accessControlBaseService.createUser(getServiceContextAdministrador(), AccessControlDoMocks.createUser());
         assertNotNull(user);
     }
+    
+    @Test
+    public void testCreateUserCheckUsernameInLowercase() throws Exception {
+        User user = AccessControlDoMocks.createUser();
+        user.setUsername("TEST");
+        
+        user = accessControlBaseService.createUser(getServiceContextAdministrador(), user);
+        assertEquals("test", user.getUsername());
+    }
 
     @Test
     public void testCreateUserCodeDuplicatedInsensitive() throws Exception {
         User user = AccessControlDoMocks.createUser();
         user.setUsername("ARTe");
 
-        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, user.getUsername()));
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, user.getUsername().toLowerCase()));
         accessControlBaseService.createUser(getServiceContextAdministrador(), user);
     }
     
@@ -233,6 +242,23 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertTrue(userUpdated.getLastUpdated().isAfter(userUpdated.getCreatedDate()));
     }
 
+    
+    @Test
+    public void testUpdateUserCheckUsernameInLowercase() throws Exception {
+        Long id = USER_1;
+
+        // Retrieve
+        User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), id);
+        user.setUsername("newUsername");
+
+        // Update
+        user = accessControlBaseService.updateUser(getServiceContextAdministrador(), user);
+
+        // Validation
+        assertEquals("newusername", user.getUsername());
+    }
+    
+    
     @Override
     @Test
     public void testFindAllUsers() throws Exception {

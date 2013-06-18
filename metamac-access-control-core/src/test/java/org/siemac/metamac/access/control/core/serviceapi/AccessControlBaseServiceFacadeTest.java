@@ -610,7 +610,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         userDto.setSurname("surname");
         userDto.setMail("prueba@arte-consultores.com");
 
-        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, userDto.getUsername()));
+        expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, userDto.getUsername().toLowerCase()));
         accessControlBaseServiceFacade.createUser(getServiceContextAdministrador(), userDto);
     }
 

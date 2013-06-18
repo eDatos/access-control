@@ -24,7 +24,6 @@ import org.siemac.metamac.access.control.core.exception.RoleNotFoundException;
 import org.siemac.metamac.access.control.core.exception.UserNotFoundException;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.access.control.service.utils.InvocationValidator;
-import org.siemac.metamac.core.common.exception.CommonServiceExceptionType;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -190,6 +189,11 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public User createUser(ServiceContext ctx, User entity) throws MetamacException {
         // Validations
         InvocationValidator.checkCreateUser(entity, null);
+
+        // Set username in lowercase
+        entity.setUsername(entity.getUsername().toLowerCase());
+
+        // Validate username
         validateUserUsernameUnique(ctx, entity.getUsername(), null);
 
         // Repository operation
@@ -199,6 +203,11 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public User updateUser(ServiceContext ctx, User entity) throws MetamacException {
         // Validations
         InvocationValidator.checkUpdateUser(entity, null);
+
+        // Set username in lowercase
+        entity.setUsername(entity.getUsername().toLowerCase());
+
+        // Validate username
         validateUserUsernameUnique(ctx, entity.getUsername(), entity.getId());
 
         // Repository operation
@@ -413,7 +422,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
         String operationUrn = null;
-        
+
         if (entity.getOperation() != null) {
             operationUrn = entity.getOperation().getUrn();
         }
@@ -463,8 +472,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         if (StringUtils.isEmpty(operationUrn)) {
             throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITHOUT_OPERATION, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername());
         } else {
-            throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(),
-                    operationUrn);
+            throw new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, entity.getRole().getCode(), entity.getApp().getCode(), entity.getUser().getUsername(), operationUrn);
         }
     }
 
