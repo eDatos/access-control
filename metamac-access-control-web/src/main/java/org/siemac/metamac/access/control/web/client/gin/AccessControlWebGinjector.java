@@ -8,6 +8,7 @@ import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UnauthorizedPagePresenter;
 import org.siemac.metamac.access.control.web.client.presenter.UsersListPresenter;
+import org.siemac.metamac.web.common.client.gin.MetamacWebGinjector;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.inject.client.AsyncProvider;
@@ -19,11 +20,7 @@ import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.proxy.PlaceManager;
 
 @GinModules({DispatchAsyncModule.class, ClientModule.class})
-public interface AccessControlWebGinjector extends Ginjector {
-
-    PlaceManager getPlaceManager();
-    EventBus getEventBus();
-    DispatchAsync getDispatcher();
+public interface AccessControlWebGinjector extends MetamacWebGinjector {
 
     LoggedInGatekeeper getLoggedInGatekeeper();
 
