@@ -65,5 +65,8 @@ Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CR
 (GET_NEXT_SEQUENCE_VALUE('APPS'),'GESTOR_RECURSOS_ESTRUCTURALES','6eb8c7c5-d839-40e2-bd89-a4863e402fd0','Gestor de recursos estructurales', 'Aplicativo encargado de gestionar los recursos estructurales', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
 
+Insert Into Tb_Apps (Id, Code, Uuid, Title, Description, Version, Created_By, Created_Date, Created_Date_Tz, Last_Updated_By, Last_Updated, Last_Updated_Tz) Values 
+(Get_Next_Sequence_Value('APPS'),'GESTOR_RECURSOS_ESTADISTICOS','fa232c30-d8dc-11e2-a28f-0800200c9a66','Gestor de recursos estadísticos', 'Aplicativo encargado de gestionar los recursos estadísticos', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
 
 commit;
