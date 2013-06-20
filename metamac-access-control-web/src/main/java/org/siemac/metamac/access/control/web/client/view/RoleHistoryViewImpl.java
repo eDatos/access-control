@@ -10,6 +10,7 @@ import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
 import org.siemac.metamac.access.control.web.client.presenter.RoleHistoryPresenter;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.RoleHistoryUiHandlers;
+import org.siemac.metamac.web.common.client.widgets.BaseCustomListGrid;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
@@ -23,10 +24,10 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class RoleHistoryViewImpl extends ViewWithUiHandlers<RoleHistoryUiHandlers> implements RoleHistoryPresenter.RoleHistoryView {
 
-    private VLayout  panel;
-    private Label    title;
+    private VLayout            panel;
+    private Label              title;
 
-    private ListGrid accessListGrid;
+    private BaseCustomListGrid accessListGrid;
 
     public RoleHistoryViewImpl() {
         super();
@@ -38,9 +39,7 @@ public class RoleHistoryViewImpl extends ViewWithUiHandlers<RoleHistoryUiHandler
         title.setMargin(15);
         title.setHeight(30);
 
-        accessListGrid = new ListGrid();
-        accessListGrid.setLeaveScrollbarGap(false);
-        accessListGrid.setCanFocus(false); // To avoid scrolling when a record is clicked
+        accessListGrid = new BaseCustomListGrid();
         ListGridField accessIdField = new ListGridField(AccessRecord.ID, getConstants().identifier());
         accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
 

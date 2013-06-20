@@ -221,6 +221,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         });
 
         accessListGrid = new NavigableListGrid();
+        ListGridUtils.setCheckBoxSelectionType(accessListGrid);
         accessListGrid.setHeight(300);
         CustomListGridField accessIdField = new CustomListGridField(AccessRecord.ID, getConstants().identifier());
         accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
