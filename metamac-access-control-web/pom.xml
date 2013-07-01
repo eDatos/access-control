@@ -95,6 +95,10 @@
             <version>${gwtp.version}</version>
             <exclusions>
                 <exclusion>
+                    <groupId>com.gwtplatform</groupId>
+                    <artifactId>gwtp-crawler-service</artifactId>
+                </exclusion>
+                <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-core</artifactId>
                 </exclusion>
