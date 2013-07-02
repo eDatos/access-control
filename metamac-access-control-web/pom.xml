@@ -97,7 +97,7 @@
                 <exclusion>
                     <groupId>com.gwtplatform</groupId>
                     <artifactId>gwtp-crawler-service</artifactId>
-                </exclusion>
+                </exclusion>            
                 <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-core</artifactId>
@@ -174,11 +174,6 @@
             <artifactId>commons-codec</artifactId>
             <version>${commons-codec.version}</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xmlParserAPIs</artifactId>
-            <version>${xerces.version}</version>
         </dependency>
         <dependency>
             <groupId>xerces</groupId>
