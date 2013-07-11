@@ -4,6 +4,8 @@ import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
 import org.siemac.metamac.common.test.utils.MetamacMocks;
+import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 
 /**
  * Mocks
@@ -33,6 +35,18 @@ public class AccessControlDtoMocks extends MetamacMocks {
         userDto.setSurname("Díaz Adán");
         userDto.setMail("rdiaada@arte-consultores.com");
         return userDto;
+    }
+
+    public static ExternalItemDto mockExternalItemDto(String code, String codeNested, String uri, String urn, String urnInternal, TypeExternalArtefactsEnum type, String managementAppUrl) {
+        ExternalItemDto target = new ExternalItemDto();
+        target.setCode(code);
+        target.setCodeNested(codeNested);
+        target.setUri(uri);
+        target.setUrn(urn);
+        target.setUrnInternal(urnInternal);
+        target.setType(type);
+        target.setManagementAppUrl(managementAppUrl);
+        return target;
     }
 
 }

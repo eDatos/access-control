@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoMocks.mockExternalItemDto;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +22,6 @@ import org.siemac.metamac.access.control.core.serviceapi.utils.AccessControlDtoM
 import org.siemac.metamac.access.control.error.ServiceExceptionParameters;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.common.test.utils.MetamacAsserts;
-import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.core.common.enume.domain.TypeExternalArtefactsEnum;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -746,8 +746,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("TODO-02", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", null,
-                TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(mockExternalItemDto("TODO-02", null, "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", null,
+                TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null));
 
         // Create
         AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -882,7 +882,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(new ExternalItemDto("TODO-01", "OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION));
+        accessDto.setOperation(mockExternalItemDto("TODO-01", null, "OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null));
 
         expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
                 .getUsername(), accessDto.getOperation().getUrn()));
@@ -1028,9 +1028,9 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDto, accessDto.getRole());
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, accessDto.getApp());
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, accessDto.getUser());
-        MetamacAsserts.assertEqualsExternalItemDto(new ExternalItemDto("TODO-01", "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:01", "OPERATION-TODO-01",
-                null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null, "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto
-                .getOperation());
+        MetamacAsserts.assertEqualsExternalItemDto(
+                mockExternalItemDto("TODO-01", null, "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
+                        "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto.getOperation());
 
         assertEquals("A-1", accessDto.getUuid());
         assertEquals(Long.valueOf(1), accessDto.getVersion());

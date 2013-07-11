@@ -157,19 +157,35 @@ public class AccessControlDoMocks extends MetamacMocks {
         return mockSrmAppExternalItem(code, mockDimensionUrn(code), TypeExternalArtefactsEnum.DIMENSION);
     }
 
+    public static ExternalItem mockExternalItem(String code, String codeNested, String uri, String urn, String urnInternal, TypeExternalArtefactsEnum type) {
+        ExternalItem target = new ExternalItem();
+        target.setVersion(Long.valueOf(0));
+        target.setCode(code);
+        target.setCodeNested(codeNested);
+        target.setUri(uri);
+        target.setUrn(urn);
+        target.setUrnInternal(urnInternal);
+        target.setType(type);
+        return target;
+    }
+
+    public static ExternalItem mockExternalItem(String code, String codeNested, String uri, String urn, String urnInternal, TypeExternalArtefactsEnum type, InternationalString title,
+            String managementAppUrl) {
+        ExternalItem target = mockExternalItem(code, codeNested, uri, urn, urnInternal, type);
+        target.setTitle(title);
+        target.setManagementAppUrl(managementAppUrl);
+        return target;
+    }
+
     // -----------------------------------------------------------------
     // PRIVATE
     // -----------------------------------------------------------------
 
     private static ExternalItem mockStatisticalOperationAppExternalItem(String code, String urn, TypeExternalArtefactsEnum type) {
-        ExternalItem item = new ExternalItem(code, CoreCommonConstants.API_LATEST_WITH_SLASHES + code, urn, urn + "internal", type, mockInternationalString(), CoreCommonConstants.URL_SEPARATOR + code);
-        item.setVersion(Long.valueOf(0));
-        return item;
+        return mockExternalItem(code, null, CoreCommonConstants.API_LATEST_WITH_SLASHES + code, urn, urn + "internal", type, mockInternationalString(), CoreCommonConstants.URL_SEPARATOR + code);
     }
 
     private static ExternalItem mockSrmAppExternalItem(String code, String urn, TypeExternalArtefactsEnum type) {
-        ExternalItem item = new ExternalItem(code, CoreCommonConstants.API_LATEST_WITH_SLASHES + code, urn, urn + "internal", type, mockInternationalString(), CoreCommonConstants.URL_SEPARATOR + code);
-        item.setVersion(Long.valueOf(0));
-        return item;
+        return mockExternalItem(code, null, CoreCommonConstants.API_LATEST_WITH_SLASHES + code, urn, urn + "internal", type, mockInternationalString(), CoreCommonConstants.URL_SEPARATOR + code);
     }
 }

@@ -202,12 +202,12 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         User user = accessControlBaseService.createUser(getServiceContextAdministrador(), AccessControlDoMocks.createUser());
         assertNotNull(user);
     }
-    
+
     @Test
     public void testCreateUserCheckUsernameInLowercase() throws Exception {
         User user = AccessControlDoMocks.createUser();
         user.setUsername("TEST");
-        
+
         user = accessControlBaseService.createUser(getServiceContextAdministrador(), user);
         assertEquals("test", user.getUsername());
     }
@@ -220,7 +220,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         expectedMetamacException(new MetamacException(ServiceExceptionType.USER_ALREADY_EXIST_CODE_DUPLICATED, user.getUsername().toLowerCase()));
         accessControlBaseService.createUser(getServiceContextAdministrador(), user);
     }
-    
+
     @Override
     @Test
     public void testUpdateUser() throws Exception {
@@ -242,7 +242,6 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         assertTrue(userUpdated.getLastUpdated().isAfter(userUpdated.getCreatedDate()));
     }
 
-    
     @Test
     public void testUpdateUserCheckUsernameInLowercase() throws Exception {
         Long id = USER_1;
@@ -257,8 +256,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         // Validation
         assertEquals("newusername", user.getUsername());
     }
-    
-    
+
     @Override
     @Test
     public void testFindAllUsers() throws Exception {
@@ -306,8 +304,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_1);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_1);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
-        ExternalItem operation = new ExternalItem("MNP", "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", null,
-                TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = AccessControlDoMocks.mockExternalItem("MNP", null, "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation));
         assertNotNull(access);
@@ -324,8 +321,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_2);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_2);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_2);
-        ExternalItem operation = new ExternalItem("MNP2", "uri/MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", null,
-                TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = AccessControlDoMocks.mockExternalItem("MNP2", null, "uri/MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         access.setApp(app);
         access.setRole(role);
