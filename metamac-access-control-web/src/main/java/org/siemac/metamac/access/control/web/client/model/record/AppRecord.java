@@ -1,15 +1,11 @@
 package org.siemac.metamac.access.control.web.client.model.record;
 
 import org.siemac.metamac.access.control.core.dto.AppDto;
+import org.siemac.metamac.access.control.web.client.model.ds.AppDS;
 
 import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class AppRecord extends ListGridRecord {
-
-    public static final String CODE        = "code";
-    public static final String TITLE       = "title";
-    public static final String DESCRIPTION = "desc";
-    public static final String APP_DTO     = "dto";
 
     public AppRecord() {
     }
@@ -22,35 +18,34 @@ public class AppRecord extends ListGridRecord {
     }
 
     public void setCode(String value) {
-        setAttribute(CODE, value);
+        setAttribute(AppDS.CODE, value);
     }
 
     public String getCode() {
-        return getAttributeAsString(CODE);
+        return getAttributeAsString(AppDS.CODE);
     }
 
     public void setTitle(String value) {
-        setAttribute(TITLE, value);
+        setAttribute(AppDS.TITLE, value);
     }
 
     public String getTitle() {
-        return getAttributeAsString(TITLE);
+        return getAttributeAsString(AppDS.TITLE);
     }
 
     public void setDescription(String value) {
-        setAttribute(DESCRIPTION, value);
+        setAttribute(AppDS.DESCRIPTION, value);
     }
 
     public String getDescription() {
-        return getAttributeAsString(DESCRIPTION);
+        return getAttributeAsString(AppDS.DESCRIPTION);
     }
 
     public void setAppDto(AppDto appDto) {
-        setAttribute(APP_DTO, appDto);
+        setAttribute(AppDS.APP_DTO, appDto);
     }
 
     public AppDto getAppDto() {
-        return (AppDto) getAttributeAsObject(APP_DTO);
+        return (AppDto) getAttributeAsObject(AppDS.APP_DTO);
     }
-
 }

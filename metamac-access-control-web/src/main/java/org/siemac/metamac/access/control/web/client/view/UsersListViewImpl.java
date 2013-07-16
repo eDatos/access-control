@@ -19,8 +19,8 @@ import org.siemac.metamac.access.control.web.client.utils.ClientSecurityUtils;
 import org.siemac.metamac.access.control.web.client.utils.CommonUtils;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
-import org.siemac.metamac.access.control.web.client.widgets.AppDragAndDropItem;
 import org.siemac.metamac.access.control.web.client.widgets.NavigableListGrid;
+import org.siemac.metamac.access.control.web.client.widgets.SearchApplicationItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
 import org.siemac.metamac.web.common.client.utils.FormItemUtils;
@@ -66,7 +66,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private static final String                      USER_MAIL                  = "mail";
 
     private static final String                      ACCESS_ROLE                = "role";
-    private static final String                      ACCESS_APP                 = "app";
+    protected static final String                    ACCESS_APP                 = "app";
     private static final String                      ACCESS_OPERATION           = "operation";
 
     private static final String                      USER_LAYOUT_ID             = "userlayout";
@@ -93,7 +93,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private GroupDynamicForm                         editionAccessForm;
 
     private SearchOperationsPaginatedDragAndDropItem operationItem;
-    private AppDragAndDropItem                       appItem;
 
     private VLayout                                  accessLayout;
 
@@ -265,7 +264,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             @Override
             public void onClick(ClickEvent event) {
-                if (editionAccessForm.getItem(ACCESS_ROLE).validate() && appItem.validate()) {
+                if (editionAccessForm.getItem(ACCESS_ROLE).validate() && editionAccessForm.getItem(ACCESS_APP).validate()) {
                     uiHandlers.saveAccess(getAccessList());
                 }
             }
@@ -486,7 +485,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             accessMainFormLayout.show();
             accessMainFormLayout.focus();
             // Reset dragAndDrop items
-            appItem.resetValues();
+            ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).clearRelatedResourceList();
             operationItem.clearValue();
 
             // Load statistical operations
@@ -513,9 +512,11 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         editionAccessForm = new GroupDynamicForm(getConstants().role());
         RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
         role.setWidth(305);
-        appItem = new AppDragAndDropItem(ACCESS_APP, getConstants().app(), ACCESS_APP);
-        appItem.setRequired(true);
-        appItem.setStartRow(true);
+
+        SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
+        applicationItem.setRequired(true);
+        applicationItem.setStartRow(true);
+
         operationItem = new SearchOperationsPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), OPERATION_LIST_MAX_RESULTS, FormItemUtils.FORM_ITEM_WIDTH,
                 new PaginatedAction() {
 
@@ -531,7 +532,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 uiHandlers.retrievePaginatedOperations(firstResult, maxResults, code);
             }
         });
-        editionAccessForm.setFields(role, appItem, operationItem);
+        editionAccessForm.setFields(role, applicationItem, operationItem);
         accessMainFormLayout.addEditionCanvas(editionAccessForm);
     }
 
@@ -545,7 +546,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     private List<AccessDto> getAccessList() {
         List<AccessDto> accessList = new ArrayList<AccessDto>();
-        List<AppDto> applications = appItem.getSelectedAppDtos();
+        List<AppDto> applications = ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).getSelectedAppDtos();
         List<ExternalItemDto> operations = operationItem.getSelectedExternalItems();
         // REMOVE TITLE: operation title can not be stored because can be modified
         operations = ExternalItemUtils.removeTitle(operations);
@@ -580,7 +581,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     @Override
     public void setApplicationList(List<AppDto> apps) {
-        appItem.setSourceAppDtos(apps);
+        ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).setSourceAppDtos(apps);
     }
 
     @Override
@@ -626,5 +627,4 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             accessToolStrip.getDeleteButton().show();
         }
     }
-
 }
