@@ -21,17 +21,15 @@ import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.NavigableListGrid;
 import org.siemac.metamac.access.control.web.client.widgets.SearchApplicationItem;
+import org.siemac.metamac.access.control.web.client.widgets.SearchOperationsItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
-import org.siemac.metamac.web.common.client.utils.FormItemUtils;
 import org.siemac.metamac.web.common.client.utils.ListGridUtils;
 import org.siemac.metamac.web.common.client.widgets.CustomLinkListGridField;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.CustomListGridField;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
-import org.siemac.metamac.web.common.client.widgets.actions.PaginatedAction;
-import org.siemac.metamac.web.common.client.widgets.actions.SearchPaginatedAction;
 import org.siemac.metamac.web.common.client.widgets.form.GroupDynamicForm;
 import org.siemac.metamac.web.common.client.widgets.form.MainFormLayout;
 import org.siemac.metamac.web.common.client.widgets.form.fields.EmailItem;
@@ -61,47 +59,43 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> implements UsersListPresenter.UsersListView {
 
-    private static final String                      USER_USERNAME              = "username";
-    private static final String                      USER_NAME                  = "name";
-    private static final String                      USER_SURNAME               = "surname";
-    private static final String                      USER_MAIL                  = "mail";
+    private static final String   USER_USERNAME    = "username";
+    private static final String   USER_NAME        = "name";
+    private static final String   USER_SURNAME     = "surname";
+    private static final String   USER_MAIL        = "mail";
 
-    private static final String                      ACCESS_ROLE                = "role";
-    protected static final String                    ACCESS_APP                 = "app";
-    private static final String                      ACCESS_OPERATION           = "operation";
+    private static final String   ACCESS_ROLE      = "role";
+    protected static final String ACCESS_APP       = "app";
+    private static final String   ACCESS_OPERATION = "operation";
 
-    private static final String                      USER_LAYOUT_ID             = "userlayout";
+    private static final String   USER_LAYOUT_ID   = "userlayout";
 
-    private static final int                         OPERATION_LIST_MAX_RESULTS = 17;
+    private VLayout               panel;
+    private VLayout               subPanel;
+    private ListGridToolStrip     userToolStrip;
+    private CustomListGrid        usersListGrid;
 
-    private VLayout                                  panel;
-    private VLayout                                  subPanel;
-    private ListGridToolStrip                        userToolStrip;
-    private CustomListGrid                           usersListGrid;
+    private Label                 title;
 
-    private Label                                    title;
+    private VLayout               userLayout;
+    private MainFormLayout        userMainFormLayout;
+    private GroupDynamicForm      viewUserForm;
+    private GroupDynamicForm      editionUserForm;
 
-    private VLayout                                  userLayout;
-    private MainFormLayout                           userMainFormLayout;
-    private GroupDynamicForm                         viewUserForm;
-    private GroupDynamicForm                         editionUserForm;
+    private ListGridToolStrip     accessToolStrip;
+    private NavigableListGrid     accessListGrid;
 
-    private ListGridToolStrip                        accessToolStrip;
-    private NavigableListGrid                        accessListGrid;
+    private MainFormLayout        accessMainFormLayout;
 
-    private MainFormLayout                           accessMainFormLayout;
+    private GroupDynamicForm      editionAccessForm;
 
-    private GroupDynamicForm                         editionAccessForm;
+    private VLayout               accessLayout;
 
-    private SearchOperationsPaginatedDragAndDropItem operationItem;
+    private UserDto               userDto;
 
-    private VLayout                                  accessLayout;
+    private List<RoleDto>         roleDtos;
 
-    private UserDto                                  userDto;
-
-    private List<RoleDto>                            roleDtos;
-
-    private UsersListUiHandlers                      uiHandlers;
+    private UsersListUiHandlers   uiHandlers;
 
     public UsersListViewImpl() {
         super();
@@ -332,6 +326,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     @Override
     public void setUiHandlers(UsersListUiHandlers uiHandlers) {
         this.uiHandlers = uiHandlers;
+        ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).setUiHandlers(uiHandlers);
     }
 
     @Override
@@ -487,10 +482,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             accessMainFormLayout.focus();
             // Reset dragAndDrop items
             ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).clearRelatedResourceList();
-            operationItem.clearValue();
+            ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).clearRelatedResourceList();
 
-            // Load statistical operations
-            uiHandlers.retrievePaginatedOperations(0, OPERATION_LIST_MAX_RESULTS, null);
             Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
 
                 @Override
@@ -523,24 +516,10 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 return !applicationItem.getSelectedAppDtos().isEmpty();
             }
         });
-        applicationItem.setStartRow(true);
 
-        operationItem = new SearchOperationsPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), OPERATION_LIST_MAX_RESULTS, FormItemUtils.FORM_ITEM_WIDTH,
-                new PaginatedAction() {
+        SearchOperationsItem operationsItem = new SearchOperationsItem(ACCESS_OPERATION, getConstants().statisticalOperation());
 
-                    @Override
-                    public void retrieveResultSet(int firstResult, int maxResults) {
-                        uiHandlers.retrievePaginatedOperations(firstResult, maxResults, null);
-                    }
-                });
-        operationItem.setSearchAction(new SearchPaginatedAction() {
-
-            @Override
-            public void retrieveResultSet(int firstResult, int maxResults, String code) {
-                uiHandlers.retrievePaginatedOperations(firstResult, maxResults, code);
-            }
-        });
-        editionAccessForm.setFields(role, applicationItem, operationItem);
+        editionAccessForm.setFields(role, applicationItem, operationsItem);
         accessMainFormLayout.addEditionCanvas(editionAccessForm);
     }
 
@@ -555,7 +534,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     private List<AccessDto> getAccessList() {
         List<AccessDto> accessList = new ArrayList<AccessDto>();
         List<AppDto> applications = ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).getSelectedAppDtos();
-        List<ExternalItemDto> operations = operationItem.getSelectedExternalItems();
+        List<ExternalItemDto> operations = ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).getSelectedRelatedResources();
         // REMOVE TITLE: operation title can not be stored because can be modified
         operations = ExternalItemUtils.removeTitle(operations);
         if (operations.isEmpty()) {
@@ -594,8 +573,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     @Override
     public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
-        operationItem.setSourceExternalItems(operations);
-        operationItem.refreshSourcePaginationInfo(firstResult, operations.size(), totalResults);
+        ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).setOperations(operations, firstResult, totalResults);
     }
 
     private RoleDto getRoleDtoById(String id) {
