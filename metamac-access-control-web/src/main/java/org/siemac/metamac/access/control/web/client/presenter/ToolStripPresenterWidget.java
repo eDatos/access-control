@@ -2,7 +2,7 @@ package org.siemac.metamac.access.control.web.client.presenter;
 
 import org.siemac.metamac.access.control.web.client.NameTokens;
 
-import com.google.gwt.event.shared.EventBus;
+import com.google.web.bindery.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;

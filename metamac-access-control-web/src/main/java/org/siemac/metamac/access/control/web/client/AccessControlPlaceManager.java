@@ -2,7 +2,7 @@ package org.siemac.metamac.access.control.web.client;
 
 import org.siemac.metamac.access.control.web.client.gin.DefaultPlace;
 
-import com.google.gwt.event.shared.EventBus;
+import com.google.web.bindery.event.shared.EventBus;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.proxy.PlaceManagerImpl;
 import com.gwtplatform.mvp.client.proxy.PlaceRequest;
