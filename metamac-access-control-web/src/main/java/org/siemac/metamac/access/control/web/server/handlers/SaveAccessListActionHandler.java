@@ -65,5 +65,4 @@ public class SaveAccessListActionHandler extends SecurityActionHandler<SaveAcces
     public void undo(SaveAccessListAction action, SaveAccessListResult result, ExecutionContext context) throws ActionException {
 
     }
-
 }
