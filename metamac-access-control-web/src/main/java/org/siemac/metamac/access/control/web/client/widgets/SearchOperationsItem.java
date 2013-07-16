@@ -36,6 +36,7 @@ public class SearchOperationsItem extends ExternalItemListItem {
             public void onFormItemClick(FormItemIconClickEvent event) {
                 searchOperationsWindow = new SearchOperationsWindow(name);
                 uiHandlers.retrievePaginatedOperations(0, SearchOperationsPaginatedDragAndDropItem.MAX_RESULTS, null);
+                searchOperationsWindow.setTargetOperations(getSelectedRelatedResources());
                 searchOperationsWindow.getSaveButton().addClickHandler(new ClickHandler() {
 
                     @Override
@@ -100,6 +101,10 @@ public class SearchOperationsItem extends ExternalItemListItem {
 
         public List<ExternalItemDto> getSelectedOperations() {
             return searchOperationsPaginatedDragAndDropItem.getSelectedExternalItems();
+        }
+
+        public void setTargetOperations(List<ExternalItemDto> externalItemDtos) {
+            searchOperationsPaginatedDragAndDropItem.setTargetExternalItems(externalItemDtos);
         }
     }
 
