@@ -50,6 +50,7 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.VisibilityChangedEvent;
 import com.smartgwt.client.widgets.events.VisibilityChangedHandler;
+import com.smartgwt.client.widgets.form.validator.CustomValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.ListGridFieldIfFunction;
@@ -513,8 +514,15 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
         role.setWidth(305);
 
-        SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
-        applicationItem.setRequired(true);
+        final SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
+        // Set required with a custom validator
+        applicationItem.setValidators(new CustomValidator() {
+
+            @Override
+            protected boolean condition(Object value) {
+                return !applicationItem.getSelectedAppDtos().isEmpty();
+            }
+        });
         applicationItem.setStartRow(true);
 
         operationItem = new SearchOperationsPaginatedDragAndDropItem(ACCESS_OPERATION, getConstants().statisticalOperation(), OPERATION_LIST_MAX_RESULTS, FormItemUtils.FORM_ITEM_WIDTH,

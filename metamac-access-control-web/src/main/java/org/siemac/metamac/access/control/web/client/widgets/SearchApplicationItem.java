@@ -8,7 +8,6 @@ import org.siemac.metamac.access.control.web.client.AccessControlWeb;
 import org.siemac.metamac.access.control.web.client.model.ds.AppDS;
 import org.siemac.metamac.access.control.web.client.model.record.AppRecord;
 import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
-import org.siemac.metamac.core.common.util.shared.BooleanUtils;
 import org.siemac.metamac.core.common.util.shared.StringUtils;
 import org.siemac.metamac.web.common.client.MetamacWebCommon;
 import org.siemac.metamac.web.common.client.widgets.BaseSearchWindow;
@@ -58,6 +57,7 @@ public class SearchApplicationItem extends ExternalItemListItem {
                             selectedAppRecords.add(appRecord);
                         }
                         SearchApplicationItem.this.getListGrid().setData(selectedAppRecords.toArray(new ListGridRecord[selectedAppRecords.size()]));
+                        SearchApplicationItem.this.validate();
                     }
                 });
             }
@@ -95,15 +95,6 @@ public class SearchApplicationItem extends ExternalItemListItem {
 
     public void setSourceAppDtos(List<AppDto> appDtos) {
         this.appDtos = appDtos;
-    }
-
-    @Override
-    public Boolean validate() {
-        if (BooleanUtils.isTrue(getRequired())) {
-            return getListGrid().getRecords() != null && getListGrid().getRecords().length > 0;
-        } else {
-            return true;
-        }
     }
 
     private class SearchApplicationWindow extends BaseSearchWindow {
@@ -193,11 +184,6 @@ public class SearchApplicationItem extends ExternalItemListItem {
 
         public void resetValues() {
             clearValue();
-        }
-
-        @Override
-        public Boolean validate() {
-            return super.validate();
         }
     }
 }
