@@ -509,7 +509,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
         final SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
         applicationItem.setTitleStyle("staticFormItemTitle");
-        applicationItem.setStartRow(true);
         // Set required with a custom validator
         applicationItem.setValidators(new CustomValidator() {
 
