@@ -72,7 +72,7 @@
 
     <!-- ******************* Default page to serve ******************** -->
     <welcome-file-list>
-        <welcome-file>AccessControlWeb.html</welcome-file>
+        <welcome-file>AccessControlWeb.jsp</welcome-file>
     </welcome-file-list>
 
 </web-app>

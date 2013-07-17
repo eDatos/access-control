@@ -15,6 +15,8 @@
     <!--                                                               -->
     <link type="text/css" rel="stylesheet" href="AccessControlWeb.css">
 
+	<meta name="gwt:property" content="locale=<%=request.getLocale()%>">
+
     <!--                                           -->
     <!-- This script loads your compiled module.   -->
     <!-- If you add any GWT meta tags, they must   -->
