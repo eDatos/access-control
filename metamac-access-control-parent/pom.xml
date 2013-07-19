@@ -36,4 +36,20 @@
         <metamac-web-common.version>1.7.0</metamac-web-common.version>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>metamac-perform-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
