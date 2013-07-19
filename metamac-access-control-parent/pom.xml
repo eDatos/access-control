@@ -10,7 +10,7 @@
 
     <groupId>org.siemac.metamac.metamac-access-control</groupId>
     <artifactId>metamac-access-control-parent</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.1</version>
     <packaging>pom</packaging>
     <name>METAMAC :: ACCESS :: CONTROL :: PARENT</name>
     <description>METAMAC :: ACCESS :: CONTROL :: PARENT</description>
@@ -57,4 +57,10 @@
         </profile>
     </profiles>
 
+
+  <scm>
+    <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-parent/tags/20130719-0856-v1.4.1/metamac-access-control-parent</connection>
+    <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-parent/tags/20130719-0856-v1.4.1/metamac-access-control-parent</developerConnection>
+    <url>http://svn.arte-consultores.com/viewvc/arte/istac/metamac/metamac-parent/tags/20130719-0856-v1.4.1/metamac-access-control-parent</url>
+  </scm>
 </project>
