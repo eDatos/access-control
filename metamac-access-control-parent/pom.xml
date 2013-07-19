@@ -10,7 +10,7 @@
 
     <groupId>org.siemac.metamac.metamac-access-control</groupId>
     <artifactId>metamac-access-control-parent</artifactId>
-    <version>1.4.2-SNAPSHOT</version>
+    <version>1.4.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>METAMAC :: ACCESS :: CONTROL :: PARENT</name>
     <description>METAMAC :: ACCESS :: CONTROL :: PARENT</description>
@@ -56,4 +56,5 @@
             </build>
         </profile>
     </profiles>
+
 </project>
