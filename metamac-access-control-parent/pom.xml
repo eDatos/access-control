@@ -35,4 +35,26 @@
         <metamac-statistical-operations-rest-internal-api.version>1.5.0</metamac-statistical-operations-rest-internal-api.version>
         <metamac-web-common.version>1.7.0</metamac-web-common.version>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <activation>
+                <property>
+                    <name>metamac-perform-release</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
