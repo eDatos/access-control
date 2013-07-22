@@ -10,7 +10,7 @@
 
     <groupId>org.siemac.metamac.metamac-access-control</groupId>
     <artifactId>metamac-access-control-parent</artifactId>
-    <version>1.5.1-SNAPSHOT</version>
+    <version>1.4.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>METAMAC :: ACCESS :: CONTROL :: PARENT</name>
     <description>METAMAC :: ACCESS :: CONTROL :: PARENT</description>
@@ -35,4 +35,5 @@
         <metamac-statistical-operations-rest-internal-api.version>1.5.0</metamac-statistical-operations-rest-internal-api.version>
         <metamac-web-common.version>1.7.0</metamac-web-common.version>
     </properties>
+
 </project>
