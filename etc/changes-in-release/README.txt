@@ -2,7 +2,7 @@ Cuando se cree la RELEASE, añadir estos pasos al manual de instalación:
 
 1. Parar Tomcat
 
-2. DATA
+2. BBDD
 
 	ALTER TABLE TB_EXTERNAL_ITEMS RENAME COLUMN URN TO URN1;
 	ALTER TABLE TB_EXTERNAL_ITEMS RENAME COLUMN URN_INTERNAL TO URN2;
