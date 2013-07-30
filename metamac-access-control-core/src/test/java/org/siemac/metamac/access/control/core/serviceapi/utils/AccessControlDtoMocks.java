@@ -37,13 +37,13 @@ public class AccessControlDtoMocks extends MetamacMocks {
         return userDto;
     }
 
-    public static ExternalItemDto mockExternalItemDto(String code, String codeNested, String uri, String urn, String urnInternal, TypeExternalArtefactsEnum type, String managementAppUrl) {
+    public static ExternalItemDto mockExternalItemDto(String code, String codeNested, String uri, String urn, String urnProvider, TypeExternalArtefactsEnum type, String managementAppUrl) {
         ExternalItemDto target = new ExternalItemDto();
         target.setCode(code);
         target.setCodeNested(codeNested);
         target.setUri(uri);
         target.setUrn(urn);
-        target.setUrnInternal(urnInternal);
+        target.setUrnProvider(urnProvider);
         target.setType(type);
         target.setManagementAppUrl(managementAppUrl);
         return target;
