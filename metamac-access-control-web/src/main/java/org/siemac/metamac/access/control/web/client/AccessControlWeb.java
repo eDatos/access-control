@@ -74,4 +74,9 @@ public class AccessControlWeb extends MetamacSecurityEntryPoint {
     protected MetamacWebGinjector getWebGinjector() {
         return getAccessControlWebGinjector();
     }
+
+    @Override
+    protected String getBundleName() {
+        return "messages-access_control-web";
+    }
 }
