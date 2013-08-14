@@ -8,7 +8,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.cxf.jaxrs.client.ServerWebApplicationException;
 import org.apache.cxf.jaxrs.client.WebClient;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
-import org.siemac.metamac.access.control.web.server.utils.WebTranslateExceptions;
 import org.siemac.metamac.access.control.web.shared.constants.WebMessageExceptionsConstants;
 import org.siemac.metamac.core.common.lang.shared.LocaleConstants;
 import org.siemac.metamac.rest.common.v1_0.domain.ComparisonOperator;
@@ -17,6 +16,7 @@ import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Opera
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.OperationCriteriaPropertyRestriction;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Operations;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
+import org.siemac.metamac.web.common.server.utils.WebTranslateExceptions;
 import org.siemac.metamac.web.common.shared.constants.CommonSharedConstants;
 import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 import org.springframework.beans.factory.annotation.Autowired;
