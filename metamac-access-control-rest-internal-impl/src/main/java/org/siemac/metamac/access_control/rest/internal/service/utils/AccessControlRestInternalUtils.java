@@ -10,9 +10,9 @@ import org.siemac.metamac.rest.exception.utils.RestExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AccessControlRestExternalUtils {
+public class AccessControlRestInternalUtils {
 
-    private static final Logger  logger               = LoggerFactory.getLogger(AccessControlRestExternalUtils.class);
+    private static final Logger  logger               = LoggerFactory.getLogger(AccessControlRestInternalUtils.class);
     private static final Pattern patternDataSeparator = Pattern.compile(" \\| ");
 
     /**
