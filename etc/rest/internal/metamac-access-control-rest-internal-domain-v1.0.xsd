@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.siemac.org/metamac/rest/access-control/v1.0/domain" xmlns:tns="http://www.siemac.org/metamac/rest/access-control/v1.0/domain"
+    xmlns:common="http://www.siemac.org/metamac/rest/common/v1.0/domain">
+
+    <xs:import namespace="http://www.siemac.org/metamac/rest/common/v1.0/domain" schemaLocation="metamac-rest-api:metamac-rest-common-domain-v1.0.xsd" />
+
+    <xs:complexType name="Role">
+        <xs:sequence>
+            <xs:element name="code" type="xs:string" />
+            <xs:element name="selfLink" type="common:ResourceLink" />
+            <xs:element name="parentLink" type="common:ResourceLink" />
+            
+            <xs:element name="title" type="xs:string" minOccurs="1"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="kind" type="xs:string" use="required" />
+    </xs:complexType>
+    
+    <xs:complexType name="App">
+        <xs:sequence>
+            <xs:element name="code" type="xs:string" />
+            <xs:element name="selfLink" type="common:ResourceLink" />
+            <xs:element name="parentLink" type="common:ResourceLink" />
+            
+            <xs:element name="title" type="xs:string" minOccurs="1"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="kind" type="xs:string" use="required" />
+    </xs:complexType>
+    
+    <xs:complexType name="User">
+        <xs:sequence>
+            <xs:element name="username" type="xs:string" />
+            <xs:element name="selfLink" type="common:ResourceLink" />
+            <xs:element name="parentLink" type="common:ResourceLink" />
+            
+            <xs:element name="name" type="xs:string" minOccurs="1"/>
+            <xs:element name="surname" type="xs:string" minOccurs="1"/>
+            <xs:element name="mail" type="xs:string" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="kind" type="xs:string" use="required" />
+    </xs:complexType>
+    
+    <xs:complexType name="Access">
+        <xs:sequence>
+            <xs:element name="selfLink" type="common:ResourceLink" />
+            <xs:element name="parentLink" type="common:ResourceLink" />
+            
+            <xs:element name="role" type="tns:Role" minOccurs="1"/>
+            <xs:element name="app" type="tns:App" minOccurs="1"/>
+            <xs:element name="user" type="tns:User" minOccurs="1"/>
+            <xs:element name="statisticalOperation" type="common:Resource" minOccurs="0"/>
+            <xs:element name="removalDate" type="xs:dateTime" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="kind" type="xs:string" use="required" />
+    </xs:complexType>
+    
+    <!-- Lists -->
+    <xs:complexType name="Accesses">
+        <xs:complexContent>
+            <xs:extension base="common:ListBase">
+                <xs:sequence>
+                    <xs:element name="accesses" type="tns:Access" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="Users">
+        <xs:complexContent>
+            <xs:extension base="common:ListBase">
+                <xs:sequence>
+                    <xs:element name="users" type="tns:User" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- Criterias -->
+    <xs:simpleType name="UserCriteriaPropertyRestriction">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="USERNAME" />
+            <xs:enumeration value="APPICATION_CODE" />
+            <xs:enumeration value="ROLE_CODE" />
+            <xs:enumeration value="STATISTICAL_OPERATION_URN" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="UserCriteriaPropertyOrder">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="USERNAME" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!-- **************** ELEMENTS **************** -->
+    <xs:element name="users" type="tns:Users"/>
+     
+</xs:schema>
