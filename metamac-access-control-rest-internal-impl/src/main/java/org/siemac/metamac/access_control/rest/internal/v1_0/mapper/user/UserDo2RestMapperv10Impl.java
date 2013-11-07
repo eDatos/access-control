@@ -48,7 +48,7 @@ public class UserDo2RestMapperv10Impl implements UserDo2RestMapperV10 {
         target.setKind(AccessControlRestInternalConstants.KIND_USER);
         target.setUsername(source.getUsername());
         target.setName(source.getName());
-        target.setUsername(source.getSurname());
+        target.setSurname(source.getSurname());
         target.setMail(source.getMail());
         // target.setSelfLink(value); // TODO quitarlo si no hago el servicio
         target.setParentLink(toUserParentLink());
