@@ -62,8 +62,9 @@
         </property>
     </bean>
 
-
+	<!-- Metamac Business Spring Configuration -->
     <import resource="classpath:/spring/access-control/applicationContext.xml" />
-
+    <!-- Rest -->
+    <import resource="classpath:/spring/access-control-rest/applicationContext.xml" />
 </beans>
 
