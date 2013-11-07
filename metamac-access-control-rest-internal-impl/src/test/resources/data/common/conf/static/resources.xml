@@ -3,6 +3,6 @@
 <properties>
     <comment>Rest endpoints</comment>
 
-	<entry key="metamac.access_control.rest.internal">http://data.istac.es/apis/access-control</entry>
+	<entry key="metamac.access_control.rest.internal">http://data.istac.es/apis/access-control-internal</entry>
 
 </properties>

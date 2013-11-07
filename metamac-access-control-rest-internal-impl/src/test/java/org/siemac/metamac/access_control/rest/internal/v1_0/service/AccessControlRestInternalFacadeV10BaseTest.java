@@ -48,7 +48,7 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
 
     protected static Logger                              logger             = LoggerFactory.getLogger(AccessControlRestInternalFacadeV10BaseTest.class);
 
-    private static String                                jaxrsServerAddress = "http://localhost:" + ServerResource.PORT + "/apis/access-control";
+    private static String                                jaxrsServerAddress = "http://localhost:" + ServerResource.PORT + "/apis/access-control-internal";
     protected String                                     baseApi            = jaxrsServerAddress + "/v1.0";
     protected static ApplicationContext                  applicationContext = null;
     protected static AccessControlRestInternalFacadeV1_0 accessControlRestInternalFacadeClientXml;
