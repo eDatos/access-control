@@ -24,7 +24,7 @@ public class UserDo2RestMapperv10Impl implements UserDo2RestMapperV10 {
             return targets;
         }
 
-        targets.setKind(AccessControlRestInternalConstants.KIND_SEPARATOR);
+        targets.setKind(AccessControlRestInternalConstants.KIND_USERS);
 
         // Pagination
         String baseLink = toUsersLink();
