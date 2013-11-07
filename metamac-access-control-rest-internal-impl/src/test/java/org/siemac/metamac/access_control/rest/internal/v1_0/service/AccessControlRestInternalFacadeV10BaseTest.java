@@ -98,7 +98,7 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
         assertTrue(StringUtils.isBlank(IOUtils.toString(responseActual)));
     }
 
-    protected AccessControlRestInternalFacadeV1_0 getAccessControlRestExternalFacadeClientXml() {
+    protected AccessControlRestInternalFacadeV1_0 getAccessControlRestInternalFacadeClientXml() {
         WebClient.client(accessControlRestInternalFacadeClientXml).reset();
         WebClient.client(accessControlRestInternalFacadeClientXml).accept(APPLICATION_XML);
         return accessControlRestInternalFacadeClientXml;

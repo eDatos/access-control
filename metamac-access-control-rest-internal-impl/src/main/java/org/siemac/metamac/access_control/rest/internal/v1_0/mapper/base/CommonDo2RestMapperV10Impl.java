@@ -25,7 +25,7 @@ public class CommonDo2RestMapperV10Impl implements CommonDo2RestMapperV10 {
     public void init() throws Exception {
 
         // ENDPOINTS
-        // Statistical resources external Api V1.0
+        // Access Control Internal Api V1.0
         String accessControlApiInternalEndpoint = configurationService.retrieveAccessControlInternalApiUrlBase();
         statisticalResourcesApiInternalEndpointV10 = RestUtils.createLink(accessControlApiInternalEndpoint, AccessControlRestInternalConstants.API_VERSION_1_0);
     }
