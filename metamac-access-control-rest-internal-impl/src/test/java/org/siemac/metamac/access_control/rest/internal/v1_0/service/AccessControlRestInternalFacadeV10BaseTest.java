@@ -1,5 +1,9 @@
 package org.siemac.metamac.access_control.rest.internal.v1_0.service;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,12 +21,21 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.ConnectionType;
+import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
+import org.fornax.cartridges.sculptor.framework.domain.PagedResult;
+import org.fornax.cartridges.sculptor.framework.domain.PagingParameter;
+import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.siemac.metamac.access.control.core.domain.User;
+import org.siemac.metamac.access.control.core.serviceapi.AccessControlBaseService;
 import org.siemac.metamac.access_control.rest.internal.v1_0.utils.RestDoMocks;
 import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.core.common.constants.shared.ConfigurationConstants;
+import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.util.ApplicationContextProvider;
 import org.siemac.metamac.rest.common.test.MetamacRestBaseTest;
 import org.siemac.metamac.rest.common.test.ServerResource;
@@ -42,6 +55,8 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
     private static String                                apiEndpointv10;
 
     protected static RestDoMocks                         restDoMocks;
+
+    private AccessControlBaseService                     accessControlBaseService;
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     @BeforeClass
@@ -113,8 +128,27 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
         }
     }
 
-    private void resetMocks() throws Exception {
+    @SuppressWarnings("unchecked")
+    private void mockFindDatasetsByCondition() throws MetamacException {
+        when(accessControlBaseService.findUserByCondition(any(ServiceContext.class), any(List.class), any(PagingParameter.class))).thenAnswer(new Answer<PagedResult<User>>() {
 
+            @Override
+            public org.fornax.cartridges.sculptor.framework.domain.PagedResult<User> answer(InvocationOnMock invocation) throws Throwable {
+                List<ConditionalCriteria> conditions = (List<ConditionalCriteria>) invocation.getArguments()[1];
+
+                List<User> mockUsers = restDoMocks.mockUsers(5);
+                PagedResult<User> pagedResult = new PagedResult<User>(mockUsers, 0, mockUsers.size(), mockUsers.size(), mockUsers.size(), 0);
+
+                return pagedResult;
+            };
+        });
+    }
+
+    private void resetMocks() throws Exception {
+        accessControlBaseService = applicationContext.getBean(AccessControlBaseService.class);
+        reset(accessControlBaseService);
+
+        mockFindDatasetsByCondition();
     }
 
 }
