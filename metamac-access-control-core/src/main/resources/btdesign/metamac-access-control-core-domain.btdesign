@@ -22,7 +22,7 @@ Application Base {
        		"DESCRIPTION"
        		String description nullable length="4000";
 
-			- Bag<@Access> access inverse <-> role orderby="user asc";
+			- Bag<@Access> access inverse <-> role;
 			
 			"Last update to optimistic locking"
 			DateTimeTZ updateDate nullable;
@@ -52,7 +52,7 @@ Application Base {
        		"DESCRIPTION"
        		String description nullable length="4000";
 
-			- Bag<@Access> access inverse <-> app orderby="user asc";
+			- Bag<@Access> access inverse <-> app;
 			
 			"Last update to optimistic locking"
 			DateTimeTZ updateDate nullable;
@@ -83,7 +83,7 @@ Application Base {
        		"E-MAIL"
        		String mail not nullable;
 
-			- Bag<@Access> access inverse <-> user orderby="user asc";
+			- Bag<@Access> access inverse <-> user;
 			
 			"Last update to optimistic locking"
 			DateTimeTZ updateDate nullable;
