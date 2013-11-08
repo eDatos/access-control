@@ -48,15 +48,6 @@ public class AccessControlRestInternalFacadeV1_0Impl implements AccessControlRes
 
     private PagedResult<User> findUsers(List<ConditionalCriteria> conditionalCriteriaQuery, PagingParameter pagingParameter) {
         try {
-            // Criteria to find users by criteria
-            // List<ConditionalCriteria> conditionalCriteria = new ArrayList<ConditionalCriteria>();
-            // if (CollectionUtils.isNotEmpty(conditionalCriteriaQuery)) {
-            // conditionalCriteria.addAll(conditionalCriteriaQuery);
-            // } else {
-            // // init
-            // conditionalCriteria.addAll(ConditionalCriteriaBuilder.criteriaFor(User.class).distinctRoot().build());
-            // }
-
             return accessControlBaseService.findUserByCondition(AccessControlRestInternalConstants.SERVICE_CONTEXT, conditionalCriteriaQuery, pagingParameter);
         } catch (Exception e) {
             throw AccessControlRestInternalUtils.manageException(e);

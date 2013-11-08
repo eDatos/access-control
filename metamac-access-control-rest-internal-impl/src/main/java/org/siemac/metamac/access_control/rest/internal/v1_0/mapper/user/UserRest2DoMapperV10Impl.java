@@ -36,7 +36,7 @@ public class UserRest2DoMapperV10Impl extends BaseRest2DoMapperV10Impl implement
             switch (propertyNameCriteria) {
                 case USERNAME:
                     return buildSculptorPropertyCriteria(UserProperties.username(), PropertyTypeEnum.STRING, propertyRestriction);
-                case APPICATION_CODE:
+                case APPLICATION_CODE:
                     return buildSculptorPropertyCriteria(UserProperties.access().app().code(), PropertyTypeEnum.STRING, propertyRestriction);
                 case ROLE_CODE:
                     return buildSculptorPropertyCriteria(UserProperties.access().role().code(), PropertyTypeEnum.STRING, propertyRestriction);
@@ -61,7 +61,7 @@ public class UserRest2DoMapperV10Impl extends BaseRest2DoMapperV10Impl implement
         @SuppressWarnings("rawtypes")
         @Override
         public Property retrievePropertyOrderDefault() throws RestException {
-            return UserProperties.surname();
+            return UserProperties.id();
         }
 
     }
