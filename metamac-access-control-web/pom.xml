@@ -41,6 +41,11 @@
             <classifier>client</classifier>
         </dependency>
         <dependency>
+            <groupId>org.siemac.metamac.metamac-access-control</groupId>
+            <artifactId>metamac-access-control-rest-internal-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.siemac.metamac.metamac-statistical-operations</groupId>
             <artifactId>metamac-statistical-operations-rest-internal-api</artifactId>
             <version>${metamac-statistical-operations-rest-internal-api.version}</version>
