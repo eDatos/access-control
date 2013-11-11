@@ -19,11 +19,6 @@ public class UserDo2RestMapperv10Impl implements UserDo2RestMapperV10 {
     @Override
     public Users toUsers(PagedResult<User> sources, String query, String orderBy, Integer limit) {
         Users targets = new Users();
-
-        if (sources == null || sources.getValues().isEmpty()) {
-            return targets;
-        }
-
         targets.setKind(AccessControlRestInternalConstants.KIND_USERS);
 
         // Pagination
