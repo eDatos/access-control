@@ -1,0 +1,2 @@
+Se ha pasado la configuración de propiedades a base de datos. Insertar y configurar en la base de datos de configuraciones:
+metamac-access-control\etc\db\oracle\03-insert\01-configurations_insert_example.sql
