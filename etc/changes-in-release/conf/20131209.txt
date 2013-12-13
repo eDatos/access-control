@@ -13,5 +13,5 @@ ${environment.indicators.data}/conf/static/datasources.xml
 
 En la app interna:
 	La configuración de logs irá en data/access-control/conf/ 
-	Los logs se conservan en data/access-control/logs/
+	Los logs se ubican en data/access-control/logs/
 
