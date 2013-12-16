@@ -1,0 +1,234 @@
+========================================================================
+METAMAC-ACCESS-CONTROL -- Gestión de Control de accesos de METAMAC
+========================================================================
+
+El Gestor de Control de accesos permite llevar a cabo la relación de los
+usuarios que forman parte de la organización y que tienen permiso para 
+acceder a cada uno de los aplicativos de la misma.
+
+Este aplicativo también proporciona información relativa a qué rol tiene
+cada usuario en cada aplicativo y si dicho rol está vinculado a alguna
+operación estadística.
+
+Además, este módulo provee a otros de los datos de contacto de los 
+usuarios de los aplicativos.
+
+Por favor, consulta nuestro gestor de incidencia para obtener más información
+de las incidencias con el id [METAMAC-xxx].
+http://jira.arte-consultores.com/browse/METAMAC
+
+------------------------------------------------------------------------------
+Release 1.5.0
+------------------------------------------------------------------------------
+
+<Sin información vinculada en JIRA>
+
+------------------------------------------------------------------------------
+Release 1.4.0
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - hito metamac-access-control - 1.4.0
+
+** Defecto
+    * [METAMAC-1703] - Los scripts de creación de la función de secuencia están incorrectos.
+    * [METAMAC-1748] - Corregir problemas que se producen al hacer login en el sso y obtener los accesos.
+    * [METAMAC-1752] - Al Añadir un nuevo acceso a un usuario no hace scroll hacia abaj y no se sabe que hay un panel debajo
+    * [METAMAC-1754] - Problema con la codificación de URLs con dos puntos (:) en IE y Chrome
+
+
+** Historia
+    * [METAMAC-1311] - Consultar ayuda
+
+** Mejora
+    * [METAMAC-702] - Incluir URL de aplicación interna en los ExternalItems
+    * [METAMAC-1516] - [Test] Refactor de la clase MetamacBaseTest para que pase a ser MetamacDBUnitBaseTest
+    * [METAMAC-1594] - Modificar los campos de tipo ML para que sean ML+URL 
+    * [METAMAC-1741] - Crear excepciones independientes para cuando existe un acceso duplicado porque tenga o no operación asociada
+
+** Tarea
+    * [METAMAC-1475] - Problema con longitud de campos con valores con acentos en Oracle 
+    * [METAMAC-1541] - [Interceptores] Modificación de la configuración de update de los interceptores
+    * [METAMAC-1564] - Configuración y control de propiedades del DATA para aplicaciones internas y externas
+    * [METAMAC-1673] - Revisar el título de las aplicaciones web internas (ver el que se muestra en el navegador)
+    * [METAMAC-1698] - Comprobar que todos los internationalString tienen traducción en el idioma por defecto
+    * [METAMAC-1743] - Validar la longitud de los LocalisedString
+    * [METAMAC-1808] - Refactor propiedades de configuración
+
+------------------------------------------------------------------------------
+Release 1.3.0
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - hito metamac-access-control - 1.3.0
+
+** Defecto
+    * [METAMAC-1166] - En los tests no se está almacenando el usuario de ServiceContext
+    * [METAMAC-1347] - Problema de concurrencia con el Pooled optimizer (generación de ids de Hibernate)
+
+** Soporte
+    * [METAMAC-1163] - Configuración de tests JUnit: cambio en la estrategia de filtrado de FilteredDataSet
+
+** Tarea
+    * [METAMAC-1298] - Añadir configuración para SQL Server
+
+
+** Sub-tarea
+    * [METAMAC-1258] - Permitir consultar el manual de usuario desde la aplicación
+
+------------------------------------------------------------------------------
+Release 1.2.0
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - hito metamac-access-control - 1.2.0
+
+** Defecto
+    * [METAMAC-897] - Idioma de los widgets definidos en metamac-web-common
+
+
+
+** Mejora
+    * [METAMAC-743] - Cambiar formato de los formularios: todos los campos deben tener el máximo ancho que les permita la columna
+    * [METAMAC-791] - Cambio en el formato de las URLs de las aplicaciones internas
+
+** Nueva Funcionalidad
+    * [METAMAC-685] - Añadir la versión de la aplicación en el footer
+
+
+** Soporte
+    * [METAMAC-930] - Subida a demos de todas la aplicaciones de METAMAC
+    * [METAMAC-1113] - Cambio en la configuración de Maven: uniqueVersion
+    * [METAMAC-1128] - Actualizar el manual de instalación para que contemple los nuevos requerimientos
+    * [METAMAC-1129] - Migración de bases de datos de jenkins a laguna
+
+** Tarea
+    * [METAMAC-661] - Sustituir WS SOAP por API Rest
+    * [METAMAC-666] - Configuración de idiomas de la aplicación
+    * [METAMAC-738] - Migrar la ubicación de los Dto a su propio proyecto
+    * [METAMAC-752] - Adaptar proyectos de metamac al MetamacBaseTests que corrige problemas de rendimiento
+    * [METAMAC-773] - Los ExternalItem deben tener los nuevos campos acordados y requeridos por las APIS
+    * [METAMAC-776] - Modificar specialCase que evita que se cree unique constraints para que contemple ExternalItem
+    * [METAMAC-805] - Añadir el campo "CODE" en los ExternalItem
+    * [METAMAC-822] - Cambio en la construcción de los Hashmaps
+    * [METAMAC-896] - Manual de usuario
+    * [METAMAC-910] - No guardar el título (en los external items) de las operaciones estadísticas en las aplicaciones que consumen la API
+    * [METAMAC-921] - Gestión de "principalException" en excepciones de la web
+    * [METAMAC-925] - Cambiar clientes de APIs internas
+    * [METAMAC-949] - Configuración del DATA según el endpoints.xml definido en metamac-parent
+    * [METAMAC-1057] - Modificar la configuración de Base de Datos para evitar errores de arranque en Cibercentro
+
+
+** Sub-tarea
+    * [METAMAC-775] - Crear specialCase para evitar que se cree una constraint para el ID de InternationalString y LocalisedString
+
+------------------------------------------------------------------------------
+Release 1.1.0
+------------------------------------------------------------------------------
+
+
+Notas de publicación - Metamac - hito metamac-access-control - 1.1.0
+
+** Defecto
+    * [METAMAC-482] - Errores de visualización en IE8
+    * [METAMAC-583] - OptimisticLocking al crear nuevos accesos a un usuario ya existente
+    * [METAMAC-585] - OptimisticLockingError al guardar múltiples accesos de un usuario determinado
+
+
+
+** Mejora
+    * [METAMAC-378] - Cambios en estilo (ver Descripción)
+
+** Nueva Funcionalidad
+    * [METAMAC-591] - Formato de fechas
+    * [METAMAC-607] - Seguridad a nivel web
+
+
+
+** Tarea
+    * [METAMAC-572] - Panel de espera, corregir image bundle (IE), ServiceContextHolder y gestión de excepciones
+    * [METAMAC-573] - Configuración del LoggingSetup
+    * [METAMAC-578] - Seguridad
+    * [METAMAC-614] - Bloquear el acceso a la aplicación si el usuario logueado no tiene permisos para ello (Gatekeeper)
+    * [METAMAC-626] - Widget para selección de operaciónes estadísticas paginadas
+    * [METAMAC-627] - Ancho de los campos
+    * [METAMAC-639] - Refactor LoggingSetup
+    * [METAMAC-649] - Integración de METAMAC en Jenkins
+    * [METAMAC-651] - Eliminar las referencias a la clase MetamacDtoAsserts y modificarlas por MetamacAsserts
+    * [METAMAC-652] - Cambiar configuración de BBDD de tests para que se adapte al Jenkins
+    * [METAMAC-653] - Refactor de las clases *SuiteTest por *Suite
+    * [METAMAC-655] - Modificar la clase de spring que se usa para crear el bean "dataSource"
+
+
+** Sub-tarea
+    * [METAMAC-579] - Configuración del CAS
+    * [METAMAC-667] - Eliminar dependencias a commons-dbcp
+
+------------------------------------------------------------------------------
+Release 1.0.0
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - hito metamac-access-control - 1.0.0
+
+** Defecto
+    * [METAMAC-334] - En los test en ocasiones de produce un error "ORA-12519: TNS:no appropriate service handler found error"
+    * [METAMAC-350] - Corregido error en validación de accesos
+
+
+
+** Mejora
+    * [METAMAC-347] - Refactor del campo "dischargeDate" por "removalDate"
+    * [METAMAC-355] - Eliminar los ficheros de la configuración de spring que no se están usando.
+    * [METAMAC-368] - Eliminar los ficheros btdesign innecesarios
+
+
+** Reuniones
+    * [METAMAC-269] - 20120125 - Revisión del documento de gestión de roles enviado por Rubén
+    * [METAMAC-296] - Crear proyecto de test común
+
+
+** Tarea
+    * [METAMAC-201] - Revisar la longitud de los String en BBDD y tomar decisiones al respecto
+    * [METAMAC-281] - Crear análisis
+    * [METAMAC-291] - Errores en los test usando dbunit
+    * [METAMAC-297] - Crear las entidades, los services y los test de dichos servicios
+    * [METAMAC-298] - Configurar DBUnit
+    * [METAMAC-304] - Test del AccessControlService
+    * [METAMAC-306] - Modificar ubicación de los scripts de BBDD
+    * [METAMAC-317] - Crear proyecto web
+    * [METAMAC-321] - Eliminar dozer
+    * [METAMAC-322] - Modificar interceptor.xml para añadir MetamacException a las excepciones que deben hacer rollback
+    * [METAMAC-324] - Eliminar métodos findByCondition del ServiceFacade
+    * [METAMAC-325] - Añadir servicio al ServiceFacade que permita la búsqueda de accesos mediante cualquiera de sus entidades relacionadas
+    * [METAMAC-326] - Tratamiento de excepciones según METAMAC-318
+    * [METAMAC-328] - Modificar arquitectura ServiceFacade y Service
+    * [METAMAC-329] - Modificar análisis. Se permiten borrar todas las entidades aunque tengan vinculaciones. La web emitirá un aviso.
+    * [METAMAC-330] - Incluir funcionalidad de descartar/archivar accesos.
+    * [METAMAC-333] - Incluir un boolean al método findAccessByCondition que indique si se quieren obtener todos los accesos o excluir los archivados
+    * [METAMAC-335] - Dbunit no inserta correctamente las DISCHARGE_DATE
+    * [METAMAC-338] - Gestión de usuarios
+    * [METAMAC-344] - Eliminar de la fachada de servicios las operaciones deleteAccess y updateAccess
+    * [METAMAC-345] - Modificar la operación findAccessByCondition para que la condición addDischargeAccess pase a ser dischargeAccess
+    * [METAMAC-357] - Gestión de excepciones lanzadas por el core
+    * [METAMAC-358] - Logging en server side
+    * [METAMAC-365] - Eliminar la clase AccessControlToolsCliente ubicada en org.siemac.metamac.access.control.dto.tool
+    * [METAMAC-382] - Enviar e-mail al ISTAC notificando de la subida del aplicativo y la ubicación del análisis
+    * [METAMAC-392] - Evitar la creación de hibernate_sequence
+    * [METAMAC-393] - Eliminar uuid de las entidades InternationalString y LocalisedString
+    * [METAMAC-412] - Error al realizar script de inserción de fechas en Oracle
+    * [METAMAC-414] - Migrar los Dto al api-domain
+    * [METAMAC-415] - Renombrar los prefijos de las tablas TBL por TB y LIS_ por TB_LIS_
+    * [METAMAC-422] - Modificación de configuración para la generación de Dtos en metamac-api-domain
+    * [METAMAC-475] - Añadir intecerptor
+    * [METAMAC-476] - Sustituir parámetros en mensajes de error por constantes
+    * [METAMAC-478] - Crear import de datos inciales para el aplicativo de indicadores
+    * [METAMAC-481] - Añadir seguridad
+    * [METAMAC-486] - Configuración del servicio web de operaciones estadísticas
+    * [METAMAC-487] - Cambiar los test a nivel de servicio para añadir los interceptores "pointcut"
+    * [METAMAC-488] - Paginación de sistemas de indicadores
+    * [METAMAC-492] - Modificar configuración de los tests para que encuentren el environmnt.xml y el resources.xml
+    * [METAMAC-493] - Actualizar el análisis con los roles
+    * [METAMAC-495] - Crear script de importación inicial de usuario y acceso
+    * [METAMAC-496] - Crear columnas de optimisticLocking en BBDD
+    * [METAMAC-510] - Optimistic Locking manual
+    * [METAMAC-513] - Eliminar clases innecesarias de Date2JodaTimeConverter y JodaTime2DateConverter
+    * [METAMAC-530] - Modificar la configuración de spring
+    * [METAMAC-534] - Modificar aspect de flushing
+    * [METAMAC-547] - Crear clase SuiteTest
