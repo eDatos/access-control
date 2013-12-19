@@ -34,7 +34,6 @@ import org.siemac.metamac.access.control.core.domain.User;
 import org.siemac.metamac.access.control.core.serviceapi.AccessControlBaseService;
 import org.siemac.metamac.access_control.rest.internal.v1_0.utils.RestDoMocks;
 import org.siemac.metamac.core.common.conf.ConfigurationService;
-import org.siemac.metamac.core.common.constants.shared.ConfigurationConstants;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.core.common.util.ApplicationContextProvider;
 import org.siemac.metamac.rest.common.test.MetamacRestBaseTest;
@@ -81,7 +80,7 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
     @Before
     public void setUp() throws Exception {
         ConfigurationService configurationService = applicationContext.getBean(ConfigurationService.class);
-        apiEndpointv10 = configurationService.getProperty(ConfigurationConstants.ENDPOINT_ACCESS_CONTROL_INTERNAL_API) + "/v1.0";
+        apiEndpointv10 = configurationService.retrieveAccessControlInternalApiUrlBase() + "/v1.0";
 
         resetMocks();
     }
