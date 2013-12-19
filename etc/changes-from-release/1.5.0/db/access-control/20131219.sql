@@ -1,6 +1,6 @@
--- -----------------------------------------------------------------------
--- Añadir roles y aplicaciones faltantes a scripts de import
--- -----------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------------------------
+-- METAMAC-2009 - [BBDD] Añadir a los scripts de import del access-control los aplicativos y roles que faltan
+-- ------------------------------------------------------------------------------------------------------------
 
 -- Create GET_NEXT_SEQUENCE_VALUE function
 
@@ -31,3 +31,5 @@ UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQU
 
 -- Drop function
 DROP FUNCTION GET_NEXT_SEQUENCE_VALUE;
+
+commit;
