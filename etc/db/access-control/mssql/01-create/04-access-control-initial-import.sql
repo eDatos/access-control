@@ -43,6 +43,10 @@ Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, C
 (FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('ROLES'), 'TECNICO_APOYO_NORMALIZACION','97e471ea-a599-4d3e-8417-ae0cae8399fa','Técnico de apoyo a la normalización', 'Persona que colabora en las labores de normalización estadística', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
 
+Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
+(FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('ROLES'), 'JEFE_PRODUCCION','97e471ea-a599-4d3e-8517-ae5cae53995a','Jefe de Producción', 'Persona que supervisa todas las labores de producción estadística', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
+
 
 -- TB_APPS INITIAL IMPORT
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
@@ -67,6 +71,14 @@ UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQU
 
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
 (FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('APPS'), 'GESTOR_RECURSOS_ESTADISTICOS','fa232c30-d8dc-11e2-a28f-0800200c9a66','Gestor de recursos estadísticos', 'Aplicativo encargado de gestionar los recursos estadísticos', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
+
+Insert Into Tb_Apps (Id, Code, Uuid, Title, Description, Version, Created_By, Created_Date, Created_Date_Tz, Last_Updated_By, Last_Updated, Last_Updated_Tz) Values 
+(FILL_WITH_SCHEMA_NAME.Get_Next_Sequence_Value('APPS'),'GESTOR_NOTIFICACIONES','ga232c30-d8dc-11e2-a28f-0800200c9a66','Gestor de notificaciones', 'Aplicativo encargado de gestionar las notificaciones que se emiten desde diferentes aplicaciones del organismo', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
+
+Insert Into Tb_Apps (Id, Code, Uuid, Title, Description, Version, Created_By, Created_Date, Created_Date_Tz, Last_Updated_By, Last_Updated, Last_Updated_Tz) Values 
+(FILL_WITH_SCHEMA_NAME.Get_Next_Sequence_Value('APPS'),'GESTOR_AYUDAS','fag32cg0-d8dc-11e2-a28f-0800200c9a66','Gestor de ayudas', 'Aplicativo encargado de gestionar los mensajes de ayuda asociados a cada uno de los campos de los aplicativos', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
 
 commit;
