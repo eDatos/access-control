@@ -115,6 +115,8 @@ Application Base {
 			- @User user not nullable cascade="none" databaseColumn="USER_FK" <-> access;
 			"OPERATION"
        		- @ExternalItem operation cascade="all" databaseColumn="OPERATION_FK" nullable;
+       		"Determines if this access may send e-mails for notifications"
+       		Boolean sendEmail not nullable databaseColumn="SEND_EMAIL";
 			
 			"REMOVAL DATE"
 			DateTimeTZ removalDate nullable;

@@ -306,7 +306,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
         ExternalItem operation = AccessControlDoMocks.mockExternalItem1("MNP", null, "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
-        Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation));
+        Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation, Boolean.TRUE));
         assertNotNull(access);
     }
 

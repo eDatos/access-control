@@ -175,6 +175,7 @@ public class Dto2DoMapperImpl extends BaseDto2DoMapperImpl implements Dto2DoMapp
         target.setRole(roleDtoToDo(ctx, source.getRole()));
         target.setApp(appDtoToDo(ctx, source.getApp()));
         target.setUser(userDtoToDo(ctx, source.getUser()));
+        target.setSendEmail(source.getSendEmail());
 
         target.setOperation(externalItemDtoToDo(source.getOperation(), target.getOperation(), ServiceExceptionParameters.ACCESS_OPERATION));
 

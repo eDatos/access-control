@@ -44,6 +44,7 @@ Application AccessControlDto {
        		- @UserDto user required;
        		- @ExternalItemDto operation nullable;
        		JAVADATE removalDate nullable;
+       		Boolean sendEmail nullable;
        		
        		Long optimisticLockingVersion;
        	}

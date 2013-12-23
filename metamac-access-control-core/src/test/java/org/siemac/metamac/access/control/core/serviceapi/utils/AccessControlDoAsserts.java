@@ -44,5 +44,6 @@ public class AccessControlDoAsserts extends AccessControlBaseAsserts {
         assertEqualsApp(expected.getApp(), actual.getApp());
         assertEqualsUser(expected.getUser(), actual.getUser());
         assertEqualsExternalItem(expected.getOperation(), actual.getOperation());
+        assertEquals(expected.getSendEmail(), actual.getSendEmail());
     }
 }

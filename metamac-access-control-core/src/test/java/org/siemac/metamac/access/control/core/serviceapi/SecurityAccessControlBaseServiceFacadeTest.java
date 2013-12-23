@@ -196,6 +196,7 @@ public class SecurityAccessControlBaseServiceFacadeTest extends AccessControlBas
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
         accessDto.setOperation(mockExternalItemDto("TODO-02", null, "OPERATION:TODO:02", "OPERATION-TODO-02", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null));
+        accessDto.setSendEmail(Boolean.TRUE);
 
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
 

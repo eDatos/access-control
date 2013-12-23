@@ -748,6 +748,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setUser(userDto);
         accessDto.setOperation(mockExternalItemDto("TODO-02", null, "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", null,
                 TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null));
+        accessDto.setSendEmail(Boolean.TRUE);
 
         // Create
         AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -784,6 +785,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
+        accessDto.setSendEmail(Boolean.TRUE);
 
         // Create
         AccessDto accessDtoCreated = accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);

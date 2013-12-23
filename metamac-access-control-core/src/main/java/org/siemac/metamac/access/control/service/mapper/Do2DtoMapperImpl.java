@@ -114,6 +114,7 @@ public class Do2DtoMapperImpl extends BaseDo2DtoMapperImpl implements Do2DtoMapp
         target.setApp(appDoToDto(source.getApp()));
         target.setUser(userDoToDto(source.getUser()));
         target.setOperation(externalItemToDto(source.getOperation()));
+        target.setSendEmail(source.getSendEmail());
 
         target.setOptimisticLockingVersion(source.getVersion());
 

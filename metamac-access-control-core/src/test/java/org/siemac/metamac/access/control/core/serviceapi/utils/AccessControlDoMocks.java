@@ -41,12 +41,13 @@ public class AccessControlDoMocks extends MetamacMocks {
         return user;
     }
 
-    public static Access createAccess(App app, Role role, User user, ExternalItem operation) {
+    public static Access createAccess(App app, Role role, User user, ExternalItem operation, Boolean sendEmail) {
         Access access = new Access();
         access.setApp(app);
         access.setUser(user);
         access.setRole(role);
         access.setOperation(operation);
+        access.setSendEmail(sendEmail);
         return access;
     }
 
