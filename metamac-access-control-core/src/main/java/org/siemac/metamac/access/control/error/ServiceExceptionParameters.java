@@ -33,5 +33,6 @@ public class ServiceExceptionParameters extends CommonServiceExceptionParameters
     public static final String ACCESS_APP           = "parameter.acl.access.app";
     public static final String ACCESS_OPERATION     = "parameter.acl.access.operation";
     public static final String ACCESS_OPERATION_URN = "parameter.acl.access.operation.urn";
+    public static final String ACCESS_SEND_EMAIL    = "parameter.acl.access.sendEmail";
 
 }

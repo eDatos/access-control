@@ -821,6 +821,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
+        accessDto.setSendEmail(Boolean.TRUE);
 
         expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITHOUT_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
                 .getUsername()));
@@ -837,6 +838,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(null);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
+        accessDto.setSendEmail(Boolean.TRUE);
 
         expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ACCESS_ROLE));
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -852,6 +854,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(null);
         accessDto.setUser(userDto);
+        accessDto.setSendEmail(Boolean.TRUE);
 
         expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ACCESS_APP));
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
@@ -867,8 +870,25 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(null);
+        accessDto.setSendEmail(Boolean.TRUE);
 
         expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ACCESS_USER));
+        accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
+    }
+
+    @Test
+    public void testCreateAccessSendEmailRequired() throws Exception {
+        // Retrieve related entities
+        RoleDto roleDto = accessControlBaseServiceFacade.findRoleById(getServiceContextAdministrador(), ROLE_1);
+        AppDto appDto = accessControlBaseServiceFacade.findAppById(getServiceContextAdministrador(), APP_1);
+        UserDto userDto = accessControlBaseServiceFacade.findUserById(getServiceContextAdministrador(), USER_1);
+
+        AccessDto accessDto = new AccessDto();
+        accessDto.setRole(roleDto);
+        accessDto.setApp(appDto);
+        accessDto.setUser(userDto);
+
+        expectedMetamacException(new MetamacException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.ACCESS_SEND_EMAIL));
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
@@ -885,6 +905,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
         accessDto.setOperation(mockExternalItemDto("TODO-01", null, "OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null));
+        accessDto.setSendEmail(Boolean.TRUE);
 
         expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
                 .getUsername(), accessDto.getOperation().getUrn()));
