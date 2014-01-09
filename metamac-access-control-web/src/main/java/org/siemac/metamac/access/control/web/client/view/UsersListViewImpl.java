@@ -23,6 +23,7 @@ import org.siemac.metamac.access.control.web.client.widgets.NavigableListGrid;
 import org.siemac.metamac.access.control.web.client.widgets.SearchApplicationItem;
 import org.siemac.metamac.access.control.web.client.widgets.SearchOperationsItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.web.common.client.utils.BooleanWebUtils;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
 import org.siemac.metamac.web.common.client.utils.ListGridUtils;
 import org.siemac.metamac.web.common.client.widgets.CustomLinkListGridField;
@@ -32,6 +33,8 @@ import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
 import org.siemac.metamac.web.common.client.widgets.TitleLabel;
 import org.siemac.metamac.web.common.client.widgets.form.GroupDynamicForm;
 import org.siemac.metamac.web.common.client.widgets.form.MainFormLayout;
+import org.siemac.metamac.web.common.client.widgets.form.fields.BooleanRequiredSelectItem;
+import org.siemac.metamac.web.common.client.widgets.form.fields.BooleanSelectItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.EmailItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredSelectItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredTextItem;
@@ -59,43 +62,44 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> implements UsersListPresenter.UsersListView {
 
-    private static final String   USER_USERNAME    = "username";
-    private static final String   USER_NAME        = "name";
-    private static final String   USER_SURNAME     = "surname";
-    private static final String   USER_MAIL        = "mail";
+    private static final String USER_USERNAME     = "username";
+    private static final String USER_NAME         = "name";
+    private static final String USER_SURNAME      = "surname";
+    private static final String USER_MAIL         = "mail";
 
-    private static final String   ACCESS_ROLE      = "role";
-    protected static final String ACCESS_APP       = "app";
-    private static final String   ACCESS_OPERATION = "operation";
+    private static final String ACCESS_ROLE       = "role";
+    private static final String ACCESS_APP        = "app";
+    private static final String ACCESS_OPERATION  = "operation";
+    private static final String ACCESS_SEND_EMAIL = "sendEmail";
 
-    private static final String   USER_LAYOUT_ID   = "userlayout";
+    private static final String USER_LAYOUT_ID    = "userlayout";
 
-    private VLayout               panel;
-    private VLayout               subPanel;
-    private ListGridToolStrip     userToolStrip;
-    private CustomListGrid        usersListGrid;
+    private VLayout             panel;
+    private VLayout             subPanel;
+    private ListGridToolStrip   userToolStrip;
+    private CustomListGrid      usersListGrid;
 
-    private Label                 title;
+    private Label               title;
 
-    private VLayout               userLayout;
-    private MainFormLayout        userMainFormLayout;
-    private GroupDynamicForm      viewUserForm;
-    private GroupDynamicForm      editionUserForm;
+    private VLayout             userLayout;
+    private MainFormLayout      userMainFormLayout;
+    private GroupDynamicForm    viewUserForm;
+    private GroupDynamicForm    editionUserForm;
 
-    private ListGridToolStrip     accessToolStrip;
-    private NavigableListGrid     accessListGrid;
+    private ListGridToolStrip   accessToolStrip;
+    private NavigableListGrid   accessListGrid;
 
-    private MainFormLayout        accessMainFormLayout;
+    private MainFormLayout      accessMainFormLayout;
 
-    private GroupDynamicForm      editionAccessForm;
+    private GroupDynamicForm    editionAccessForm;
 
-    private VLayout               accessLayout;
+    private VLayout             accessLayout;
 
-    private UserDto               userDto;
+    private UserDto             userDto;
 
-    private List<RoleDto>         roleDtos;
+    private List<RoleDto>       roleDtos;
 
-    private UsersListUiHandlers   uiHandlers;
+    private UsersListUiHandlers uiHandlers;
 
     public UsersListViewImpl() {
         super();
@@ -201,7 +205,13 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             @Override
             public void onClick(ClickEvent event) {
-                selectAccess(new AccessDto());
+                selectAccess(buildNewAccess());
+            }
+
+            private AccessDto buildNewAccess() {
+                AccessDto accessDto = new AccessDto();
+                accessDto.setSendEmail(Boolean.TRUE);
+                return accessDto;
             }
         });
         accessToolStrip.getNewButton().setVisibility(ClientSecurityUtils.canCreateAccess() ? Visibility.VISIBLE : Visibility.HIDDEN);
@@ -228,10 +238,11 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         CustomListGridField roleField = new CustomListGridField(AccessRecord.ROLE, getConstants().role());
         CustomListGridField appField = new CustomListGridField(AccessRecord.APP, getConstants().app());
         CustomLinkListGridField opField = new CustomLinkListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
+        CustomListGridField sendEmail = new CustomListGridField(AccessRecord.SEND_EMAIL, getConstants().sendEmail());
 
         accessListGrid.setDataSource(new AccessDS());
         accessListGrid.setUseAllDataSourceFields(false);
-        accessListGrid.setFields(accessIdField, roleField, appField, opField);
+        accessListGrid.setFields(accessIdField, roleField, appField, opField, sendEmail);
         accessListGrid.setShowGroupSummary(true);
         accessListGrid.setGroupStartOpen(GroupStartOpen.ALL);
         accessListGrid.setGroupByField(AccessRecord.ROLE);
@@ -504,8 +515,10 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     private void createEditionAccessForm() {
         editionAccessForm = new GroupDynamicForm(getConstants().role());
+
+        BooleanRequiredSelectItem sendEmail = new BooleanRequiredSelectItem(ACCESS_SEND_EMAIL, getConstants().sendEmail());
+
         RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
-        role.setWidth(305);
 
         final SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
         applicationItem.setTitleStyle("staticFormItemTitle");
@@ -520,7 +533,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
         SearchOperationsItem operationsItem = new SearchOperationsItem(ACCESS_OPERATION, getConstants().statisticalOperation());
 
-        editionAccessForm.setFields(role, applicationItem, operationsItem);
+        editionAccessForm.setFields(sendEmail, role, applicationItem, operationsItem);
         accessMainFormLayout.addEditionCanvas(editionAccessForm);
     }
 
@@ -530,35 +543,41 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     private void setAccessEditionMode(AccessDto accessDto) {
         editionAccessForm.setValue(ACCESS_ROLE, accessDto.getRole() != null ? accessDto.getRole().getId().toString() : null);
+        editionAccessForm.setValue(ACCESS_SEND_EMAIL, BooleanWebUtils.getBooleanValue(accessDto.getSendEmail()));
     }
 
     private List<AccessDto> getAccessList() {
         List<AccessDto> accessList = new ArrayList<AccessDto>();
         List<AppDto> applications = ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).getSelectedAppDtos();
+        Boolean sendEmail = ((BooleanSelectItem) editionAccessForm.getItem(ACCESS_SEND_EMAIL)).getBooleanValue();
+
         List<ExternalItemDto> operations = ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).getSelectedRelatedResources();
-        // REMOVE TITLE: operation title can not be stored because can be modified
-        operations = ExternalItemUtils.removeTitle(operations);
+        operations = ExternalItemUtils.removeTitle(operations); // We have to remove title because it can be modified
+
         if (operations.isEmpty()) {
             for (AppDto app : applications) {
-                AccessDto accessDto = new AccessDto();
-                accessDto.setUser(userDto);
-                accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
-                accessDto.setApp(app);
+                AccessDto accessDto = createBasicAccess(sendEmail, app);
                 accessList.add(accessDto);
             }
         } else {
             for (AppDto app : applications) {
                 for (ExternalItemDto op : operations) {
-                    AccessDto accessDto = new AccessDto();
-                    accessDto.setUser(userDto);
-                    accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
-                    accessDto.setApp(app);
+                    AccessDto accessDto = createBasicAccess(sendEmail, app);
                     accessDto.setOperation(op);
                     accessList.add(accessDto);
                 }
             }
         }
         return accessList;
+    }
+
+    private AccessDto createBasicAccess(Boolean sendEmail, AppDto app) {
+        AccessDto accessDto = new AccessDto();
+        accessDto.setUser(userDto);
+        accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
+        accessDto.setApp(app);
+        accessDto.setSendEmail(sendEmail);
+        return accessDto;
     }
 
     @Override

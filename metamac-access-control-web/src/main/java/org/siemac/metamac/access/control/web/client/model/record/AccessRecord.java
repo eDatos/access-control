@@ -11,13 +11,15 @@ public class AccessRecord extends NavigableListGridRecord {
     public static final String ROLE         = "role";
     public static final String APP          = "app";
     public static final String OPERATION    = "op";
+    public static final String SEND_EMAIL   = "send-email";
     public static final String REMOVAL_DATE = "date";
+
     public static final String ACCESS_DTO   = "acc-dto";
 
     public AccessRecord() {
     }
 
-    public AccessRecord(Long id, String user, String role, String app, ExternalItemDto operation, String dischargedDate, AccessDto accessDto) {
+    public AccessRecord(Long id, String user, String role, String app, ExternalItemDto operation, String sendEmail, String dischargedDate, AccessDto accessDto) {
         setId(id);
         setUser(user);
         setRole(role);
@@ -25,6 +27,7 @@ public class AccessRecord extends NavigableListGridRecord {
         setOperation(operation);
         setRemovalDate(dischargedDate);
         setAccessDto(accessDto);
+        setSendEmail(sendEmail);
     }
 
     public void setId(Long value) {
@@ -61,6 +64,10 @@ public class AccessRecord extends NavigableListGridRecord {
 
     public void setOperation(ExternalItemDto operation) {
         setExternalItem(OPERATION, operation);
+    }
+
+    public void setSendEmail(String sendEmail) {
+        setAttribute(SEND_EMAIL, sendEmail);
     }
 
     public void setAccessDto(AccessDto accessDto) {

@@ -28,6 +28,9 @@ public class AccessDS extends DataSource {
         DataSourceTextField operation = new DataSourceTextField(AccessRecord.OPERATION, "Operation");
         addField(operation);
 
+        DataSourceTextField sendEmail = new DataSourceTextField(AccessRecord.SEND_EMAIL, "Send email");
+        addField(sendEmail);
+
         setClientOnly(true);
     }
 
