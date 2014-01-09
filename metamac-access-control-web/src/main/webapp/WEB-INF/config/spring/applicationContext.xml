@@ -50,7 +50,7 @@
         <property name="logConfigurationFile" value="${environment.metamac.data}/access-control/conf/dynamic/logback-access-control-web.xml" />
     </bean>
 
-    <bean id="configurationService" class="org.siemac.metamac.core.common.conf.ConfigurationServiceImpl">
+    <bean id="configurationService" class="org.siemac.metamac.access.control.core.conf.AccessControlConfigurationServiceImpl">
         <property name="systemConfigurationFile">
             <value>classpath:metamac/environment.xml</value>
         </property>
