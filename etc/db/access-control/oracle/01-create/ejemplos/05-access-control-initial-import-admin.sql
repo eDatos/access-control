@@ -27,8 +27,8 @@ Insert into TB_USERS (ID, USERNAME, UUID, NAME, SURNAME, MAIL, VERSION, CREATED_
 --    (1, '<UUID>','<ROLE_FK>', '<APP_FK>', '<USER_FK>', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 
 -- Ejemplo de creación de un acceso:
-Insert into TB_ACCESS (ID, UUID, ROLE_FK, APP_FK, USER_FK, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-(GET_NEXT_SEQUENCE_VALUE('ACCESS'), '1fa6695a-0fb0-40c6-bf77-b3198ca60a5f', '1', '1', GET_NEXT_SEQUENCE_VALUE('USERS'), 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+Insert into TB_ACCESS (ID, UUID, ROLE_FK, APP_FK, USER_FK, SEND_EMAIL, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
+(GET_NEXT_SEQUENCE_VALUE('ACCESS'), '1fa6695a-0fb0-40c6-bf77-b3198ca60a5f', '1', '1', GET_NEXT_SEQUENCE_VALUE('USERS'), 1, 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 
 
 -- Actualización de sequencias:
