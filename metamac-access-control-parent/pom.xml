@@ -10,7 +10,7 @@
 
     <groupId>org.siemac.metamac.metamac-access-control</groupId>
     <artifactId>metamac-access-control-parent</artifactId>
-    <version>1.5.1-SNAPSHOT</version>
+    <version>1.6.0</version>
     <packaging>pom</packaging>
     <name>METAMAC :: ACCESS :: CONTROL :: PARENT</name>
     <description>METAMAC :: ACCESS :: CONTROL :: PARENT</description>
@@ -39,4 +39,10 @@
         <metamac-access-control.baseDir>${basedir}/..</metamac-access-control.baseDir>
         <metamac-access-control.etcDir>${metamac-access-control.baseDir}/etc</metamac-access-control.etcDir>
     </properties>
+
+  <scm>
+    <connection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-parent/tags/20140115-1326-v1.6.0/metamac-access-control-parent</connection>
+    <developerConnection>scm:svn:http://svn.arte-consultores.com/svn/arte/istac/metamac/metamac-parent/tags/20140115-1326-v1.6.0/metamac-access-control-parent</developerConnection>
+    <url>http://svn.arte-consultores.com/viewvc/arte/istac/metamac/metamac-parent/tags/20140115-1326-v1.6.0/metamac-access-control-parent</url>
+  </scm>
 </project>
