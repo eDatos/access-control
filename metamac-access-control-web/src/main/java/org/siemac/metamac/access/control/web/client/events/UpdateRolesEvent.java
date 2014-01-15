@@ -22,7 +22,6 @@ public class UpdateRolesEvent extends GwtEvent<UpdateRolesEvent.UpdateRolesHandl
         return TYPE;
     }
 
-    // TODO HasEventBus should be used instead of HasHandlers ¿?
     public static void fire(HasHandlers source, List<RoleDto> rolesDtos) {
         if (TYPE != null) {
             source.fireEvent(new UpdateRolesEvent(rolesDtos));

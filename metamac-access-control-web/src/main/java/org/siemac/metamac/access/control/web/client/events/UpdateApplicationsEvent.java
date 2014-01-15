@@ -22,7 +22,6 @@ public class UpdateApplicationsEvent extends GwtEvent<UpdateApplicationsEvent.Up
         return TYPE;
     }
 
-    // TODO HasEventBus should be used instead of HasHandlers ¿?
     public static void fire(HasHandlers source, List<AppDto> appDtos) {
         if (TYPE != null) {
             source.fireEvent(new UpdateApplicationsEvent(appDtos));
