@@ -18,7 +18,7 @@ de las incidencias con el id [METAMAC-xxx].
 http://jira.arte-consultores.com/browse/METAMAC
 
 ------------------------------------------------------------------------------
-Release 1.5.0
+Release 1.6.0
 ------------------------------------------------------------------------------
 
 Notas de publicación - Metamac - hito metamac-access-control - 1.6.0
