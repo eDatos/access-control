@@ -50,7 +50,14 @@ Notas de publicación - Metamac - hito metamac-access-control - 1.6.0
 Release 1.5.0
 ------------------------------------------------------------------------------
 
-<Sin información vinculada en JIRA>
+Notas de publicación - Metamac - hito metamac-access-control - 1.5.0
+
+** Soporte
+    * [METAMAC-1816] - Configurar proyectos Maven para que durante el performRelease no se ejecuten los tests
+
+** Tarea
+    * [METAMAC-1807] - Paquete de instalación Julio 2013
+
 
 ------------------------------------------------------------------------------
 Release 1.4.0
