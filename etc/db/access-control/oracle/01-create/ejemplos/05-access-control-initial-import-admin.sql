@@ -11,7 +11,7 @@
 
 -- Ejemplo de creación de un usuario:
 Insert into TB_USERS (ID, USERNAME, UUID, NAME, SURNAME, MAIL, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
-(GET_NEXT_SEQUENCE_VALUE('USERS'), 'METAMAC_ADMIN','94e714ea-d168-4d32-b3f4-f4097029a400','Administrador METAMAC', 'Administrador METAMAC', 'administrador-metamac@gobiernodecanarias.org', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+(GET_NEXT_SEQUENCE_VALUE('USERS'), 'metamac_admin','94e714ea-d168-4d32-b3f4-f4097029a400','Administrador METAMAC', 'Administrador METAMAC', 'administrador-metamac@gobiernodecanarias.org', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 
 
 -- ------------------------
