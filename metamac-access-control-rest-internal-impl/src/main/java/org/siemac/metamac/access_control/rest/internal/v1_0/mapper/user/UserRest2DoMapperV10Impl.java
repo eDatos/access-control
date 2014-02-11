@@ -1,5 +1,6 @@
 package org.siemac.metamac.access_control.rest.internal.v1_0.mapper.user;
 
+import org.apache.commons.lang.StringUtils;
 import org.fornax.cartridges.sculptor.framework.domain.Property;
 import org.siemac.metamac.access.control.core.domain.User;
 import org.siemac.metamac.access.control.core.domain.UserProperties;
@@ -35,6 +36,7 @@ public class UserRest2DoMapperV10Impl extends BaseRest2DoMapperV10Impl implement
             UserCriteriaPropertyRestriction propertyNameCriteria = UserCriteriaPropertyRestriction.fromValue(propertyRestriction.getPropertyName());
             switch (propertyNameCriteria) {
                 case USERNAME:
+                    propertyRestrictionValueToLowerCase(propertyRestriction);
                     return buildSculptorPropertyCriteria(UserProperties.username(), PropertyTypeEnum.STRING, propertyRestriction);
                 case APPLICATION_CODE:
                     return buildSculptorPropertyCriteria(UserProperties.access().app().code(), PropertyTypeEnum.STRING, propertyRestriction);
@@ -46,6 +48,21 @@ public class UserRest2DoMapperV10Impl extends BaseRest2DoMapperV10Impl implement
                     throw toRestExceptionParameterIncorrect(propertyNameCriteria.name());
             }
         }
+
+        private void propertyRestrictionValueToLowerCase(MetamacRestQueryPropertyRestriction propertyRestriction) {
+            if (propertyRestriction != null) {
+                if (StringUtils.isNotBlank(propertyRestriction.getValue())) {
+                    propertyRestriction.setValue(propertyRestriction.getValue().toLowerCase());
+                }
+
+                if (!propertyRestriction.getValueList().isEmpty()) {
+                    for (int i = 0; i < propertyRestriction.getValueList().size(); i++) {
+                        propertyRestriction.getValueList().set(i, propertyRestriction.getValueList().get(i).toLowerCase());
+                    }
+                }
+            }
+        }
+
         @SuppressWarnings("rawtypes")
         @Override
         public Property retrievePropertyOrder(MetamacRestOrder order) throws RestException {

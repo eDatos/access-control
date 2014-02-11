@@ -21,7 +21,6 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.apache.cxf.transport.http.HTTPConduit;
 import org.apache.cxf.transports.http.configuration.ConnectionType;
-import org.fornax.cartridges.sculptor.framework.accessapi.ConditionalCriteria;
 import org.fornax.cartridges.sculptor.framework.domain.PagedResult;
 import org.fornax.cartridges.sculptor.framework.domain.PagingParameter;
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
@@ -133,8 +132,6 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
 
             @Override
             public org.fornax.cartridges.sculptor.framework.domain.PagedResult<User> answer(InvocationOnMock invocation) throws Throwable {
-                List<ConditionalCriteria> conditions = (List<ConditionalCriteria>) invocation.getArguments()[1];
-
                 List<User> mockUsers = restDoMocks.mockUsers(5);
                 PagedResult<User> pagedResult = new PagedResult<User>(mockUsers, 0, mockUsers.size(), mockUsers.size(), mockUsers.size(), 0);
 
