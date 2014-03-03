@@ -6,6 +6,7 @@ import org.siemac.metamac.access.control.core.error.AccessControlCheckTranslatio
 import org.siemac.metamac.access.control.core.mapper.ExternalItemsDo2DtoMapperTest;
 import org.siemac.metamac.access.control.core.mapper.ExternalItemsDto2DoMapperTest;
 
+
 /**
  * Spring based transactional test with DbUnit support.
  */
