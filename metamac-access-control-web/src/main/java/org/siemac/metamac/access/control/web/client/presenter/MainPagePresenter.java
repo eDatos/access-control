@@ -90,7 +90,6 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
     protected void onBind() {
         super.onBind();
 
-        // TODO Is this the proper place to load value lists?
         loadRoles();
         loadApplications();
     }
