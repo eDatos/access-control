@@ -50,18 +50,6 @@
         <property name="logConfigurationFile" value="${environment.metamac.data}/access-control/conf/logback-access-control-web.xml" />
     </bean>
 
-    <bean id="configurationService" class="org.siemac.metamac.access.control.core.conf.AccessControlConfigurationServiceImpl">
-        <property name="systemConfigurationFile">
-            <value>classpath:metamac/environment.xml</value>
-        </property>
-    </bean>
-
-    <bean id="propertyPlaceholderConfigurer" class="org.siemac.metamac.core.common.conf.ConfigurationServicePropertyPlaceholderConfigurer">
-        <property name="configurationService">
-            <ref bean="configurationService" />
-        </property>
-    </bean>
-
 	<!-- Metamac Business Spring Configuration -->
     <import resource="classpath:/spring/access-control/applicationContext.xml" />
     <!-- Rest -->

@@ -2,8 +2,8 @@ package org.siemac.metamac.access_control.rest.internal.v1_0.mapper.base;
 
 import javax.annotation.PostConstruct;
 
+import org.siemac.metamac.access.control.core.conf.AccessControlConfigurationService;
 import org.siemac.metamac.access_control.rest.internal.AccessControlRestInternalConstants;
-import org.siemac.metamac.core.common.conf.ConfigurationService;
 import org.siemac.metamac.rest.common.v1_0.domain.ResourceLink;
 import org.siemac.metamac.rest.utils.RestUtils;
 import org.slf4j.Logger;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommonDo2RestMapperV10Impl implements CommonDo2RestMapperV10 {
 
-    private static final Logger  logger = LoggerFactory.getLogger(CommonDo2RestMapperV10.class);
+    private static final Logger               logger = LoggerFactory.getLogger(CommonDo2RestMapperV10.class);
 
     @Autowired
-    private ConfigurationService configurationService;
+    private AccessControlConfigurationService configurationService;
 
-    private String               statisticalResourcesApiInternalEndpointV10;
+    private String                            statisticalResourcesApiInternalEndpointV10;
 
     @PostConstruct
     public void init() throws Exception {
