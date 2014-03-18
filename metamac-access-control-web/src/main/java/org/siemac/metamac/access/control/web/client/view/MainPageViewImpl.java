@@ -5,19 +5,16 @@ import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
-import org.siemac.metamac.web.common.client.widgets.ErrorMessagePanel;
 import org.siemac.metamac.web.common.client.widgets.MasterHead;
+import org.siemac.metamac.web.common.client.widgets.MessagePanel;
 import org.siemac.metamac.web.common.client.widgets.MetamacNavBar;
-import org.siemac.metamac.web.common.client.widgets.SuccessMessagePanel;
 import org.siemac.metamac.web.common.client.widgets.VersionFooter;
 
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.gwtplatform.mvp.client.ViewWithUiHandlers;
 import com.smartgwt.client.types.Alignment;
-import com.smartgwt.client.types.AnimationEffect;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
@@ -25,27 +22,26 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> implements MainPagePresenter.MainPageView {
 
-    private static final int          NORTH_HEIGHT   = 85;
-    private static final String       DEFAULT_MARGIN = "0px";
+    private static final int    NORTH_HEIGHT   = 85;
+    private static final String DEFAULT_MARGIN = "0px";
 
-    private MainPageUiHandlers        uiHandlers;
+    private MainPageUiHandlers  uiHandlers;
 
-    private final MasterHead          masterHead;
+    private final MasterHead    masterHead;
 
-    private final SuccessMessagePanel successMessagePanel;
-    private final ErrorMessagePanel   errorMessagePanel;
+    private final MessagePanel  messagePanel;
 
-    private VLayout                   panel;
-    private VLayout                   northLayout;
-    private HLayout                   headerLayout;
-    private HLayout                   southLayout;
-    private VLayout                   footerLayout;
+    private final VLayout       panel;
+    private final VLayout       northLayout;
+    private final HLayout       headerLayout;
+    private final HLayout       southLayout;
+    private final VLayout       footerLayout;
 
     @Inject
-    public MainPageViewImpl(MasterHead masterHead, SuccessMessagePanel successMessagePanel, ErrorMessagePanel errorMessagePanel) {
+    public MainPageViewImpl(MasterHead masterHead, MessagePanel messagePanel) {
         this.masterHead = masterHead;
-        this.successMessagePanel = successMessagePanel;
-        this.errorMessagePanel = errorMessagePanel;
+        this.messagePanel = messagePanel;
+
         // get rid of scroll bars, and clear out the window's built-in margin,
         // because we want to take advantage of the entire client area
         Window.enableScrolling(false);
@@ -78,8 +74,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         southLayout.setHeight100();
 
         footerLayout = new VLayout();
-        footerLayout.addMember(this.successMessagePanel);
-        footerLayout.addMember(this.errorMessagePanel);
+        footerLayout.addMember(this.messagePanel);
         footerLayout.addMember(new VersionFooter(AccessControlWeb.getProjectVersion()));
 
         // Set user name
@@ -115,6 +110,7 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         panel.addMember(footerLayout);
 
     }
+
     @Override
     public Widget asWidget() {
         return panel;
@@ -152,26 +148,12 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
     @Override
     public void showMessage(Throwable throwable, String message, MessageTypeEnum type) {
         // Hide messages before showing the new ones
-        hideMessages();
-        if (MessageTypeEnum.SUCCESS.equals(type)) {
-            successMessagePanel.showMessage(message);
-            Timer timer = new Timer() {
-
-                @Override
-                public void run() {
-                    successMessagePanel.animateHide(AnimationEffect.FADE);
-                }
-            };
-            timer.schedule(12000);
-        } else if (MessageTypeEnum.ERROR.equals(type)) {
-            errorMessagePanel.showMessage(throwable);
-        }
+        messagePanel.showMessage(throwable, message, type);
     }
 
     @Override
     public void hideMessages() {
-        successMessagePanel.hide();
-        errorMessagePanel.hide();
+        messagePanel.hide();
     }
 
     @Override

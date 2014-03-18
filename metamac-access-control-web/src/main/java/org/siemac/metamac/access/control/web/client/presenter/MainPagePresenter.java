@@ -21,16 +21,16 @@ import org.siemac.metamac.web.common.client.events.SetTitleEvent.SetTitleHandler
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent.ShowMessageHandler;
 import org.siemac.metamac.web.common.client.utils.CommonWebUtils;
-import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
+import org.siemac.metamac.web.common.client.utils.WaitingAsyncCallbackHandlingError;
 import org.siemac.metamac.web.common.shared.CloseSessionAction;
 import org.siemac.metamac.web.common.shared.CloseSessionResult;
 import org.siemac.metamac.web.common.shared.utils.SharedTokens;
 
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
@@ -67,7 +67,9 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
     public interface MainPageView extends View, HasUiHandlers<MainPageUiHandlers> {
 
         void showMessage(Throwable throwable, String message, MessageTypeEnum type);
+
         void hideMessages();
+
         void setTitle(String title);
     }
 
@@ -127,12 +129,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
     }
 
     private void loadRoles() {
-        dispatcher.execute(new FindAllRolesAction(), new WaitingAsyncCallback<FindAllRolesResult>() {
+        dispatcher.execute(new FindAllRolesAction(), new WaitingAsyncCallbackHandlingError<FindAllRolesResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(MainPagePresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(FindAllRolesResult result) {
                 UpdateRolesEvent.fire(MainPagePresenter.this, result.getRoles());
@@ -141,12 +139,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
     }
 
     private void loadApplications() {
-        dispatcher.execute(new FindAllAppsAction(), new WaitingAsyncCallback<FindAllAppsResult>() {
+        dispatcher.execute(new FindAllAppsAction(), new WaitingAsyncCallbackHandlingError<FindAllAppsResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(MainPagePresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(FindAllAppsResult result) {
                 UpdateApplicationsEvent.fire(MainPagePresenter.this, result.getApps());
@@ -163,6 +157,7 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
                 logger.log(Level.SEVERE, "Error closing session");
                 ShowMessageEvent.fireErrorMessage(MainPagePresenter.this, caught);
             }
+
             @Override
             public void onSuccess(CloseSessionResult result) {
                 Window.Location.assign(result.getLogoutPageUrl());
@@ -172,12 +167,8 @@ public class MainPagePresenter extends Presenter<MainPagePresenter.MainPageView,
 
     @Override
     public void downloadUserGuide() {
-        dispatcher.execute(new GetUserGuideUrlAction(), new WaitingAsyncCallback<GetUserGuideUrlResult>() {
+        dispatcher.execute(new GetUserGuideUrlAction(), new WaitingAsyncCallbackHandlingError<GetUserGuideUrlResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(MainPagePresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(GetUserGuideUrlResult result) {
                 CommonWebUtils.showDownloadFileWindow(SharedTokens.FILE_DOWNLOAD_DIR_PATH, SharedTokens.PARAM_FILE_NAME, result.getUserGuideUrl());

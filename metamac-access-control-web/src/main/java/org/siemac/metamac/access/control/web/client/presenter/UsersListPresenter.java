@@ -34,11 +34,11 @@ import org.siemac.metamac.access.control.web.shared.SaveUserResult;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.events.SetTitleEvent;
 import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
-import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
+import org.siemac.metamac.web.common.client.utils.WaitingAsyncCallbackHandlingError;
 
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
@@ -56,9 +56,9 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListView, UsersListPresenter.UsersListProxy> implements UsersListUiHandlers, UpdateRolesHandler, UpdateApplicationsHandler {
 
-    private final DispatchAsync      dispatcher;
+    private final DispatchAsync            dispatcher;
 
-    private ToolStripPresenterWidget toolStripPresenterWidget;
+    private final ToolStripPresenterWidget toolStripPresenterWidget;
 
     @ProxyCodeSplit
     @NameToken(NameTokens.usersListPage)
@@ -69,13 +69,17 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     public interface UsersListView extends View, HasUiHandlers<UsersListUiHandlers> {
 
         void setUsersList(List<UserDto> userDtos);
+
         void onUserSaved(List<UserDto> userDtos, UserDto userDto);
+
         void setUserAccess(List<AccessDto> accessDtos);
 
         void onAccessSaved(List<AccessDto> accessDtos, AccessDto accessDto);
 
         void setRoleList(List<RoleDto> roles);
+
         void setApplicationList(List<AppDto> apps);
+
         void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults);
     }
 
@@ -114,12 +118,8 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
     }
 
     private void retrieveUsersList() {
-        dispatcher.execute(new FindAllUsersAction(), new WaitingAsyncCallback<FindAllUsersResult>() {
+        dispatcher.execute(new FindAllUsersAction(), new WaitingAsyncCallbackHandlingError<FindAllUsersResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(FindAllUsersResult result) {
                 getView().setUsersList(result.getUsers());
@@ -129,15 +129,15 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @Override
     public void deleteUsers(final List<Long> selectedUsers) {
-        dispatcher.execute(new DeleteUserListAction(selectedUsers), new WaitingAsyncCallback<DeleteUserListResult>() {
+        dispatcher.execute(new DeleteUserListAction(selectedUsers), new WaitingAsyncCallbackHandlingError<DeleteUserListResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(DeleteUserListResult result) {
                 ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, selectedUsers.size() > 1 ? getMessages().usersDeleted() : getMessages().userDeleted());
+            }
+
+            @Override
+            protected void afterResult() {
                 retrieveUsersList();
             }
         });
@@ -145,22 +145,14 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @Override
     public void saveUser(UserDto userDto) {
-        dispatcher.execute(new SaveUserAction(userDto), new WaitingAsyncCallback<SaveUserResult>() {
+        dispatcher.execute(new SaveUserAction(userDto), new WaitingAsyncCallbackHandlingError<SaveUserResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(SaveUserResult result) {
                 final UserDto userSaved = result.getUserDto();
                 ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().userSaved());
-                dispatcher.execute(new FindAllUsersAction(), new WaitingAsyncCallback<FindAllUsersResult>() {
+                dispatcher.execute(new FindAllUsersAction(), new WaitingAsyncCallbackHandlingError<FindAllUsersResult>(UsersListPresenter.this) {
 
-                    @Override
-                    public void onWaitFailure(Throwable caught) {
-                        ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-                    }
                     @Override
                     public void onWaitSuccess(FindAllUsersResult result) {
                         getView().onUserSaved(result.getUsers(), userSaved);
@@ -172,12 +164,8 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @Override
     public void retrieveUserAccess(String username) {
-        dispatcher.execute(new FindAccessByUserAction(username), new WaitingAsyncCallback<FindAccessByUserResult>() {
+        dispatcher.execute(new FindAccessByUserAction(username), new WaitingAsyncCallbackHandlingError<FindAccessByUserResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(FindAccessByUserResult result) {
                 getView().setUserAccess(result.getAccessDtos());
@@ -187,22 +175,14 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @Override
     public void saveAccess(final AccessDto accessDto) {
-        dispatcher.execute(new SaveAccessAction(accessDto), new WaitingAsyncCallback<SaveAccessResult>() {
+        dispatcher.execute(new SaveAccessAction(accessDto), new WaitingAsyncCallbackHandlingError<SaveAccessResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(SaveAccessResult result) {
                 final AccessDto accessSaved = result.getAccess();
                 ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessSaved());
-                dispatcher.execute(new FindAccessByUserAction(accessDto.getUser().getUsername()), new WaitingAsyncCallback<FindAccessByUserResult>() {
+                dispatcher.execute(new FindAccessByUserAction(accessDto.getUser().getUsername()), new WaitingAsyncCallbackHandlingError<FindAccessByUserResult>(UsersListPresenter.this) {
 
-                    @Override
-                    public void onWaitFailure(Throwable caught) {
-                        ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-                    }
                     @Override
                     public void onWaitSuccess(FindAccessByUserResult result) {
                         getView().onAccessSaved(result.getAccessDtos(), accessSaved);
@@ -214,12 +194,8 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @Override
     public void saveAccess(final List<AccessDto> accessDtos) {
-        dispatcher.execute(new SaveAccessListAction(accessDtos), new WaitingAsyncCallback<SaveAccessListResult>() {
+        dispatcher.execute(new SaveAccessListAction(accessDtos), new WaitingAsyncCallbackHandlingError<SaveAccessListResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(SaveAccessListResult result) {
                 retrieveUserAccess(accessDtos.get(0).getUser().getUsername());
@@ -230,16 +206,16 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @Override
     public void deleteAccess(List<Long> selectedAccess, final String username) {
-        dispatcher.execute(new DeleteAccessListAction(selectedAccess), new WaitingAsyncCallback<DeleteAccessListResult>() {
+        dispatcher.execute(new DeleteAccessListAction(selectedAccess), new WaitingAsyncCallbackHandlingError<DeleteAccessListResult>(this) {
 
             @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
-            @Override
             public void onWaitSuccess(DeleteAccessListResult result) {
-                retrieveUserAccess(username);
                 ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessDeleted());
+            }
+
+            @Override
+            protected void afterResult() {
+                retrieveUserAccess(username);
             }
         });
     }
@@ -258,12 +234,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
     @Override
     public void retrievePaginatedOperations(int firstResult, int maxResults, String operationCode) {
-        dispatcher.execute(new GetOperationPaginatedListAction(firstResult, maxResults, operationCode), new WaitingAsyncCallback<GetOperationPaginatedListResult>() {
-
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(UsersListPresenter.this, caught);
-            }
+        dispatcher.execute(new GetOperationPaginatedListAction(firstResult, maxResults, operationCode), new WaitingAsyncCallbackHandlingError<GetOperationPaginatedListResult>(this) {
 
             @Override
             public void onWaitSuccess(GetOperationPaginatedListResult result) {

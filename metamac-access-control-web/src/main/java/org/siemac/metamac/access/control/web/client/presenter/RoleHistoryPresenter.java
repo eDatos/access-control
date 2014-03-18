@@ -8,12 +8,11 @@ import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.view.handlers.RoleHistoryUiHandlers;
 import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessResult;
-import org.siemac.metamac.web.common.client.events.ShowMessageEvent;
-import org.siemac.metamac.web.common.client.widgets.WaitingAsyncCallback;
+import org.siemac.metamac.web.common.client.utils.WaitingAsyncCallbackHandlingError;
 
-import com.google.web.bindery.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent.Type;
 import com.google.inject.Inject;
+import com.google.web.bindery.event.shared.EventBus;
 import com.gwtplatform.dispatch.shared.DispatchAsync;
 import com.gwtplatform.mvp.client.HasUiHandlers;
 import com.gwtplatform.mvp.client.Presenter;
@@ -30,9 +29,9 @@ import com.gwtplatform.mvp.client.proxy.RevealContentHandler;
 
 public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHistoryView, RoleHistoryPresenter.RoleHistoryProxy> implements RoleHistoryUiHandlers {
 
-    private final DispatchAsync      dispatcher;
+    private final DispatchAsync            dispatcher;
 
-    private ToolStripPresenterWidget toolStripPresenterWidget;
+    private final ToolStripPresenterWidget toolStripPresenterWidget;
 
     @ProxyCodeSplit
     @NameToken(NameTokens.roleHistoryPage)
@@ -75,17 +74,12 @@ public class RoleHistoryPresenter extends Presenter<RoleHistoryPresenter.RoleHis
     }
 
     private void retrieveDischargedAccess() {
-        dispatcher.execute(new FindAllRemovedAccessAction(), new WaitingAsyncCallback<FindAllRemovedAccessResult>() {
+        dispatcher.execute(new FindAllRemovedAccessAction(), new WaitingAsyncCallbackHandlingError<FindAllRemovedAccessResult>(this) {
 
-            @Override
-            public void onWaitFailure(Throwable caught) {
-                ShowMessageEvent.fireErrorMessage(RoleHistoryPresenter.this, caught);
-            }
             @Override
             public void onWaitSuccess(FindAllRemovedAccessResult result) {
                 getView().setRemovedAccess(result.getAccessDtos());
             }
         });
     }
-
 }
