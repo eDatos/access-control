@@ -15,9 +15,10 @@
 
     <jaxrs:server id="restInternal" address="/access-control-internal">
 
-        <jaxrs:features>
-            <cxf:logging />
-        </jaxrs:features>
+<!--         <jaxrs:features> -->
+<!--             <cxf:logging /> -->
+<!--         </jaxrs:features> -->
+
         <jaxrs:serviceBeans>
             <ref bean="accessControlRestInternalFacadeV1_0" />
         </jaxrs:serviceBeans>
