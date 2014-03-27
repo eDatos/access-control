@@ -43,7 +43,8 @@ Notas de publicación - Metamac - Versión access-control - 1.6.1
     * [METAMAC-2131] - [CORE] Añadir método para comprobar que no faltan traducciones de parámetros ni mensajes de error
     * [METAMAC-2133] - Cambiar driver a oracle 11 para pasar los tests en jenkins
     * [METAMAC-2203] - [LOGS] Desactivar que en el log se impriman las respuestas de la API
-
+    * [METAMAC-2223] - [WEB INTERNA] Modificar el tamaño de las ventanas de búsqueda en los formularios de acceso
+    
 ------------------------------------------------------------------------------
 Release 1.6.0
 ------------------------------------------------------------------------------
