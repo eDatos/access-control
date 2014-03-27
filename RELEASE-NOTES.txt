@@ -18,6 +18,33 @@ de las incidencias con el id [METAMAC-xxx].
 http://jira.arte-consultores.com/browse/METAMAC
 
 ------------------------------------------------------------------------------
+Release 1.6.1
+------------------------------------------------------------------------------
+
+Notas de publicación - Metamac - Versión access-control - 1.6.1
+
+** Error
+    * [METAMAC-2044] - Corregir ubicación de los bean de configurationService
+    * [METAMAC-2109] - Problemas actualización desde versión anterior instalada a nueva versión enviada
+    * [METAMAC-2116] - Revisar los environment.xml porque están puestas las properties mal
+    * [METAMAC-2117] - Los manuales tienen los ejemplos de environment.xml incorrecto
+    * [METAMAC-2120] - Corregir error en el valor de las propiedades del datasource en el fichero environment.xml
+    * [METAMAC-2123] - Los scripts de los username deben guardar los nombre en minúscula
+    * [METAMAC-2215] - [BBDD] Las constraints no pueden ser DEFERRED porque no hay soporte para SQLServer
+
+** Mejora
+    * [METAMAC-2073] - Revisar los CSS necesarios en las aplicaciones y eliminar lo obsoleto
+    * [METAMAC-2124] - Cuando se realiza una búsqueda por username los valores deben convertirse a lowercase
+    * [METAMAC-2141] - Refactor de los WaitingAsyncCallback para homogeneizar el manejo de acciones asincronas con menos código
+
+** Tarea
+    * [METAMAC-2020] - Revisar los TODO y FIXME antes de dar por finalizado cada módulo
+    * [METAMAC-2082] - Cambio de los nombres de los war
+    * [METAMAC-2131] - [CORE] Añadir método para comprobar que no faltan traducciones de parámetros ni mensajes de error
+    * [METAMAC-2133] - Cambiar driver a oracle 11 para pasar los tests en jenkins
+    * [METAMAC-2203] - [LOGS] Desactivar que en el log se impriman las respuestas de la API
+
+------------------------------------------------------------------------------
 Release 1.6.0
 ------------------------------------------------------------------------------
 
