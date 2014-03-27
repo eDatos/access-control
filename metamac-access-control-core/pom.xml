@@ -355,32 +355,78 @@
         </dependency>
     </dependencies>
 
+
+    <profiles>
+        <profile>
+            <id>oracle</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.6</version><!--$NO-MVN-MAN-VER$ -->
+                        <executions>
+                            <execution>
+                                <id>clean-sculptor-conf</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <delete file="src/main/resources/generator/sculptor-generator.properties" />
+                                        <delete file="src/main/resources/templates/db/CustomDDL.xpt" />
+                                        <copy file="src/main/resources/generator/sculptor-generator.oracle.properties" tofile="src/main/resources/generator/sculptor-generator.properties" verbose="true" />
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>mssql</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.6</version><!--$NO-MVN-MAN-VER$ -->
+                        <executions>
+                            <execution>
+                                <id>clean-sculptor-conf</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <target>
+                                        <delete file="src/main/resources/generator/sculptor-generator.properties" />
+                                        <delete file="src/main/resources/generator/CustomDDL.xpt" />
+                                        <copy file="src/main/resources/generator/sculptor-generator.mssql.properties" tofile="src/main/resources/generator/sculptor-generator.properties" verbose="true" />
+                                        <copy file="target/generated-resources/DDLMSSQL.xpt" tofile="src/main/resources/templates/db/CustomDDL.xpt" verbose="true" />
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
     <build>
         <finalName>${project.artifactId}</finalName>
 
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>clean-sculptor-conf</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <target>
-                                <delete file="src/main/resources/generator/sculptor-generator.properties" />
-                                <delete file="src/main/resources/templates/db/CustomDDL.xpt" />
-                                <copy file="src/main/resources/generator/sculptor-generator.oracle.properties" tofile="src/main/resources/generator/sculptor-generator.properties" verbose="true" />
-                            </target>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
