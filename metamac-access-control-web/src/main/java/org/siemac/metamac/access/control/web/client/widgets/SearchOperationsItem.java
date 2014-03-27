@@ -68,7 +68,7 @@ public class SearchOperationsItem extends ExternalItemListItem {
         public SearchOperationsWindow(String name) {
             super(AccessControlWeb.getConstants().statisticalOperationSelection());
 
-            searchOperationsPaginatedDragAndDropItem = new SearchOperationsPaginatedDragAndDropItem(name, "", String.valueOf(FORM_ITEM_CUSTOM_WIDTH), new PaginatedAction() {
+            searchOperationsPaginatedDragAndDropItem = new SearchOperationsPaginatedDragAndDropItem(name, "", String.valueOf(FORM_ITEM_CUSTOM_WIDTH/2), new PaginatedAction() {
 
                 @Override
                 public void retrieveResultSet(int firstResult, int maxResults) {
