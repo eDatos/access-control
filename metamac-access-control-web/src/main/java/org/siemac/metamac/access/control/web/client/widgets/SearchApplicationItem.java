@@ -25,7 +25,7 @@ import com.smartgwt.client.widgets.grid.ListGridRecord;
 
 public class SearchApplicationItem extends ExternalItemListItem {
 
-    protected static final int        FORM_ITEM_CUSTOM_WIDTH = 500;
+    protected static final int        FORM_ITEM_CUSTOM_WIDTH = 1000;
 
     protected SearchApplicationWindow searchApplicationWindow;
     protected List<AppDto>            appDtos;
