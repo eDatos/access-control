@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.siemac.metamac.metamac-access-control</groupId>
-		<artifactId>metamac-access-control-parent</artifactId>
-		<version>1.6.2-SNAPSHOT</version>
-		<relativePath>../metamac-access-control-parent/pom.xml</relativePath>
-	</parent>
+    <parent>
+        <groupId>org.siemac.metamac.metamac-access-control</groupId>
+        <artifactId>metamac-access-control-parent</artifactId>
+        <version>1.6.2-SNAPSHOT</version>
+        <relativePath>../metamac-access-control-parent/pom.xml</relativePath>
+    </parent>
 
-	<groupId>org.siemac.metamac.metamac-access-control</groupId>
-	<artifactId>metamac-access-control-rest-internal-impl</artifactId>
-	<packaging>jar</packaging>
-	<name>METAMAC :: ACCESS :: CONTROL :: REST :: INTERNAL :: IMPL</name>
-	<description>METAMAC :: ACCESS :: CONTROL :: REST :: INTERNAL :: IMPL</description>
+    <groupId>org.siemac.metamac.metamac-access-control</groupId>
+    <artifactId>metamac-access-control-rest-internal-impl</artifactId>
+    <packaging>jar</packaging>
+    <name>METAMAC :: ACCESS :: CONTROL :: REST :: INTERNAL :: IMPL</name>
+    <description>METAMAC :: ACCESS :: CONTROL :: REST :: INTERNAL :: IMPL</description>
 
-	<dependencies>
+    <dependencies>
         <!-- Metamac -->
-		<dependency>
-		    <groupId>org.siemac.metamac.metamac-access-control</groupId>
-		    <artifactId>metamac-access-control-rest-internal-api</artifactId>
-		    <version>${project.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.metamac-access-control</groupId>
+            <artifactId>metamac-access-control-rest-internal-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.siemac.metamac.metamac-access-control</groupId>
             <artifactId>metamac-access-control-core</artifactId>
@@ -53,7 +53,7 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-xc</artifactId>
             <version>${jackson.version}</version>
-        </dependency>         
+        </dependency>
 
         <!-- Spring -->
         <dependency>
@@ -89,13 +89,13 @@
         </dependency>
 
         <!-- Test -->
-<!--         <dependency> -->
-<!--             <groupId>org.siemac.metamac.metamac-access-control</groupId> -->
-<!--             <artifactId>metamac-access-control-core</artifactId> -->
-<!--             <type>test-jar</type> -->
-<!--             <version>${project.version}</version> -->
-<!--             <scope>test</scope> -->
-<!--         </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.siemac.metamac.metamac-access-control</groupId> -->
+        <!-- <artifactId>metamac-access-control-core</artifactId> -->
+        <!-- <type>test-jar</type> -->
+        <!-- <version>${project.version}</version> -->
+        <!-- <scope>test</scope> -->
+        <!-- </dependency> -->
         <dependency>
             <groupId>org.siemac.metamac</groupId>
             <artifactId>metamac-core-common</artifactId>
@@ -151,7 +151,7 @@
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty.version}</version>
             <scope>test</scope>
-        </dependency> 
+        </dependency>
         <dependency>
             <groupId>org.apache.geronimo.specs</groupId>
             <artifactId>geronimo-servlet_2.5_spec</artifactId>
