@@ -7,6 +7,7 @@ public class AccessControlConfigurationConstants {
     // Configuration
 
     public static final String USER_GUIDE_FILE_NAME = "metamac.access_control.user_guide.file_name";
+    public static final String DOCS_PATH            = "metamac.data.docs.access_control.path";
 
     // DataSource
 

@@ -11,4 +11,9 @@ public class AccessControlConfigurationServiceImpl extends ConfigurationServiceI
         return retrieveProperty(AccessControlConfigurationConstants.USER_GUIDE_FILE_NAME, Boolean.TRUE);
     }
 
+    @Override
+    public String retrieveDocsPath() throws MetamacException {
+        return retrieveProperty(AccessControlConfigurationConstants.DOCS_PATH, Boolean.TRUE);
+    }
+
 }
