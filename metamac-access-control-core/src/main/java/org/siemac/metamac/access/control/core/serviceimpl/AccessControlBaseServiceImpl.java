@@ -313,7 +313,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public Access updateAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
         InvocationValidator.checkUpdateAccess(entity);
-        validateRemovalDate(ctx, entity);
+        validateRemovalDate(entity);
         validateAccessUnique(ctx, entity);
 
         // Repository operation
@@ -396,7 +396,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         Access access = findAccessById(ctx, accessId);
 
         // Validate if it's already removed
-        validateRemovalDate(ctx, access);
+        validateRemovalDate(access);
 
         // Set attributes
         access.setRemovalDate(new DateTime());
@@ -523,7 +523,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         }
     }
 
-    private void validateRemovalDate(ServiceContext ctx, Access entity) throws MetamacException {
+    private void validateRemovalDate(Access entity) throws MetamacException {
         if (entity.getRemovalDate() != null) {
             throw new MetamacException(ServiceExceptionType.ACCESS_REMOVED, entity.getId());
         }
