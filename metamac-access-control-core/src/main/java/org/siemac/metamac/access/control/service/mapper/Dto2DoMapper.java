@@ -14,11 +14,11 @@ import org.siemac.metamac.core.common.mapper.BaseDto2DoMapper;
 
 public interface Dto2DoMapper extends BaseDto2DoMapper {
 
-    public Role roleDtoToDo(ServiceContext ctx, RoleDto source) throws MetamacException;
+    Role roleDtoToDo(ServiceContext ctx, RoleDto source) throws MetamacException;
 
-    public App appDtoToDo(ServiceContext ctx, AppDto source) throws MetamacException;
+    App appDtoToDo(ServiceContext ctx, AppDto source) throws MetamacException;
 
-    public User userDtoToDo(ServiceContext ctx, UserDto source) throws MetamacException;
+    User userDtoToDo(ServiceContext ctx, UserDto source) throws MetamacException;
 
-    public Access accessDtoToDo(ServiceContext ctx, AccessDto source) throws MetamacException;
+    Access accessDtoToDo(ServiceContext ctx, AccessDto source) throws MetamacException;
 }
