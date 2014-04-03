@@ -38,7 +38,7 @@ import org.springframework.stereotype.Service;
 @Service("accessControlBaseService")
 public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBase {
 
-    private static final Logger logger = LoggerFactory.getLogger(AccessControlBaseServiceImpl.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AccessControlBaseServiceImpl.class);
 
     @Autowired
     private RoleRepository      roleRepository;
@@ -64,7 +64,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return roleRepository.findById(id);
         } catch (RoleNotFoundException e) {
-            logger.error("findRoleById: role not found", e);
+            LOG.error("findRoleById: role not found", e);
             throw new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND, id);
         }
     }
@@ -133,7 +133,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return appRepository.findById(id);
         } catch (AppNotFoundException e) {
-            logger.error("findAppById: app not found", e);
+            LOG.error("findAppById: app not found", e);
             throw new MetamacException(ServiceExceptionType.APP_NOT_FOUND, id);
         }
     }
@@ -203,7 +203,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return userRepository.findById(id);
         } catch (UserNotFoundException e) {
-            logger.error("findUserById: user not found", e);
+            LOG.error("findUserById: user not found", e);
             throw new MetamacException(ServiceExceptionType.USER_NOT_FOUND, id);
         }
     }
@@ -294,7 +294,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return accessRepository.findById(id);
         } catch (AccessNotFoundException e) {
-            logger.error("findAccessById: access not found", e);
+            LOG.error("findAccessById: access not found", e);
             throw new MetamacException(ServiceExceptionType.ACCESS_NOT_FOUND, id);
         }
     }
