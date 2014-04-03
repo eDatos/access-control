@@ -54,7 +54,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public Role findRoleById(ServiceContext ctx, Long id) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindRoleById(id, null);
+        InvocationValidator.checkFindRoleById(id);
 
         // Repository Operation
         try {
@@ -67,7 +67,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public Role createRole(ServiceContext ctx, Role entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkCreateRole(entity, null);
+        InvocationValidator.checkCreateRole(entity);
         validateRoleCodeUnique(ctx, entity.getCode(), null);
 
         // Repository operation
@@ -77,7 +77,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public Role updateRole(ServiceContext ctx, Role entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkUpdateRole(entity, null);
+        InvocationValidator.checkUpdateRole(entity);
         validateRoleCodeUnique(ctx, entity.getCode(), entity.getId());
 
         // Repository operation
@@ -88,7 +88,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public void deleteRole(ServiceContext ctx, Long roleId) throws MetamacException {
         // Validations
-        InvocationValidator.checkDeleteRole(roleId, null);
+        InvocationValidator.checkDeleteRole(roleId);
 
         // Repository operation
         Role role = findRoleById(ctx, roleId);
@@ -98,7 +98,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<Role> findAllRoles(ServiceContext ctx) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAllRoles(null);
+        InvocationValidator.checkFindAllRoles();
 
         // Repository operation
         return roleRepository.findAll();
@@ -107,7 +107,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<Role> findRoleByCondition(ServiceContext ctx, List<ConditionalCriteria> conditions) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindRoleByCondition(conditions, null);
+        InvocationValidator.checkFindRoleByCondition(conditions);
 
         // Initializations
         initCriteriaConditions(conditions, Role.class);
@@ -122,7 +122,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public App findAppById(ServiceContext ctx, Long id) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAppById(id, null);
+        InvocationValidator.checkFindAppById(id);
 
         // Repository Operation
         try {
@@ -135,7 +135,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public App createApp(ServiceContext ctx, App entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkCreateApp(entity, null);
+        InvocationValidator.checkCreateApp(entity);
         validateAppCodeUnique(ctx, entity.getCode(), null);
 
         // Repository operation
@@ -145,7 +145,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public App updateApp(ServiceContext ctx, App entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkUpdateApp(entity, null);
+        InvocationValidator.checkUpdateApp(entity);
         validateAppCodeUnique(ctx, entity.getCode(), entity.getId());
 
         // Repository operation
@@ -155,7 +155,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public void deleteApp(ServiceContext ctx, Long appId) throws MetamacException {
         // Validations
-        InvocationValidator.checkDeleteApp(appId, null);
+        InvocationValidator.checkDeleteApp(appId);
 
         // Repository operation
         App app = findAppById(ctx, appId);
@@ -165,7 +165,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<App> findAllApps(ServiceContext ctx) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAllApps(null);
+        InvocationValidator.checkFindAllApps();
 
         // Repository operation
         return appRepository.findAll();
@@ -174,7 +174,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<App> findAppByCondition(ServiceContext ctx, List<ConditionalCriteria> conditions) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAppByCondition(conditions, null);
+        InvocationValidator.checkFindAppByCondition(conditions);
 
         // Initializations
         initCriteriaConditions(conditions, App.class);
@@ -191,7 +191,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public User findUserById(ServiceContext ctx, Long id) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindUserById(id, null);
+        InvocationValidator.checkFindUserById(id);
 
         // Repository Operation
         try {
@@ -204,7 +204,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public User createUser(ServiceContext ctx, User entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkCreateUser(entity, null);
+        InvocationValidator.checkCreateUser(entity);
 
         // Set username in lowercase
         entity.setUsername(entity.getUsername().toLowerCase());
@@ -219,7 +219,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public User updateUser(ServiceContext ctx, User entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkUpdateUser(entity, null);
+        InvocationValidator.checkUpdateUser(entity);
 
         // Set username in lowercase
         entity.setUsername(entity.getUsername().toLowerCase());
@@ -235,7 +235,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public void deleteUser(ServiceContext ctx, Long userId) throws MetamacException {
         // Validations
-        InvocationValidator.checkDeleteUser(userId, null);
+        InvocationValidator.checkDeleteUser(userId);
 
         // Repository operation
         User user = findUserById(ctx, userId);
@@ -245,7 +245,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<User> findAllUsers(ServiceContext ctx) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAllUsers(null);
+        InvocationValidator.checkFindAllUsers();
 
         // Repository operation
         return userRepository.findAll();
@@ -254,7 +254,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<User> findUserByCondition(ServiceContext ctx, List<ConditionalCriteria> conditions) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindUserByCondition(conditions, null);
+        InvocationValidator.checkFindUserByCondition(conditions);
 
         // Initializations
         initCriteriaConditions(conditions, User.class);
@@ -266,7 +266,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public PagedResult<User> findUserByCondition(ServiceContext ctx, List<ConditionalCriteria> conditions, PagingParameter pagingParameter) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindUserByCondition(conditions, null);
+        InvocationValidator.checkFindUserByCondition(conditions);
 
         // Initializations
         initCriteriaConditions(conditions, User.class);
@@ -281,7 +281,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public Access findAccessById(ServiceContext ctx, Long id) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAccessById(id, null);
+        InvocationValidator.checkFindAccessById(id);
 
         // Repository Operation
         try {
@@ -294,7 +294,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public Access createAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkCreateAccess(entity, null);
+        InvocationValidator.checkCreateAccess(entity);
         validateAccessUnique(ctx, entity, null);
 
         // Repository operation
@@ -304,7 +304,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public Access updateAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
-        InvocationValidator.checkUpdateAccess(entity, null);
+        InvocationValidator.checkUpdateAccess(entity);
         validateRemovalDate(ctx, entity, null);
         validateAccessUnique(ctx, entity, null);
 
@@ -315,7 +315,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public void deleteAccess(ServiceContext ctx, Long accessId) throws MetamacException {
         // Validations
-        InvocationValidator.checkDeleteAccess(accessId, null);
+        InvocationValidator.checkDeleteAccess(accessId);
 
         // Repository operation
         Access access = findAccessById(ctx, accessId);
@@ -325,7 +325,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<Access> findAllAccess(ServiceContext ctx) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAllAccess(null);
+        InvocationValidator.checkFindAllAccess();
 
         // Repository operation
         return accessRepository.findAll();
@@ -334,7 +334,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public List<Access> findAccessByCondition(ServiceContext ctx, List<ConditionalCriteria> conditions) throws MetamacException {
         // Validations
-        InvocationValidator.checkFindAccessByCondition(conditions, null);
+        InvocationValidator.checkFindAccessByCondition(conditions);
 
         // Initializations
         initCriteriaConditions(conditions, Access.class);
@@ -382,7 +382,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     @Override
     public void removeAccess(ServiceContext ctx, Long accessId) throws MetamacException {
         // Validations
-        InvocationValidator.checkRemoveAccess(accessId, null);
+        InvocationValidator.checkRemoveAccess(accessId);
 
         // Retrieve entity
         Access access = findAccessById(ctx, accessId);

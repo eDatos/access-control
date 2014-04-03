@@ -18,42 +18,29 @@ public class InvocationValidator {
     // ------------------------------------------------------------------------------------
     // ROLES
     // ------------------------------------------------------------------------------------
-    public static void checkFindRoleById(Long id, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
-
+    public static void checkFindRoleById(Long id) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
         AccessControlValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
-
         ExceptionUtils.throwIfException(exceptions);
     }
 
-    public static void checkFindAllRoles(List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
-
+    public static void checkFindAllRoles() throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
         // nothing to validate
-
         ExceptionUtils.throwIfException(exceptions);
 
     }
 
-    public static void checkCreateRole(Role role, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
-
+    public static void checkCreateRole(Role role) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
         checkRole(role, exceptions);
         AccessControlValidationUtils.checkMetadataEmpty(role.getId(), ServiceExceptionParameters.ROLE_ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
 
-    public static void checkUpdateRole(Role role, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkUpdateRole(Role role) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         checkRole(role, exceptions);
         AccessControlValidationUtils.checkMetadataRequired(role.getId(), ServiceExceptionParameters.ROLE_ID, exceptions);
@@ -62,20 +49,16 @@ public class InvocationValidator {
         ExceptionUtils.throwIfException(exceptions);
     }
 
-    public static void checkDeleteRole(Long id, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkDeleteRole(Long id) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
 
-    public static void checkFindRoleByCondition(List<ConditionalCriteria> conditions, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindRoleByCondition(List<ConditionalCriteria> conditions) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         // nothing to validate
 
@@ -87,10 +70,8 @@ public class InvocationValidator {
     // APPS
     // ------------------------------------------------------------------------------------
 
-    public static void checkFindAppById(Long id, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindAppById(Long id) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
@@ -98,10 +79,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkCreateApp(App app, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkCreateApp(App app) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         checkApp(app, exceptions);
         AccessControlValidationUtils.checkMetadataEmpty(app.getId(), ServiceExceptionParameters.APP_ID, exceptions);
@@ -110,10 +89,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkUpdateApp(App app, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkUpdateApp(App app) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         checkApp(app, exceptions);
         AccessControlValidationUtils.checkMetadataRequired(app.getId(), ServiceExceptionParameters.APP_ID, exceptions);
@@ -123,10 +100,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkDeleteApp(Long appId, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkDeleteApp(Long appId) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(appId, ServiceExceptionParameters.ID, exceptions);
 
@@ -134,10 +109,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkFindAllApps(List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindAllApps() throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         // nothing to validate
 
@@ -145,10 +118,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkFindAppByCondition(List<ConditionalCriteria> conditions, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindAppByCondition(List<ConditionalCriteria> conditions) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         // nothing to validate
 
@@ -160,10 +131,8 @@ public class InvocationValidator {
     // USERS
     // ------------------------------------------------------------------------------------
 
-    public static void checkFindUserById(Long id, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindUserById(Long id) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
@@ -171,10 +140,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkCreateUser(User user, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkCreateUser(User user) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         checkUser(user, exceptions);
         AccessControlValidationUtils.checkMetadataEmpty(user.getId(), ServiceExceptionParameters.USER_ID, exceptions);
@@ -183,10 +150,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkUpdateUser(User user, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkUpdateUser(User user) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         checkUser(user, exceptions);
         AccessControlValidationUtils.checkMetadataRequired(user.getId(), ServiceExceptionParameters.ID, exceptions);
@@ -196,10 +161,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkDeleteUser(Long userId, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkDeleteUser(Long userId) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(userId, ServiceExceptionParameters.ID, exceptions);
 
@@ -207,10 +170,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkFindAllUsers(List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindAllUsers() throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         // nothing to validate
 
@@ -218,10 +179,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkFindUserByCondition(List<ConditionalCriteria> conditions, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindUserByCondition(List<ConditionalCriteria> conditions) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         // nothing to validate
 
@@ -233,10 +192,8 @@ public class InvocationValidator {
     // ACCESS
     // ------------------------------------------------------------------------------------
 
-    public static void checkFindAccessById(Long id, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindAccessById(Long id) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(id, ServiceExceptionParameters.ID, exceptions);
 
@@ -244,10 +201,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkCreateAccess(Access access, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkCreateAccess(Access access) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         checkAccess(access, exceptions);
         AccessControlValidationUtils.checkMetadataEmpty(access.getId(), ServiceExceptionParameters.ACCESS_ID, exceptions);
@@ -256,10 +211,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkUpdateAccess(Access access, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkUpdateAccess(Access access) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         checkAccess(access, exceptions);
         AccessControlValidationUtils.checkMetadataRequired(access.getId(), ServiceExceptionParameters.ACCESS_ID, exceptions);
@@ -269,10 +222,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkDeleteAccess(Long accessId, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkDeleteAccess(Long accessId) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(accessId, ServiceExceptionParameters.ID, exceptions);
 
@@ -280,20 +231,16 @@ public class InvocationValidator {
 
     }
 
-    public static void checkRemoveAccess(Long accessId, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkRemoveAccess(Long accessId) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         AccessControlValidationUtils.checkParameterRequired(accessId, ServiceExceptionParameters.ID, exceptions);
 
         ExceptionUtils.throwIfException(exceptions);
     }
 
-    public static void checkFindAllAccess(List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindAllAccess() throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         // nothing to validate
 
@@ -301,10 +248,8 @@ public class InvocationValidator {
 
     }
 
-    public static void checkFindAccessByCondition(List<ConditionalCriteria> conditions, List<MetamacExceptionItem> exceptions) throws MetamacException {
-        if (exceptions == null) {
-            exceptions = new ArrayList<MetamacExceptionItem>();
-        }
+    public static void checkFindAccessByCondition(List<ConditionalCriteria> conditions) throws MetamacException {
+        List<MetamacExceptionItem> exceptions = new ArrayList<MetamacExceptionItem>();
 
         // nothing to validate
 
