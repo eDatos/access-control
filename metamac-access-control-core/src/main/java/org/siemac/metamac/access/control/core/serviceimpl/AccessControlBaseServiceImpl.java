@@ -500,19 +500,22 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
                 if (access.size() == 1) {
                     throwExceptionForDuplicatedAccess(entity, operationUrn);
                 } else if (access.size() > 1) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: "
-                            + entity.getUser().getUsername() + " Operation: " + operationUrn);
+                    throwMetamacExceptionForDuplicatedAccess(entity, operationUrn);
                 }
             } else {
                 if (access.size() == 2) {
                     throwExceptionForDuplicatedAccess(entity, operationUrn);
                 } else if (access.size() > 2) {
-                    throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: "
-                            + entity.getUser().getUsername() + " Operation: " + operationUrn);
+                    throwMetamacExceptionForDuplicatedAccess(entity, operationUrn);
                 }
             }
         }
 
+    }
+
+    private void throwMetamacExceptionForDuplicatedAccess(Access entity, String operationUrn) throws MetamacException {
+        throw new MetamacException(ServiceExceptionType.UNKNOWN, "More than one access with values. Role: " + entity.getRole().getCode() + " App: " + entity.getApp().getCode() + " User: "
+                + entity.getUser().getUsername() + " Operation: " + operationUrn);
     }
 
     private void throwExceptionForDuplicatedAccess(Access entity, String operationUrn) throws MetamacException {
