@@ -303,7 +303,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public Access createAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
         InvocationValidator.checkCreateAccess(entity);
-        validateAccessUnique(ctx, entity, null);
+        validateAccessUnique(ctx, entity);
 
         // Repository operation
         return accessRepository.save(entity);
@@ -313,8 +313,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     public Access updateAccess(ServiceContext ctx, Access entity) throws MetamacException {
         // Validations
         InvocationValidator.checkUpdateAccess(entity);
-        validateRemovalDate(ctx, entity, null);
-        validateAccessUnique(ctx, entity, null);
+        validateRemovalDate(ctx, entity);
+        validateAccessUnique(ctx, entity);
 
         // Repository operation
         return accessRepository.save(entity);
@@ -396,7 +396,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         Access access = findAccessById(ctx, accessId);
 
         // Validate if it's already removed
-        validateRemovalDate(ctx, access, null);
+        validateRemovalDate(ctx, access);
 
         // Set attributes
         access.setRemovalDate(new DateTime());
@@ -465,7 +465,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         }
     }
 
-    private void validateAccessUnique(ServiceContext ctx, Access entity, Object object) throws MetamacException {
+    private void validateAccessUnique(ServiceContext ctx, Access entity) throws MetamacException {
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
         String operationUrn = null;
@@ -523,7 +523,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         }
     }
 
-    private void validateRemovalDate(ServiceContext ctx, Access entity, Object object) throws MetamacException {
+    private void validateRemovalDate(ServiceContext ctx, Access entity) throws MetamacException {
         if (entity.getRemovalDate() != null) {
             throw new MetamacException(ServiceExceptionType.ACCESS_REMOVED, entity.getId());
         }
