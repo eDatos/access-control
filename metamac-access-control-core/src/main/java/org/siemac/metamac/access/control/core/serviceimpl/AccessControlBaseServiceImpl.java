@@ -27,6 +27,8 @@ import org.siemac.metamac.access.control.core.exception.UserNotFoundException;
 import org.siemac.metamac.access.control.error.ServiceExceptionType;
 import org.siemac.metamac.access.control.service.utils.InvocationValidator;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +38,16 @@ import org.springframework.stereotype.Service;
 @Service("accessControlBaseService")
 public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBase {
 
+    private static final Logger logger = LoggerFactory.getLogger(AccessControlBaseServiceImpl.class);
+
     @Autowired
-    private RoleRepository   roleRepository;
+    private RoleRepository      roleRepository;
     @Autowired
-    private AppRepository    appRepository;
+    private AppRepository       appRepository;
     @Autowired
-    private UserRepository   userRepository;
+    private UserRepository      userRepository;
     @Autowired
-    private AccessRepository accessRepository;
+    private AccessRepository    accessRepository;
 
     public AccessControlBaseServiceImpl() {
     }
@@ -60,6 +64,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return roleRepository.findById(id);
         } catch (RoleNotFoundException e) {
+            logger.error("findRoleById: role not found", e);
             throw new MetamacException(ServiceExceptionType.ROLE_NOT_FOUND, id);
         }
     }
@@ -128,6 +133,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return appRepository.findById(id);
         } catch (AppNotFoundException e) {
+            logger.error("findAppById: app not found", e);
             throw new MetamacException(ServiceExceptionType.APP_NOT_FOUND, id);
         }
     }
@@ -197,6 +203,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return userRepository.findById(id);
         } catch (UserNotFoundException e) {
+            logger.error("findUserById: user not found", e);
             throw new MetamacException(ServiceExceptionType.USER_NOT_FOUND, id);
         }
     }
@@ -287,6 +294,7 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
         try {
             return accessRepository.findById(id);
         } catch (AccessNotFoundException e) {
+            logger.error("findAccessById: access not found", e);
             throw new MetamacException(ServiceExceptionType.ACCESS_NOT_FOUND, id);
         }
     }
