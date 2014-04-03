@@ -468,31 +468,8 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
     private void validateAccessUnique(ServiceContext ctx, Access entity) throws MetamacException {
         List<ConditionalCriteria> conditions = new ArrayList<ConditionalCriteria>();
 
-        String operationUrn = null;
-
-        if (entity.getOperation() != null) {
-            operationUrn = entity.getOperation().getUrn();
-        }
-
-        // Role condition
-        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.role().code(), entity.getRole().getCode()));
-
-        // App condition
-        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.app().code(), entity.getApp().getCode()));
-
-        // User condition
-        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.user().username(), entity.getUser().getUsername()));
-
-        // Operation condition
-        if (operationUrn != null) {
-            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().urn(), operationUrn));
-        } else {
-            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().urn()));
-        }
-
-        // Removal date
-        conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.removalDate()));
-
+        String operationUrn = fillOperationUrn(entity);
+        populateConditionsForValidateAccessUnique(entity, conditions, operationUrn);
         List<Access> access = findAccessByCondition(ctx, conditions);
 
         if (access != null) {
@@ -511,6 +488,35 @@ public class AccessControlBaseServiceImpl extends AccessControlBaseServiceImplBa
             }
         }
 
+    }
+
+    private String fillOperationUrn(Access entity) {
+        if (entity.getOperation() != null) {
+            return entity.getOperation().getUrn();
+        } else {
+            return StringUtils.EMPTY;
+        }
+    }
+
+    private void populateConditionsForValidateAccessUnique(Access entity, List<ConditionalCriteria> conditions, String operationUrn) {
+        // Role condition
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.role().code(), entity.getRole().getCode()));
+
+        // App condition
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.app().code(), entity.getApp().getCode()));
+
+        // User condition
+        conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.user().username(), entity.getUser().getUsername()));
+
+        // Operation condition
+        if (StringUtils.isNotBlank(operationUrn)) {
+            conditions.add(ConditionalCriteria.ignoreCaseEqual(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().urn(), operationUrn));
+        } else {
+            conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.operation().urn()));
+        }
+
+        // Removal date
+        conditions.add(ConditionalCriteria.isNull(org.siemac.metamac.access.control.core.domain.AccessProperties.removalDate()));
     }
 
     private void throwMetamacExceptionForDuplicatedAccess(Access entity, String operationUrn) throws MetamacException {
