@@ -67,7 +67,7 @@ public class AccessControlWeb extends MetamacSecurityEntryPoint {
 
     @Override
     protected String getSecurityApplicationId() {
-        return AccessControlConstants.SECURITY_APPLICATION_ID;
+        return AccessControlConstants.APPLICATION_ID;
     }
 
     @Override
