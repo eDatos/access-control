@@ -36,11 +36,6 @@
             <type>zip</type>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.siemac.metamac.metamac-notifications</groupId>
-            <artifactId>metamac-notifications-rest-internal-api</artifactId>
-            <version>${metamac-notifications-rest-internal-api.version}</version>
-        </dependency>
 
         <!-- Add dependency to JMS when consumers are used, deployment.type=ear <dependency> <groupId>javax.jms</groupId> <artifactId>jms</artifactId> <version>1.1</version> <scope>provided</scope> </dependency> -->
         <!-- Add dependency to EJB when deployment.type=ear <dependency> <groupId>javax.ejb</groupId> <artifactId>ejb-api</artifactId> <version>3.0</version> <scope>provided</scope> </dependency> -->
