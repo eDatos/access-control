@@ -5,5 +5,5 @@ public final class AccessControlConstants {
     private AccessControlConstants() {
     }
 
-    public static final String SECURITY_APPLICATION_ID = "GESTOR_ACCESOS";
+    public static final String APPLICATION_ID = "GESTOR_ACCESOS";
 }

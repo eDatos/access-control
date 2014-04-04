@@ -28,7 +28,7 @@ public class SharedSecurityUtils {
      */
     public static Boolean isRoleInAccesses(MetamacPrincipal metamacPrincipal, AccessControlRoleEnum role) {
         for (MetamacPrincipalAccess metamacPrincipalAccess : metamacPrincipal.getAccesses()) {
-            if (AccessControlConstants.SECURITY_APPLICATION_ID.equals(metamacPrincipalAccess.getApplication()) && metamacPrincipalAccess.getRole().equals(role.name())) {
+            if (AccessControlConstants.APPLICATION_ID.equals(metamacPrincipalAccess.getApplication()) && metamacPrincipalAccess.getRole().equals(role.name())) {
                 return Boolean.TRUE;
             }
         }
