@@ -81,6 +81,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
         void setApplicationList(List<AppDto> apps);
 
         void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults);
+        
     }
 
     @Inject
@@ -169,25 +170,6 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
             @Override
             public void onWaitSuccess(FindAccessByUserResult result) {
                 getView().setUserAccess(result.getAccessDtos());
-            }
-        });
-    }
-
-    @Override
-    public void saveAccess(final AccessDto accessDto) {
-        dispatcher.execute(new SaveAccessAction(accessDto), new WaitingAsyncCallbackHandlingError<SaveAccessResult>(this) {
-
-            @Override
-            public void onWaitSuccess(SaveAccessResult result) {
-                final AccessDto accessSaved = result.getAccess();
-                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessSaved());
-                dispatcher.execute(new FindAccessByUserAction(accessDto.getUser().getUsername()), new WaitingAsyncCallbackHandlingError<FindAccessByUserResult>(UsersListPresenter.this) {
-
-                    @Override
-                    public void onWaitSuccess(FindAccessByUserResult result) {
-                        getView().onAccessSaved(result.getAccessDtos(), accessSaved);
-                    }
-                });
             }
         });
     }

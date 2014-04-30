@@ -155,12 +155,161 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         listGridLayout.addMember(usersListGrid);
 
         // User Details
-        userPanel = new UserPanel();
+
+        userMainFormLayout = new MainFormLayout(ClientSecurityUtils.canUpdateUser());
+        userMainFormLayout.getSave().addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+                if (editionUserForm.validate()) {
+                    uiHandlers.saveUser(getUser());
+                }
+            }
+        });
+        userMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+                // If it is a new user, hide mainFormLayout
+                if (userDto.getId() == null) {
+                    userLayout.hide();
+                }
+            }
+        });
+        createViewUserForm();
+        createEditionUserForm();
+
+        // User Access
+
+        TitleLabel accessTitle = new TitleLabel(getConstants().userAccess());
+        accessTitle.setStyleName("accessSectionTitle");
+        accessTitle.setHeight(30);
+
+        accessToolStrip = new ListGridToolStrip(getMessages().accessDeleteTitle(), getMessages().accessDeleteConfirmation());
+        accessToolStrip.getNewButton().addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+                selectAccess(buildNewAccess());
+            }
+
+            private AccessDto buildNewAccess() {
+                AccessDto accessDto = new AccessDto();
+                accessDto.setSendEmail(Boolean.TRUE);
+                return accessDto;
+            }
+        });
+        accessToolStrip.getNewButton().setVisibility(ClientSecurityUtils.canCreateAccess() ? Visibility.VISIBLE : Visibility.HIDDEN);
+
+        accessToolStrip.getDeleteConfirmationWindow().getYesButton().addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+                uiHandlers.deleteAccess(getSelectedAccess(), userDto.getUsername());
+            }
+        });
+
+        accessListGrid = new NavigableListGrid();
+        ListGridUtils.setCheckBoxSelectionType(accessListGrid);
+        accessListGrid.setHeight(300);
+        CustomListGridField accessIdField = new CustomListGridField(AccessRecord.ID, getConstants().identifier());
+        accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
+
+            @Override
+            public boolean execute(ListGrid grid, ListGridField field, int fieldNum) {
+                return false;
+            }
+        });
+        CustomListGridField roleField = new CustomListGridField(AccessRecord.ROLE, getConstants().role());
+        CustomListGridField appField = new CustomListGridField(AccessRecord.APP, getConstants().app());
+        CustomLinkListGridField opField = new CustomLinkListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
+        CustomListGridField sendEmail = new CustomListGridField(AccessRecord.SEND_EMAIL, getConstants().sendEmail());
+
+        accessListGrid.setDataSource(new AccessDS());
+        accessListGrid.setUseAllDataSourceFields(false);
+        accessListGrid.setFields(accessIdField, roleField, appField, opField, sendEmail);
+        accessListGrid.setShowGroupSummary(true);
+        accessListGrid.setGroupStartOpen(GroupStartOpen.ALL);
+        accessListGrid.setGroupByField(AccessRecord.ROLE);
+        accessListGrid.addSelectionChangedHandler(new SelectionChangedHandler() {
+
+            @Override
+            public void onSelectionChanged(SelectionEvent event) {
+                if (accessListGrid.getSelectedRecord() != null && accessListGrid.getSelectedRecords().length == 1) {
+                    AccessRecord record = (AccessRecord) accessListGrid.getSelectedRecord();
+                    selectAccess(record.getAccessDto());
+                } else {
+                    // No record selected
+                    deselectAccess();
+                    if (accessListGrid.getSelectedRecords().length > 1) {
+                        // Delete more than one Access with one click
+                        showAccessDeleteButton();
+                    }
+                }
+            }
+        });
+
+        accessMainFormLayout = new MainFormLayout();
+        accessMainFormLayout.setVisible(false);
+        accessMainFormLayout.getSave().addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+                if (editionAccessForm.getItem(ACCESS_ROLE).validate() && editionAccessForm.getItem(ACCESS_APP).validate()) {
+                    uiHandlers.saveAccess(getAccessList());
+                }
+            }
+        });
+        accessMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
+
+            @Override
+            public void onClick(ClickEvent event) {
+                // If it is a new user, hide mainFormLayout
+                // if (accessDto.getId() == null) {
+                accessMainFormLayout.hide();
+                // }
+            }
+        });
+        accessMainFormLayout.addVisibilityChangedHandler(new VisibilityChangedHandler() {
+
+            @Override
+            public void onVisibilityChanged(final VisibilityChangedEvent event) {
+                Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
+                    @Override
+                    public void execute() {
+                        // Scroll to bottom
+                        subPanel.scrollToBottom();
+                    }
+                });
+            }
+        });
+
+        createEditionAccessForm();
+
+        VLayout subAccessLayout = new VLayout();
+        subAccessLayout.setAutoHeight();
+        subAccessLayout.setBorder("1px solid #D9D9D9");
+        subAccessLayout.addMember(accessToolStrip);
+        subAccessLayout.addMember(accessListGrid);
+        subAccessLayout.addMember(accessMainFormLayout);
+
+        userLayout = new VLayout();
+        userLayout.setID(USER_LAYOUT_ID);
+        userLayout.setVisibility(Visibility.HIDDEN);
+        userLayout.addMember(userMainFormLayout);
+
+        accessLayout = new VLayout();
+        accessLayout.setMargin(15);
+        accessLayout.addMember(accessTitle);
+        accessLayout.addMember(subAccessLayout);
+
+        userLayout.addMember(accessLayout);
 
         subPanel = new VLayout();
         subPanel.setOverflow(Overflow.SCROLL);
         subPanel.addMember(listGridLayout);
-        subPanel.addMember(userPanel);
+        subPanel.addMember(userLayout);
 
         panel.addMember(subPanel);
     }
@@ -168,12 +317,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
     @Override
     public Widget asWidget() {
         return panel;
-    }
-
-    @Override
-    public void setUiHandlers(UsersListUiHandlers uiHandlers) {
-        this.uiHandlers = uiHandlers;
-        userPanel.userAccessesPanel.setUiHandlers(uiHandlers);
     }
 
     @Override
@@ -198,6 +341,17 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         usersListGrid.setData(records);
     }
 
+    @Override
+    public void setUserAccess(List<AccessDto> accessDtos) {
+        AccessRecord[] records = new AccessRecord[accessDtos.size()];
+        for (int i = 0; i < accessDtos.size(); i++) {
+            records[i] = RecordUtils.getAccessRecord(accessDtos.get(i));
+        }
+        accessListGrid.setData(records);
+        accessLayout.show();
+        accessMainFormLayout.hide();
+    }
+
     private List<Long> getSelectedUsers() {
         List<Long> selectedUsers = new ArrayList<Long>();
         ListGridRecord[] records = usersListGrid.getSelectedRecords();
@@ -208,9 +362,50 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         return selectedUsers;
     }
 
+    private void selectUser(UserDto userDto) {
+        this.userDto = userDto;
+        userMainFormLayout.clearTitleLabelContents();
+        if (userDto.getId() == null) {
+            userToolStrip.getDeleteButton().hide();
+            usersListGrid.deselectAllRecords();
+            userMainFormLayout.setEditionMode();
+        } else {
+            showUserDeleteButton();
+            userMainFormLayout.setViewMode();
+            uiHandlers.retrieveUserAccess(userDto.getUsername());
+        }
+        userLayout.show();
+        if (userDto.getId() == null) {
+            // Do not show user access panel
+            accessLayout.hide();
+        }
+        setUser(userDto);
+    }
+
     private void deselectUser() {
         userToolStrip.getDeleteButton().hide();
-        userPanel.hide();
+        userLayout.hide();
+    }
+
+    private void createViewUserForm() {
+        viewUserForm = new GroupDynamicForm(getConstants().user());
+        ViewTextItem username = new ViewTextItem(USER_USERNAME, getConstants().userUsername());
+        ViewTextItem name = new ViewTextItem(USER_NAME, getConstants().userName());
+        ViewTextItem surname = new ViewTextItem(USER_SURNAME, getConstants().userSurname());
+        ViewTextItem mail = new ViewTextItem(USER_MAIL, getConstants().userMail());
+        viewUserForm.setFields(username, name, surname, mail);
+        userMainFormLayout.addViewCanvas(viewUserForm);
+    }
+
+    private void createEditionUserForm() {
+        editionUserForm = new GroupDynamicForm(getConstants().user());
+        RequiredTextItem username = new RequiredTextItem(USER_USERNAME, getConstants().userUsername());
+        RequiredTextItem name = new RequiredTextItem(USER_NAME, getConstants().userName());
+        RequiredTextItem surname = new RequiredTextItem(USER_SURNAME, getConstants().userSurname());
+        EmailItem mail = new EmailItem(USER_MAIL, getConstants().userMail());
+        mail.setRequired(true);
+        editionUserForm.setFields(username, name, surname, mail);
+        userMainFormLayout.addEditionCanvas(editionUserForm);
     }
 
     @Override
@@ -230,439 +425,196 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
         }
     }
 
+    private void setUser(UserDto userDto) {
+        userMainFormLayout.setTitleLabelContents(userDto.getUsername());
+        setUserViewMode(userDto);
+        setUserEditionMode(userDto);
+    }
+
+    private void setUserViewMode(UserDto userDto) {
+        viewUserForm.setValue(USER_USERNAME, userDto.getUsername());
+        viewUserForm.setValue(USER_NAME, userDto.getName());
+        viewUserForm.setValue(USER_SURNAME, userDto.getSurname());
+        viewUserForm.setValue(USER_MAIL, userDto.getMail());
+    }
+
+    private void setUserEditionMode(UserDto userDto) {
+        editionUserForm.setValue(USER_USERNAME, userDto.getUsername());
+        editionUserForm.setValue(USER_NAME, userDto.getName());
+        editionUserForm.setValue(USER_SURNAME, userDto.getSurname());
+        editionUserForm.setValue(USER_MAIL, userDto.getMail());
+    }
+
+    private UserDto getUser() {
+        userDto.setUsername(editionUserForm.getValueAsString(USER_USERNAME));
+        userDto.setName(editionUserForm.getValueAsString(USER_NAME));
+        userDto.setSurname(editionUserForm.getValueAsString(USER_SURNAME));
+        userDto.setMail(editionUserForm.getValueAsString(USER_MAIL));
+        return userDto;
+    }
+
+    private List<Long> getSelectedAccess() {
+        List<Long> selectedAccess = new ArrayList<Long>();
+        ListGridRecord[] records = accessListGrid.getSelectedRecords();
+        for (int i = 0; i < records.length; i++) {
+            AccessRecord record = (AccessRecord) records[i];
+            selectedAccess.add(record.getId());
+        }
+        return selectedAccess;
+    }
+
+    private void selectAccess(AccessDto accessDto) {
+        if (accessDto.getId() == null) {
+            accessToolStrip.getDeleteButton().hide();
+            accessListGrid.deselectAllRecords();
+            accessMainFormLayout.setEditionMode();
+            accessMainFormLayout.show();
+            accessMainFormLayout.focus();
+            // Reset dragAndDrop items
+            ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).clearRelatedResourceList();
+            ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).clearRelatedResourceList();
+
+            Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
+
+                @Override
+                public void execute() {
+                    subPanel.scrollToBottom();
+                }
+            });
+        } else {
+            showAccessDeleteButton();
+            accessMainFormLayout.hide();
+        }
+        setAccess(accessDto);
+    }
+
+    private void deselectAccess() {
+        accessToolStrip.getDeleteButton().hide();
+    }
+
+    private void createEditionAccessForm() {
+        editionAccessForm = new GroupDynamicForm(getConstants().role());
+
+        BooleanRequiredSelectItem sendEmail = new BooleanRequiredSelectItem(ACCESS_SEND_EMAIL, getConstants().sendEmail());
+
+        RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
+
+        final SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
+        applicationItem.setTitleStyle("staticFormItemTitle");
+        // Set required with a custom validator
+        applicationItem.setValidators(new CustomValidator() {
+
+            @Override
+            protected boolean condition(Object value) {
+                return !applicationItem.getSelectedAppDtos().isEmpty();
+            }
+        });
+
+        SearchOperationsItem operationsItem = new SearchOperationsItem(ACCESS_OPERATION, getConstants().statisticalOperation()) {
+        	@Override
+        	protected void retrievePaginatedOperations(int firstResult, int maxResults, String criteria) {
+        		uiHandlers.retrievePaginatedOperations(firstResult, maxResults, criteria);
+        	}
+        };
+
+        editionAccessForm.setFields(sendEmail, role, applicationItem, operationsItem);
+        accessMainFormLayout.addEditionCanvas(editionAccessForm);
+    }
+
+    private void setAccess(AccessDto accessDto) {
+        setAccessEditionMode(accessDto);
+    }
+
+    private void setAccessEditionMode(AccessDto accessDto) {
+        editionAccessForm.setValue(ACCESS_ROLE, accessDto.getRole() != null ? accessDto.getRole().getId().toString() : null);
+        editionAccessForm.setValue(ACCESS_SEND_EMAIL, BooleanWebUtils.getBooleanValue(accessDto.getSendEmail()));
+    }
+
+    private List<AccessDto> getAccessList() {
+        List<AccessDto> accessList = new ArrayList<AccessDto>();
+        List<AppDto> applications = ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).getSelectedAppDtos();
+        Boolean sendEmail = ((BooleanSelectItem) editionAccessForm.getItem(ACCESS_SEND_EMAIL)).getBooleanValue();
+
+        List<ExternalItemDto> operations = ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).getSelectedRelatedResources();
+        operations = ExternalItemUtils.removeTitle(operations); // We have to remove title because it can be modified
+
+        if (operations.isEmpty()) {
+            for (AppDto app : applications) {
+                AccessDto accessDto = createBasicAccess(sendEmail, app);
+                accessList.add(accessDto);
+            }
+        } else {
+            for (AppDto app : applications) {
+                for (ExternalItemDto op : operations) {
+                    AccessDto accessDto = createBasicAccess(sendEmail, app);
+                    accessDto.setOperation(op);
+                    accessList.add(accessDto);
+                }
+            }
+        }
+        return accessList;
+    }
+
+    private AccessDto createBasicAccess(Boolean sendEmail, AppDto app) {
+        AccessDto accessDto = new AccessDto();
+        accessDto.setUser(userDto);
+        accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
+        accessDto.setApp(app);
+        accessDto.setSendEmail(sendEmail);
+        return accessDto;
+    }
+
+    @Override
+    public void setRoleList(List<RoleDto> roles) {
+        this.roleDtos = roles;
+        editionAccessForm.getItem(ACCESS_ROLE).setValueMap(CommonUtils.getRolesHashMap(roles));
+    }
+
+    @Override
+    public void setApplicationList(List<AppDto> apps) {
+        ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).setSourceAppDtos(apps);
+    }
+
+    @Override
+    public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
+        ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).setOperations(operations, firstResult, totalResults);
+    }
+
+    private RoleDto getRoleDtoById(String id) {
+        for (RoleDto role : roleDtos) {
+            if (role.getId().compareTo(Long.valueOf(id)) == 0) {
+                return role;
+            }
+        }
+        return new RoleDto();
+    }
+
+    @Override
+    public void onAccessSaved(List<AccessDto> accessDtos, AccessDto accessDto) {
+        AccessRecord[] records = new AccessRecord[accessDtos.size()];
+        AccessRecord savedRecord = null;
+        for (int i = 0; i < accessDtos.size(); i++) {
+            AccessRecord accessRecord = RecordUtils.getAccessRecord(accessDtos.get(i));
+            records[i] = accessRecord;
+            if (accessDto.getId().compareTo(accessRecord.getId()) == 0) {
+                savedRecord = accessRecord;
+            }
+        }
+        accessListGrid.setData(records);
+        if (savedRecord != null) {
+            accessListGrid.selectRecord(savedRecord);
+        }
+    }
+
     private void showUserDeleteButton() {
         if (ClientSecurityUtils.canDeleteUser()) {
             userToolStrip.getDeleteButton().show();
         }
     }
 
-    private void scrollPanelToBottom() {
-        Scheduler.get().scheduleDeferred(new Scheduler.ScheduledCommand() {
-
-            @Override
-            public void execute() {
-                subPanel.scrollToBottom();
-            }
-        });
-    }
-
-    // USER RELATED ACTIONS DELEGATE ACTIONS
-
-    @Override
-    public void setUserAccess(List<AccessDto> accessDtos) {
-        userPanel.userAccessesPanel.setUserAccesses(accessDtos);
-    }
-
-    @Override
-    public void setRoleList(List<RoleDto> roles) {
-        userPanel.userAccessesPanel.setRolesList(roles);
-    }
-
-    @Override
-    public void setApplicationList(List<AppDto> apps) {
-        userPanel.userAccessesPanel.setApplicationList(apps);
-    }
-
-    @Override
-    public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
-        userPanel.userAccessesPanel.setOperations(operations, firstResult, totalResults);
-    }
-
-    @Override
-    public void onAccessSaved(List<AccessDto> accessDtos, AccessDto accessDto) {
-        userPanel.userAccessesPanel.onAccessSaved(accessDtos, accessDto);
-    }
-
-    private class UserPanel extends VLayout {
-
-        private MainFormLayout    userMainFormLayout;
-        private GroupDynamicForm  viewUserForm;
-        private GroupDynamicForm  editionUserForm;
-
-        private UserDto           userDto;
-        private UserAccessesPanel userAccessesPanel;
-
-        public UserPanel() {
-            setID(USER_LAYOUT_ID);
-            setVisibility(Visibility.HIDDEN);
-
-            userMainFormLayout = new MainFormLayout(ClientSecurityUtils.canUpdateUser());
-            userMainFormLayout.getSave().addClickHandler(new ClickHandler() {
-
-                @Override
-                public void onClick(ClickEvent event) {
-                    if (editionUserForm.validate()) {
-                        uiHandlers.saveUser(getUser());
-                    }
-                }
-            });
-            userMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
-
-                @Override
-                public void onClick(ClickEvent event) {
-                    // If it is a new user, hide mainFormLayout
-                    if (userDto.getId() == null) {
-                        hide();
-                    }
-                }
-            });
-            createViewUserForm();
-            createEditionUserForm();
-
-            // User Access
-
-            userAccessesPanel = new UserAccessesPanel();
-
-            addMember(userMainFormLayout);
-            addMember(userAccessesPanel);
+    private void showAccessDeleteButton() {
+        if (ClientSecurityUtils.canDeleteAccess()) {
+            accessToolStrip.getDeleteButton().show();
         }
-
-        private void createViewUserForm() {
-            viewUserForm = new GroupDynamicForm(getConstants().user());
-            ViewTextItem username = new ViewTextItem(USER_USERNAME, getConstants().userUsername());
-            ViewTextItem name = new ViewTextItem(USER_NAME, getConstants().userName());
-            ViewTextItem surname = new ViewTextItem(USER_SURNAME, getConstants().userSurname());
-            ViewTextItem mail = new ViewTextItem(USER_MAIL, getConstants().userMail());
-            viewUserForm.setFields(username, name, surname, mail);
-            userMainFormLayout.addViewCanvas(viewUserForm);
-        }
-
-        private void createEditionUserForm() {
-            editionUserForm = new GroupDynamicForm(getConstants().user());
-            RequiredTextItem username = new RequiredTextItem(USER_USERNAME, getConstants().userUsername());
-            RequiredTextItem name = new RequiredTextItem(USER_NAME, getConstants().userName());
-            RequiredTextItem surname = new RequiredTextItem(USER_SURNAME, getConstants().userSurname());
-            EmailItem mail = new EmailItem(USER_MAIL, getConstants().userMail());
-            mail.setRequired(true);
-            editionUserForm.setFields(username, name, surname, mail);
-            userMainFormLayout.addEditionCanvas(editionUserForm);
-        }
-
-        private void selectUser(UserDto userDto) {
-            this.userDto = userDto;
-            userMainFormLayout.clearTitleLabelContents();
-            if (userDto.getId() == null) {
-                userToolStrip.getDeleteButton().hide();
-                usersListGrid.deselectAllRecords();
-                userMainFormLayout.setEditionMode();
-            } else {
-                showUserDeleteButton();
-                userMainFormLayout.setViewMode();
-                uiHandlers.retrieveUserAccess(userDto.getUsername());
-            }
-            show();
-            if (userDto.getId() == null) {
-                // Do not show user access panel
-                userAccessesPanel.hide();
-            }
-            setUser(userDto);
-        }
-
-        private void setUser(UserDto userDto) {
-            userMainFormLayout.setTitleLabelContents(userDto.getUsername());
-            setUserViewMode(userDto);
-            setUserEditionMode(userDto);
-        }
-
-        private void setUserViewMode(UserDto userDto) {
-            viewUserForm.setValue(USER_USERNAME, userDto.getUsername());
-            viewUserForm.setValue(USER_NAME, userDto.getName());
-            viewUserForm.setValue(USER_SURNAME, userDto.getSurname());
-            viewUserForm.setValue(USER_MAIL, userDto.getMail());
-        }
-
-        private void setUserEditionMode(UserDto userDto) {
-            editionUserForm.setValue(USER_USERNAME, userDto.getUsername());
-            editionUserForm.setValue(USER_NAME, userDto.getName());
-            editionUserForm.setValue(USER_SURNAME, userDto.getSurname());
-            editionUserForm.setValue(USER_MAIL, userDto.getMail());
-        }
-
-        private UserDto getUser() {
-            userDto.setUsername(editionUserForm.getValueAsString(USER_USERNAME));
-            userDto.setName(editionUserForm.getValueAsString(USER_NAME));
-            userDto.setSurname(editionUserForm.getValueAsString(USER_SURNAME));
-            userDto.setMail(editionUserForm.getValueAsString(USER_MAIL));
-            return userDto;
-        }
-
-        private class UserAccessesPanel extends VLayout {
-
-            private ListGridToolStrip accessToolStrip;
-            private NavigableListGrid accessListGrid;
-            private MainFormLayout    accessMainFormLayout;
-
-            private GroupDynamicForm  editionAccessForm;
-
-            private List<RoleDto>     roleDtos;
-
-            public UserAccessesPanel() {
-                setMargin(15);
-
-                TitleLabel accessTitle = new TitleLabel(getConstants().userAccess());
-                accessTitle.setStyleName("accessSectionTitle");
-                accessTitle.setHeight(30);
-
-                accessToolStrip = new ListGridToolStrip(getMessages().accessDeleteTitle(), getMessages().accessDeleteConfirmation());
-                accessToolStrip.getNewButton().addClickHandler(new ClickHandler() {
-
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        selectAccess(buildNewAccess());
-                    }
-
-                    private AccessDto buildNewAccess() {
-                        AccessDto accessDto = new AccessDto();
-                        accessDto.setSendEmail(Boolean.TRUE);
-                        return accessDto;
-                    }
-                });
-                accessToolStrip.getNewButton().setVisibility(ClientSecurityUtils.canCreateAccess() ? Visibility.VISIBLE : Visibility.HIDDEN);
-
-                accessToolStrip.getDeleteConfirmationWindow().getYesButton().addClickHandler(new ClickHandler() {
-
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        uiHandlers.deleteAccess(getSelectedAccess(), userDto.getUsername());
-                    }
-                });
-
-                accessListGrid = new NavigableListGrid();
-                ListGridUtils.setCheckBoxSelectionType(accessListGrid);
-                accessListGrid.setHeight(300);
-                CustomListGridField accessIdField = new CustomListGridField(AccessRecord.ID, getConstants().identifier());
-                accessIdField.setShowIfCondition(new ListGridFieldIfFunction() {
-
-                    @Override
-                    public boolean execute(ListGrid grid, ListGridField field, int fieldNum) {
-                        return false;
-                    }
-                });
-                CustomListGridField roleField = new CustomListGridField(AccessRecord.ROLE, getConstants().role());
-                CustomListGridField appField = new CustomListGridField(AccessRecord.APP, getConstants().app());
-                CustomLinkListGridField opField = new CustomLinkListGridField(AccessRecord.OPERATION, getConstants().statisticalOperation());
-                CustomListGridField sendEmail = new CustomListGridField(AccessRecord.SEND_EMAIL, getConstants().sendEmail());
-
-                accessListGrid.setDataSource(new AccessDS());
-                accessListGrid.setUseAllDataSourceFields(false);
-                accessListGrid.setFields(accessIdField, roleField, appField, opField, sendEmail);
-                accessListGrid.setShowGroupSummary(true);
-                accessListGrid.setGroupStartOpen(GroupStartOpen.ALL);
-                accessListGrid.setGroupByField(AccessRecord.ROLE);
-                accessListGrid.addSelectionChangedHandler(new SelectionChangedHandler() {
-
-                    @Override
-                    public void onSelectionChanged(SelectionEvent event) {
-                        if (accessListGrid.getSelectedRecord() != null && accessListGrid.getSelectedRecords().length == 1) {
-                            AccessRecord record = (AccessRecord) accessListGrid.getSelectedRecord();
-                            selectAccess(record.getAccessDto());
-                        } else {
-                            // No record selected
-                            deselectAccess();
-                            if (accessListGrid.getSelectedRecords().length > 1) {
-                                // Delete more than one Access with one click
-                                showAccessDeleteButton();
-                            }
-                        }
-                    }
-                });
-
-                accessMainFormLayout = new MainFormLayout();
-                accessMainFormLayout.setVisible(false);
-                accessMainFormLayout.getSave().addClickHandler(new ClickHandler() {
-
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        if (editionAccessForm.getItem(ACCESS_ROLE).validate() && editionAccessForm.getItem(ACCESS_APP).validate()) {
-                            uiHandlers.saveAccess(getAccessList());
-                        }
-                    }
-                });
-                accessMainFormLayout.getCancelToolStripButton().addClickHandler(new ClickHandler() {
-
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        // If it is a new user, hide mainFormLayout
-                        // if (accessDto.getId() == null) {
-                        accessMainFormLayout.hide();
-                        // }
-                    }
-                });
-                accessMainFormLayout.addVisibilityChangedHandler(new VisibilityChangedHandler() {
-
-                    @Override
-                    public void onVisibilityChanged(final VisibilityChangedEvent event) {
-                        scrollPanelToBottom();
-                    }
-                });
-
-                createEditionAccessForm();
-
-                VLayout subAccessLayout = new VLayout();
-                subAccessLayout.setAutoHeight();
-                subAccessLayout.setBorder("1px solid #D9D9D9");
-                subAccessLayout.addMember(accessToolStrip);
-                subAccessLayout.addMember(accessListGrid);
-                subAccessLayout.addMember(accessMainFormLayout);
-
-                addMember(accessTitle);
-                addMember(subAccessLayout);
-            }
-
-            public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
-                ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).setOperations(operations, firstResult, totalResults);
-            }
-
-            public void setApplicationList(List<AppDto> apps) {
-                ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).setSourceAppDtos(apps);
-            }
-
-            public void setRolesList(List<RoleDto> roles) {
-                this.roleDtos = roles;
-                editionAccessForm.getItem(ACCESS_ROLE).setValueMap(CommonUtils.getRolesHashMap(roles));
-            }
-
-            public void setUiHandlers(UsersListUiHandlers uiHandlers) {
-                ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).setUiHandlers(uiHandlers);
-            }
-
-            private List<AccessDto> getAccessList() {
-                List<AccessDto> accessList = new ArrayList<AccessDto>();
-                List<AppDto> applications = ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).getSelectedAppDtos();
-                Boolean sendEmail = ((BooleanSelectItem) editionAccessForm.getItem(ACCESS_SEND_EMAIL)).getBooleanValue();
-
-                List<ExternalItemDto> operations = ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).getSelectedRelatedResources();
-                operations = ExternalItemUtils.removeTitle(operations); // We have to remove title because it can be modified
-
-                if (operations.isEmpty()) {
-                    for (AppDto app : applications) {
-                        AccessDto accessDto = createBasicAccess(sendEmail, app);
-                        accessList.add(accessDto);
-                    }
-                } else {
-                    for (AppDto app : applications) {
-                        for (ExternalItemDto op : operations) {
-                            AccessDto accessDto = createBasicAccess(sendEmail, app);
-                            accessDto.setOperation(op);
-                            accessList.add(accessDto);
-                        }
-                    }
-                }
-                return accessList;
-            }
-
-            private AccessDto createBasicAccess(Boolean sendEmail, AppDto app) {
-                AccessDto accessDto = new AccessDto();
-                accessDto.setUser(userPanel.userDto);
-                accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
-                accessDto.setApp(app);
-                accessDto.setSendEmail(sendEmail);
-                return accessDto;
-            }
-
-            private RoleDto getRoleDtoById(String id) {
-                for (RoleDto role : roleDtos) {
-                    if (role.getId().compareTo(Long.valueOf(id)) == 0) {
-                        return role;
-                    }
-                }
-                return new RoleDto();
-            }
-
-            public void onAccessSaved(List<AccessDto> accessDtos, AccessDto accessDto) {
-                AccessRecord[] records = new AccessRecord[accessDtos.size()];
-                AccessRecord savedRecord = null;
-                for (int i = 0; i < accessDtos.size(); i++) {
-                    AccessRecord accessRecord = RecordUtils.getAccessRecord(accessDtos.get(i));
-                    records[i] = accessRecord;
-                    if (accessDto.getId().compareTo(accessRecord.getId()) == 0) {
-                        savedRecord = accessRecord;
-                    }
-                }
-                accessListGrid.setData(records);
-                if (savedRecord != null) {
-                    accessListGrid.selectRecord(savedRecord);
-                }
-            }
-
-            private void createEditionAccessForm() {
-                editionAccessForm = new GroupDynamicForm(getConstants().role());
-
-                BooleanRequiredSelectItem sendEmail = new BooleanRequiredSelectItem(ACCESS_SEND_EMAIL, getConstants().sendEmail());
-
-                RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
-
-                final SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
-                applicationItem.setTitleStyle("staticFormItemTitle");
-                // Set required with a custom validator
-                applicationItem.setValidators(new CustomValidator() {
-
-                    @Override
-                    protected boolean condition(Object value) {
-                        return !applicationItem.getSelectedAppDtos().isEmpty();
-                    }
-                });
-
-                SearchOperationsItem operationsItem = new SearchOperationsItem(ACCESS_OPERATION, getConstants().statisticalOperation());
-
-                editionAccessForm.setFields(sendEmail, role, applicationItem, operationsItem);
-                accessMainFormLayout.addEditionCanvas(editionAccessForm);
-            }
-
-            public void setUserAccesses(List<AccessDto> accessDtos) {
-                AccessRecord[] records = new AccessRecord[accessDtos.size()];
-                for (int i = 0; i < accessDtos.size(); i++) {
-                    records[i] = RecordUtils.getAccessRecord(accessDtos.get(i));
-                }
-                accessListGrid.setData(records);
-                show();
-                accessMainFormLayout.hide();
-            }
-
-            private List<Long> getSelectedAccess() {
-                List<Long> selectedAccess = new ArrayList<Long>();
-                ListGridRecord[] records = accessListGrid.getSelectedRecords();
-                for (int i = 0; i < records.length; i++) {
-                    AccessRecord record = (AccessRecord) records[i];
-                    selectedAccess.add(record.getId());
-                }
-                return selectedAccess;
-            }
-
-            private void selectAccess(AccessDto accessDto) {
-                if (accessDto.getId() == null) {
-                    accessToolStrip.getDeleteButton().hide();
-                    accessListGrid.deselectAllRecords();
-                    accessMainFormLayout.setEditionMode();
-                    accessMainFormLayout.show();
-                    accessMainFormLayout.focus();
-                    // Reset dragAndDrop items
-                    ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).clearRelatedResourceList();
-                    ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).clearRelatedResourceList();
-
-                    scrollPanelToBottom();
-                } else {
-                    showAccessDeleteButton();
-                    accessMainFormLayout.hide();
-                }
-                setAccessEditionMode(accessDto);
-            }
-
-            private void setAccessEditionMode(AccessDto accessDto) {
-                editionAccessForm.setValue(ACCESS_ROLE, accessDto.getRole() != null ? accessDto.getRole().getId().toString() : null);
-                editionAccessForm.setValue(ACCESS_SEND_EMAIL, BooleanWebUtils.getBooleanValue(accessDto.getSendEmail()));
-            }
-
-            private void deselectAccess() {
-                accessToolStrip.getDeleteButton().hide();
-            }
-
-            private void showAccessDeleteButton() {
-                if (ClientSecurityUtils.canDeleteAccess()) {
-                    accessToolStrip.getDeleteButton().show();
-                }
-            }
-        }
-
     }
 }

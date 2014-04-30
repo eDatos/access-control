@@ -3,7 +3,6 @@ package org.siemac.metamac.access.control.web.client.widgets;
 import java.util.List;
 
 import org.siemac.metamac.access.control.web.client.AccessControlWeb;
-import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.MetamacWebCommon;
 import org.siemac.metamac.web.common.client.utils.RecordUtils;
@@ -21,11 +20,10 @@ import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.FormItemClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.FormItemIconClickEvent;
 
-public class SearchOperationsItem extends ExternalItemListItem {
+public abstract class SearchOperationsItem extends ExternalItemListItem {
 
     protected SearchOperationsWindow searchOperationsWindow;
 
-    protected UsersListUiHandlers    uiHandlers;
 
     public SearchOperationsItem(final String name, String title) {
         super(name, title, true);
@@ -35,7 +33,7 @@ public class SearchOperationsItem extends ExternalItemListItem {
             @Override
             public void onFormItemClick(FormItemIconClickEvent event) {
                 searchOperationsWindow = new SearchOperationsWindow(name);
-                uiHandlers.retrievePaginatedOperations(0, SearchOperationsPaginatedDragAndDropItem.MAX_RESULTS, null);
+                retrievePaginatedOperations(0, SearchOperationsPaginatedDragAndDropItem.MAX_RESULTS, null);
                 searchOperationsWindow.setTargetOperations(getSelectedRelatedResources());
                 searchOperationsWindow.getSaveButton().addClickHandler(new ClickHandler() {
 
@@ -48,10 +46,6 @@ public class SearchOperationsItem extends ExternalItemListItem {
                 });
             }
         });
-    }
-
-    public void setUiHandlers(UsersListUiHandlers uiHandlers) {
-        this.uiHandlers = uiHandlers;
     }
 
     public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
@@ -72,15 +66,18 @@ public class SearchOperationsItem extends ExternalItemListItem {
 
                 @Override
                 public void retrieveResultSet(int firstResult, int maxResults) {
-                    uiHandlers.retrievePaginatedOperations(firstResult, maxResults, null);
+                    retrievePaginatedOperations(firstResult, maxResults, null);
                 }
             });
             searchOperationsPaginatedDragAndDropItem.setSearchAction(new SearchPaginatedAction() {
 
                 @Override
                 public void retrieveResultSet(int firstResult, int maxResults, String criteria) {
-                    uiHandlers.retrievePaginatedOperations(firstResult, maxResults, criteria);
+                    retrievePaginatedOperations(firstResult, maxResults,
+							criteria);
                 }
+
+
             });
             searchOperationsPaginatedDragAndDropItem.setShowTitle(false);
 
@@ -107,6 +104,10 @@ public class SearchOperationsItem extends ExternalItemListItem {
             searchOperationsPaginatedDragAndDropItem.setTargetExternalItems(externalItemDtos);
         }
     }
+    
+    
+	protected abstract void retrievePaginatedOperations(int firstResult,
+			int maxResults, String criteria);
 
     private class SearchOperationsPaginatedDragAndDropItem extends SearchExternalPaginatedDragAndDropItem {
 
@@ -123,4 +124,5 @@ public class SearchOperationsItem extends ExternalItemListItem {
             form.markForRedraw();
         }
     }
+    
 }
