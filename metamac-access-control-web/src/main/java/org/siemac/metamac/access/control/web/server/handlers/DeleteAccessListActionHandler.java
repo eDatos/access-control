@@ -1,14 +1,21 @@
 package org.siemac.metamac.access.control.web.server.handlers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
+import org.siemac.metamac.access.control.core.dto.AccessDto;
 import org.siemac.metamac.access.control.core.serviceapi.AccessControlBaseServiceFacade;
+import org.siemac.metamac.access.control.web.server.rest.NoticesRestInternalService;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
+import org.siemac.metamac.core.common.exception.MetamacExceptionItem;
 import org.siemac.metamac.web.common.server.ServiceContextHolder;
 import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
+import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
+import org.siemac.metamac.web.common.shared.exception.MetamacWebExceptionItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,21 +28,45 @@ public class DeleteAccessListActionHandler extends SecurityActionHandler<DeleteA
     @Autowired
     private AccessControlBaseServiceFacade accessControlBaseServiceFacade;
 
+    @Autowired
+    private NoticesRestInternalService     noticesRestInternalService;
+
     public DeleteAccessListActionHandler() {
         super(DeleteAccessListAction.class);
     }
 
     @Override
     public DeleteAccessListResult executeSecurityAction(DeleteAccessListAction action) throws ActionException {
-        List<Long> ids = action.getAccessIds();
-        for (Long id : ids) {
+        List<MetamacExceptionItem> exceptionItems = new ArrayList<MetamacExceptionItem>();
+        ServiceContext serviceContext = ServiceContextHolder.getCurrentServiceContext();
+
+        List<AccessDto> accessDeleted = new ArrayList<AccessDto>();
+        List<AccessDto> accessList = action.getAccess();
+        for (AccessDto access : accessList) {
             try {
-                accessControlBaseServiceFacade.removeAccess(ServiceContextHolder.getCurrentServiceContext(), id);
+                accessControlBaseServiceFacade.removeAccess(serviceContext, access.getId());
+                accessDeleted.add(access);
             } catch (MetamacException e) {
-                throw WebExceptionUtils.createMetamacWebException(e);
+                exceptionItems.addAll(e.getExceptionItems());
             }
         }
-        return new DeleteAccessListResult();
+
+        if (!accessDeleted.isEmpty()) {
+            try {
+                noticesRestInternalService.createNotificationForDeleteAccessList(serviceContext, accessDeleted);
+            } catch (MetamacWebException notificationException) {
+                List<MetamacWebExceptionItem> actionExceptionItems = WebExceptionUtils.getMetamacWebExceptionItems(null, exceptionItems);
+                notificationException.getWebExceptionItems().addAll(actionExceptionItems);
+
+                return new DeleteAccessListResult(notificationException);
+            }
+        }
+
+        if (!exceptionItems.isEmpty()) {
+            throw WebExceptionUtils.createMetamacWebException(new MetamacException(exceptionItems));
+        }
+
+        return new DeleteAccessListResult(null);
     }
 
     @Override

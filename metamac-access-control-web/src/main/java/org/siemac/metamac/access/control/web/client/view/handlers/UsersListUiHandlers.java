@@ -10,11 +10,14 @@ import com.gwtplatform.mvp.client.UiHandlers;
 public interface UsersListUiHandlers extends UiHandlers {
 
     void saveUser(UserDto userDto);
+
     void deleteUsers(List<Long> selectedUsers);
 
     void retrieveUserAccess(String username);
+
     void saveAccess(List<AccessDto> accessDto);
-    void deleteAccess(List<Long> selectedAccess, String username);
+
+    void deleteAccess(List<AccessDto> selectedAccess, String username);
 
     void retrievePaginatedOperations(int firstResult, int maxResults, String operationCode);
 

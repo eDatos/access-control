@@ -62,29 +62,29 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> implements UsersListPresenter.UsersListView {
 
-    private static final String USER_USERNAME     = "username";
-    private static final String USER_NAME         = "name";
-    private static final String USER_SURNAME      = "surname";
-    private static final String USER_MAIL         = "mail";
+    private static final String     USER_USERNAME     = "username";
+    private static final String     USER_NAME         = "name";
+    private static final String     USER_SURNAME      = "surname";
+    private static final String     USER_MAIL         = "mail";
 
-    private static final String ACCESS_ROLE       = "role";
-    private static final String ACCESS_APP        = "app";
-    private static final String ACCESS_OPERATION  = "operation";
-    private static final String ACCESS_SEND_EMAIL = "sendEmail";
+    private static final String     ACCESS_ROLE       = "role";
+    private static final String     ACCESS_APP        = "app";
+    private static final String     ACCESS_OPERATION  = "operation";
+    private static final String     ACCESS_SEND_EMAIL = "sendEmail";
 
-    private static final String USER_LAYOUT_ID    = "userlayout";
+    private static final String     USER_LAYOUT_ID    = "userlayout";
 
-    private VLayout             panel;
-    private VLayout             subPanel;
+    private final VLayout           panel;
+    private final VLayout           subPanel;
 
-    private ListGridToolStrip   userToolStrip;
-    private CustomListGrid      usersListGrid;
+    private final ListGridToolStrip userToolStrip;
+    private final CustomListGrid    usersListGrid;
 
-    private Label               title;
+    private final Label             title;
 
-    private UsersListUiHandlers uiHandlers;
+    private UsersListUiHandlers     uiHandlers;
 
-    private UserPanel           userPanel;
+    private final UserPanel         userPanel;
 
     public UsersListViewImpl() {
         super();
@@ -269,12 +269,12 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     private class UserPanel extends VLayout {
 
-        private MainFormLayout    userMainFormLayout;
-        private GroupDynamicForm  viewUserForm;
-        private GroupDynamicForm  editionUserForm;
+        private final MainFormLayout    userMainFormLayout;
+        private GroupDynamicForm        viewUserForm;
+        private GroupDynamicForm        editionUserForm;
 
-        private UserDto           userDto;
-        private UserAccessesPanel userAccessesPanel;
+        private UserDto                 userDto;
+        private final UserAccessesPanel userAccessesPanel;
 
         public UserPanel() {
             setID(USER_LAYOUT_ID);
@@ -515,7 +515,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 this.roleDtos = roles;
                 editionAccessForm.getItem(ACCESS_ROLE).setValueMap(CommonUtils.getRolesHashMap(roles));
             }
-            
+
             private List<AccessDto> getAccessList() {
                 List<AccessDto> accessList = new ArrayList<AccessDto>();
                 List<AppDto> applications = ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).getSelectedAppDtos();
@@ -593,12 +593,13 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     }
                 });
 
-           	 SearchOperationsItem operationsItem = new SearchOperationsItem(ACCESS_OPERATION, getConstants().statisticalOperation()) {
-             	@Override
-             	protected void retrievePaginatedOperations(int firstResult, int maxResults, String criteria) {
-             		uiHandlers.retrievePaginatedOperations(firstResult, maxResults, criteria);
-             	}
-             };
+                SearchOperationsItem operationsItem = new SearchOperationsItem(ACCESS_OPERATION, getConstants().statisticalOperation()) {
+
+                    @Override
+                    protected void retrievePaginatedOperations(int firstResult, int maxResults, String criteria) {
+                        uiHandlers.retrievePaginatedOperations(firstResult, maxResults, criteria);
+                    }
+                };
                 editionAccessForm.setFields(sendEmail, role, applicationItem, operationsItem);
                 accessMainFormLayout.addEditionCanvas(editionAccessForm);
             }
@@ -613,12 +614,12 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 accessMainFormLayout.hide();
             }
 
-            private List<Long> getSelectedAccess() {
-                List<Long> selectedAccess = new ArrayList<Long>();
+            private List<AccessDto> getSelectedAccess() {
+                List<AccessDto> selectedAccess = new ArrayList<AccessDto>();
                 ListGridRecord[] records = accessListGrid.getSelectedRecords();
                 for (int i = 0; i < records.length; i++) {
                     AccessRecord record = (AccessRecord) records[i];
-                    selectedAccess.add(record.getId());
+                    selectedAccess.add(record.getAccessDto());
                 }
                 return selectedAccess;
             }

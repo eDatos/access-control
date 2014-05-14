@@ -8,6 +8,7 @@ import org.siemac.metamac.access.control.core.dto.AccessDto;
 import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
+import org.siemac.metamac.access.control.web.client.AccessControlWeb;
 import org.siemac.metamac.access.control.web.client.LoggedInGatekeeper;
 import org.siemac.metamac.access.control.web.client.NameTokens;
 import org.siemac.metamac.access.control.web.client.events.UpdateApplicationsEvent;
@@ -25,10 +26,8 @@ import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersResult;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListResult;
-import org.siemac.metamac.access.control.web.shared.SaveAccessAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListResult;
-import org.siemac.metamac.access.control.web.shared.SaveAccessResult;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserResult;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
@@ -81,7 +80,7 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
         void setApplicationList(List<AppDto> apps);
 
         void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults);
-        
+
     }
 
     @Inject
@@ -181,18 +180,27 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
             @Override
             public void onWaitSuccess(SaveAccessListResult result) {
                 retrieveUserAccess(accessDtos.get(0).getUser().getUsername());
-                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessSaved());
+
+                if (result.getNotificationException() != null) {
+                    ShowMessageEvent.fireWarningMessageWithError(UsersListPresenter.this, AccessControlWeb.getMessages().accessSavedWithNotificationError(), result.getNotificationException());
+                } else {
+                    ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessSaved());
+                }
             }
         });
     }
 
     @Override
-    public void deleteAccess(List<Long> selectedAccess, final String username) {
+    public void deleteAccess(List<AccessDto> selectedAccess, final String username) {
         dispatcher.execute(new DeleteAccessListAction(selectedAccess), new WaitingAsyncCallbackHandlingError<DeleteAccessListResult>(this) {
 
             @Override
             public void onWaitSuccess(DeleteAccessListResult result) {
-                ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessDeleted());
+                if (result.getNotificationException() != null) {
+                    ShowMessageEvent.fireWarningMessageWithError(UsersListPresenter.this, AccessControlWeb.getMessages().accessDeletedWithNotificationError(), result.getNotificationException());
+                } else {
+                    ShowMessageEvent.fireSuccessMessage(UsersListPresenter.this, getMessages().accessDeleted());
+                }
             }
 
             @Override

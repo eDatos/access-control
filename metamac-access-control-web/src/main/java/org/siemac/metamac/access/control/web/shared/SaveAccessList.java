@@ -3,6 +3,7 @@ package org.siemac.metamac.access.control.web.shared;
 import java.util.List;
 
 import org.siemac.metamac.access.control.core.dto.AccessDto;
+import org.siemac.metamac.web.common.shared.exception.MetamacWebException;
 
 import com.gwtplatform.dispatch.annotation.GenDispatch;
 import com.gwtplatform.dispatch.annotation.In;
@@ -12,9 +13,12 @@ import com.gwtplatform.dispatch.annotation.Out;
 public class SaveAccessList {
 
     @In(1)
-    List<AccessDto> accessToSave;
+    List<AccessDto>     accessToSave;
 
     @Out(1)
-    List<AccessDto> accessDtos;
+    List<AccessDto>     accessDtos;
+
+    @Out(2)
+    MetamacWebException notificationException;
 
 }
