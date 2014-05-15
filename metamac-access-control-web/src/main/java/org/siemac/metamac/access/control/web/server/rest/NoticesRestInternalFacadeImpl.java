@@ -83,8 +83,9 @@ public class NoticesRestInternalFacadeImpl implements NoticesRestInternalService
     private String createTranslatedMessage(ServiceContext ctx, String messageCode, AccessDto access) {
         Locale locale = ServiceContextUtils.getLocale(ctx);
         String localisedMessage = LocaleUtil.getMessageForCode(messageCode, locale);
+        String operation = access.getOperation() != null ? access.getOperation().getCode() : "*";
         // User = {0}, Role = {1}, App = {2}, Operation = {3}
-        localisedMessage = MessageFormat.format(localisedMessage, access.getUser().getUsername(), access.getRole().getTitle(), access.getApp().getTitle(), access.getOperation().getCode());
+        localisedMessage = MessageFormat.format(localisedMessage, access.getUser().getUsername(), access.getRole().getTitle(), access.getApp().getTitle(), operation);
         return localisedMessage;
     }
 

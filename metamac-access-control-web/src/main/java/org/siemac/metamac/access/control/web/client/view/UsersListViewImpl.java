@@ -82,8 +82,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
     private final Label             title;
 
-    private UsersListUiHandlers     uiHandlers;
-
     private final UserPanel         userPanel;
 
     public UsersListViewImpl() {
@@ -110,7 +108,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             @Override
             public void onClick(ClickEvent event) {
-                uiHandlers.deleteUsers(getSelectedUsers());
+                getUiHandlers().deleteUsers(getSelectedUsers());
             }
         });
 
@@ -286,7 +284,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 @Override
                 public void onClick(ClickEvent event) {
                     if (editionUserForm.validate()) {
-                        uiHandlers.saveUser(getUser());
+                        getUiHandlers().saveUser(getUser());
                     }
                 }
             });
@@ -342,7 +340,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             } else {
                 showUserDeleteButton();
                 userMainFormLayout.setViewMode();
-                uiHandlers.retrieveUserAccess(userDto.getUsername());
+                getUiHandlers().retrieveUserAccess(userDto.getUsername());
             }
             show();
             if (userDto.getId() == null) {
@@ -417,7 +415,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
                     @Override
                     public void onClick(ClickEvent event) {
-                        uiHandlers.deleteAccess(getSelectedAccess(), userDto.getUsername());
+                        getUiHandlers().deleteAccess(getSelectedAccess(), userDto.getUsername());
                     }
                 });
 
@@ -468,7 +466,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     @Override
                     public void onClick(ClickEvent event) {
                         if (editionAccessForm.getItem(ACCESS_ROLE).validate() && editionAccessForm.getItem(ACCESS_APP).validate()) {
-                            uiHandlers.saveAccess(getAccessList());
+                            getUiHandlers().saveAccess(getAccessList());
                         }
                     }
                 });
@@ -597,7 +595,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
                     @Override
                     protected void retrievePaginatedOperations(int firstResult, int maxResults, String criteria) {
-                        uiHandlers.retrievePaginatedOperations(firstResult, maxResults, criteria);
+                        getUiHandlers().retrievePaginatedOperations(firstResult, maxResults, criteria);
                     }
                 };
                 editionAccessForm.setFields(sendEmail, role, applicationItem, operationsItem);
