@@ -1,57 +1,38 @@
 package org.siemac.metamac.access.control.web.server.listener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.siemac.metamac.access.control.constants.AccessControlConfigurationConstants;
 import org.siemac.metamac.core.common.constants.shared.ConfigurationConstants;
-import org.siemac.metamac.web.common.server.listener.ApplicationStartupListener;
+import org.siemac.metamac.web.common.server.listener.InternalApplicationStartupListener;
 
-public class AccessControlApplicationStartupListener extends ApplicationStartupListener {
-
-    private static final Log LOG = LogFactory.getLog(AccessControlApplicationStartupListener.class);
+public class AccessControlApplicationStartupListener extends InternalApplicationStartupListener {
 
     @Override
-    public void checkConfiguration() {
-
-        LOG.info("****************************************************************");
-        LOG.info("[metamac-access-control-web] Checking application configuration");
-        LOG.info("****************************************************************");
-
-        // SECURITY
-
-        checkSecurityProperties();
-
-        // DATASOURCE
-
+    public void checkDatasourceProperties() {
         checkRequiredProperty(AccessControlConfigurationConstants.DB_DRIVER_NAME);
         checkRequiredProperty(AccessControlConfigurationConstants.DB_URL);
         checkRequiredProperty(AccessControlConfigurationConstants.DB_USERNAME);
         checkRequiredProperty(AccessControlConfigurationConstants.DB_PASSWORD);
         checkRequiredProperty(AccessControlConfigurationConstants.DB_DIALECT);
+    }
 
-        // OTHER CONFIGURATION PROPERTIES
-
-        // Common properties
-
-        checkEditionLanguagesProperty();
-        checkNavBarUrlProperty();
-        checkOrganisationProperty();
-
-        // WEB APPLICATIONS
-
+    @Override
+    public void checkWebApplicationsProperties() {
         checkRequiredProperty(ConfigurationConstants.WEB_APPLICATION_STATISTICAL_OPERATIONS_INTERNAL_WEB);
+    }
 
-        // API
-
+    @Override
+    public void checkApiProperties() {
         checkRequiredProperty(ConfigurationConstants.ENDPOINT_STATISTICAL_OPERATIONS_INTERNAL_API);
         checkRequiredProperty(ConfigurationConstants.ENDPOINT_ACCESS_CONTROL_INTERNAL_API);
+    }
 
-        // Access Control properties
-
+    @Override
+    public void checkOtherModuleProperties() {
         checkRequiredProperty(AccessControlConfigurationConstants.USER_GUIDE_FILE_NAME);
+    }
 
-        LOG.info("****************************************************************");
-        LOG.info("[metamac-access-control-web] Application configuration checked");
-        LOG.info("****************************************************************");
+    @Override
+    public String projectName() {
+        return "access-control-internal";
     }
 }
