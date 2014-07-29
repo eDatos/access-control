@@ -29,8 +29,8 @@ import org.siemac.metamac.web.common.client.utils.ListGridUtils;
 import org.siemac.metamac.web.common.client.widgets.CustomLinkListGridField;
 import org.siemac.metamac.web.common.client.widgets.CustomListGrid;
 import org.siemac.metamac.web.common.client.widgets.CustomListGridField;
+import org.siemac.metamac.web.common.client.widgets.CustomSectionStack;
 import org.siemac.metamac.web.common.client.widgets.ListGridToolStrip;
-import org.siemac.metamac.web.common.client.widgets.TitleLabel;
 import org.siemac.metamac.web.common.client.widgets.form.GroupDynamicForm;
 import org.siemac.metamac.web.common.client.widgets.form.MainFormLayout;
 import org.siemac.metamac.web.common.client.widgets.form.fields.BooleanRequiredSelectItem;
@@ -391,10 +391,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             public UserAccessesPanel() {
                 setMargin(15);
 
-                TitleLabel accessTitle = new TitleLabel(getConstants().userAccess());
-                accessTitle.setStyleName("accessSectionTitle");
-                accessTitle.setHeight(30);
-
                 accessToolStrip = new ListGridToolStrip(getMessages().accessDeleteTitle(), getMessages().accessDeleteConfirmation());
                 accessToolStrip.getNewButton().addClickHandler(new ClickHandler() {
 
@@ -497,8 +493,11 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 subAccessLayout.addMember(accessListGrid);
                 subAccessLayout.addMember(accessMainFormLayout);
 
-                addMember(accessTitle);
-                addMember(subAccessLayout);
+                CustomSectionStack userAccessSectionStack = new CustomSectionStack(getConstants().userAccess());
+                userAccessSectionStack.getDefaultSection().setItems(subAccessLayout);
+                userAccessSectionStack.getDefaultSection().setExpanded(true);
+
+                addMember(userAccessSectionStack);
             }
 
             public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
