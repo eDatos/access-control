@@ -21,7 +21,6 @@ import org.siemac.metamac.access.control.web.client.utils.RecordUtils;
 import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHandlers;
 import org.siemac.metamac.access.control.web.client.widgets.NavigableListGrid;
 import org.siemac.metamac.access.control.web.client.widgets.SearchApplicationItem;
-import org.siemac.metamac.access.control.web.client.widgets.SearchOperationsItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
 import org.siemac.metamac.web.common.client.utils.BooleanWebUtils;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
@@ -39,6 +38,8 @@ import org.siemac.metamac.web.common.client.widgets.form.fields.EmailItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredSelectItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.RequiredTextItem;
 import org.siemac.metamac.web.common.client.widgets.form.fields.ViewTextItem;
+import org.siemac.metamac.web.common.client.widgets.form.fields.external.SearchMultiExternalItemSimpleItem;
+import org.siemac.metamac.web.common.shared.criteria.MetamacWebCriteria;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.ui.Widget;
@@ -388,6 +389,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             private List<RoleDto>     roleDtos;
 
+            public final static int   MAX_RESULTS = 8;
+
             public UserAccessesPanel() {
                 setMargin(15);
 
@@ -501,7 +504,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
             }
 
             public void setOperations(List<ExternalItemDto> operations, int firstResult, int totalResults) {
-                ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).setOperations(operations, firstResult, totalResults);
+                ((SearchMultiExternalItemSimpleItem) editionAccessForm.getItem(ACCESS_OPERATION)).setResources(operations, firstResult, totalResults);
             }
 
             public void setApplicationList(List<AppDto> apps) {
@@ -518,7 +521,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 List<AppDto> applications = ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).getSelectedAppDtos();
                 Boolean sendEmail = ((BooleanSelectItem) editionAccessForm.getItem(ACCESS_SEND_EMAIL)).getBooleanValue();
 
-                List<ExternalItemDto> operations = ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).getSelectedRelatedResources();
+                List<ExternalItemDto> operations = ((SearchMultiExternalItemSimpleItem) editionAccessForm.getItem(ACCESS_OPERATION)).getSelectedRelatedResources();
                 operations = ExternalItemUtils.removeTitle(operations); // We have to remove title because it can be modified
 
                 if (operations.isEmpty()) {
@@ -590,13 +593,14 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     }
                 });
 
-                SearchOperationsItem operationsItem = new SearchOperationsItem(ACCESS_OPERATION, getConstants().statisticalOperation()) {
+                SearchMultiExternalItemSimpleItem operationsItem = new SearchMultiExternalItemSimpleItem(ACCESS_OPERATION, getConstants().statisticalOperation(), MAX_RESULTS) {
 
                     @Override
-                    protected void retrievePaginatedOperations(int firstResult, int maxResults, String criteria) {
-                        getUiHandlers().retrievePaginatedOperations(firstResult, maxResults, criteria);
+                    protected void retrieveResources(int firstResult, int maxResults, MetamacWebCriteria webCriteria) {
+                        getUiHandlers().retrievePaginatedOperations(firstResult, maxResults, webCriteria.getCriteria());
                     }
                 };
+
                 editionAccessForm.setFields(sendEmail, role, applicationItem, operationsItem);
                 accessMainFormLayout.addEditionCanvas(editionAccessForm);
             }
@@ -630,7 +634,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     accessMainFormLayout.focus();
                     // Reset dragAndDrop items
                     ((SearchApplicationItem) editionAccessForm.getItem(ACCESS_APP)).clearRelatedResourceList();
-                    ((SearchOperationsItem) editionAccessForm.getItem(ACCESS_OPERATION)).clearRelatedResourceList();
+                    ((SearchMultiExternalItemSimpleItem) editionAccessForm.getItem(ACCESS_OPERATION)).clearRelatedResourceList();
 
                     scrollPanelToBottom();
                 } else {
