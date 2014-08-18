@@ -59,6 +59,6 @@ public class StatisticalOperationsRestInternalFacadeImpl implements StatisticalO
     }
 
     private MetamacWebException manageStatisticalOperationsRestException(ServiceContext ctx, Exception e) throws MetamacWebException {
-        return restExceptionUtils.manageMetamacRestException(ctx, e, ServiceExceptionParameters.API_SRM_INTERNAL, restApiLocator.getStatisticalOperationsRestFacadeV10());
+        return restExceptionUtils.manageMetamacRestException(ctx, e, ServiceExceptionParameters.API_STATISTICAL_OPERATIONS_INTERNAL, restApiLocator.getStatisticalOperationsRestFacadeV10());
     }
 }
