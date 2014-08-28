@@ -497,6 +497,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 subAccessLayout.addMember(accessMainFormLayout);
 
                 CustomSectionStack userAccessSectionStack = new CustomSectionStack(getConstants().userAccess());
+                userAccessSectionStack.setStyleName("customSectionStackStyle");
                 userAccessSectionStack.getDefaultSection().setItems(subAccessLayout);
                 userAccessSectionStack.getDefaultSection().setExpanded(true);
 
