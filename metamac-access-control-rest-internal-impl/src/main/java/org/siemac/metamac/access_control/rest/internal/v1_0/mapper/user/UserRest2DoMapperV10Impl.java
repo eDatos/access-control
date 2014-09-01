@@ -44,11 +44,12 @@ public class UserRest2DoMapperV10Impl extends BaseRest2DoMapperV10Impl implement
                     return buildSculptorPropertyCriteria(UserProperties.access().role().code(), PropertyTypeEnum.STRING, propertyRestriction);
                 case STATISTICAL_OPERATION_URN:
                     return buildSculptorPropertyCriteriaDisjunctionForUrnProperty(propertyRestriction, UserProperties.access().operation());
+                case SEND_MAIL:
+                    return buildSculptorPropertyCriteria(UserProperties.access().sendEmail(), PropertyTypeEnum.BOOLEAN, propertyRestriction);
                 default:
                     throw toRestExceptionParameterIncorrect(propertyNameCriteria.name());
             }
         }
-
         private void propertyRestrictionValueToLowerCase(MetamacRestQueryPropertyRestriction propertyRestriction) {
             if (propertyRestriction != null) {
                 if (StringUtils.isNotBlank(propertyRestriction.getValue())) {

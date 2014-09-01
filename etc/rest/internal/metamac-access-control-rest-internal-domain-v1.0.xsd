@@ -83,6 +83,7 @@
             <xs:enumeration value="APPLICATION_CODE" />
             <xs:enumeration value="ROLE_CODE" />
             <xs:enumeration value="STATISTICAL_OPERATION_URN" />
+            <xs:enumeration value="SEND_MAIL" />
         </xs:restriction>
     </xs:simpleType>
     
