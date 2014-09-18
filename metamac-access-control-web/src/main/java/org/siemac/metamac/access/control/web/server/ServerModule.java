@@ -13,8 +13,6 @@ import org.siemac.metamac.access.control.web.server.handlers.FindAllUsersActionH
 import org.siemac.metamac.access.control.web.server.handlers.GetOperationPaginatedListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.GetUserGuideUrlActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAccessListActionHandler;
-import org.siemac.metamac.access.control.web.server.handlers.SaveAppActionHandler;
-import org.siemac.metamac.access.control.web.server.handlers.SaveRoleActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveUserActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.ValidateTicketActionHandler;
 import org.siemac.metamac.access.control.web.shared.DeleteAccessListAction;
@@ -30,8 +28,6 @@ import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
 import org.siemac.metamac.access.control.web.shared.GetUserGuideUrlAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
-import org.siemac.metamac.access.control.web.shared.SaveAppAction;
-import org.siemac.metamac.access.control.web.shared.SaveRoleAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.web.common.server.handlers.CloseSessionActionHandler;
 import org.siemac.metamac.web.common.server.handlers.GetLoginPageUrlActionHandler;
@@ -68,8 +64,6 @@ public class ServerModule extends HandlerModule {
         bindHandler(DeleteRoleListAction.class, DeleteRoleListActionHandler.class);
         bindHandler(DeleteAppListAction.class, DeleteAppListActionHandler.class);
         bindHandler(SaveUserAction.class, SaveUserActionHandler.class);
-        bindHandler(SaveRoleAction.class, SaveRoleActionHandler.class);
-        bindHandler(SaveAppAction.class, SaveAppActionHandler.class);
         bindHandler(FindAccessByUserAction.class, FindAccessByUserActionHandler.class);
         bindHandler(GetOperationPaginatedListAction.class, GetOperationPaginatedListActionHandler.class);
         bindHandler(FindAllRemovedAccessAction.class, FindAllRemovedAccessActionHandler.class);
@@ -86,5 +80,4 @@ public class ServerModule extends HandlerModule {
         // This action should be removed to use CAS authentication
         bindHandler(MockCASUserAction.class, MockCASUserActionHandler.class);
     }
-
 }
