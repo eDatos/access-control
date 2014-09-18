@@ -179,6 +179,17 @@ public class UsersListPresenter extends Presenter<UsersListPresenter.UsersListVi
 
             @Override
             public void onWaitSuccess(SaveAccessListResult result) {
+
+                final UserDto updatedUserDto = result.getUserDto();
+
+                dispatcher.execute(new FindAllUsersAction(), new WaitingAsyncCallbackHandlingError<FindAllUsersResult>(UsersListPresenter.this) {
+
+                    @Override
+                    public void onWaitSuccess(FindAllUsersResult result) {
+                        getView().onUserSaved(result.getUsers(), updatedUserDto);
+                    }
+                });
+
                 retrieveUserAccess(accessDtos.get(0).getUser().getUsername());
 
                 if (result.getNotificationException() != null) {

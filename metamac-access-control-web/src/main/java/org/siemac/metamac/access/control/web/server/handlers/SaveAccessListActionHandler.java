@@ -45,6 +45,7 @@ public class SaveAccessListActionHandler extends SecurityActionHandler<SaveAcces
 
         List<AccessDto> accessSaved = new ArrayList<AccessDto>();
         List<AccessDto> accessDtos = action.getAccessToSave();
+        UserDto updatedUserDto = null;
         for (AccessDto accessToSave : accessDtos) {
             try {
                 AccessDto accessDto = null;
@@ -71,12 +72,19 @@ public class SaveAccessListActionHandler extends SecurityActionHandler<SaveAcces
         }
 
         if (!accessSaved.isEmpty()) {
+
+            try {
+                updatedUserDto = accessControlBaseServiceFacade.findUserById(ServiceContextHolder.getCurrentServiceContext(), accessSaved.get(0).getUser().getId());
+            } catch (MetamacException e) {
+                exceptionItems.addAll(e.getExceptionItems());
+            }
+
             try {
                 noticesRestInternalService.createNotificationForSaveAccessList(serviceContext, accessSaved);
             } catch (MetamacWebException notificationException) {
                 List<MetamacWebExceptionItem> actionExceptionItems = WebExceptionUtils.getMetamacWebExceptionItems(null, exceptionItems);
                 notificationException.getWebExceptionItems().addAll(actionExceptionItems);
-                return new SaveAccessListResult(accessSaved, notificationException);
+                return new SaveAccessListResult(updatedUserDto, accessSaved, notificationException);
             }
         }
 
@@ -84,7 +92,7 @@ public class SaveAccessListActionHandler extends SecurityActionHandler<SaveAcces
             throw WebExceptionUtils.createMetamacWebException(new MetamacException(exceptionItems));
         }
 
-        return new SaveAccessListResult(accessSaved, null);
+        return new SaveAccessListResult(updatedUserDto, accessSaved, null);
     }
 
     @Override
