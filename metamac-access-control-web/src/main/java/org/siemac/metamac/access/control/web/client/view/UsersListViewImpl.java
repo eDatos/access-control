@@ -22,6 +22,7 @@ import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHan
 import org.siemac.metamac.access.control.web.client.widgets.NavigableListGrid;
 import org.siemac.metamac.access.control.web.client.widgets.SearchApplicationItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.web.common.client.constants.CommonWebConstants;
 import org.siemac.metamac.web.common.client.utils.BooleanWebUtils;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
 import org.siemac.metamac.web.common.client.utils.ListGridUtils;
@@ -389,8 +390,6 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
 
             private List<RoleDto>     roleDtos;
 
-            public final static int   MAX_RESULTS = 8;
-
             public UserAccessesPanel() {
                 setMargin(15);
 
@@ -594,7 +593,8 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     }
                 });
 
-                SearchMultiExternalItemSimpleItem operationsItem = new SearchMultiExternalItemSimpleItem(ACCESS_OPERATION, getConstants().statisticalOperation(), MAX_RESULTS) {
+                SearchMultiExternalItemSimpleItem operationsItem = new SearchMultiExternalItemSimpleItem(ACCESS_OPERATION, getConstants().statisticalOperation(),
+                        CommonWebConstants.FORM_LIST_MAX_RESULTS) {
 
                     @Override
                     protected void retrieveResources(int firstResult, int maxResults, MetamacWebCriteria webCriteria) {
