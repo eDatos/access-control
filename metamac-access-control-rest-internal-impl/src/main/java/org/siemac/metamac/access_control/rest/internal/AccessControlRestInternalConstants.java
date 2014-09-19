@@ -13,5 +13,13 @@ public class AccessControlRestInternalConstants extends RestApiConstants {
     public static String               KIND_USERS         = API_NAME + KIND_SEPARATOR + "users";
     public static String               KIND_USER          = API_NAME + KIND_SEPARATOR + "user";
 
+    public static String               KIND_ROLES         = API_NAME + KIND_SEPARATOR + "roles";
+    public static String               KIND_ROLE          = API_NAME + KIND_SEPARATOR + "role";
+
+    public static String               KIND_APPS          = API_NAME + KIND_SEPARATOR + "apps";
+    public static String               KIND_APP           = API_NAME + KIND_SEPARATOR + "app";
+
     public static String               LINK_SUBPATH_USERS = "users";
+    public static String               LINK_SUBPATH_ROLES = "roles";
+    public static String               LINK_SUBPATH_APPS  = "apps";
 }

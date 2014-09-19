@@ -76,6 +76,26 @@
         </xs:complexContent>
     </xs:complexType>
     
+    <xs:complexType name="Roles">
+        <xs:complexContent>
+            <xs:extension base="common:ListBase">
+                <xs:sequence>
+                    <xs:element name="roles" type="tns:Role" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="Apps">
+        <xs:complexContent>
+            <xs:extension base="common:ListBase">
+                <xs:sequence>
+                    <xs:element name="apps" type="tns:App" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <!-- Criterias -->
     <xs:simpleType name="UserCriteriaPropertyRestriction">
         <xs:restriction base="xs:token">
@@ -95,5 +115,7 @@
     
     <!-- **************** ELEMENTS **************** -->
     <xs:element name="users" type="tns:Users"/>
+    <xs:element name="roles" type="tns:Roles"/>
+    <xs:element name="apps" type="tns:Apps"/>
      
 </xs:schema>

@@ -5,6 +5,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import org.siemac.metamac.rest.access_control.v1_0.domain.Apps;
+import org.siemac.metamac.rest.access_control.v1_0.domain.Roles;
 import org.siemac.metamac.rest.access_control.v1_0.domain.Users;
 
 @Path("v1.0")
@@ -15,4 +17,14 @@ public interface AccessControlRestInternalFacadeV1_0 {
     @Produces({"application/xml"})
     @Path("users")
     Users findUsers(@QueryParam("query") String query, @QueryParam("limit") String limit, @QueryParam("offset") String offset);
+
+    @GET
+    @Produces({"application/xml"})
+    @Path("roles")
+    Roles findRoles();
+
+    @GET
+    @Produces({"application/xml"})
+    @Path("applications")
+    Apps findApps();
 }

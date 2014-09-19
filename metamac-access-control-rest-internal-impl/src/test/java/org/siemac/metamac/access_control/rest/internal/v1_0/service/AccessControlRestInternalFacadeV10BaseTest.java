@@ -30,6 +30,8 @@ import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.siemac.metamac.access.control.core.conf.AccessControlConfigurationService;
+import org.siemac.metamac.access.control.core.domain.App;
+import org.siemac.metamac.access.control.core.domain.Role;
 import org.siemac.metamac.access.control.core.domain.User;
 import org.siemac.metamac.access.control.core.serviceapi.AccessControlBaseService;
 import org.siemac.metamac.access_control.rest.internal.v1_0.utils.RestDoMocks;
@@ -106,6 +108,7 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
         return apiEndpointv10;
     }
 
+    @Override
     protected void incrementRequestTimeOut(WebClient create) {
         ClientConfiguration config = WebClient.getConfig(create);
         HTTPConduit conduit = config.getHttpConduit();
@@ -114,6 +117,7 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
         conduit.getClient().setConnection(ConnectionType.CLOSE);
     }
 
+    @Override
     protected void assertInputStream(InputStream expected, InputStream actual, boolean onlyPrint) throws IOException {
         byte[] byteArray = IOUtils.toByteArray(actual);
         if (logger.isDebugEnabled()) {
@@ -127,7 +131,7 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
     }
 
     @SuppressWarnings("unchecked")
-    private void mockFindDatasetsByCondition() throws MetamacException {
+    private void mockFindUsersByCondition() throws MetamacException {
         when(accessControlBaseService.findUserByCondition(any(ServiceContext.class), any(List.class), any(PagingParameter.class))).thenAnswer(new Answer<PagedResult<User>>() {
 
             @Override
@@ -140,11 +144,32 @@ public abstract class AccessControlRestInternalFacadeV10BaseTest extends Metamac
         });
     }
 
+    private void mockFindRolesByCondition() throws MetamacException {
+        when(accessControlBaseService.findAllRoles(any(ServiceContext.class))).then(new Answer<List<Role>>() {
+
+            @Override
+            public java.util.List<Role> answer(InvocationOnMock invocation) throws Throwable {
+                return restDoMocks.mockRoles(10);
+            }
+        });
+    }
+
+    private void mockFindAppsByCondition() throws MetamacException {
+        when(accessControlBaseService.findAllApps(any(ServiceContext.class))).then(new Answer<List<App>>() {
+
+            @Override
+            public java.util.List<App> answer(InvocationOnMock invocation) throws Throwable {
+                return restDoMocks.mockApps(10);
+            }
+        });
+    }
+
     private void resetMocks() throws Exception {
         accessControlBaseService = applicationContext.getBean(AccessControlBaseService.class);
         reset(accessControlBaseService);
 
-        mockFindDatasetsByCondition();
+        mockFindUsersByCondition();
+        mockFindRolesByCondition();
+        mockFindAppsByCondition();
     }
-
 }
