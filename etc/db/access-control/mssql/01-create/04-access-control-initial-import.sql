@@ -74,7 +74,7 @@ Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CR
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
 
 Insert Into Tb_Apps (Id, Code, Uuid, Title, Description, Version, Created_By, Created_Date, Created_Date_Tz, Last_Updated_By, Last_Updated, Last_Updated_Tz) Values 
-(FILL_WITH_SCHEMA_NAME.Get_Next_Sequence_Value('APPS'),'GESTOR_AVISOS','ga232c30-d8dc-11e2-a28f-0800200c9a66','Gestor de notificaciones', 'Aplicativo encargado de gestionar las notificaciones que se emiten desde diferentes aplicaciones del organismo', 1, 'access_control_app', convert(datetime, '2012-04-19 09:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-04-19 09:00:00', 120), 'Europe/London');
+(FILL_WITH_SCHEMA_NAME.Get_Next_Sequence_Value('APPS'),'GESTOR_AVISOS','ga232c30-d8dc-11e2-a28f-0800200c9a66','Gestor de avisos', 'Aplicativo encargado de gestionar los avisos que se emiten desde diferentes aplicaciones del organismo', 1, 'access_control_app', convert(datetime, '2012-04-19 09:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-04-19 09:00:00', 120), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
 
 Insert Into Tb_Apps (Id, Code, Uuid, Title, Description, Version, Created_By, Created_Date, Created_Date_Tz, Last_Updated_By, Last_Updated, Last_Updated_Tz) Values 
