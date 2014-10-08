@@ -47,12 +47,9 @@ public class NoticesRestInternalFacadeImpl implements NoticesRestInternalService
     private void createNotification(ServiceContext ctx, String actionCode, String messageCode, List<AccessDto> accessList) throws MetamacWebException {
         // All access are allways for the same user
         String receiver = accessList.get(0).getUser().getUsername();
-
         Locale locale = ServiceContextUtils.getLocale(ctx);
-        String localisedAction = LocaleUtil.getMessageForCode(actionCode, locale);
-
+        String subject = LocaleUtil.getMessageForCode(actionCode, locale);
         String sendingApp = MetamacApplicationsEnum.GESTOR_ACCESOS.getName();
-        String subject = "[" + sendingApp + "] " + localisedAction;
 
         List<String> translatedMessages = processMessages(ctx, messageCode, accessList);
         String[] messages = new String[translatedMessages.size()];
