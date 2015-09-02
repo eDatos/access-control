@@ -47,6 +47,14 @@ Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, C
 (GET_NEXT_SEQUENCE_VALUE('ROLES'),'JEFE_PRODUCCION','97e471ea-a599-4d3e-8517-ae5cae53995a','Jefe de Producción', 'Persona que supervisa todas las labores de producción estadística', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
 
+Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
+(GET_NEXT_SEQUENCE_VALUE('ROLES'),'LECTOR_AVISOS','97e4713a-a599-4d3e-8417-ae0cae8399fa','Lector de avisos', 'Persona que puede acceder al gestor de notificaciones para leer sus avisos', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
+
+Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
+(GET_NEXT_SEQUENCE_VALUE('ROLES'),'REDACTOR_AVISOS','97e441ea-a599-4d3e-8517-ae5cae53995a','Redactor de avisos', 'Persona que puede enviar avisos desde el gestor de notificaciones', 1, 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London', 'access_control_app', to_date('2012-04-19 09:00:00', 'yyyy-mm-dd hh24:mi:ss'), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
+
 
 
 -- TB_APPS INITIAL IMPORT

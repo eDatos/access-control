@@ -47,6 +47,14 @@ Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, C
 (FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('ROLES'), 'JEFE_PRODUCCION','97e471ea-a599-4d3e-8517-ae5cae53995a','Jefe de Producción', 'Persona que supervisa todas las labores de producción estadística', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
 
+Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
+(FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('ROLES'), 'LECTOR_AVISOS','97e471ea-a5g9-4d3e-8517-ae5cae53995a','Lector de avisos', 'Persona que puede acceder al gestor de notificaciones para visualizar sus avisos', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
+
+Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
+(FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('ROLES'), 'REDACTOR_AVISOS','97e471ea-ar99-4d3e-8517-ae5cae53995a','Redactor de avisos', 'Persona que desde el gestor de notificaciones puede enviar anuncios', 1, 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-01-01 12:00:00', 120), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
+
 
 -- TB_APPS INITIAL IMPORT
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
