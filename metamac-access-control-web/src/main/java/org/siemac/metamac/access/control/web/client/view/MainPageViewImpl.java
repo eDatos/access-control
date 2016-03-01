@@ -5,10 +5,11 @@ import org.siemac.metamac.access.control.web.client.presenter.MainPagePresenter;
 import org.siemac.metamac.access.control.web.client.view.handlers.MainPageUiHandlers;
 import org.siemac.metamac.sso.client.MetamacPrincipal;
 import org.siemac.metamac.web.common.client.enums.MessageTypeEnum;
+import org.siemac.metamac.web.common.client.utils.ApplicationOrganisation;
+import org.siemac.metamac.web.common.client.widgets.FooterLayout;
 import org.siemac.metamac.web.common.client.widgets.MasterHead;
 import org.siemac.metamac.web.common.client.widgets.MessagePanel;
 import org.siemac.metamac.web.common.client.widgets.MetamacNavBar;
-import org.siemac.metamac.web.common.client.widgets.VersionFooter;
 
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Widget;
@@ -33,9 +34,8 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
 
     private final VLayout       panel;
     private final VLayout       northLayout;
-    private final HLayout       headerLayout;
     private final HLayout       southLayout;
-    private final VLayout       footerLayout;
+    private final FooterLayout  footerLayout;
 
     @Inject
     public MainPageViewImpl(MasterHead masterHead, MessagePanel messagePanel) {
@@ -55,27 +55,18 @@ public class MainPageViewImpl extends ViewWithUiHandlers<MainPageUiHandlers> imp
         panel.setCanDrag(false);
 
         // Initialize the North layout container
-        headerLayout = new HLayout();
-        headerLayout.setHeight(NORTH_HEIGHT);
-
-        // Nested layout container
-        VLayout vLayout = new VLayout();
-        vLayout.addMember(this.masterHead);
+        northLayout = new VLayout();
+        northLayout.setHeight(NORTH_HEIGHT);
 
         // Nested layout container to the North layout container
-        headerLayout.addMember(vLayout);
-        headerLayout.setHeight(80);
-
-        northLayout = new VLayout();
-        northLayout.addMember(headerLayout);
+        northLayout.addMember(this.masterHead);
+        northLayout.setHeight(65);
 
         // Initialize the South layout container
         southLayout = new HLayout();
         southLayout.setHeight100();
 
-        footerLayout = new VLayout();
-        footerLayout.addMember(this.messagePanel);
-        footerLayout.addMember(new VersionFooter(AccessControlWeb.getProjectVersion()));
+        footerLayout = new FooterLayout(this.messagePanel, ApplicationOrganisation.getCurrentOrganisation(), AccessControlWeb.getProjectVersion());
 
         // Set user name
         masterHead.getUserNameLabel().setContents(getUserName());
