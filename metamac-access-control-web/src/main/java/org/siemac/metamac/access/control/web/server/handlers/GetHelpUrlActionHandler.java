@@ -1,8 +1,8 @@
 package org.siemac.metamac.access.control.web.server.handlers;
 
 import org.siemac.metamac.access.control.core.conf.AccessControlConfigurationService;
-import org.siemac.metamac.access.control.web.shared.GetUserGuideUrlAction;
-import org.siemac.metamac.access.control.web.shared.GetUserGuideUrlResult;
+import org.siemac.metamac.access.control.web.shared.GetHelpUrlAction;
+import org.siemac.metamac.access.control.web.shared.GetHelpUrlResult;
 import org.siemac.metamac.core.common.exception.MetamacException;
 import org.siemac.metamac.web.common.server.handlers.SecurityActionHandler;
 import org.siemac.metamac.web.common.server.utils.WebExceptionUtils;
@@ -12,20 +12,20 @@ import org.springframework.stereotype.Component;
 import com.gwtplatform.dispatch.shared.ActionException;
 
 @Component
-public class GetUserGuideUrlActionHandler extends SecurityActionHandler<GetUserGuideUrlAction, GetUserGuideUrlResult> {
+public class GetHelpUrlActionHandler extends SecurityActionHandler<GetHelpUrlAction, GetHelpUrlResult> {
 
     @Autowired
     private AccessControlConfigurationService configurationService;
 
-    public GetUserGuideUrlActionHandler() {
-        super(GetUserGuideUrlAction.class);
+    public GetHelpUrlActionHandler() {
+        super(GetHelpUrlAction.class);
     }
 
     @Override
-    public GetUserGuideUrlResult executeSecurityAction(GetUserGuideUrlAction action) throws ActionException {
+    public GetHelpUrlResult executeSecurityAction(GetHelpUrlAction action) throws ActionException {
         try {
-            String userGuideFileName = configurationService.retrieveUserGuideFileName();
-            return new GetUserGuideUrlResult(userGuideFileName);
+            String helpUrl = configurationService.retrieveHelpUrl();
+            return new GetHelpUrlResult(helpUrl);
         } catch (MetamacException e) {
             throw WebExceptionUtils.createMetamacWebException(e);
         }

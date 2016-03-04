@@ -11,7 +11,7 @@ import org.siemac.metamac.access.control.web.server.handlers.FindAllRemovedAcces
 import org.siemac.metamac.access.control.web.server.handlers.FindAllRolesActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.FindAllUsersActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.GetOperationPaginatedListActionHandler;
-import org.siemac.metamac.access.control.web.server.handlers.GetUserGuideUrlActionHandler;
+import org.siemac.metamac.access.control.web.server.handlers.GetHelpUrlActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveAccessListActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.SaveUserActionHandler;
 import org.siemac.metamac.access.control.web.server.handlers.ValidateTicketActionHandler;
@@ -26,7 +26,7 @@ import org.siemac.metamac.access.control.web.shared.FindAllRemovedAccessAction;
 import org.siemac.metamac.access.control.web.shared.FindAllRolesAction;
 import org.siemac.metamac.access.control.web.shared.FindAllUsersAction;
 import org.siemac.metamac.access.control.web.shared.GetOperationPaginatedListAction;
-import org.siemac.metamac.access.control.web.shared.GetUserGuideUrlAction;
+import org.siemac.metamac.access.control.web.shared.GetHelpUrlAction;
 import org.siemac.metamac.access.control.web.shared.SaveAccessListAction;
 import org.siemac.metamac.access.control.web.shared.SaveUserAction;
 import org.siemac.metamac.web.common.server.handlers.CloseSessionActionHandler;
@@ -75,7 +75,7 @@ public class ServerModule extends HandlerModule {
         bindHandler(GetNavigationBarUrlAction.class, GetNavigationBarUrlActionHandler.class);
 
         bindHandler(LoadConfigurationPropertiesAction.class, LoadConfigurationPropertiesActionHandler.class);
-        bindHandler(GetUserGuideUrlAction.class, GetUserGuideUrlActionHandler.class);
+        bindHandler(GetHelpUrlAction.class, GetHelpUrlActionHandler.class);
 
         // This action should be removed to use CAS authentication
         bindHandler(MockCASUserAction.class, MockCASUserActionHandler.class);

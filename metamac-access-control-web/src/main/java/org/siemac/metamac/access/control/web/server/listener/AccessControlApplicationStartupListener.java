@@ -28,7 +28,7 @@ public class AccessControlApplicationStartupListener extends InternalApplication
 
     @Override
     public void checkOtherModuleProperties() {
-        checkRequiredProperty(AccessControlConfigurationConstants.USER_GUIDE_FILE_NAME);
+        checkRequiredProperty(AccessControlConfigurationConstants.HELP_URL);
     }
 
     @Override
