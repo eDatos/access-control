@@ -3,7 +3,7 @@
 <properties>
   <comment>Data sources configuration</comment>
   
-  <entry key="metamac.access_control.db.url">jdbc:oracle:thin:@oracle-dev.arte:1521:XE</entry>
+  <entry key="metamac.access_control.db.url">jdbc:oracle:thin:@teide.arte:1521:orcl</entry>
   <entry key="metamac.access_control.db.driver_name">oracle.jdbc.OracleDriver</entry>
   <entry key="metamac.access_control.db.username">JENKINS_METAMAC_ACCESS_CONTROL</entry>
   <entry key="metamac.access_control.db.password">JENKINS_METAMAC_ACCESS_CONTROL</entry>
