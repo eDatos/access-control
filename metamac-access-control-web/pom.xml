@@ -244,7 +244,7 @@
                 </executions>
                 <!-- Plugin configuration. There are many available options, see gwt-maven-plugin documentation at codehaus.org -->
                 <configuration>
-                    <extraJvmArgs>-Xms512M -Xmx1024M -XX:MaxPermSize=512M</extraJvmArgs>
+                    <extraJvmArgs>-Xms512M -Xmx1024M</extraJvmArgs>
                     <hostedWebapp>${webappDirectory}</hostedWebapp>
                     <noServer>true</noServer>
                     <runTarget>http://localhost:8080/metamac-access-control-web/AccessControlWeb.jsp</runTarget>
