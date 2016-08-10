@@ -28,8 +28,8 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     sudo rm -rf $DEPLOY_TARGET_PATH/access-control-internal.war
 
     # Restore Configuration
-    sudo mv $HOME_PATH/environment.xml $DEPLOY_TARGET_PATH/access-control-internal/$ENVIRONMENT_RELATIVE_PATH_FILE
-    sudo mv $HOME_PATH/logback.xml $DEPLOY_TARGET_PATH/access-control-internal/$LOGBACK_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH/environment.xml $DEPLOY_TARGET_PATH/access-control-internal/$ENVIRONMENT_RELATIVE_PATH_FILE
+    sudo cp $HOME_PATH/logback.xml $DEPLOY_TARGET_PATH/access-control-internal/$LOGBACK_RELATIVE_PATH_FILE
 
     sudo chown -R metamac.metamac /servers/metamac
     sudo service metamac01 start
