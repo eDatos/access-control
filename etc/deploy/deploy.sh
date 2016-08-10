@@ -5,8 +5,8 @@ DEPLOY_TARGET_PATH=/servers/metamac/tomcats/metamac01/webapps
 ENVIRONMENT_RELATIVE_PATH_FILE=WEB-INF/classes/metamac/environment.xml
 LOGBACK_RELATIVE_PATH_FILE=WEB-INF/classes/logback.xml
 
-scp -r etc/deploy deploy@estadisticas.arte-consultores.com:
-scp metamac-access-control-web/target/access-control-internal-*.war deploy@estadisticas.arte-consultores.com:access-control-internal.war
+scp -r etc/deploy deploy@estadisticas.arte-consultores.com:~/metamac-access-control-web:
+scp metamac-access-control-web/target/access-control-internal-*.war deploy@estadisticas.arte-consultores.com:~/metamac-access-control-web/access-control-internal.war
 ssh deploy@estadisticas.arte-consultores.com <<EOF
 
     chmod a+x deploy/*.sh;
@@ -24,7 +24,7 @@ ssh deploy@estadisticas.arte-consultores.com <<EOF
     sudo mv $DEPLOY_TARGET_PATH/access-control-internal/$LOGBACK_RELATIVE_PATH_FILE $TMP_PATH/logback.xml_access-control-internal_tmp
     
     # Update Process
-    sudo mv access-control-internal.war $DEPLOY_TARGET_PATH/access-control-internal.war
+    sudo mv metamac-access-control-web/access-control-internal.war $DEPLOY_TARGET_PATH/access-control-internal.war
     sudo unzip $DEPLOY_TARGET_PATH/access-control-internal.war -d $DEPLOY_TARGET_PATH
     sudo rm -rf $DEPLOY_TARGET_PATH/access-control-internal.war
     
