@@ -746,7 +746,7 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setRole(roleDto);
         accessDto.setApp(appDto);
         accessDto.setUser(userDto);
-        accessDto.setOperation(mockExternalItemDto("TODO-02", null, "http://apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", null,
+        accessDto.setOperation(mockExternalItemDto("TODO-02", null, "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:02", "OPERATION-TODO-02", null,
                 TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null));
         accessDto.setSendEmail(Boolean.TRUE);
 
@@ -823,8 +823,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setUser(userDto);
         accessDto.setSendEmail(Boolean.TRUE);
 
-        expectedMetamacException(
-                new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITHOUT_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser().getUsername()));
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITHOUT_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
+                .getUsername()));
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
@@ -907,8 +907,8 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         accessDto.setOperation(mockExternalItemDto("TODO-01", null, "OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION, null));
         accessDto.setSendEmail(Boolean.TRUE);
 
-        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(),
-                accessDto.getUser().getUsername(), accessDto.getOperation().getUrn()));
+        expectedMetamacException(new MetamacException(ServiceExceptionType.ACCESS_ALREADY_EXIST_WITH_OPERATION, accessDto.getRole().getCode(), accessDto.getApp().getCode(), accessDto.getUser()
+                .getUsername(), accessDto.getOperation().getUrn()));
         accessControlBaseServiceFacade.createAccess(getServiceContextAdministrador(), accessDto);
     }
 
@@ -1051,8 +1051,9 @@ public class AccessControlBaseServiceFacadeTest extends AccessControlBaseTest im
         AccessControlDtoAsserts.assertEqualsRoleDto(roleDto, accessDto.getRole());
         AccessControlDtoAsserts.assertEqualsAppDto(appDto, accessDto.getApp());
         AccessControlDtoAsserts.assertEqualsUserDto(userDto, accessDto.getUser());
-        MetamacAsserts.assertEqualsExternalItemDto(mockExternalItemDto("TODO-01", null, "http://apis.metamac.org/statistical-operations-internal/OPERATION:TODO:01", "OPERATION-TODO-01", null,
-                TypeExternalArtefactsEnum.STATISTICAL_OPERATION, "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto.getOperation());
+        MetamacAsserts.assertEqualsExternalItemDto(
+                mockExternalItemDto("TODO-01", null, "apis.metamac.org/statistical-operations-internal/OPERATION:TODO:01", "OPERATION-TODO-01", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION,
+                        "http://localhost:8080/metamac-statistical-operations-web/OPERATION:TODO:01"), accessDto.getOperation());
 
         assertEquals("A-1", accessDto.getUuid());
         assertEquals(Long.valueOf(1), accessDto.getVersion());
