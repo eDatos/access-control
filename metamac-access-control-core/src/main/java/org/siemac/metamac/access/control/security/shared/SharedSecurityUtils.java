@@ -36,7 +36,6 @@ public class SharedSecurityUtils {
     }
 
     public static Boolean isAnyAccessControlRole(MetamacPrincipal metamacPrincipal) {
-        return isAdministrador(metamacPrincipal) || isRoleInAccesses(metamacPrincipal, AccessControlRoleEnum.TECNICO_PLANIFICACION);
+        return isAdministrador(metamacPrincipal) || isRoleInAccesses(metamacPrincipal, AccessControlRoleEnum.TECNICO_PLANIFICACION) || isRoleInAccesses(metamacPrincipal, AccessControlRoleEnum.LECTOR);
     }
-
 }

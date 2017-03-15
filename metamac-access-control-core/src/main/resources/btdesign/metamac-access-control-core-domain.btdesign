@@ -221,6 +221,7 @@ Application Base {
 		enum AccessControlRoleEnum {
     		TECNICO_PLANIFICACION,
     		ADMINISTRADOR,
+    		LECTOR,
     		ANY_ROLE_ALLOWED
     	}
 	}
