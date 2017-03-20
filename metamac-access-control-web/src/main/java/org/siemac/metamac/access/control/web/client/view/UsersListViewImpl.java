@@ -10,6 +10,7 @@ import org.siemac.metamac.access.control.core.dto.AccessDto;
 import org.siemac.metamac.access.control.core.dto.AppDto;
 import org.siemac.metamac.access.control.core.dto.RoleDto;
 import org.siemac.metamac.access.control.core.dto.UserDto;
+import org.siemac.metamac.access.control.core.enume.domain.AccessControlRoleEnum;
 import org.siemac.metamac.access.control.web.client.model.ds.AccessDS;
 import org.siemac.metamac.access.control.web.client.model.ds.UserDS;
 import org.siemac.metamac.access.control.web.client.model.record.AccessRecord;
@@ -22,6 +23,8 @@ import org.siemac.metamac.access.control.web.client.view.handlers.UsersListUiHan
 import org.siemac.metamac.access.control.web.client.widgets.NavigableListGrid;
 import org.siemac.metamac.access.control.web.client.widgets.SearchApplicationItem;
 import org.siemac.metamac.core.common.dto.ExternalItemDto;
+import org.siemac.metamac.core.common.util.shared.StringUtils;
+import org.siemac.metamac.web.common.client.MetamacWebCommon;
 import org.siemac.metamac.web.common.client.constants.CommonWebConstants;
 import org.siemac.metamac.web.common.client.utils.BooleanWebUtils;
 import org.siemac.metamac.web.common.client.utils.ExternalItemUtils;
@@ -53,6 +56,11 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.events.VisibilityChangedEvent;
 import com.smartgwt.client.widgets.events.VisibilityChangedHandler;
+import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.FormItemIfFunction;
+import com.smartgwt.client.widgets.form.fields.FormItem;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.validator.CustomValidator;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
@@ -64,17 +72,18 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> implements UsersListPresenter.UsersListView {
 
-    private static final String     USER_USERNAME     = "username";
-    private static final String     USER_NAME         = "name";
-    private static final String     USER_SURNAME      = "surname";
-    private static final String     USER_MAIL         = "mail";
+    private static final String     USER_USERNAME          = "username";
+    private static final String     USER_NAME              = "name";
+    private static final String     USER_SURNAME           = "surname";
+    private static final String     USER_MAIL              = "mail";
 
-    private static final String     ACCESS_ROLE       = "role";
-    private static final String     ACCESS_APP        = "app";
-    private static final String     ACCESS_OPERATION  = "operation";
-    private static final String     ACCESS_SEND_EMAIL = "sendEmail";
+    private static final String     ACCESS_ROLE            = "role";
+    private static final String     ACCESS_APP             = "app";
+    private static final String     ACCESS_OPERATION       = "operation";
+    private static final String     ACCESS_SEND_EMAIL      = "sendEmail";
+    private static final String     ACCESS_SEND_EMAIL_VIEW = "sendEmailView";
 
-    private static final String     USER_LAYOUT_ID    = "userlayout";
+    private static final String     USER_LAYOUT_ID         = "userlayout";
 
     private final VLayout           panel;
     private final VLayout           subPanel;
@@ -546,7 +555,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 accessDto.setUser(userPanel.userDto);
                 accessDto.setRole(getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE)));
                 accessDto.setApp(app);
-                accessDto.setSendEmail(sendEmail);
+                accessDto.setSendEmail(isRoleLector(accessDto.getRole()) ? false : sendEmail);
                 return accessDto;
             }
 
@@ -579,8 +588,31 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                 editionAccessForm = new GroupDynamicForm(getConstants().role());
 
                 BooleanRequiredSelectItem sendEmail = new BooleanRequiredSelectItem(ACCESS_SEND_EMAIL, getConstants().sendEmail());
+                sendEmail.setShowIfCondition(new FormItemIfFunction() {
+
+                    @Override
+                    public boolean execute(FormItem item, Object value, DynamicForm form) {
+                        return !isRoleLectorSelectedInEditionForm();
+                    }
+                });
+                ViewTextItem sendEmailView = new ViewTextItem(ACCESS_SEND_EMAIL_VIEW, getConstants().sendEmail());
+                sendEmailView.setValue(MetamacWebCommon.getConstants().no());
+                sendEmailView.setShowIfCondition(new FormItemIfFunction() {
+
+                    @Override
+                    public boolean execute(FormItem item, Object value, DynamicForm form) {
+                        return isRoleLectorSelectedInEditionForm();
+                    }
+                });
 
                 RequiredSelectItem role = new RequiredSelectItem(ACCESS_ROLE, getConstants().role());
+                role.addChangedHandler(new ChangedHandler() {
+
+                    @Override
+                    public void onChanged(ChangedEvent event) {
+                        editionAccessForm.markForRedraw();
+                    }
+                });
 
                 final SearchApplicationItem applicationItem = new SearchApplicationItem(ACCESS_APP, getConstants().app());
                 applicationItem.setTitleStyle("staticFormItemTitle");
@@ -602,7 +634,7 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     }
                 };
 
-                editionAccessForm.setFields(sendEmail, role, applicationItem, operationsItem);
+                editionAccessForm.setFields(role, sendEmail, sendEmailView, applicationItem, operationsItem);
                 accessMainFormLayout.addEditionCanvas(editionAccessForm);
             }
 
@@ -659,7 +691,19 @@ public class UsersListViewImpl extends ViewWithUiHandlers<UsersListUiHandlers> i
                     accessToolStrip.getDeleteButton().show();
                 }
             }
-        }
 
+            private boolean isRoleLectorSelectedInEditionForm() {
+                if (StringUtils.isBlank(editionAccessForm.getValueAsString(ACCESS_ROLE))) {
+                    return false;
+                } else {
+                    RoleDto roleDto = getRoleDtoById(editionAccessForm.getValueAsString(ACCESS_ROLE));
+                    return AccessControlRoleEnum.LECTOR.toString().equals(roleDto.getCode());
+                }
+            }
+
+            private boolean isRoleLector(RoleDto roleDto) {
+                return AccessControlRoleEnum.LECTOR.toString().equals(roleDto.getCode());
+            }
+        }
     }
 }
