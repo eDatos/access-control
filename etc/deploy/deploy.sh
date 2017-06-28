@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 HOME_PATH=metamac-access-control-web
 TRANSFER_PATH=$HOME_PATH/tmp
