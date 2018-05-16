@@ -304,7 +304,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_1);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_1);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_1);
-        ExternalItem operation = AccessControlDoMocks.mockExternalItem1("MNP", null, "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = AccessControlDoMocks.mockExternalItem("MNP", null, "uri/MNP", "urn:app:gopestat:StatisticalOperation=MNP", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         Access access = accessControlBaseService.createAccess(getServiceContextAdministrador(), AccessControlDoMocks.createAccess(app, role, user, operation, Boolean.TRUE));
         assertNotNull(access);
@@ -321,7 +321,7 @@ public class AccessControlBaseServiceTest extends AccessControlBaseTest implemen
         App app = accessControlBaseService.findAppById(getServiceContextAdministrador(), APP_2);
         Role role = accessControlBaseService.findRoleById(getServiceContextAdministrador(), ROLE_2);
         User user = accessControlBaseService.findUserById(getServiceContextAdministrador(), USER_2);
-        ExternalItem operation = AccessControlDoMocks.mockExternalItem1("MNP2", null, "uri/MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
+        ExternalItem operation = AccessControlDoMocks.mockExternalItem("MNP2", null, "uri/MNP2", "urn:app:gopestat:StatisticalOperation=MNP2", null, TypeExternalArtefactsEnum.STATISTICAL_OPERATION);
 
         access.setApp(app);
         access.setRole(role);
