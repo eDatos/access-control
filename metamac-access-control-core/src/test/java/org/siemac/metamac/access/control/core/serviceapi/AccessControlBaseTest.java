@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.fornax.cartridges.sculptor.framework.errorhandling.ServiceContext;
 import org.siemac.metamac.access.control.constants.AccessControlConstants;
@@ -19,21 +21,21 @@ public abstract class AccessControlBaseTest extends MetamacDBUnitBaseTests {
 
     protected static Long NOT_EXISTS = Long.valueOf(-1);
 
-    protected static Long ROLE_1     = Long.valueOf(1);
-    protected static Long ROLE_2     = Long.valueOf(2);
+    protected static Long ROLE_1 = Long.valueOf(1);
+    protected static Long ROLE_2 = Long.valueOf(2);
 
-    protected static Long APP_1      = Long.valueOf(1);
-    protected static Long APP_2      = Long.valueOf(2);
+    protected static Long APP_1 = Long.valueOf(1);
+    protected static Long APP_2 = Long.valueOf(2);
 
-    protected static Long USER_1     = Long.valueOf(1);
-    protected static Long USER_2     = Long.valueOf(2);
+    protected static Long USER_1 = Long.valueOf(1);
+    protected static Long USER_2 = Long.valueOf(2);
 
-    protected static Long ACCESS_1   = Long.valueOf(1);
-    protected static Long ACCESS_2   = Long.valueOf(2);
-    protected static Long ACCESS_3   = Long.valueOf(3);
+    protected static Long ACCESS_1 = Long.valueOf(1);
+    protected static Long ACCESS_2 = Long.valueOf(2);
+    protected static Long ACCESS_3 = Long.valueOf(3);
 
     @Value("${metamac.access_control.db.provider}")
-    private String        databaseProvider;
+    private String databaseProvider;
 
     // --------------------------------------------------------------------------------------------------------------
     // SERVICE CONTEXT
@@ -85,6 +87,14 @@ public abstract class AccessControlBaseTest extends MetamacDBUnitBaseTests {
     protected Map<String, List<String>> getTablePrimaryKeys() {
         Map<String, List<String>> primaryKeys = new HashMap<String, List<String>>();
         primaryKeys.put("TB_SEQUENCES", Arrays.asList("SEQUENCE_NAME"));
+        // It is necessary to specify the table name and the column name in upper and lower case for compatibility with the different database providers.
+        Map<String, List<String>> primaryKeysInLowerCase = new HashMap<>();
+        for (Entry<String, List<String>> primaryKey : primaryKeys.entrySet()) {
+            List<String> values = new ArrayList<>(primaryKey.getValue());
+            toLowerCase(values);
+            primaryKeysInLowerCase.put(primaryKey.getKey().toLowerCase(), values);
+        }
+        primaryKeys.putAll(primaryKeysInLowerCase);
         return primaryKeys;
     }
 
@@ -93,4 +103,10 @@ public abstract class AccessControlBaseTest extends MetamacDBUnitBaseTests {
         return DataBaseProvider.valueOf(databaseProvider);
     }
 
+    private void toLowerCase(List<String> strings) {
+        ListIterator<String> iterator = strings.listIterator();
+        while (iterator.hasNext()) {
+            iterator.set(iterator.next().toLowerCase());
+        }
+    }
 }
