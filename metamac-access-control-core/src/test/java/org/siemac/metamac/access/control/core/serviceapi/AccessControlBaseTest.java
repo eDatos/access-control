@@ -37,6 +37,9 @@ public abstract class AccessControlBaseTest extends MetamacDBUnitBaseTests {
     @Value("${metamac.access_control.db.provider}")
     private String databaseProvider;
 
+    @Value("${metamac.access_control.db.default_schema}")
+    private String defaultSchema;
+
     // --------------------------------------------------------------------------------------------------------------
     // SERVICE CONTEXT
     // --------------------------------------------------------------------------------------------------------------
@@ -101,6 +104,11 @@ public abstract class AccessControlBaseTest extends MetamacDBUnitBaseTests {
     @Override
     protected DataBaseProvider getDatabaseProvider() {
         return DataBaseProvider.valueOf(databaseProvider);
+    }
+
+    @Override
+    protected String getDefaultSchema() {
+        return defaultSchema;
     }
 
     private void toLowerCase(List<String> strings) {
