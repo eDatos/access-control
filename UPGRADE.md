@@ -15,10 +15,10 @@ datos en la actualización de la versión 1.0.0 a la 2.0.0.*
 
 *Se deberá realizar primero la actualización de la versión 1.0.0 a la 2.0.0 y luego desde la 2.0.0 a la 3.0.0*
 
-## 2.5.1 a 2.5.2
+## 2.5.1 a x.y.z
 
 - Debe actualizar la base de datos ejecutando los scripts de migración contenidos en el fichero 
-  `etc/changes-from-release/2.5.2/db/access-control/<BD>/20210604.sql`, donde `<BD>`se corresponde 
+  `etc/changes-from-release/2.5.1/db/access-control/<BD>/20210604.sql`, donde `<BD>`se corresponde 
   con el DBMS empleado.
   
 ## 0.0.0 a 2.5.1
