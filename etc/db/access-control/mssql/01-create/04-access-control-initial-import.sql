@@ -59,6 +59,9 @@ Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, C
 (FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('ROLES'), 'LECTOR','87r651f9-4190-2fgr-h789-8te0056rw412','Lector', 'Persona con permiso de lectura sobre los datos de las aplicaciones', 1, 'access_control_app', convert(datetime, '2017-01-19 09:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2017-01-19 09:00:00', 120), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
 
+INSERT INTO TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) VALUES
+(FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('ROLES'), 'GESTOR', '57b1ec2d-5f1a-4bec-8573-0a38d14c2f04', 'Gestor', 'Persona con permisos de gestión de los usuarios externos', 1, 'access_control_app', convert(datetime, '2021-06-04 09:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2021-06-04 09:00:00', 120), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
 
 -- TB_APPS INITIAL IMPORT
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
@@ -87,4 +90,8 @@ UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQU
 
 Insert Into Tb_Apps (Id, Code, Uuid, Title, Description, Version, Created_By, Created_Date, Created_Date_Tz, Last_Updated_By, Last_Updated, Last_Updated_Tz) Values 
 (FILL_WITH_SCHEMA_NAME.Get_Next_Sequence_Value('APPS'),'GESTOR_AVISOS','ga232c30-d8dc-11e2-a28f-0800200c9a66','Gestor de avisos', 'Aplicativo encargado de gestionar los avisos que se emiten desde diferentes aplicaciones del organismo', 1, 'access_control_app', convert(datetime, '2012-04-19 09:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2012-04-19 09:00:00', 120), 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
+
+INSERT INTO TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) VALUES
+(FILL_WITH_SCHEMA_NAME.GetSequenceNextValue('APPS'), 'GESTOR_USUARIOS_EXTERNOS','4cb47e26-5cda-480e-9ce5-4556e78441b3','Gestor de usuarios externos', 'Aplicativo encargado de gestionar los usuarios externos', 1, 'access_control_app', convert(datetime, '2021-06-04 09:00:00', 120), 'Europe/London', 'access_control_app', convert(datetime, '2021-06-04 09:00:00', 120), 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
