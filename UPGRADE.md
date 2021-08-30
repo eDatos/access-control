@@ -17,8 +17,9 @@ datos en la actualización de la versión 1.0.0 a la 2.0.0.*
 
 ## 2.5.1 a x.y.z
 
-- Debe actualizar la base de datos ejecutando los scripts de migración contenidos en el fichero 
-  `etc/changes-from-release/2.5.1/db/access-control/<BD>/20210604_added_new_rol_and_app.sql`, donde `<BD>`se corresponde 
+- Se han realizado cambios a la base de datos, por ello se proveen una serie de scripts SQL para adaptarse a la nueva versión. 
+  Ejecutar los scripts de la siguiente ruta en el esquema correspondiente por orden de fecha: 
+  [etc/changes-from-release/2.5.1/db/access-control/<BD>/](etc/changes-from-release/2.5.1/db/access-control/<BD>), donde `<BD>`se corresponde 
   con el DBMS empleado.
   
 ## 0.0.0 a 2.5.1
