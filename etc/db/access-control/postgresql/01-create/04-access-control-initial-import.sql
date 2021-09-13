@@ -59,6 +59,9 @@ Insert into TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, C
 ((SELECT GET_NEXT_SEQUENCE_VALUE('ROLES')),'LECTOR','87r651f9-4190-2fgr-h789-8te0056rw412','Lector', 'Persona con permiso de lectura sobre los datos de las aplicaciones', 1, 'access_control_app', current_timestamp, 'Europe/London', 'access_control_app', current_timestamp, 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
 
+INSERT INTO TB_ROLES (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) VALUES
+((SELECT GET_NEXT_SEQUENCE_VALUE('ROLES')), 'GESTOR', '57b1ec2d-5f1a-4bec-8573-0a38d14c2f04', 'Gestor', 'Persona con permisos de gestión de los usuarios externos', 1, 'access_control_app', current_timestamp, 'Europe/London', 'access_control_app', current_timestamp, 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'ROLES';
 
 -- TB_APPS INITIAL IMPORT
 Insert into TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) values 
@@ -89,3 +92,10 @@ Insert Into Tb_Apps (Id, Code, Uuid, Title, Description, Version, Created_By, Cr
 ((SELECT GET_NEXT_SEQUENCE_VALUE('APPS')),'GESTOR_AVISOS','ga232c30-d8dc-11e2-a28f-0800200c9a66','Gestor de avisos', 'Aplicativo encargado de gestionar los avisos que se emiten desde diferentes aplicaciones del organismo', 1, 'access_control_app', current_timestamp, 'Europe/London', 'access_control_app', current_timestamp, 'Europe/London');
 UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
 
+INSERT INTO TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) VALUES
+((SELECT GET_NEXT_SEQUENCE_VALUE('APPS')), 'GESTOR_USUARIOS_EXTERNOS','4cb47e26-5cda-480e-9ce5-4556e78441b3','Gestor de usuarios externos', 'Aplicativo encargado de gestionar los usuarios externos', 1, 'access_control_app', current_timestamp, 'Europe/London', 'access_control_app', current_timestamp, 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
+
+INSERT INTO TB_APPS (ID, CODE, UUID, TITLE, DESCRIPTION, VERSION, CREATED_BY, CREATED_DATE, CREATED_DATE_TZ, LAST_UPDATED_BY, LAST_UPDATED, LAST_UPDATED_TZ) VALUES
+((SELECT GET_NEXT_SEQUENCE_VALUE('APPS')), 'GESTOR_CONSOLA_ETL','cdbb5a10-78db-4454-9a45-933c7563fc8b','Gestor de consola de ETLs', 'Aplicativo encargado de gestionar y ejecutar las ETLs', 1, 'access_control_app', current_timestamp, 'Europe/London', 'access_control_app', current_timestamp, 'Europe/London');
+UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'APPS';
