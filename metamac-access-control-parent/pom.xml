@@ -11,7 +11,7 @@
 
     <groupId>org.siemac.metamac.metamac-access-control</groupId>
     <artifactId>metamac-access-control-parent</artifactId>
-    <version>2.6.1</version>
+    <version>2.6.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>METAMAC :: ACCESS :: CONTROL :: PARENT</name>
     <description>METAMAC :: ACCESS :: CONTROL :: PARENT</description>
@@ -41,8 +41,4 @@
         <metamac-access-control.baseDir>${basedir}/..</metamac-access-control.baseDir>
         <metamac-access-control.etcDir>${metamac-access-control.baseDir}/etc</metamac-access-control.etcDir>
     </properties>
-
-  <scm>
-    <tag>20220308-1052-v2.6.1</tag>
-  </scm>
 </project>
